@@ -1,5 +1,4 @@
 import placeholderImg02 from "../../assets/placeholderImg02.svg";
-import { Link } from "react-router-dom";
 
 export default function SeriesThumbnail() {
   return (
@@ -7,8 +6,7 @@ export default function SeriesThumbnail() {
       {/* tablet 이상 */}
       <div
         className="relative hidden tablet:flex flex-row justify-around items-start w-full h-[640px] bg-cover bg-center py-[146px] desktop:px-[136px] tablet:px-[30px]"
-        style={{ backgroundImage: `url(${placeholderImg02})` }}
-      >
+        style={{ backgroundImage: `url(${placeholderImg02})` }}>
         {/* 블러 오버레이 */}
         <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-lg"></div>
 
@@ -36,8 +34,7 @@ export default function SeriesThumbnail() {
       {/* mobile 전용 */}
       <div
         className="relative tablet:hidden flex flex-col justify-center items-center w-full h-[308px] border-[1px] border-gray01 bg-cover bg-center py-[50px] px-[30px]"
-        style={{ backgroundImage: `url(${placeholderImg02})` }}
-      >
+        style={{ backgroundImage: `url(${placeholderImg02})` }}>
         {/* 블러 오버레이 */}
         <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-md"></div>
 
