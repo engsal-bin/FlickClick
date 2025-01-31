@@ -1,4 +1,3 @@
-import React from "react";
 import placeholderImg03 from "../../assets/placeholderImg03.svg";
 import { Link } from "react-router-dom";
 
@@ -10,10 +9,9 @@ export default function MainThumbnail() {
       <Link
         to={"/detailseries"}
         className="relative hidden tablet:flex flex-col justify-center items-center w-full h-[720px] bg-cover bg-center py-[80px] px-[100px]"
-        style={{ backgroundImage: `url(${placeholderImg03})` }}
-      >
+        style={{ backgroundImage: `url(${placeholderImg03})` }}>
         {/* 그라데이션 오버레이 */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent to-transparent opacity-80"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"></div>
 
         {/* 텍스트 */}
         <div className="w-full h-full flex flex-col justify-end items-start gap-[10px] relative z-10 text-center text-white">
@@ -25,8 +23,7 @@ export default function MainThumbnail() {
       {/* mobile 전용 */}
       <div
         className="relative tablet:hidden flex flex-col justify-center items-center w-full h-[420px] border-[1px] border-gray01 bg-cover bg-center py-[50px] px-[30px]"
-        style={{ backgroundImage: `url(${placeholderImg03})` }}
-      >
+        style={{ backgroundImage: `url(${placeholderImg03})` }}>
         {/* 그라데이션 오버레이 */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
 

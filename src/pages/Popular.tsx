@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import arrowLeft from "../assets/icon/arrow/arrowLeft.svg";
-import Contents from "../components/common/Contents";
+import ContentsWithoutViewMore from "../components/common/ContentsWithoutViewMore";
 
 type Period = "today" | "7days" | "30days" | null;
 
@@ -38,8 +38,7 @@ export default function Popular() {
               selectedPeriod === "today"
                 ? "bg-gray01 border-[1px] border-gray01 text-white01"
                 : "border-[1px] border-white03"
-            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
-          >
+            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}>
             오늘
           </div>
           <div
@@ -48,8 +47,7 @@ export default function Popular() {
               selectedPeriod === "7days"
                 ? "bg-gray01 border-[1px] border-gray01 text-white01"
                 : "border-[1px] border-white03"
-            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
-          >
+            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}>
             최근 7일
           </div>
           <div
@@ -58,14 +56,14 @@ export default function Popular() {
               selectedPeriod === "30days"
                 ? "bg-gray01 border-[1px] border-gray01 text-white01"
                 : "border-[1px] border-white03"
-            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
-          >
+            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}>
             최근 30일
           </div>
         </div>
       </div>
       {/* 컨텐츠 */}
-      <Contents />
+      <ContentsWithoutViewMore />
+      <ContentsWithoutViewMore />
     </div>
   );
 }

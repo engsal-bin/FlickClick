@@ -1,5 +1,3 @@
-import React from "react";
-
 interface OttIconProps {
   src: string; // 이미지 경로
   isSelected: boolean; // 선택 여부

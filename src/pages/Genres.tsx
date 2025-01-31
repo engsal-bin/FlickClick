@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import eraser from "../assets/icon/eraser.svg";
 // ott 로고
 import appleTv from "../assets/icon/ottIcon/appleTV.svg";
