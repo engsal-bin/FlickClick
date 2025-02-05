@@ -15,6 +15,7 @@ import DetailSeries from "./pages/DetailSeries";
 import DetailEpisode from "./pages/DetailEpisode";
 import DetailSeason from "./pages/DetailSeason";
 import DetailSeriesNoSeason from "./pages/DetailSeriesNoSeason";
+import DetailMovie from "./pages/DetailMovie";
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
           {/* 상세 페이지 */}
           <Route path="/detailseries" element={<DetailSeries />} />
           <Route path="/detailseason-noseason" element={<DetailSeriesNoSeason/>}/>
+          <Route path="/detailmovie" element={<DetailMovie/>}/>
           <Route path="/detailepisode" element={<DetailEpisode/>}/>
           <Route path="/detailseason" element={<DetailSeason/>}/>
         </Route>
