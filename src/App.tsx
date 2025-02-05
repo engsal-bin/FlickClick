@@ -1,4 +1,3 @@
-import React from "react";
 import "./css/index.css";
 import { Route, Routes } from "react-router";
 import RootLayout from "./layouts/RootLayout";
@@ -13,6 +12,9 @@ import Login from "./pages/Login";
 import Mypage from "./pages/Mypage";
 import { AuthProvider } from "./api/Auth";
 import DetailSeries from "./pages/DetailSeries";
+import DetailEpisode from "./pages/DetailEpisode";
+import DetailSeason from "./pages/DetailSeason";
+import DetailSeriesNoSeason from "./pages/DetailSeriesNoSeason";
 
 export default function App() {
   return (
@@ -34,6 +36,9 @@ export default function App() {
           <Route path="/mypage" element={<Mypage />} />
           {/* 상세 페이지 */}
           <Route path="/detailseries" element={<DetailSeries />} />
+          <Route path="/detailseason-noseason" element={<DetailSeriesNoSeason/>}/>
+          <Route path="/detailepisode" element={<DetailEpisode/>}/>
+          <Route path="/detailseason" element={<DetailSeason/>}/>
         </Route>
       </Routes>
     </AuthProvider>

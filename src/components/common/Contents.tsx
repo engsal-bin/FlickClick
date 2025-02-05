@@ -12,7 +12,7 @@ export default function Contents({
   return (
     <>
       {/* tablet 이상 */}
-      <div className="hidden tablet:flex flex-col justify-between w-full px-[50px] border-[1px] border-gray01">
+      <div className="hidden tablet:flex flex-col justify-between w-full border-[1px] border-gray01">
         <div className="flex justify-between items-baseline">
           <p className="text-white01 font-bold text-[24px] mb-[30px]">
             {children}

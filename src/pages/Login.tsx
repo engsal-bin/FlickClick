@@ -1,4 +1,3 @@
-import React from "react";
 import loginBg from "../assets/icon/loginBg.svg";
 import kakao from "../assets/logo/socialLogo/kakao.svg";
 import google from "../assets/logo/socialLogo/google.svg";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Header from "../components/rootlayouts/Header";
 import { Outlet } from "react-router";
 import topButtonDefault from "../assets/icon/fixedButton/topButton_default.svg";
