@@ -1,21 +1,26 @@
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Link } from "react-router-dom";
 
-// Swiper 컴포넌트 사용 예시
-export default function ArgorithmIP() {
+export default function ArgorithmIP({ label }: { label: string }) {
   return (
-    <Swiper
-      spaceBetween={50}
-      slidesPerView={5}
-      pagination={{ clickable: true }}
-      navigation={true}  // 네비게이션 버튼 활성화
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
-    >
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-    </Swiper>
+    <section className="mb-[130px] w-full">
+      <p className="text-white01 font-bold text-[24px]">{label}</p>
+      <div className="flex justify-start gap-[30px] tablet:h-[265px] mobile:h-[132.5px]">
+        <Link to="">
+          <figure className="tablet:w-[200px] mobile:w-[100px] bg-gray02 h-full rounded-[10px] overflow-hidden">
+            <img src="" alt="" className="w-full h-full object-cover" />
+          </figure>
+        </Link>
+        <Link to="">
+          <figure className="tablet:w-[200px] mobile:w-[100px] bg-gray02 h-full rounded-[10px] overflow-hidden">
+            <img src="" alt="" className="w-full h-full object-cover" />
+          </figure>
+        </Link>
+        <Link to="">
+          <figure className="tablet:w-[200px] mobile:w-[100px] bg-gray02 h-full rounded-[10px] overflow-hidden">
+            <img src="" alt="" className="w-full h-full object-cover" />
+          </figure>
+        </Link>
+      </div>
+    </section>
   );
 }
