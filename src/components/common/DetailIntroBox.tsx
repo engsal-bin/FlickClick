@@ -1,10 +1,10 @@
-import placeholderImg02 from "../../assets/placeholderImg02.svg";
 import Tag from "./Tag";
-import watcha from "../../assets/icon/ottIcon/watcha.svg"
-import scrapIcon from "../../assets/icon/scrap_btn.svg"
 import cancelIcon from "../../assets/icon/cancelIcon.svg"
+import placeholderImg02 from "../../assets/placeholderImg02.svg";
+import scrapIcon from "../../assets/icon/scrap_btn.svg"
+import watcha from "../../assets/icon/ottIcon/watcha.svg"
 
-export default function SeriesThumbnail() {
+export default function DetailIntroBox() {
   return (
     <>
       {/* tablet 이상 */}
