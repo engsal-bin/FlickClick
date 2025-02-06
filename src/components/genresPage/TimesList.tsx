@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 type CheckedState = {
   [key: string]: boolean;
 };
