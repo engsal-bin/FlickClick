@@ -179,14 +179,27 @@ export default function Header() {
         {isOpen && (
           <>
             {/* tablet 이상 */}
-            <div className="absolute hidden tablet:flex top-[80px] right-[18px] bg-none z-10">
-              <div className="absolute top-0 right-0 w-[349px] h-[417px]  bg-black border border-gray03 rounded-[10px] shadow-md shadow-white01/10 p-[50px] z-20">
+            <div
+              className="absolute hidden tablet:flex top-[80px] 
+            right-[18px] bg-none z-20"
+            >
+              <div
+                className="absolute top-0 right-0 w-[349px] h-[417px]  
+              bg-black border border-gray03 rounded-[10px] 
+              shadow-md shadow-white01/10 p-[50px] z-20"
+              >
                 <Notification />
               </div>
             </div>
             {/* mobile 전용 */}
-            <div className="absolute tablet:hidden flex w-full h-[100%]  bg-black_50 top-[80px] left-0 z-10">
-              <div className="absolute top-0px right-0 w-[256px] h-full bg-black border-0 rounded-none z-20">
+            <div
+              className="absolute tablet:hidden flex w-full h-[100%]  
+            bg-black_50 top-[80px] left-0 z-20"
+            >
+              <div
+                className="absolute top-0px right-0 w-[256px] h-full 
+              bg-black border-0 rounded-none z-20"
+              >
                 <Notification />
               </div>
             </div>
