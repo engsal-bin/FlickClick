@@ -42,7 +42,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="w-full h-[80px] pl-[30px] pr-[30px] bg-black flex justify-between items-center">
+      <div className="w-full h-[80px] px-[50px] bg-black flex justify-between items-center">
         {/* 좌측 메뉴 */}
         <>
           {/* tablet 이상 */}
@@ -56,8 +56,7 @@ export default function Header() {
                 location.pathname === "/series"
                   ? "text-main hover:text-main"
                   : ""
-              }`}
-            >
+              }`}>
               시리즈
             </Link>
             <Link
@@ -66,8 +65,7 @@ export default function Header() {
                 location.pathname === "/movies"
                   ? "text-main hover:text-main"
                   : ""
-              }`}
-            >
+              }`}>
               영화
             </Link>
             <Link
@@ -76,8 +74,7 @@ export default function Header() {
                 location.pathname === "/genres"
                   ? "text-main hover:text-main"
                   : ""
-              }`}
-            >
+              }`}>
               장르
             </Link>
           </div>
@@ -92,15 +89,13 @@ export default function Header() {
         {isLoggedIn ? (
           <div
             onClick={setIsLoggedin}
-            className="w-[100px] border-[1px] border-white01 p-[5px] text-center text-white01 text-[10px] cursor-pointer"
-          >
+            className="w-[100px] border-[1px] border-white01 p-[5px] text-center text-white01 text-[10px] cursor-pointer">
             임시 로그아웃 버튼
           </div>
         ) : (
           <div
             onClick={setIsLoggedin}
-            className="w-[100px] border-[1px] border-white01 p-[5px] text-center text-white01 text-[10px] cursor-pointer"
-          >
+            className="w-[100px] border-[1px] border-white01 p-[5px] text-center text-white01 text-[10px] cursor-pointer">
             임시 로그인 버튼
           </div>
         )}
@@ -123,8 +118,7 @@ export default function Header() {
             {isLoggedIn ? (
               <Link
                 to={"/mypage"}
-                className="flex justify-between items-center "
-              >
+                className="flex justify-between items-center ">
                 <div className="w-[35px] h-[35px] bg-gray02 rounded-full mr-[10px]"></div>
                 <div>닉네임</div>
               </Link>

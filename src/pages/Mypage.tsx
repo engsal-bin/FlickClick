@@ -2,11 +2,17 @@ import { useState } from "react";
 import Notify from "../components/mypage/Notify";
 import Review from "../components/mypage/Review";
 import Tag from "../components/common/Tag";
-import Discuss from "../components/mypage/Discuss";
-import Scrap from "../components/mypage/Scrap";
+import CreatedDiscuss from "../components/mypage/CreatedDiscuss";
+import MyOpinion from "../components/mypage/MyOpinion";
+import Season from "../components/mypage/Season";
+import Episode from "../components/mypage/Episode";
+import MovieContents from "../components/mypage/MovieContents";
 
 export default function Mypage() {
   const [isClick, setIsClick] = useState("notify");
+  const [discussType, setDiscussType] = useState("createdDiscuss");
+  const [scrapType, setScrapType] = useState("season");
+
   return (
     <div className="w-full y-full flex-1 pt-[100px] tablet:px-[50px] mobile:pt-0 mobile:px-[10px] text-gray01">
       <div className="hidden tablet:flex flex-row border-b-[1px] border-gray01">
@@ -97,20 +103,57 @@ export default function Mypage() {
         {isClick === "discuss" && (
           <div>
             <div className="flex gap-[10px]">
-              <Tag>생성한 토론</Tag>
-              <Tag>내 의견</Tag>
+              <Tag
+                onClick={() => {
+                  setDiscussType("createdDiscuss");
+                }}
+                isSelected={discussType === "createdDiscuss"}>
+                생성한 토론
+              </Tag>
+              <Tag
+                onClick={() => {
+                  setDiscussType("myOpinion");
+                }}
+                isSelected={discussType === "myOpinion"}>
+                내 의견
+              </Tag>
             </div>
-            <Discuss />
+            <div className="mt-[30px]">
+              {discussType === "createdDiscuss" && <CreatedDiscuss />}
+              {discussType === "myOpinion" && <MyOpinion />}
+            </div>
           </div>
         )}
         {isClick === "scrap" && (
           <div>
             <div className="flex gap-[10px]">
-              <Tag>시즌</Tag>
-              <Tag>에피소드</Tag>
-              <Tag>영화</Tag>
+              <Tag
+                onClick={() => {
+                  setScrapType("season");
+                }}
+                isSelected={scrapType === "season"}>
+                시즌
+              </Tag>
+              <Tag
+                onClick={() => {
+                  setScrapType("episode");
+                }}
+                isSelected={scrapType === "episode"}>
+                에피소드
+              </Tag>
+              <Tag
+                onClick={() => {
+                  setScrapType("movie");
+                }}
+                isSelected={scrapType === "movie"}>
+                영화
+              </Tag>
             </div>
-            <Scrap />
+            <div className="mt-[30px]">
+              {scrapType === "season" && <Season />}
+              {scrapType === "episode" && <Episode />}
+              {scrapType === "movie" && <MovieContents />}
+            </div>
           </div>
         )}
       </div>
