@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../api/Auth";
 import changeIcon from "../../assets/icon/changeIcon.svg";
 import logoutIcon from "../../assets/icon/logoutIcon.svg";
 import tranlateLang from "../../assets/icon/translate_lang.svg";
-import { useAuth } from "../../api/Auth";
 import SideToggleList from "../notification/SideToggleList";
 
 type ToggleClickedType = {
@@ -58,8 +59,12 @@ export default function Notification() {
           <p className="text-white01">한국어</p>
         </div>
       </div>
-      <p className="text-white01 hidden tablet:flex">마이페이지</p>
-      <p className="text-white01 hidden tablet:flex">알림</p>
+      <Link to="/mypage" className="text-white01 hidden tablet:flex">
+        마이페이지
+      </Link>
+      <Link to="/mypage" className="text-white01 hidden tablet:flex">
+        알림
+      </Link>
       {/* 로그아웃 버튼 */}
       <div
         className="hidden tablet:flex justify-left cursor-pointer"
