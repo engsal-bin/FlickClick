@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import arrowLeft from "../assets/icon/arrow/arrowLeft.svg";
+import Contents from "../components/common/Contents";
 import ContentsWithoutViewMore from "../components/common/ContentsWithoutViewMore";
+import { commonAPI } from "../api/common";
 
 type Period = "today" | "7days" | "30days" | null;
 
 export default function Popular() {
+  const [trendAllInfo, setTrendAllInfo] = useState<BasicType[]>([]);
+
   // 선택태그 상태
   const [selectedPeriod, setSelectedPeriod] = useState<Period>(null);
 
@@ -18,6 +22,27 @@ export default function Popular() {
     window.history.back(); // 브라우저 히스토리에서 뒤로 가기
   };
 
+  useEffect(() => {
+    const fetchTrendAll = async () => {
+      try {
+        const trend = await commonAPI.getTrendingAll(1);
+        setTrendAllInfo(
+          trend.results.map((item: TrendingAllResultsType) => ({
+            poster_path:
+              "https://image.tmdb.org/t/p/w220_and_h330_face" +
+              item.poster_path,
+            id: item.id,
+            title: item.title,
+            media_type: item.media_type,
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching upcoming movies:", error);
+      }
+    };
+    fetchTrendAll();
+  }, []);
+
   return (
     <div className="w-full h-full bg-black flex flex-col tablet:gap-[50px] tablet:p-[50px] tablet:px-[40px] mobile:gap-[20px] mobile:px-[20px]">
       {/* 뒤로가기 버튼 */}
@@ -29,7 +54,7 @@ export default function Popular() {
       {/* 주제 및 태그 */}
       <div className="flex flex-col gap-[20px]">
         {/* 주제 */}
-        <div className="font-bold text-white01 text-xl">인기 급상승</div>
+        <div className="text-xl font-bold text-white01">인기 급상승</div>
         {/* 태그 */}
         <div className="flex gap-[10px] text-white03 font-light">
           <div
@@ -38,7 +63,8 @@ export default function Popular() {
               selectedPeriod === "today"
                 ? "bg-gray01 border-[1px] border-gray01 text-white01"
                 : "border-[1px] border-white03"
-            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}>
+            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
+          >
             오늘
           </div>
           <div
@@ -47,7 +73,8 @@ export default function Popular() {
               selectedPeriod === "7days"
                 ? "bg-gray01 border-[1px] border-gray01 text-white01"
                 : "border-[1px] border-white03"
-            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}>
+            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
+          >
             최근 7일
           </div>
           <div
@@ -56,7 +83,8 @@ export default function Popular() {
               selectedPeriod === "30days"
                 ? "bg-gray01 border-[1px] border-gray01 text-white01"
                 : "border-[1px] border-white03"
-            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}>
+            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
+          >
             최근 30일
           </div>
         </div>
