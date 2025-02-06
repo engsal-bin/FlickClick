@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import arrowBottom from "../../assets/icon/arrow/arrowBottom.svg";
 import arrowRight from "../../assets/icon/arrow/arrowRight.svg";
 import OttIcons from "./OttIcons";

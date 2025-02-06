@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import mainLogo from "../../assets/logo/mainLogo.svg";
 import searchIcon from "../../assets/icon/searchIcon.svg";
@@ -56,7 +56,8 @@ export default function Header() {
                 location.pathname === "/series"
                   ? "text-main hover:text-main"
                   : ""
-              }`}>
+              }`}
+            >
               시리즈
             </Link>
             <Link
@@ -65,7 +66,8 @@ export default function Header() {
                 location.pathname === "/movies"
                   ? "text-main hover:text-main"
                   : ""
-              }`}>
+              }`}
+            >
               영화
             </Link>
             <Link
@@ -74,12 +76,13 @@ export default function Header() {
                 location.pathname === "/genres"
                   ? "text-main hover:text-main"
                   : ""
-              }`}>
+              }`}
+            >
               장르
             </Link>
           </div>
           {/* mobile 전용 */}
-          <div className="w-[85px] tablet:hidden flex justify-between items-center w-[401px] h-[60px] text-gray01 text-[20px] font-bold">
+          <div className="tablet:hidden flex justify-between items-center h-[60px] text-gray01 text-[20px] font-bold">
             <Link to="/">
               <img src={mainLogo} className="w-[85px] h-[44.35px]" />
             </Link>
@@ -89,13 +92,15 @@ export default function Header() {
         {isLoggedIn ? (
           <div
             onClick={setIsLoggedin}
-            className="w-[100px] border-[1px] border-white01 p-[5px] text-center text-white01 text-[10px] cursor-pointer">
+            className="w-[100px] border-[1px] border-white01 p-[5px] text-center text-white01 text-[10px] cursor-pointer"
+          >
             임시 로그아웃 버튼
           </div>
         ) : (
           <div
             onClick={setIsLoggedin}
-            className="w-[100px] border-[1px] border-white01 p-[5px] text-center text-white01 text-[10px] cursor-pointer">
+            className="w-[100px] border-[1px] border-white01 p-[5px] text-center text-white01 text-[10px] cursor-pointer"
+          >
             임시 로그인 버튼
           </div>
         )}
@@ -118,7 +123,8 @@ export default function Header() {
             {isLoggedIn ? (
               <Link
                 to={"/mypage"}
-                className="flex justify-between items-center ">
+                className="flex justify-between items-center "
+              >
                 <div className="w-[35px] h-[35px] bg-gray02 rounded-full mr-[10px]"></div>
                 <div>닉네임</div>
               </Link>
@@ -173,14 +179,27 @@ export default function Header() {
         {isOpen && (
           <>
             {/* tablet 이상 */}
-            <div className="absolute hidden tablet:flex top-[80px] right-[18px] bg-none z-10">
-              <div className="absolute top-0 right-0 w-[349px] h-[417px]  bg-black border border-gray03 rounded-[10px] shadow-md shadow-white01/10 p-[50px] z-20">
+            <div
+              className="absolute hidden tablet:flex top-[80px] 
+            right-[18px] bg-none z-20"
+            >
+              <div
+                className="absolute top-0 right-0 w-[349px] h-[417px]  
+              bg-black border border-gray03 rounded-[10px] 
+              shadow-md shadow-white01/10 p-[50px] z-20"
+              >
                 <Notification />
               </div>
             </div>
             {/* mobile 전용 */}
-            <div className="absolute tablet:hidden flex w-full h-[100%]  bg-black_50 top-[80px] left-0 z-10">
-              <div className="absolute top-0px right-0 w-[256px] h-full bg-black border-0 rounded-none z-20">
+            <div
+              className="absolute tablet:hidden flex w-full h-[100%]  
+            bg-black_50 top-[80px] left-0 z-20"
+            >
+              <div
+                className="absolute top-0px right-0 w-[256px] h-full 
+              bg-black border-0 rounded-none z-20"
+              >
                 <Notification />
               </div>
             </div>
