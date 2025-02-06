@@ -98,7 +98,7 @@ export default function Header() {
           </div>
         ) : (
           <div
-            onClick={setIsLoggedin}
+            onClick={() => {}}
             className="w-[100px] border-[1px] border-white01 p-[5px] text-center text-white01 text-[10px] cursor-pointer"
           >
             임시 로그인 버튼
@@ -123,7 +123,7 @@ export default function Header() {
             {isLoggedIn ? (
               <Link
                 to={"/mypage"}
-                className="flex justify-between items-center "
+                className="flex items-center justify-between "
               >
                 <div className="w-[35px] h-[35px] bg-gray02 rounded-full mr-[10px]"></div>
                 <div>닉네임</div>
@@ -136,7 +136,7 @@ export default function Header() {
               <img
                 src={arrow01}
                 alt="Toggle Notification"
-                className="cursor-pointer flex"
+                className="flex cursor-pointer"
                 onClick={() => {
                   setIsOpen((prev) => !prev);
                 }}
