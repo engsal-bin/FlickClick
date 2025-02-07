@@ -1,20 +1,14 @@
+import { supabase } from "./index.ts";
+
 interface SupabaseResponse<T> {
-  data: T | null;
-  error: any;
-}
+    data: T | null;
+    error: any;
+  }// 회원별 리뷰
 
-// 회원별 리뷰
 
-interface Review {
-  review_id: number;
-  ip_name: string;
-  ip_id: string;
-  ip_type: string;
-  content: string;
-  created_at: Date;
-}
-
-const getReviewsByUId = async (userId: string): Promise<Review[] | null> => {
+export const getReviewsByUId = async (
+  userId: string
+): Promise<Review[] | null> => {
   const { data, error }: SupabaseResponse<Review[]> = await supabase.rpc(
     "get_reviews_by_user_id",
     {
@@ -30,17 +24,8 @@ const getReviewsByUId = async (userId: string): Promise<Review[] | null> => {
 };
 
 // 회원별 토론
-interface Argument {
-  argument_id: number;
-  topic: string;
-  ip_name: string;
-  ip_type: string;
-  ip_id: string;
-  author_id: string;
-  created_at: Date;
-}
 
-const getArgumentsCreatedByUserId = async (
+export const getArgumentsCreatedByUserId = async (
   userId: string
 ): Promise<Argument[] | null> => {
   const { data, error }: SupabaseResponse<Argument[]> = await supabase.rpc(
@@ -55,18 +40,7 @@ const getArgumentsCreatedByUserId = async (
 };
 
 // 회원별 토론 댓글
-interface ArgumentComment {
-  argument_id: number;
-  topic: string;
-  ip_name: string;
-  ip_type: string;
-  ip_id: string;
-  comment: string;
-  comment_created_at: Date;
-  comment_author_id: string;
-}
-
-const getArgumentsCommentedByUId = async (
+export const getArgumentsCommentedByUId = async (
   userId: string
 ): Promise<ArgumentComment[] | null> => {
   const { data, error }: SupabaseResponse<ArgumentComment[]> =
@@ -81,15 +55,10 @@ const getArgumentsCommentedByUId = async (
 };
 
 // 회원별 스크랩된 게시물
-interface SavedClips {
-  ip_id: string;
-  ip_name: string;
-  ip_type: string;
-  poster_path: string;
-  summary: string;
-}
 
-const getClipsByUId = async (userId: string): Promise<SavedClips[] | null> => {
+export const getClipsByUId = async (
+  userId: string
+): Promise<SavedClips[] | null> => {
   const { data, error }: SupabaseResponse<SavedClips[]> = await supabase.rpc(
     "get_clip_by_user_id",
     {
@@ -106,7 +75,9 @@ const getClipsByUId = async (userId: string): Promise<SavedClips[] | null> => {
 };
 
 // 회원 리뷰수
-const getReviewCountByUId = async (userId: string): Promise<number | null> => {
+export const getReviewCountByUId = async (
+  userId: string
+): Promise<number | null> => {
   // 데이터와 에러의 타입을 정확히 정의
   const { data, error }: { data: number | null; error: any } =
     await supabase.rpc("get_review_count_by_user_id", {
@@ -124,7 +95,7 @@ const getReviewCountByUId = async (userId: string): Promise<number | null> => {
 };
 
 // 회원 토론수
-const getArgumentCountByUId = async (
+export const getArgumentCountByUId = async (
   userId: string
 ): Promise<number | null> => {
   const { data, error }: { data: number | null; error: any } =
@@ -141,7 +112,9 @@ const getArgumentCountByUId = async (
 };
 
 // 회원 클립수
-const getClipCountByUId = async (userId: string): Promise<number | null> => {
+export const getClipCountByUId = async (
+  userId: string
+): Promise<number | null> => {
   const { data, error }: { data: number | null; error: any } =
     await supabase.rpc("get_clip_count_by_user_id", { user_id: userId });
 

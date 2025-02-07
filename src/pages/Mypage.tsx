@@ -1,17 +1,64 @@
-import { useState } from "react";
-import Notify from "../components/mypage/Notify";
-import Review from "../components/mypage/Review";
-import Tag from "../components/common/Tag";
+import {
+  getArgumentsCommentedByUId,
+  getArgumentsCreatedByUserId,
+  getClipsByUId,
+  getReviewsByUId,
+} from "../api/mypageInfo";
+
 import CreatedDiscuss from "../components/mypage/CreatedDiscuss";
-import MyOpinion from "../components/mypage/MyOpinion";
-import Season from "../components/mypage/Season";
 import Episode from "../components/mypage/Episode";
 import MovieContents from "../components/mypage/MovieContents";
+import MyOpinion from "../components/mypage/MyOpinion";
+import Notify from "../components/mypage/Notify";
+import Review from "../components/mypage/Review";
+import Season from "../components/mypage/Season";
+import Tag from "../components/common/Tag";
+import { useState } from "react";
 
 export default function Mypage() {
   const [isClick, setIsClick] = useState("notify");
   const [discussType, setDiscussType] = useState("createdDiscuss");
   const [scrapType, setScrapType] = useState("season");
+
+  const [reviews, setReviews] = useState([]);
+  const [discusses, setDiscusses] = useState([]);
+  const [myOpinions, setMyOpinions] = useState([]);
+  const [clips, setClips] = useState([]);
+
+  // 리뷰
+  const userId = "ce0845a8-ac83-425b-af3f-cb534ac52d09"; // 더미 데이터 만들어 놓은 테스트 계정
+  const onClickReviewTab = async () => {
+    setIsClick("review");
+    await getReviewsByUId(userId).then((reviews) => {
+      console.log(reviews);
+      setReviews(reviews);
+    });
+  };
+
+  // 불러올 수가 없는 애러 왜지?
+  const onClickDiscussTab = async () => {
+    setIsClick("discuss");
+    await getArgumentsCreatedByUserId(userId).then((discusses) => {
+      console.log(discusses);
+      setDiscusses(discusses);
+    });
+  };
+
+  const onClickMyOpinionTag = async () => {
+    setDiscussType("myOpinion");
+    await getArgumentsCommentedByUId(userId).then((myOpinions) => {
+      console.log(myOpinions);
+      setMyOpinions(myOpinions);
+    });
+  };
+
+  const onClickScrapTab = async () => {
+    setIsClick("scrap");
+    await getClipsByUId(userId).then((clips) => {
+      console.log(clips);
+      setClips(clips);
+    });
+  };
 
   return (
     <div className="w-full y-full flex-1 pt-[100px] tablet:px-[50px] mobile:pt-0 mobile:px-[10px] text-gray01">
@@ -24,7 +71,8 @@ export default function Mypage() {
           }`}
           onClick={() => {
             setIsClick(() => "notify");
-          }}>
+          }}
+        >
           알림
         </div>
         <div
@@ -33,9 +81,8 @@ export default function Mypage() {
               ? "border-b-[2px] border-main text-main"
               : "hover:text-gray03"
           }`}
-          onClick={() => {
-            setIsClick(() => "review");
-          }}>
+          onClick={onClickReviewTab}
+        >
           리뷰
         </div>
         <div
@@ -44,9 +91,8 @@ export default function Mypage() {
               ? "border-b-[2px] border-main text-main"
               : "hover:text-gray03"
           }`}
-          onClick={() => {
-            setIsClick(() => "discuss");
-          }}>
+          onClick={onClickDiscussTab}
+        >
           토론
         </div>
         <div
@@ -55,9 +101,8 @@ export default function Mypage() {
               ? "border-b-[2px] border-main text-main"
               : "hover:text-gray03"
           }`}
-          onClick={() => {
-            setIsClick(() => "scrap");
-          }}>
+          onClick={onClickScrapTab}
+        >
           스크랩
         </div>
       </div>
@@ -70,57 +115,44 @@ export default function Mypage() {
               action={"댓글"}
               read={true}
             />
-            <Notify
-              name={"내현"}
-              content={"리뷰"}
-              action={"댓글"}
-              read={true}
-            />
-            <Notify
-              name={"예빈"}
-              content={"토론 글"}
-              action={"의견"}
-              read={false}
-            />
           </div>
         )}
         {isClick === "review" && (
           <div>
-            <Review
-              content={"슬기로운 의사생활"}
-              review={
-                "재미도 감동도 잡은 최고의 드라마! 3번째 정주행 중인데 질리지가 않네요!"
-              }
-              date={"2025-01-02"}
-            />
-            <Review
-              content={"위키드"}
-              review={"마지막 엘피의 노래는 너무 감동적인!"}
-              date={"2025-01-06"}
-            />
+            {reviews.map((review) => (
+              <Review
+                key={review.id}
+                review_id={review.id}
+                ip_name={review.ip_name}
+                ip_id={review.ip_id}
+                ip_type={review.ip_type}
+                content={review.content}
+                created_at={review.created_at}
+              />
+            ))}
           </div>
         )}
         {isClick === "discuss" && (
           <div>
             <div className="flex gap-[10px]">
               <Tag
-                onClick={() => {
-                  setDiscussType("createdDiscuss");
-                }}
-                isSelected={discussType === "createdDiscuss"}>
+                onClick={onClickDiscussTab}
+                isSelected={discussType === "createdDiscuss"}
+              >
                 생성한 토론
               </Tag>
               <Tag
-                onClick={() => {
-                  setDiscussType("myOpinion");
-                }}
-                isSelected={discussType === "myOpinion"}>
+                onClick={onClickMyOpinionTag}
+                isSelected={discussType === "myOpinion"}
+              >
                 내 의견
               </Tag>
             </div>
             <div className="mt-[30px]">
               {discussType === "createdDiscuss" && <CreatedDiscuss />}
-              {discussType === "myOpinion" && <MyOpinion />}
+              {discussType === "myOpinion" && (
+                <MyOpinion myOpinions={myOpinions} />
+              )}
             </div>
           </div>
         )}
@@ -131,21 +163,24 @@ export default function Mypage() {
                 onClick={() => {
                   setScrapType("season");
                 }}
-                isSelected={scrapType === "season"}>
+                isSelected={scrapType === "season"}
+              >
                 시즌
               </Tag>
               <Tag
                 onClick={() => {
                   setScrapType("episode");
                 }}
-                isSelected={scrapType === "episode"}>
+                isSelected={scrapType === "episode"}
+              >
                 에피소드
               </Tag>
               <Tag
                 onClick={() => {
                   setScrapType("movie");
                 }}
-                isSelected={scrapType === "movie"}>
+                isSelected={scrapType === "movie"}
+              >
                 영화
               </Tag>
             </div>

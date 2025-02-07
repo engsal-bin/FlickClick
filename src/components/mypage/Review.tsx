@@ -1,23 +1,29 @@
 export default function Review({
+  review_id,
+  ip_name,
+  ip_id,
+  ip_type,
   content,
-  review,
-  date,
+  created_at,
 }: {
+  review_id: number;
+  ip_name: string;
+  ip_id: string;
+  ip_type: string;
   content: string;
-  review: string;
-  date: string;
+  created_at: Date;
 }) {
   return (
     <>
       <div className="border-b-[1px] border-gray01  flex flex-col gap-[15px] mt-[30px]">
         <p className="font-bold text-white03 tablet:text-[16px] mobile:text-[14px]">
-          {content}
+          {ip_name}
         </p>
         <p className="tablet:text-[20px] mobile:text-[16px] text-white01">
-          {review}
+          {content}
         </p>
         <p className="font-light tablet:text-[14px] mobile:text-[12px] text-gray03 mb-[30px]">
-          {date}
+          {created_at}
         </p>
       </div>
     </>

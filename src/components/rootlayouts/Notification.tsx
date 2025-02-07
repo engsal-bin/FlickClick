@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import SideToggleList from "../notification/SideToggleList";
+import { useAuth } from "../../api/Auth";
+import arrowRight from "../../assets/icon/arrow/arrowRight.svg";
 import changeIcon from "../../assets/icon/changeIcon.svg";
 import logoutIcon from "../../assets/icon/logoutIcon.svg";
 import tranlateLang from "../../assets/icon/translate_lang.svg";
-import { useAuth } from "../../api/Auth";
-import { useState } from "react";
+import SideToggleList from "../notification/SideToggleList";
 
 type ToggleClickedType = {
   [key: string]: boolean;
