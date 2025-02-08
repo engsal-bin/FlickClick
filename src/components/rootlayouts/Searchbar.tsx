@@ -33,6 +33,9 @@ export default function Searchbar() {
   const [trendingContents, setTrendingContents] = useState<ContentType[] | []>(
     []
   );
+  // const [search];
+
+  // 검색어 입력 전 & 검색어 지웠을 때 보여줄 트랜드 컨텐츠 패칭
   const fetchTrendingContents = async () => {
     try {
       const response: ContentsType = await commonAPI.getTrendingAll(1);
@@ -53,7 +56,7 @@ export default function Searchbar() {
         <div className="w-[100%] h-[100%] py-[50px] px-[315px] flex flex-col justify-between items-center">
           <div className="flex">
             <input
-              className="w-[620px] h-[41px] mr-[4px] font-light text-white01 text-[18px] bg-black border-b-[2px] border-b-white01"
+              className="w-[620px] h-[41px] mr-[4px] font-light text-white01 text-[18px] bg-black border-b-[2px] border-b-white01 focus:outline-none"
               placeholder="검색어를 입력하세요"
             />
             <img src={seachIcon} />
@@ -76,7 +79,7 @@ export default function Searchbar() {
         <div className="w-[100%] h-[100%] py-[50px] px-[58px] flex flex-col justify-between items-center">
           <div className="flex text-[18px]">
             <input
-              className="w-[620px] h-[41px] mr-[4px] font-light text-white01 bg-black border-b-[2px] border-b-white01"
+              className="w-[620px] h-[41px] mr-[4px] font-light text-white01 bg-black border-b-[2px] border-b-white01 focus:outline-none"
               placeholder="검색어를 입력하세요"
             />
             <img src={seachIcon} />
@@ -96,15 +99,15 @@ export default function Searchbar() {
       </div>
       {/* mobile */}
       <div className="desktop:hidden tablet:hidden mobile:flex">
-        <div className="w-[100%] h-[100%] py-[50px] px-[58px] flex flex-col justify-between items-center">
-          <div className="flex text-[18px]">
+        <div className="w-full h-full py-[50px] px-[10px] flex flex-col justify-between items-center ">
+          <div className="flex text-[18px] w-full">
             <input
-              className="w-[250px] h-[35px] mr-[4px] font-light text-white01 bg-black border-b-[2px] border-b-white01"
+              className="w-full h-[35px] mr-[4px] font-light text-white01 bg-black border-b-[2px] border-b-white01 focus:outline-none"
               placeholder="검색어를 입력하세요"
             />
             <img src={seachIcon} />
           </div>
-          <div className="w-[280px] h-[411px] flex flex-col gap-[20px] mt-[50px] text-white01 font-bold text-[18px]">
+          <div className="w-full h-[411px] flex flex-col gap-[20px] mt-[50px] text-white01 font-bold text-[18px]">
             <p>트렌드 컨텐츠</p>
             {trendingContents.map((content, index) => (
               <div className="flex text-[16px]" key={content.id}>
