@@ -41,16 +41,16 @@ export default function App() {
           {/* 상세 페이지 */}
 
           {/* 시리즈 상세페이지 - 시즌 유 */}
-          <Route path="/detailseries" element={<DetailSeries />} />
+          <Route path="/detailseries/:id" element={<DetailSeries />} />
           {/* 시리즈 상세페이지 - 시즌 무 */}
           <Route
-            path="/detailseason-noseason"
+            path="/detailseason-noseason/:id"
             element={<DetailSeriesNoSeason />}
           />
           {/* 시즌 상세페이지 */}
-          <Route path="/detailseason" element={<DetailSeason />} />
+          <Route path="/detailseason/:id" element={<DetailSeason />} />
           {/* 에피소드 상세페이지 */}
-          <Route path="/detailepisode" element={<DetailEpisode />} />
+          <Route path="/detailepisode/:id" element={<DetailEpisode />} />
 
           {/* 영화 상세페이지 */}
           <Route path="/detailmovie" element={<DetailMovie />} />
