@@ -59,7 +59,7 @@ export default function PersonList({
         personList.removeEventListener("wheel", handleWheel);
       }
     };
-  }, []);
+  }, [isOverflow]);
 
   // 부모 요소의 너비를 기준으로 자식 요소가 넘쳤는지 체크
   useEffect(() => {
@@ -67,19 +67,23 @@ export default function PersonList({
       if (personListRef.current) {
         const isOverflowing =
           personListRef.current.scrollWidth > personListRef.current.clientWidth;
-        // console.log(`${type}`, personListRef.current.scrollWidth);
-        // console.log(`${type}`, personListRef.current.clientWidth);
         setIsOverflow(isOverflowing);
       }
     };
 
-    checkOverflow(); // 처음 렌더링 시 체크
-    window.addEventListener("resize", checkOverflow); // 리사이즈 시 체크
+    // 브라우저가 레이아웃을 계산한 후 실행되도록 requestAnimationFrame 사용
+    const raf = requestAnimationFrame(checkOverflow);
+
+    window.addEventListener("resize", checkOverflow);
 
     return () => {
+      cancelAnimationFrame(raf);
       window.removeEventListener("resize", checkOverflow);
     };
   }, [personData]);
+
+  // console.log(personListRef.current?.scrollWidth);
+  // console.log(personListRef.current?.clientWidth);
 
   return (
     <div className="flex flex-col gap-[30px]">
@@ -91,9 +95,8 @@ export default function PersonList({
       {/* 인물정보 */}
       <div
         ref={personListRef}
-        className={`flex justify-start gap-[30px] ${
-          isOverflow ? "overflow-x-auto overflow-y-hidden" : "overflow-x-hidden"
-        } `}
+        className={`flex justify-start gap-[30px] overflow-x-auto overflow-y-hidden" 
+        `}
         style={{
           scrollbarWidth: "none",
         }}

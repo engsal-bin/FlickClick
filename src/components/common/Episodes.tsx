@@ -1,13 +1,25 @@
 import { Link } from "react-router-dom";
 import { IMAGE_BASE_URL } from "../../api/axios";
 
-export default function Episodes({ data }: { data?: EpisodeType[] }) {
+export default function Episodes({
+  seriesId,
+  seasonNum,
+  data,
+}: {
+  seriesId: number;
+  seasonNum: number;
+  data?: EpisodeType[];
+}) {
+  // console.log(data);
   return (
     <section className="flex flex-col gap-[20px]">
       {/* 개별 에피소드 */}
 
       {data?.map((epi) => (
-        <Link key={epi.id} to="">
+        <Link
+          key={epi.id}
+          to={`/detailepisode/${seriesId}/${seasonNum}/${epi.episode_number}`}
+        >
           <div
             className="flex tablet:flex-row mobile:flex-col 
           desktop:gap-[30px] tablet:gap-[20px] mobile:gap-[10px]"

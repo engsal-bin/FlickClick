@@ -37,7 +37,7 @@ export default function DetailSeason() {
     };
     fetchSeries();
   }, []);
-  console.log(seasonData);
+  // console.log(seasonData);
 
   // 더미데이터 예시
   const dummyreviews = [
@@ -152,7 +152,11 @@ export default function DetailSeason() {
           type="crew"
         />
         {/* 에피소드 리스트 */}
-        <Episodes data={seasonData?.episodes} />
+        <Episodes
+          seriesId={Number(locationInfo[1])}
+          seasonNum={Number(locationInfo[2])}
+          data={seasonData?.episodes}
+        />
 
         {/* 리뷰토론 */}
         <section className="flex flex-col">
