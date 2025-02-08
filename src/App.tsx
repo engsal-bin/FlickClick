@@ -17,7 +17,6 @@ import DetailSeason from "./pages/DetailSeason";
 import DetailSeriesNoSeason from "./pages/DetailSeriesNoSeason";
 import DetailMovie from "./pages/DetailMovie";
 import Trailers from "./components/common/Trailers";
-import TrailerModal from "./components/common/TrailerModal";
 
 export default function App() {
   return (
