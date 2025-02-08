@@ -38,15 +38,23 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           {/* 마이페이지 */}
           <Route path="/mypage" element={<Mypage />} />
+
           {/* 상세 페이지 */}
+
+          {/* 시리즈 상세페이지 - 시즌 유 */}
           <Route path="/detailseries" element={<DetailSeries />} />
+          {/* 시리즈 상세페이지 - 시즌 무 */}
           <Route
             path="/detailseason-noseason"
             element={<DetailSeriesNoSeason />}
           />
-          <Route path="/detailmovie" element={<DetailMovie />} />
-          <Route path="/detailepisode" element={<DetailEpisode />} />
+          {/* 시즌 상세페이지 */}
           <Route path="/detailseason" element={<DetailSeason />} />
+          {/* 에피소드 상세페이지 */}
+          <Route path="/detailepisode" element={<DetailEpisode />} />
+
+          {/* 영화 상세페이지 */}
+          <Route path="/detailmovie" element={<DetailMovie />} />
           {/* 예고편 */}
           <Route path="/trailers" element={<Trailers />} />
         </Route>
