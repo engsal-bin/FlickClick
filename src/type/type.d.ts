@@ -98,3 +98,53 @@ interface UpComingMovieResultsType {
   vote_count: number;
 }
 interface TransType {}
+
+// tv 시리즈
+interface TvSeriesType {
+  adult: boolean;
+  backdrop_path: string;
+  created_by: {
+    id: number;
+    credit_id: string;
+    name: string;
+    gender: number;
+    profile_path: string;
+  };
+  episode_run_time: number;
+  first_air_date: string;
+  genres: { id: number; name: string }[];
+  homepage: string;
+  id: number;
+  last_air_date: string;
+  name: string;
+  networks: {
+    id: number;
+    logo_path: string;
+    name: string;
+    original_country: sting;
+  }[];
+  number_of_episodes: number;
+  number_of_seasons: number;
+  original_country: string[];
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  production_companies: {
+    id: number;
+    logo_path: string;
+    name: string;
+    origin_country: string;
+  }[];
+  seasons: {
+    air_date: string;
+    episode_count: number;
+    id: number;
+    name: string;
+    overview: string;
+    poster_path: string;
+    season_number: number;
+    vote_average: number;
+  }[];
+  tagline: string;
+  vote_average: number;
+}
