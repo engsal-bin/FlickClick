@@ -1,6 +1,5 @@
 import Tag from "./Tag";
 import cancelIcon from "../../assets/icon/cancelIcon.svg";
-import placeholderImg02 from "../../assets/placeholderImg02.svg";
 import scrapIcon from "../../assets/icon/scrap_btn.svg";
 import { IMAGE_BASE_URL } from "../../api/axios";
 
@@ -53,14 +52,14 @@ export default function DetailIntroBox({
             desktop:w-[540px] tablet:w-[436px] mobile:w-full
           gap-[35px] relative z-10 text-left text-white"
           >
-            <div className="flex flex-col gap-[10px]">
+            <div className="w-full flex flex-col gap-[10px]">
               {/* 컨텐츠 제목 */}
-              <div className="font-bold text-[40px] leading-auto">
+              <div className="w-full font-bold text-[40px] leading-auto">
                 {data?.name} {season && season.name}
               </div>
 
               {/* 컨텐츠 세부 정보 태그 */}
-              <div className="flex gap-[10px] text-light">
+              <div className="w-full flex gap-[10px] text-light">
                 {/* 방영연도 */}
                 <Tag>
                   {season
@@ -102,7 +101,7 @@ export default function DetailIntroBox({
             </div>
 
             {/* 오버뷰 */}
-            <div className="font-light text-[16px] leading-[24px]">
+            <div className="w-full font-light text-[16px] leading-[24px]">
               {season ? season.overview : data?.overview}
             </div>
 
@@ -118,7 +117,7 @@ export default function DetailIntroBox({
 
           {/* 포스터 이미지 */}
           <div
-            className="desktop:w-[324px] tablet:w-[200px] mobile:w-[220px] 
+            className="desktop:w-[324px] tablet:w-[220px] mobile:w-[220px] 
             desktop:h-[453.6px] tablet:h-[308px] mobile:h-[308px] 
             z-10 bg-cover bg-center rounded-[8px]"
             style={{

@@ -53,7 +53,10 @@ export default function App() {
             element={<DetailSeason />}
           />
           {/* 에피소드 상세페이지 */}
-          <Route path="/detailepisode/:id" element={<DetailEpisode />} />
+          <Route
+            path="/detailepisode/:seriesid/:seasonnumber/:episodenumber"
+            element={<DetailEpisode />}
+          />
 
           {/* 영화 상세페이지 */}
           <Route path="/detailmovie" element={<DetailMovie />} />
