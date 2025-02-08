@@ -1,13 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArgorithmIP from "../components/common/ArgorithmIP";
 import Argument from "../components/common/Argument";
 import DetailIntroBox from "../components/common/DetailIntroBox";
 import Episodes from "../components/common/Episodes";
 import PersonList from "../components/common/PersonList";
 import Reviews from "../components/common/Reviews";
+import { tvAPI } from "../api/tv";
+import { useLocation } from "react-router-dom";
 
 export default function DetailSeason() {
   const [activeTab, setActiveTab] = useState<number>(0);
+  // 경로 정보 불러오기
+  const location = useLocation();
+  // 시리즈 id, 시즌 id 저장
+  const locationInfo = location.pathname.split("/").slice(1, 4);
+  // 시리즈 데이터 상태
+  const [seriesData, setSeriesData] = useState<TvSeriesType>();
+  // 시즌 데이터 상태
+  const [seasonData, setSeasonData] = useState<TvSeasonsType>();
+  // console.log(locationInfo);
+
+  useEffect(() => {
+    const fetchSeries = async () => {
+      try {
+        const series = await tvAPI.getSeries(Number(`${locationInfo[1]}`));
+        const season = await tvAPI.getSeason(
+          Number(`${locationInfo[1]}`),
+          Number(`${locationInfo[2]}`)
+        );
+        // console.log(season);
+        setSeriesData(series);
+        setSeasonData(season);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchSeries();
+  }, []);
+  console.log(seasonData);
+
   // 더미데이터 예시
   const dummyreviews = [
     {
@@ -97,16 +128,32 @@ export default function DetailSeason() {
 
   return (
     <>
-      <DetailIntroBox />
-      <section className="border border-white flex flex-col jutify-evenly w-full tablet:gap-[50px] mobile:gap-[30px] desktop:px-[128px] tablet:px-[40px] mobile:px-[10px]">
+      <DetailIntroBox data={seriesData} season={seasonData} />
+      <section
+        className="border border-white flex flex-col jutify-evenly w-full 
+      tablet:gap-[50px] mobile:gap-[30px] 
+      desktop:px-[128px] tablet:px-[40px] mobile:px-[10px]
+      tablet:py-[50px] mobile:py-[30px]"
+      >
         {/* 영상 스와이퍼(아직 컴포넌트 완성 X) */}
 
         {/* 출연진 */}
-        <PersonList label="진연진" />
+        <PersonList
+          seriesId={Number(locationInfo[1])}
+          seasonNum={Number(locationInfo[2])}
+          label="출연진"
+          type="cast"
+        />
         {/* 제작진 */}
-        <PersonList label="제작진" />
+        <PersonList
+          seriesId={Number(locationInfo[1])}
+          seasonNum={Number(locationInfo[2])}
+          label="제작진"
+          type="crew"
+        />
         {/* 에피소드 리스트 */}
-        <Episodes />
+        <Episodes data={seasonData?.episodes} />
+
         {/* 리뷰토론 */}
         <section className="flex flex-col">
           {/* 텝 */}
