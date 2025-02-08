@@ -9,8 +9,11 @@ export default function DetailIntroBox({ data }: { data?: TvSeriesType }) {
     <>
       {/* tablet 이상 */}
       <section
-        className="relative h-auto flex flex-col bg-cover bg-center desktop:pb-[133px] tablet:pb-[14px] mobile:pb-[42px]"
-        style={{ backgroundImage: `url(${placeholderImg02})` }}
+        className="relative h-auto flex flex-col 
+        bg-cover bg-center desktop:pb-[133px] tablet:pb-[14px] mobile:pb-[42px]"
+        style={{
+          backgroundImage: `url(${IMAGE_BASE_URL}original${data?.poster_path})`,
+        }}
       >
         {/* 블러 오버레이 */}
         <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-lg"></div>
@@ -55,7 +58,7 @@ export default function DetailIntroBox({ data }: { data?: TvSeriesType }) {
                     key={network.id}
                     className="w-[48px] h-[48px] bg-contain bg-no-repeat bg-center"
                     style={{
-                      backgroundImage: `url(${IMAGE_BASE_URL}${network.logo_path}))`,
+                      backgroundImage: `url(${IMAGE_BASE_URL}original${network.logo_path})`,
                     }}
                   ></div>
                 ))}
