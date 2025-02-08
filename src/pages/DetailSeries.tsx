@@ -4,8 +4,7 @@ import { tvAPI } from "../api/tv";
 import { useEffect, useState } from "react";
 
 export default function DetailSeries() {
-  const [contentData, setContentData] =
-    useState<OnTheAirTvSerieseResultsType>();
+  const [contentData, setContentData] = useState<TvSeriesType>();
 
   useEffect(() => {
     const fetchSeries = async () => {
