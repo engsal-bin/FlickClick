@@ -55,7 +55,7 @@ export default function DetailIntroBox({ data }: { data?: TvSeriesType }) {
                     key={network.id}
                     className="w-[48px] h-[48px] bg-contain bg-no-repeat bg-center"
                     style={{
-                      backgroundImage: `${IMAGE_BASE_URL}${network.logo_path})`,
+                      backgroundImage: `url(${IMAGE_BASE_URL}${network.logo_path}))`,
                     }}
                   ></div>
                 ))}
