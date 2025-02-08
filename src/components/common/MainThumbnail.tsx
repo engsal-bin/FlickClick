@@ -7,7 +7,7 @@ export default function MainThumbnail() {
     <>
       {/* tablet 이상 */}
       <Link
-        to={"/detailseries/96102"}
+        to={"/detailseries/96102"} // 임시로 슬기로운의사생활 id 적용
         className="relative hidden tablet:flex flex-col justify-center 
         items-center w-full h-[720px] bg-cover bg-center py-[80px] px-[100px]"
         style={{ backgroundImage: `url(${placeholderImg03})` }}
