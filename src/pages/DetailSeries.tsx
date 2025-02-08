@@ -23,7 +23,12 @@ export default function DetailSeries() {
     <div>
       <DetailIntroBox data={contentData} />
       {contentData?.seasons.map((season) => (
-        <SeasonBox key={season.id} title={contentData?.name} season={season} />
+        <SeasonBox
+          key={season.id}
+          title={contentData?.name}
+          seriesId={contentData.id}
+          season={season}
+        />
       ))}
       <hr className="h-[1px] border-gray02" />
 

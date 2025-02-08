@@ -15,13 +15,16 @@ interface SeasonType {
 
 export default function SeasonBox({
   title,
+  seriesId,
   season,
 }: {
   title: string;
+  seriesId: number;
   season?: SeasonType;
 }) {
   return (
-    <section
+    <Link
+      to={`/detailseason/${seriesId}/${season?.season_number}`}
       className="flex flex-col w-full
     tablet:gap-[50px] mobile:gap-[30px] 
     desktop:px-[128px] tablet:px-[40px] mobile:px-[10px] 
@@ -76,6 +79,6 @@ export default function SeasonBox({
           />
         </Link>
       </div>
-    </section>
+    </Link>
   );
 }
