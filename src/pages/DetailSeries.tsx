@@ -22,7 +22,11 @@ export default function DetailSeries() {
   return (
     <div>
       <DetailIntroBox data={contentData} />
-      <SeasonBox />
+      {contentData?.seasons.map((season) => (
+        <SeasonBox key={season.id} title={contentData?.name} season={season} />
+      ))}
+      <hr className="h-[1px] border-gray02" />
+
       {/* 추천 */}
       {/* 유사한 작품 */}
     </div>
