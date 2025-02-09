@@ -6,7 +6,7 @@ export default function Tag({
   onClick,
   isSelected,
 }: {
-  children: string;
+  children?: string | number;
   onClick?: () => void;
   isSelected?: boolean;
 }) {
@@ -20,20 +20,23 @@ export default function Tag({
     <>
       {/* desktop, tablet */}
       <div
-        className={`desktop:flex tablet:flex mobile:hidden h-[30px] items-center px-[10px]  rounded-[10px] font-light text-white03 ${
-          isSelected ? "bg-gray01 border-0" : "border-[1px] border-white03"
-        }`}
-        onClick={handleClick}>
+        className={`desktop:flex tablet:flex mobile:hidden h-[30px] items-center 
+          px-[5px] rounded-[10px] font-light text-white03 ${
+            isSelected ? "bg-gray01 border-0" : "border-[1px] border-white03"
+          }`}
+        onClick={handleClick}
+      >
         {children}
         {isSelected && <img src={TagCancelIcon} className="ml-[10px]"></img>}
       </div>
 
       {/* mobile */}
       <div
-        className={`desktop:hidden tablet:hidden mobile:flex h-[24px] items-center px-[8px] rounded-[8px] font-light text-[14px] text-white03 ${
-          isSelected ? "bg-gray01 border-0" : "border-[1px] border-white03"
-        }`}
-        onClick={handleClick}>
+        className={`desktop:hidden tablet:hidden mobile:flex h-[24px] 
+          items-center px-[8px] rounded-[8px] font-light text-[14px] text-white03 
+          ${isSelected ? "bg-gray01 border-0" : "border-[1px] border-white03"}`}
+        onClick={handleClick}
+      >
         {children}
         {isSelected && (
           <img src={TagCancelIcon} className="ml-[10px] w-2 h-2"></img>

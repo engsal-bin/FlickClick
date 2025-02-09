@@ -1,20 +1,24 @@
 import MyOpinionContent from "./MyOpinionContent";
 
-export default function MyOpinion() {
+export default function MyOpinion({
+  myOpinions,
+}: {
+  myOpinions: ArgumentComment[] | [] | null;
+}) {
   return (
     <div>
-      <MyOpinionContent
-        content="슬기로운 의사생활 시즌 2"
-        subject="토론 주제"
-        opinion="내가 토론에 단 의견 어쩌구 블라블라"
-        date="2025-01-02"
-      />
-      <MyOpinionContent
-        content="슬기로운 의사생활 시즌 2"
-        subject="토론 주제"
-        opinion="내가 토론에 단 의견 어쩌구 블라블라"
-        date="2025-01-02"
-      />
+      {myOpinions?.map((myOpinion) => (
+        <MyOpinionContent
+          key={myOpinion.argument_id}
+          argument_id={myOpinion.argument_id}
+          topic={myOpinion.topic}
+          ip_name={myOpinion.ip_name}
+          ip_id={myOpinion.ip_id}
+          comment={myOpinion.comment}
+          comment_created_at={myOpinion.comment_created_at}
+          comment_author_id={myOpinion.comment_author_id}
+        />
+      ))}
     </div>
   );
 }

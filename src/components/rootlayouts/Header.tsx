@@ -1,21 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import mainLogo from "../../assets/logo/mainLogo.svg";
 import searchIcon from "../../assets/icon/searchIcon.svg";
 import cancelIcon from "../../assets/icon/cancelIcon.svg";
 import arrow01 from "../../assets/icon/arrow/arrow01.svg";
+
 import Notification from "./Notification";
 import Searchbar from "./Searchbar";
+import arrow01 from "../../assets/icon/arrow/arrow01.svg";
 import burgerButton from "../../assets/icon/burgerButton.svg";
+import cancelIcon from "../../assets/icon/cancelIcon.svg";
+import mainLogo from "../../assets/logo/mainLogo.svg";
+import searchIcon from "../../assets/icon/searchIcon.svg";
 import { useAuth } from "../../api/Auth";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false); // 알림창 오픈 상태
+  const [isOpen, setIsOpen] = useState(false);
   const [isSearch, setIsSearch] = useState(false); // 검색창 오픈 상태
   const location = useLocation(); // 현재 경로 상태
-  const { isLoggedIn, setIsLoggedin } = useAuth(); // (임시) 로그인 상태
   const navigate = useNavigate();
   const [previousPath, setPreviousPath] = useState("");
+  const { isLoggedIn, user } = useAuth();
 
   // 모바일에서 스크롤 막기&허용
   useEffect(() => {
@@ -47,6 +52,11 @@ export default function Header() {
       setPreviousPath(location.pathname);
     }
   }, [navigate, previousPath]);
+
+          
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
 
   return (
     <>
@@ -93,20 +103,6 @@ export default function Header() {
             </Link>
           </div>
         </>
-        {/* 임시 로그인 버튼 */}
-        {isLoggedIn ? (
-          <div
-            onClick={setIsLoggedin}
-            className="w-[100px] border-[1px] border-white01 p-[5px] text-center text-white01 text-[10px] cursor-pointer">
-            임시 로그아웃 버튼
-          </div>
-        ) : (
-          <div
-            onClick={() => {}}
-            className="w-[100px] border-[1px] border-white01 p-[5px] text-center text-white01 text-[10px] cursor-pointer">
-            임시 로그인 버튼
-          </div>
-        )}
 
         {/* 우측 메뉴 */}
         <>
@@ -127,9 +123,13 @@ export default function Header() {
             {isLoggedIn ? (
               <Link
                 to={"/mypage"}
-                className="flex items-center justify-between ">
-                <div className="w-[35px] h-[35px] bg-gray02 rounded-full mr-[10px]"></div>
-                <div>닉네임</div>
+                className="flex items-center justify-between "
+              >
+                <img
+                  src={user?.profile}
+                  className="w-[35px] h-[35px] bg-gray02 rounded-full mr-[10px]"
+                ></img>
+                <div>{user?.name || "No Name"}</div>
               </Link>
             ) : (
               <Link to="/login">로그인을 해주세요</Link>
@@ -159,6 +159,7 @@ export default function Header() {
             />
             {/* 햄버거 버튼 */}
             <img
+              ref={mypageRef}
               src={burgerButton}
               alt="Toggle Notification"
               className="cursor-pointer flex w-[20px]"

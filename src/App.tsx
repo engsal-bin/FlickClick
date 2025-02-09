@@ -1,23 +1,24 @@
 import "./css/index.css";
+
 import { Route, Routes } from "react-router";
-import RootLayout from "./layouts/RootLayout";
-import Main from "./pages/Main";
-import Popular from "./pages/Popular";
-import NewUpdate from "./pages/NewUpdate";
-import Upcoming from "./pages/Upcoming";
-import Series from "./pages/Series";
-import Movies from "./pages/Movies";
+
+import { AuthProvider } from "./api/Auth";
+import DetailEpisode from "./pages/DetailEpisode";
+import DetailMovie from "./pages/DetailMovie";
+import DetailSeason from "./pages/DetailSeason";
+import DetailSeries from "./pages/DetailSeries";
+import DetailSeriesNoSeason from "./pages/DetailSeriesNoSeason";
 import Genres from "./pages/Genres";
 import Login from "./pages/Login";
+import Main from "./pages/Main";
+import Movies from "./pages/Movies";
 import Mypage from "./pages/Mypage";
-import { AuthProvider } from "./api/Auth";
-import DetailSeries from "./pages/DetailSeries";
-import DetailEpisode from "./pages/DetailEpisode";
-import DetailSeason from "./pages/DetailSeason";
-import DetailSeriesNoSeason from "./pages/DetailSeriesNoSeason";
-import DetailMovie from "./pages/DetailMovie";
+import NewUpdate from "./pages/NewUpdate";
+import Popular from "./pages/Popular";
+import RootLayout from "./layouts/RootLayout";
+import Series from "./pages/Series";
 import Trailers from "./components/common/Trailers";
-import TrailerModal from "./components/common/TrailerModal";
+import Upcomings from "./pages/Upcomings";
 
 export default function App() {
   return (
@@ -28,7 +29,7 @@ export default function App() {
           {/* 메인 페이지 내 분류 */}
           <Route path="/popular" element={<Popular />} />
           <Route path="/newupdate" element={<NewUpdate />} />
-          <Route path="/upcoming" element={<Upcoming />} />
+          <Route path="/upcomings" element={<Upcomings />} />
           {/* 헤더 내 분류 */}
           <Route path="/series" element={<Series />} />
           <Route path="/movies" element={<Movies />} />
@@ -38,15 +39,29 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           {/* 마이페이지 */}
           <Route path="/mypage" element={<Mypage />} />
+
           {/* 상세 페이지 */}
-          <Route path="/detailseries" element={<DetailSeries />} />
+
+          {/* 시리즈 상세페이지 - 시즌 유 */}
+          <Route path="/detailseries/:seriesid" element={<DetailSeries />} />
+          {/* 시리즈 상세페이지 - 시즌 무 */}
           <Route
-            path="/detailseason-noseason"
+            path="/detailseason-noseason/:id"
             element={<DetailSeriesNoSeason />}
           />
+          {/* 시즌 상세페이지 */}
+          <Route
+            path="/detailseason/:seriesid/:seasonnumber"
+            element={<DetailSeason />}
+          />
+          {/* 에피소드 상세페이지 */}
+          <Route
+            path="/detailepisode/:seriesid/:seasonnumber/:episodenumber"
+            element={<DetailEpisode />}
+          />
+
+          {/* 영화 상세페이지 */}
           <Route path="/detailmovie" element={<DetailMovie />} />
-          <Route path="/detailepisode" element={<DetailEpisode />} />
-          <Route path="/detailseason" element={<DetailSeason />} />
           {/* 예고편 */}
           <Route path="/trailers" element={<Trailers />} />
         </Route>

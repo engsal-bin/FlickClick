@@ -40,6 +40,22 @@ const getSeason = async (series_id: number, season_number: number) => {
     throw error;
   }
 };
+const getSeasonCredits = async (series_id: number, season_number: number) => {
+  try {
+    const response = await axiosInstance.get(
+      `/tv/${series_id}/season/${season_number}/credits`,
+      {
+        params: {
+          language: "ko-KR",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:");
+    throw error;
+  }
+};
 const getEpisode = async (
   series_id: number,
   season_number: number,
@@ -61,4 +77,10 @@ const getEpisode = async (
   }
 };
 
-export const tvAPI = { getOnTheAirTvSeriese, getSeries, getSeason, getEpisode };
+export const tvAPI = {
+  getOnTheAirTvSeriese,
+  getSeries,
+  getSeason,
+  getEpisode,
+  getSeasonCredits,
+};

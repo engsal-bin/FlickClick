@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import arrowLeft from "../assets/icon/arrow/arrowLeft.svg";
-import Contents from "../components/common/Contents";
-import ContentsWithoutViewMore from "../components/common/ContentsWithoutViewMore";
 import { commonAPI } from "../api/common";
+import ContentsWithoutViewMore from "../components/common/ContentsWithoutViewMore";
 
-type Period = "today" | "7days" | "30days" | null;
+type Period = "today" | "week";
 
 export default function Popular() {
-  const [trendAllInfo, setTrendAllInfo] = useState<BasicType[]>([]);
+  const [trendInfos, setTrendInfos] = useState<BasicType[]>([]);
 
   // 선택태그 상태
-  const [selectedPeriod, setSelectedPeriod] = useState<Period>(null);
+  const [selectedPeriod, setSelectedPeriod] = useState<Period>("today");
 
   // 선택여부 확인 후 선택 or 선택 취소
   const handleSelect = (period: Period) => {
-    setSelectedPeriod((prev) => (prev === period ? null : period));
+    setSelectedPeriod((prev) => (prev === period ? prev : period));
+    if (period === selectedPeriod) return;
+    if (period === "today") fetchTrendAll();
+    else fetchTrendAll("week");
   };
 
   // 뒤로가기
@@ -22,24 +24,26 @@ export default function Popular() {
     window.history.back(); // 브라우저 히스토리에서 뒤로 가기
   };
 
+  const fetchTrendAll = async (day = "day") => {
+    try {
+      const trend = await commonAPI.getTrendingAll(1, day);
+      console.log(trend);
+
+      setTrendInfos(
+        trend["results"].map((item: TrendingAllResultsType) => ({
+          poster_path:
+            "https://image.tmdb.org/t/p/w220_and_h330_face" + item.poster_path,
+          id: item.id,
+          title: item.title,
+          media_type: item.media_type,
+          name: item.name,
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching upcoming movies:", error);
+    }
+  };
   useEffect(() => {
-    const fetchTrendAll = async () => {
-      try {
-        const trend = await commonAPI.getTrendingAll(1);
-        setTrendAllInfo(
-          trend.results.map((item: TrendingAllResultsType) => ({
-            poster_path:
-              "https://image.tmdb.org/t/p/w220_and_h330_face" +
-              item.poster_path,
-            id: item.id,
-            title: item.title,
-            media_type: item.media_type,
-          }))
-        );
-      } catch (error) {
-        console.error("Error fetching upcoming movies:", error);
-      }
-    };
     fetchTrendAll();
   }, []);
 
@@ -68,30 +72,24 @@ export default function Popular() {
             오늘
           </div>
           <div
-            onClick={() => handleSelect("7days")}
+            onClick={() => handleSelect("week")}
             className={`h-[31px] flex items-center ${
-              selectedPeriod === "7days"
+              selectedPeriod === "week"
                 ? "bg-gray01 border-[1px] border-gray01 text-white01"
                 : "border-[1px] border-white03"
             } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
           >
-            최근 7일
-          </div>
-          <div
-            onClick={() => handleSelect("30days")}
-            className={`h-[31px] flex items-center ${
-              selectedPeriod === "30days"
-                ? "bg-gray01 border-[1px] border-gray01 text-white01"
-                : "border-[1px] border-white03"
-            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
-          >
-            최근 30일
+            이번주
           </div>
         </div>
       </div>
+
       {/* 컨텐츠 */}
-      <ContentsWithoutViewMore />
-      <ContentsWithoutViewMore />
+      <div className="flex flex-wrap justify-start gap-4">
+        {trendInfos.map((info) => (
+          <ContentsWithoutViewMore info={info} key={info.id} />
+        ))}
+      </div>
     </div>
   );
 }

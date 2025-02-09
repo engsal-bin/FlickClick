@@ -10,6 +10,8 @@ interface BasicType {
   title: string;
   poster_path: string;
   media_type: string;
+  name: string;
+  popularity: number;
 }
 
 // 인기 급상승
@@ -29,6 +31,7 @@ interface TrendingAllResultsType {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  name: string;
 }
 
 // 신규 업데이트
@@ -37,6 +40,9 @@ interface NewUpdateType {
   title: string;
   poster_path: string;
   popularity: number;
+  name: string;
+  media_type: string;
+  genre_ids: [number];
 }
 // TV
 interface OnTheAirTvSerieseResultsType {
@@ -71,6 +77,7 @@ interface NowPlayingMovieResultsType {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  name: string;
 }
 
 // 공개 예정
@@ -97,4 +104,143 @@ interface UpComingMovieResultsType {
   vote_average: number;
   vote_count: number;
 }
-interface TransType {}
+interface VideoType {
+  id: string;
+  key: string;
+  site: string;
+  type: string;
+  published_at: string;
+}
+// tmdb 전체 장르
+interface GenreType {
+  id: number;
+  name: string;
+}
+
+// 출연자 정보
+interface CreditInfoType {
+  adult: boolean;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  order: 0;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+}
+// tv 시리즈
+interface TvSeriesType {
+  adult: boolean;
+  backdrop_path: string;
+  created_by: {
+    id: number;
+    credit_id: string;
+    name: string;
+    gender: number;
+    profile_path: string;
+  };
+  episode_run_time: number;
+  first_air_date: string;
+  genres: { id: number; name: string }[];
+  homepage: string;
+  id: number;
+  last_air_date: string;
+  name: string;
+  networks: {
+    id: number;
+    logo_path: string;
+    name: string;
+    original_country: sting;
+  }[];
+  number_of_episodes: number;
+  number_of_seasons: number;
+  original_country: string[];
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  production_companies: {
+    id: number;
+    logo_path: string;
+    name: string;
+    origin_country: string;
+  }[];
+  seasons: TvSeasonsType[];
+  tagline: string;
+  vote_average: number;
+}
+interface TvSeasonsType {
+  air_date: string;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  season_number: number;
+  vote_average: number;
+  episodes: EpisodeType[];
+}
+
+interface PersonDataType {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+interface EpisodeType {
+  air_date: string;
+  episode_number: number;
+  episode_type: string;
+  id: number;
+  name: string;
+  overview: string;
+  runtime: number;
+  season_number: number;
+  show_id: number;
+  still_path: string;
+  vote_average: number;
+  vote_count: number;
+  crew: {
+    job: string;
+    department: string;
+    credit_id: string;
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string;
+  }[];
+  guest_stars: {
+    character: string;
+    credit_id: string;
+    order: number;
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string;
+  }[];
+}
+
+// 장르 기본 타입
+interface GenreBasicType {
+  name: string;
+  id: number;
+}
