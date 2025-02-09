@@ -46,7 +46,6 @@ export default function Header() {
     if (location.pathname !== "/search") {
       setPreviousPath(location.pathname);
     }
-    console.log(`경로 저장됨 : ${previosPath}`);
   }, [navigate, previosPath]);
 
   return (
