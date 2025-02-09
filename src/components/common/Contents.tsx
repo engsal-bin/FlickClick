@@ -34,8 +34,6 @@ export default function Contents(props: ChildProps) {
               />
             );
           })}
-
-          <div className="w-[200px] h-[265px] border-[1px] rounded-[8px] border-gray01 bg-gray02"></div>
         </div>
       </div>
       {/* mobile 전용 */}
