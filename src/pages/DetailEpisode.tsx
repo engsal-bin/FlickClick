@@ -147,8 +147,7 @@ export default function DetailSeriesNoSeson() {
           label="제작진"
           type="crew"
         />
-        {/* 에피소드 리스트 */}
-        <Episodes />
+
         {/* 리뷰토론 */}
         <section className="flex flex-col">
           {/* 탭 */}
