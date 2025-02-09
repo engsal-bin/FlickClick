@@ -11,6 +11,7 @@ export default function DetailIntroBox({
   season?: TvSeasonsType;
 }) {
   // console.log(data?.poster_path);
+  console.log(data);
   return (
     <>
       <section
@@ -73,11 +74,11 @@ export default function DetailIntroBox({
                 ))}
 
                 {/* 시즌 or 에피소드 갯수 */}
-                {season ? (
-                  <Tag>{`에피소드 ${String(season?.episode_count)}개`}</Tag>
+                {season?.episodes ? (
+                  <Tag>{`에피소드 ${String(season?.episodes.length)}개`}</Tag>
                 ) : (
                   data?.number_of_seasons && (
-                    <Tag>{`시즌 ${String(data?.number_of_seasons)}개`}</Tag>
+                    <Tag>{`시즌 ${String(data?.seasons.length)}개`}</Tag>
                   )
                 )}
               </div>

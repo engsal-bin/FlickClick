@@ -147,8 +147,7 @@ export default function DetailSeriesNoSeson() {
           label="제작진"
           type="crew"
         />
-        {/* 에피소드 리스트 */}
-        <Episodes />
+
         {/* 리뷰토론 */}
         <section className="flex flex-col">
           {/* 탭 */}
@@ -167,12 +166,21 @@ export default function DetailSeriesNoSeson() {
               </button>
             ))}
           </div>
+
           {/* 리뷰창 */}
           {activeTab === 0 && <Reviews />}
           {activeTab === 1 && <Argument />}
         </section>
-        <ArgorithmIP label="추천" />
-        <ArgorithmIP label="유사한 작품" />
+        <ArgorithmIP
+          seriesId={Number(locationInfo[1])}
+          type="recommendations"
+          label="추천"
+        />
+        <ArgorithmIP
+          seriesId={Number(locationInfo[1])}
+          type="similar"
+          label="유사한 작품"
+        />
       </section>
     </>
   );

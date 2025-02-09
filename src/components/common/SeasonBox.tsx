@@ -49,7 +49,7 @@ export default function SeasonBox({
           ></div>
 
           {/* 텍스트 캡션 */}
-          <figcaption className="flex flex-col justify-center ml-[20px] text-white">
+          <div className="flex flex-col justify-center ml-[20px] text-white">
             {/* 컨텐츠 시즌명 */}
             <p className="font-semibold tablet:text-[30px] mobile:text-[18px] text-white01">
               {title} {season?.name}
@@ -69,15 +69,15 @@ export default function SeasonBox({
                 {season?.vote_average.toFixed(1)}점
               </p>
             </div>
-          </figcaption>
+          </div>
         </div>
-        <Link to="" className="w-[50px] h-full flex justify-end items-center">
+        <div className="w-[50px] h-full flex justify-end items-center">
           <img
             src={arrowRight}
             alt="바로 가기 버튼"
             className="tablet:w-[10px] tablet:h-[24px] mobile:w-[6.67px] mobile:h-[16px]"
           />
-        </Link>
+        </div>
       </div>
     </Link>
   );
