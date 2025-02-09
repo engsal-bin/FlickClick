@@ -1,26 +1,30 @@
-export default function Contents() {
+export default function ContentsWithoutViewMore({ info }: { info: BasicType }) {
   return (
-    <>
+    <div className="flex-grow-0 flex-shrink-0 basis-auto max-w-[212px] min-w-[93px] w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] md:w-[calc(25%-16px)] lg:w-[calc(20%-16px)]">
       {/* tablet 이상 */}
-      <div className="hidden tablet:flex flex-col justify-between w-full border-[1px] border-gray01">
-        <div className="flex justify-between items-baseline">
-          <p className="text-white01 font-bold text-[24px]"></p>
+      <div className="flex-col hidden sm:flex ">
+        <div className="w-full aspect-[212/306]">
+          <img
+            src={info.poster_path}
+            className="object-cover w-full h-full border-black border-[1px] rounded-[8px]"
+          />
         </div>
-        <div>
-          <div className="w-[212px] h-[306px] border-[1px] rounded-[8px] border-gray01 bg-gray02"></div>
-          <p className="text-white01 pt-[10px] font-[18px]">영화 제목</p>
-        </div>
+        <p className="text-white01 pt-[10px] font-[18px]">
+          {info.title || info.name}
+        </p>
       </div>
       {/* mobile 전용 */}
-      <div className="tablet:hidden flex flex-col justify-between w-full border-[1px] border-gray01">
-        <div className="flex justify-between items-baseline">
-          <p className="text-white01 font-bold text-[16px]"></p>
+      <div className="flex flex-col justify-between sm:hidden">
+        <div className="w-full aspect-[93/134]">
+          <img
+            src={info.poster_path}
+            className="object-cover w-full h-full border-black border-[1px] rounded-[8px]"
+          />
         </div>
-        <div>
-          <div className="w-[93px] h-[134px] border-[1px] rounded-[8px] border-gray01 bg-gray02"></div>
-          <p className="text-white01 pt-[10px] font-[14px]">영화 제목</p>
-        </div>
+        <p className="text-white01 pt-[10px] font-[14px]">
+          {info.title || info.name}
+        </p>
       </div>
-    </>
+    </div>
   );
 }

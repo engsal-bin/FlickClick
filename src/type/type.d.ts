@@ -10,6 +10,7 @@ interface BasicType {
   title: string;
   poster_path: string;
   media_type: string;
+  name: string;
 }
 
 // 인기 급상승
@@ -29,6 +30,7 @@ interface TrendingAllResultsType {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  name: string;
 }
 
 // 신규 업데이트
