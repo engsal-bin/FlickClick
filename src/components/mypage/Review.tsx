@@ -5,14 +5,7 @@ export default function Review({
   ip_type,
   content,
   created_at,
-}: {
-  review_id: number;
-  ip_name: string;
-  ip_id: string;
-  ip_type: string;
-  content: string;
-  created_at: Date;
-}) {
+}: Review) {
   return (
     <>
       <div className="border-b-[1px] border-gray01  flex flex-col gap-[15px] mt-[30px]">

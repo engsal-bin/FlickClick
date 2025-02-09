@@ -3,11 +3,11 @@ import MyOpinionContent from "./MyOpinionContent";
 export default function MyOpinion({
   myOpinions,
 }: {
-  myOpinions: ArgumentComment[];
+  myOpinions: ArgumentComment[] | [] | null;
 }) {
   return (
     <div>
-      {myOpinions.map((myOpinion) => (
+      {myOpinions?.map((myOpinion) => (
         <MyOpinionContent
           key={myOpinion.argument_id}
           argument_id={myOpinion.argument_id}

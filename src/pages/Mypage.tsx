@@ -4,61 +4,98 @@ import {
   getClipsByUId,
   getReviewsByUId,
 } from "../api/mypageInfo";
+import { useEffect, useState } from "react";
 
 import CreatedDiscuss from "../components/mypage/CreatedDiscuss";
-import Episode from "../components/mypage/Episode";
-import MovieContents from "../components/mypage/MovieContents";
 import MyOpinion from "../components/mypage/MyOpinion";
 import Notify from "../components/mypage/Notify";
 import Review from "../components/mypage/Review";
-import Season from "../components/mypage/Season";
+import ScrapEpisode from "../components/mypage/ScrapEpisode";
+import ScrapMovie from "../components/mypage/ScrapMovie";
+import ScrapSeason from "../components/mypage/ScrapSeason";
 import Tag from "../components/common/Tag";
-import { useState } from "react";
+import { useAuth } from "../api/Auth";
+
+// import { useNavigate } from "react-router-dom";
 
 export default function Mypage() {
   const [isClick, setIsClick] = useState("notify");
   const [discussType, setDiscussType] = useState("createdDiscuss");
   const [scrapType, setScrapType] = useState("season");
 
-  const [reviews, setReviews] = useState([]);
-  const [discusses, setDiscusses] = useState([]);
-  const [myOpinions, setMyOpinions] = useState([]);
-  const [clips, setClips] = useState([]);
+  const [reviews, setReviews] = useState<Review[] | null>([]);
+  const [discusses, setDiscusses] = useState<Argument[] | null>([]);
+  const [myOpinions, setMyOpinions] = useState<ArgumentComment[] | null>([]);
+  const [clips, setClips] = useState<SavedClips[] | null>([]);
+  const [seasonClips, setSeasonClips] = useState<SavedClips[] | null>([]);
+  const [episodeClips, setEpisodeClips] = useState<SavedClips[] | null>([]);
+  const [movieClips, setMovieClips] = useState<SavedClips[] | null>([]);
 
   // 리뷰
-  const userId = "ce0845a8-ac83-425b-af3f-cb534ac52d09"; // 더미 데이터 만들어 놓은 테스트 계정
+
+  const { user } = useAuth();
+  // const userId = "ce0845a8-ac83-425b-af3f-cb534ac52d09"; // 더미 데이터 만들어 놓은 테스트 계정
   const onClickReviewTab = async () => {
     setIsClick("review");
-    await getReviewsByUId(userId).then((reviews) => {
-      console.log(reviews);
-      setReviews(reviews);
-    });
+    if (user) {
+      await getReviewsByUId(user.id).then((reviews) => {
+        console.log(reviews);
+        setReviews(reviews);
+      });
+    }
   };
 
-  // 불러올 수가 없는 애러 왜지?
   const onClickDiscussTab = async () => {
     setIsClick("discuss");
-    await getArgumentsCreatedByUserId(userId).then((discusses) => {
-      console.log(discusses);
-      setDiscusses(discusses);
-    });
+    setDiscussType("createdDiscuss");
+    if (user) {
+      await getArgumentsCreatedByUserId(user.id).then((discusses) => {
+        console.log(discusses);
+        setDiscusses(discusses || []);
+      });
+    }
   };
 
   const onClickMyOpinionTag = async () => {
     setDiscussType("myOpinion");
-    await getArgumentsCommentedByUId(userId).then((myOpinions) => {
-      console.log(myOpinions);
-      setMyOpinions(myOpinions);
-    });
+    if (user) {
+      await getArgumentsCommentedByUId(user.id).then(
+        (myOpinions: ArgumentComment[] | null) => {
+          console.log(myOpinions);
+          setMyOpinions(myOpinions);
+        }
+      );
+    }
   };
 
   const onClickScrapTab = async () => {
     setIsClick("scrap");
-    await getClipsByUId(userId).then((clips) => {
-      console.log(clips);
-      setClips(clips);
-    });
+    if (user?.id) {
+      const fetchedClips = await getClipsByUId(user.id);
+      console.log(fetchedClips);
+      setClips(fetchedClips || []);
+    }
+    if (clips) {
+      setSeasonClips(
+        () => clips.filter((clip) => clip.ip_type === "season") || []
+      );
+      setEpisodeClips(
+        () => clips.filter((clip) => clip.ip_type === "episode") || []
+      );
+      setMovieClips(
+        () => clips.filter((clip) => clip.ip_type === "movie") || []
+      );
+    }
   };
+
+  useEffect(() => {
+    if (!clips) return;
+    if (user?.id) {
+      setSeasonClips(clips.filter((clip) => clip.ip_type === "season"));
+      setEpisodeClips(clips.filter((clip) => clip.ip_type === "episode"));
+      setMovieClips(clips.filter((clip) => clip.ip_type === "movie"));
+    }
+  }, [clips]);
 
   return (
     <div className="w-full y-full flex-1 pt-[100px] tablet:px-[50px] mobile:pt-0 mobile:px-[10px] text-gray01">
@@ -119,10 +156,10 @@ export default function Mypage() {
         )}
         {isClick === "review" && (
           <div>
-            {reviews.map((review) => (
+            {reviews?.map((review) => (
               <Review
-                key={review.id}
-                review_id={review.id}
+                key={review.review_id}
+                review_id={review.review_id}
                 ip_name={review.ip_name}
                 ip_id={review.ip_id}
                 ip_type={review.ip_type}
@@ -149,7 +186,9 @@ export default function Mypage() {
               </Tag>
             </div>
             <div className="mt-[30px]">
-              {discussType === "createdDiscuss" && <CreatedDiscuss />}
+              {discussType === "createdDiscuss" && (
+                <CreatedDiscuss discusses={discusses} />
+              )}
               {discussType === "myOpinion" && (
                 <MyOpinion myOpinions={myOpinions} />
               )}
@@ -185,9 +224,13 @@ export default function Mypage() {
               </Tag>
             </div>
             <div className="mt-[30px]">
-              {scrapType === "season" && <Season />}
-              {scrapType === "episode" && <Episode />}
-              {scrapType === "movie" && <MovieContents />}
+              {scrapType === "season" && (
+                <ScrapSeason seasonClips={seasonClips} />
+              )}
+              {scrapType === "episode" && (
+                <ScrapEpisode episodeClips={episodeClips} />
+              )}
+              {scrapType === "movie" && <ScrapMovie movieClips={movieClips} />}
             </div>
           </div>
         )}

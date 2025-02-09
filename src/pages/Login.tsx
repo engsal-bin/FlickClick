@@ -1,7 +1,7 @@
 import { authAPI } from "../api/user";
-import loginBg from "../assets/icon/loginBg.svg";
-import kakao from "../assets/logo/socialLogo/kakao.svg";
 import google from "../assets/logo/socialLogo/google.svg";
+import kakao from "../assets/logo/socialLogo/kakao.svg";
+import loginBg from "../assets/icon/loginBg.svg";
 import twitter from "../assets/logo/socialLogo/twitter.svg";
 
 export default function Login() {

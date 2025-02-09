@@ -1,11 +1,16 @@
 import { supabase } from "./index.ts";
 
 interface SupabaseResponse<T> {
-    data: T | null;
-    error: any;
-  }// 회원별 리뷰
+  data: T | null;
+  error: {
+    code: string;
+    details: string | null;
+    hint: string | null;
+    message: string | null;
+  } | null;
+}
 
-
+// 회원별 리뷰
 export const getReviewsByUId = async (
   userId: string
 ): Promise<Review[] | null> => {
@@ -78,19 +83,18 @@ export const getClipsByUId = async (
 export const getReviewCountByUId = async (
   userId: string
 ): Promise<number | null> => {
-  // 데이터와 에러의 타입을 정확히 정의
-  const { data, error }: { data: number | null; error: any } =
-    await supabase.rpc("get_review_count_by_user_id", {
+  const { data, error }: SupabaseResponse<number> = await supabase.rpc(
+    "get_review_count_by_user_id",
+    {
       user_id: userId,
-    });
+    }
+  );
 
-  // 에러가 있을 경우 콘솔에 출력하고 null 반환
   if (error) {
     console.error("Error calling RPC:", error);
     return null;
   }
 
-  // 정상적인 경우 데이터 반환
   return data;
 };
 
@@ -98,10 +102,12 @@ export const getReviewCountByUId = async (
 export const getArgumentCountByUId = async (
   userId: string
 ): Promise<number | null> => {
-  const { data, error }: { data: number | null; error: any } =
-    await supabase.rpc("get_argument_count_by_user_id", {
+  const { data, error }: SupabaseResponse<number> = await supabase.rpc(
+    "get_argument_count_by_user_id",
+    {
       user_id: userId,
-    });
+    }
+  );
 
   if (error) {
     console.error("Error calling RPC:", error);
@@ -115,8 +121,10 @@ export const getArgumentCountByUId = async (
 export const getClipCountByUId = async (
   userId: string
 ): Promise<number | null> => {
-  const { data, error }: { data: number | null; error: any } =
-    await supabase.rpc("get_clip_count_by_user_id", { user_id: userId });
+  const { data, error }: SupabaseResponse<number> = await supabase.rpc(
+    "get_clip_count_by_user_id",
+    { user_id: userId }
+  );
 
   if (error) {
     console.error("Error calling RPC:", error);
