@@ -81,7 +81,7 @@ export default function PersonList({
       window.removeEventListener("resize", checkOverflow);
     };
   }, [personData]);
-
+  console.log(personData);
   // console.log(personListRef.current?.scrollWidth);
   // console.log(personListRef.current?.clientWidth);
 
@@ -101,34 +101,37 @@ export default function PersonList({
           scrollbarWidth: "none",
         }}
       >
-        {personData?.map((person) => (
-          <div key={person.id} className="flex flex-col gap-[5px] items-center">
-            {/* 프로필 이미지 */}
+        {personData?.length ? (
+          personData.map((person) => (
             <div
-              className="bg-white tablet:w-[100px] mobile:w-[60px] 
-              aspect-square bg-cover bg-center rounded-full z-10"
-              style={{
-                backgroundImage: `url(${IMAGE_BASE_URL}original${person.profile_path})`,
-              }}
-            ></div>
-
-            {/* 이름 */}
-            <div
-              className="w-full text-[18px] leading-auto text-white01 
-            text-center"
+              key={person.id}
+              className="flex flex-col gap-[5px] items-center"
             >
-              {person.name}
-            </div>
+              {/* 프로필 이미지 */}
+              <div
+                className="bg-white tablet:w-[100px] mobile:w-[60px] 
+        aspect-square bg-cover bg-center rounded-full z-10"
+                style={{
+                  backgroundImage: person.profile_path
+                    ? `url(${IMAGE_BASE_URL}original${person.profile_path})`
+                    : `url(/default-profile.png)`, // 기본 이미지 처리
+                }}
+              ></div>
 
-            {/* 역할 */}
-            <div
-              className="w-full text-[16px] leading-auto text-gray03 
-            text-center"
-            >
-              {person.character}
+              {/* 이름 */}
+              <div className="w-full text-[18px] leading-auto text-white01 text-center">
+                {person.name}
+              </div>
+
+              {/* 역할 */}
+              <div className="w-full text-[16px] leading-auto text-gray03 text-center">
+                {person.character}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div className="text-center text-gray03">{label} 정보 없음</div>
+        )}
       </div>
     </div>
   );
