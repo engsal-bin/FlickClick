@@ -16,8 +16,11 @@ export default function DetailEpisodeIntroBox({
     <>
       {/* tablet 이상 */}
       <section
-        className="relative h-auto flex flex-col bg-cover bg-center desktop:pb-[133px] tablet:pb-[14px] mobile:pb-[42px]"
-        style={{ backgroundImage: `url(${placeholderImg03})` }}
+        className="relative h-auto flex flex-col bg-cover bg-center 
+        desktop:pb-[133px] tablet:pb-[14px] mobile:pb-[42px]"
+        style={{
+          backgroundImage: `url(${IMAGE_BASE_URL}original${episode?.still_path})`,
+        }}
       >
         {/* 블러 오버레이 */}
         <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-lg"></div>
