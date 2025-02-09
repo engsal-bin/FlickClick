@@ -47,18 +47,18 @@ export default function Header() {
 
   const mypageRef = useRef(null);
 
-  // 다른 곳 클릭하면 창 닫음
-  // TODO: 타입 애러 해결
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (mypageRef.current && !mypageRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
+  // // 다른 곳 클릭하면 창 닫음
+  // // TODO: 타입 애러 해결
+  // useEffect(() => {
+  //   function handleClickOutside(event: MouseEvent) {
+  //     if (mypageRef.current && !mypageRef.current.contains(event.target)) {
+  //       setIsOpen(false);
+  //     }
+  //   }
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, []);
 
   return (
     <>
