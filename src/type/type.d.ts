@@ -97,8 +97,34 @@ interface UpComingMovieResultsType {
   vote_average: number;
   vote_count: number;
 }
-interface TransType {}
+interface VideoType {
+  id: string;
+  key: string;
+  site: string;
+  type: string;
+  published_at: string;
+}
+// tmdb 전체 장르
+interface GenreType {
+  id: number;
+  name: string;
+}
 
+// 출연자 정보
+interface CreditInfoType {
+  adult: boolean;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  order: 0;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+}
 // tv 시리즈
 interface TvSeriesType {
   adult: boolean;
@@ -139,7 +165,6 @@ interface TvSeriesType {
   tagline: string;
   vote_average: number;
 }
-
 interface TvSeasonsType {
   air_date: string;
   episode_count: number;

@@ -30,8 +30,44 @@ const getUpComingMovie = async (page = 1, language = "ko-KR") => {
     throw error;
   }
 };
+const getCredits = async (movie_id: number, language = "ko-KR") => {
+  try {
+    const response = await axiosInstance.get(`/movie/${movie_id}/credits`, {
+      params: { language },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error);
+  }
+};
+const getGenres = async (language = "ko-KR") => {
+  try {
+    const response = await axiosInstance.get(`/genre/movie/list`, {
+      params: { language },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error);
+  }
+};
+const getProviders = async (movie_id: number, language = "ko-KR") => {
+  try {
+    const response = await axiosInstance.get(
+      `/movie/${movie_id}/watch/providers`,
+      {
+        params: { language },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error);
+  }
+};
 export const movieAPI = {
   getMovieTrailer,
   getNowPlayingMovie,
   getUpComingMovie,
+  getCredits,
+  getGenres,
+  getProviders,
 };
