@@ -1,5 +1,9 @@
-import { Link, useLocation } from "react-router";
 import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
+import mainLogo from "../../assets/logo/mainLogo.svg";
+import searchIcon from "../../assets/icon/searchIcon.svg";
+import cancelIcon from "../../assets/icon/cancelIcon.svg";
+import arrow01 from "../../assets/icon/arrow/arrow01.svg";
 
 import Notification from "./Notification";
 import Searchbar from "./Searchbar";
@@ -14,6 +18,8 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearch, setIsSearch] = useState(false); // 검색창 오픈 상태
   const location = useLocation(); // 현재 경로 상태
+  const navigate = useNavigate();
+  const [previousPath, setPreviousPath] = useState("");
   const { isLoggedIn, user } = useAuth();
 
   // 모바일에서 스크롤 막기&허용
@@ -42,23 +48,15 @@ export default function Header() {
   }, [isSearch]);
 
   useEffect(() => {
+    if (location.pathname !== "/search") {
+      setPreviousPath(location.pathname);
+    }
+  }, [navigate, previousPath]);
+
+          
+  useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
-
-  const mypageRef = useRef(null);
-
-  // // 다른 곳 클릭하면 창 닫음
-  // // TODO: 타입 애러 해결
-  // useEffect(() => {
-  //   function handleClickOutside(event: MouseEvent) {
-  //     if (mypageRef.current && !mypageRef.current.contains(event.target)) {
-  //       setIsOpen(false);
-  //     }
-  //   }
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, []);
 
   return (
     <>
@@ -76,8 +74,7 @@ export default function Header() {
                 location.pathname === "/series"
                   ? "text-main hover:text-main"
                   : ""
-              }`}
-            >
+              }`}>
               시리즈
             </Link>
             <Link
@@ -86,8 +83,7 @@ export default function Header() {
                 location.pathname === "/movies"
                   ? "text-main hover:text-main"
                   : ""
-              }`}
-            >
+              }`}>
               영화
             </Link>
             <Link
@@ -96,8 +92,7 @@ export default function Header() {
                 location.pathname === "/genres"
                   ? "text-main hover:text-main"
                   : ""
-              }`}
-            >
+              }`}>
               장르
             </Link>
           </div>
@@ -122,6 +117,7 @@ export default function Header() {
               }`}
               onClick={() => {
                 setIsSearch((prev) => !prev);
+                isSearch ? navigate(previousPath) : "";
               }}
             />
             {isLoggedIn ? (
@@ -176,8 +172,8 @@ export default function Header() {
 
         {/* 검색창 */}
         {isSearch && (
-          <div className="absolute top-[80px] left-0 w-full h-full bg-black_50 z-10">
-            <div className="absolute left-0 w-full h-[603px] bg-black z-20">
+          <div className="absolute top-[80px] left-0 w-full h-full bg-black_50 z-20">
+            <div className="absolute left-0 w-full bg-black z-30">
               <Searchbar />
             </div>
           </div>
@@ -188,26 +184,22 @@ export default function Header() {
           <>
             {/* tablet 이상 */}
             <div
-              className="absolute hidden tablet:flex top-[80px] 
-            right-[18px] bg-none z-20"
-            >
+              className="absolute hidden tablet:flex top-[80px]
+            right-[18px] bg-none z-20">
               <div
-                className="absolute top-0 right-0 w-[349px] h-[417px]  
-              bg-black border border-gray03 rounded-[10px] 
-              shadow-md shadow-white01/10 p-[50px] z-20"
-              >
+                className="absolute top-0 right-0 w-[349px] h-[417px]
+              bg-black border border-gray03 rounded-[10px]
+              shadow-md shadow-white01/10 p-[50px] z-20">
                 <Notification />
               </div>
             </div>
             {/* mobile 전용 */}
             <div
-              className="absolute tablet:hidden flex w-full h-[100%]  
-            bg-black_50 top-[80px] left-0 z-20"
-            >
+              className="absolute tablet:hidden flex w-full h-[100%]
+            bg-black_50 top-[80px] left-0 z-20">
               <div
-                className="absolute top-0px right-0 w-[256px] h-full 
-              bg-black border-0 rounded-none z-20"
-              >
+                className="absolute top-0px right-0 w-[256px] h-full
+              bg-black border-0 rounded-none z-20">
                 <Notification />
               </div>
             </div>
