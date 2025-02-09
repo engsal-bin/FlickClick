@@ -4,7 +4,7 @@ import RootLayout from "./layouts/RootLayout";
 import Main from "./pages/Main";
 import Popular from "./pages/Popular";
 import NewUpdate from "./pages/NewUpdate";
-import Upcoming from "./pages/Upcoming";
+import Upcomings from "./pages/Upcomings";
 import Series from "./pages/Series";
 import Movies from "./pages/Movies";
 import Genres from "./pages/Genres";
@@ -27,7 +27,7 @@ export default function App() {
           {/* 메인 페이지 내 분류 */}
           <Route path="/popular" element={<Popular />} />
           <Route path="/newupdate" element={<NewUpdate />} />
-          <Route path="/upcoming" element={<Upcoming />} />
+          <Route path="/upcomings" element={<Upcomings />} />
           {/* 헤더 내 분류 */}
           <Route path="/series" element={<Series />} />
           <Route path="/movies" element={<Movies />} />

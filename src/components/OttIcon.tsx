@@ -10,7 +10,10 @@ const OttIcon = ({ src, isSelected, onClick, alt }: OttIconProps) => {
     <img
       src={src}
       onClick={onClick}
-      className={`cursor-pointer ${isSelected ? "opacity-100" : "opacity-30"}`}
+      className={
+        `cursor-pointer ${isSelected ? "opacity-100" : "opacity-30"}` +
+        "object-cover"
+      }
       alt={alt}
     />
   );

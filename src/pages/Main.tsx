@@ -17,7 +17,6 @@ export default function Main() {
     const fetchTrendAll = async () => {
       try {
         const trend = await commonAPI.getTrendingAll(1);
-        console.log(trend);
         setTrendImgSrc(
           trend.results
             .map((item: TrendingAllResultsType) => ({
@@ -126,7 +125,7 @@ export default function Main() {
         신규 업데이트
       </Contents>
       <Contents
-        to="/upcoming"
+        to="/upcomings"
         showMore
         imgSrc={upcomingImgSrc.map((item) => item.poster_path)}
       >

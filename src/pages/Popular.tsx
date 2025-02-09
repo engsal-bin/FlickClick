@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import arrowLeft from "../assets/icon/arrow/arrowLeft.svg";
 import Contents from "../components/common/Contents";
-import ContentsWithoutViewMore from "../components/common/ContentsWithoutViewMore";
 import { commonAPI } from "../api/common";
 
-type Period = "today" | "7days" | "30days" | null;
+type Period = "today" | "week" | "30days" | null;
 
 export default function Popular() {
-  const [trendAllInfo, setTrendAllInfo] = useState<BasicType[]>([]);
+  const [trendMovieInfo, setTrendMovieInfo] = useState<BasicType[]>([]);
+  const [trendTvInfo, setTrendTvInfo] = useState<BasicType[]>([]);
 
   // 선택태그 상태
   const [selectedPeriod, setSelectedPeriod] = useState<Period>(null);
@@ -24,17 +24,51 @@ export default function Popular() {
 
   useEffect(() => {
     const fetchTrendAll = async () => {
+      const trend = [];
       try {
-        const trend = await commonAPI.getTrendingAll(1);
-        setTrendAllInfo(
-          trend.results.map((item: TrendingAllResultsType) => ({
-            poster_path:
-              "https://image.tmdb.org/t/p/w220_and_h330_face" +
-              item.poster_path,
-            id: item.id,
-            title: item.title,
-            media_type: item.media_type,
-          }))
+        const trend1 = await commonAPI.getTrendingAll(1);
+        const trend2 = await commonAPI.getTrendingAll(2);
+        const trend3 = await commonAPI.getTrendingAll(3);
+        const trend4 = await commonAPI.getTrendingAll(4);
+        trend.push(...trend1["results"]);
+        trend.push(...trend2["results"]);
+        trend.push(...trend3["results"]);
+        trend.push(...trend4["results"]);
+
+        const movieFilters = trend.filter((filter) => {
+          if (filter["media_type"] === "movie") {
+            return filter;
+          }
+        });
+        const tvFilters = trend.filter((filter) => {
+          if (filter["media_type"] === "tv") {
+            return filter;
+          }
+        });
+
+        setTrendMovieInfo(
+          movieFilters
+            .map((item: TrendingAllResultsType) => ({
+              poster_path:
+                "https://image.tmdb.org/t/p/w220_and_h330_face" +
+                item.poster_path,
+              id: item.id,
+              title: item.title,
+              media_type: item.media_type,
+            }))
+            .slice(0, 20)
+        );
+        setTrendTvInfo(
+          tvFilters
+            .map((item: TrendingAllResultsType) => ({
+              poster_path:
+                "https://image.tmdb.org/t/p/w220_and_h330_face" +
+                item.poster_path,
+              id: item.id,
+              title: item.title,
+              media_type: item.media_type,
+            }))
+            .slice(0, 20)
         );
       } catch (error) {
         console.error("Error fetching upcoming movies:", error);
@@ -68,9 +102,9 @@ export default function Popular() {
             오늘
           </div>
           <div
-            onClick={() => handleSelect("7days")}
+            onClick={() => handleSelect("week")}
             className={`h-[31px] flex items-center ${
-              selectedPeriod === "7days"
+              selectedPeriod === "week"
                 ? "bg-gray01 border-[1px] border-gray01 text-white01"
                 : "border-[1px] border-white03"
             } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
@@ -90,8 +124,20 @@ export default function Popular() {
         </div>
       </div>
       {/* 컨텐츠 */}
-      <ContentsWithoutViewMore />
-      <ContentsWithoutViewMore />
+      <Contents
+        to=""
+        showMore={false}
+        imgSrc={trendMovieInfo.map((item) => item.poster_path)}
+      >
+        MOVIE
+      </Contents>
+      <Contents
+        to=""
+        showMore={false}
+        imgSrc={trendTvInfo.map((item) => item.poster_path)}
+      >
+        TV
+      </Contents>
     </div>
   );
 }
