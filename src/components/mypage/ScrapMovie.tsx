@@ -11,9 +11,7 @@ export default function ScrapMovie({
         <ScrapContent
           ip_id={clip.ip_id}
           ip_name={clip.ip_name}
-          ip_type={clip.ip_type}
           poster_path={clip.poster_path}
-          summary={clip.summary}
         />
       ))}
     </div>

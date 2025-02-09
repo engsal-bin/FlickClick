@@ -11,9 +11,9 @@ export default function ScrapEpisode({
         <EpisodeContent
           ip_id={clip.ip_id}
           ip_name={clip.ip_name}
-          ip_type={"episode"}
           poster_path={clip.poster_path}
           summary={clip.summary}
+          upstream_ip_name={clip.upstream_ip_name}
         />
       ))}
     </div>

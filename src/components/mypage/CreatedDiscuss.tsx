@@ -13,10 +13,8 @@ export default function CreatedDiscuss({
           argument_id={discuss.argument_id}
           topic={discuss.topic}
           ip_name={discuss.ip_name}
-          ip_type={discuss.ip_type}
           ip_id={discuss.ip_id}
           created_at={discuss.created_at}
-          author_id={discuss.author_id}
           profile_image={discuss.profile_image}
         />
       ))}

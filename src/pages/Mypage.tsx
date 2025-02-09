@@ -17,12 +17,10 @@ import Tag from "../components/common/Tag";
 import { useAuth } from "../api/Auth";
 
 // import { useNavigate } from "react-router-dom";
-
 export default function Mypage() {
   const [isClick, setIsClick] = useState("notify");
   const [discussType, setDiscussType] = useState("createdDiscuss");
   const [scrapType, setScrapType] = useState("season");
-
   const [reviews, setReviews] = useState<Review[] | null>([]);
   const [discusses, setDiscusses] = useState<Argument[] | null>([]);
   const [myOpinions, setMyOpinions] = useState<ArgumentComment[] | null>([]);
@@ -31,10 +29,8 @@ export default function Mypage() {
   const [episodeClips, setEpisodeClips] = useState<SavedClips[] | null>([]);
   const [movieClips, setMovieClips] = useState<SavedClips[] | null>([]);
 
-  // 리뷰
-
   const { user } = useAuth();
-  // const userId = "ce0845a8-ac83-425b-af3f-cb534ac52d09"; // 더미 데이터 만들어 놓은 테스트 계정
+  
   const onClickReviewTab = async () => {
     setIsClick("review");
     if (user) {
@@ -75,27 +71,34 @@ export default function Mypage() {
       console.log(fetchedClips);
       setClips(fetchedClips || []);
     }
-    if (clips) {
-      setSeasonClips(
-        () => clips.filter((clip) => clip.ip_type === "season") || []
-      );
-      setEpisodeClips(
-        () => clips.filter((clip) => clip.ip_type === "episode") || []
-      );
-      setMovieClips(
-        () => clips.filter((clip) => clip.ip_type === "movie") || []
-      );
-    }
   };
 
   useEffect(() => {
     if (!clips) return;
     if (user?.id) {
-      setSeasonClips(clips.filter((clip) => clip.ip_type === "season"));
+      setSeasonClips(
+        clips
+          .filter((clip) => clip.ip_type === "season")
+          .map((clip) => {
+            const { ...rest } = clip;
+            delete rest.upstream_ip_name;
+            return rest;
+          })
+      );
       setEpisodeClips(clips.filter((clip) => clip.ip_type === "episode"));
-      setMovieClips(clips.filter((clip) => clip.ip_type === "movie"));
+      setMovieClips(
+        clips
+          .filter((clip) => clip.ip_type === "movie")
+          .map((clip) => {
+            const { ...rest } = clip;
+            delete rest.upstream_ip_name;
+            return rest;
+          })
+      );
     }
   }, [clips]);
+
+  
 
   return (
     <div className="w-full y-full flex-1 pt-[100px] tablet:px-[50px] mobile:pt-0 mobile:px-[10px] text-gray01">
@@ -144,6 +147,7 @@ export default function Mypage() {
         </div>
       </div>
       <div className="mt-[30px]">
+        {/* 알림 */}
         {isClick === "notify" && (
           <div className="flex flex-col gap-[30px] ">
             <Notify
@@ -154,6 +158,7 @@ export default function Mypage() {
             />
           </div>
         )}
+        {/* 리뷰 */}
         {isClick === "review" && (
           <div>
             {reviews?.map((review) => (
@@ -162,13 +167,13 @@ export default function Mypage() {
                 review_id={review.review_id}
                 ip_name={review.ip_name}
                 ip_id={review.ip_id}
-                ip_type={review.ip_type}
                 content={review.content}
                 created_at={review.created_at}
               />
             ))}
           </div>
         )}
+        {/* 토론 */}
         {isClick === "discuss" && (
           <div>
             <div className="flex gap-[10px]">
@@ -195,6 +200,7 @@ export default function Mypage() {
             </div>
           </div>
         )}
+        {/* 스크랩 */}
         {isClick === "scrap" && (
           <div>
             <div className="flex gap-[10px]">
