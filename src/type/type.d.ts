@@ -11,6 +11,7 @@ interface BasicType {
   poster_path: string;
   media_type: string;
   name: string;
+  popularity: number;
 }
 
 // 인기 급상승
@@ -39,6 +40,9 @@ interface NewUpdateType {
   title: string;
   poster_path: string;
   popularity: number;
+  name: string;
+  media_type: string;
+  genre_ids: [number];
 }
 // TV
 interface OnTheAirTvSerieseResultsType {
@@ -73,6 +77,7 @@ interface NowPlayingMovieResultsType {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  name: string;
 }
 
 // 공개 예정
@@ -232,4 +237,10 @@ interface EpisodeType {
     popularity: number;
     profile_path: string;
   }[];
+}
+
+// 장르 기본 타입
+interface GenreBasicType {
+  name: string;
+  id: number;
 }
