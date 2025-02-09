@@ -29,7 +29,8 @@ export default function MainThumbnail() {
       </Link>
 
       {/* mobile 전용 */}
-      <div
+      <Link
+        to={"/detailseries/96102"} // 임시로 슬기로운의사생활 id 적용
         className="relative tablet:hidden flex flex-col justify-center 
         items-center w-full h-[420px] border-[1px] border-gray01 
         bg-cover bg-center py-[50px] px-[30px]"
@@ -49,7 +50,7 @@ export default function MainThumbnail() {
           <div className="font-bold text-[36px] leading-none">영화 제목</div>
           <div className="text-[16px] leading-none">요약 내용</div>
         </div>
-      </div>
+      </Link>
     </>
   );
 }
