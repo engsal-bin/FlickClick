@@ -15,7 +15,7 @@ export default function Header() {
   const location = useLocation(); // 현재 경로 상태
   const { isLoggedIn, setIsLoggedin } = useAuth(); // (임시) 로그인 상태
   const navigate = useNavigate();
-  const [previosPath, setPreviousPath] = useState("/");
+  const [previosPath, setPreviousPath] = useState("");
 
   // 모바일에서 스크롤 막기&허용
   useEffect(() => {
@@ -46,6 +46,7 @@ export default function Header() {
     if (location.pathname !== "/search") {
       setPreviousPath(location.pathname);
     }
+    console.log(`경로 저장됨 : ${previosPath}`);
   }, [navigate, previosPath]);
 
   return (
