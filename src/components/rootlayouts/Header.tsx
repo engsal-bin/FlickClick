@@ -15,7 +15,7 @@ export default function Header() {
   const location = useLocation(); // 현재 경로 상태
   const { isLoggedIn, setIsLoggedin } = useAuth(); // (임시) 로그인 상태
   const navigate = useNavigate();
-  const [previosPath, setPreviousPath] = useState("");
+  const [previousPath, setPreviousPath] = useState("");
 
   // 모바일에서 스크롤 막기&허용
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function Header() {
     if (location.pathname !== "/search") {
       setPreviousPath(location.pathname);
     }
-  }, [navigate, previosPath]);
+  }, [navigate, previousPath]);
 
   return (
     <>
@@ -121,7 +121,7 @@ export default function Header() {
               }`}
               onClick={() => {
                 setIsSearch((prev) => !prev);
-                isSearch ? navigate(previosPath) : "";
+                isSearch ? navigate(previousPath) : "";
               }}
             />
             {isLoggedIn ? (
