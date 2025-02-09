@@ -1,22 +1,24 @@
 import "./css/index.css";
+
 import { Route, Routes } from "react-router";
-import RootLayout from "./layouts/RootLayout";
-import Main from "./pages/Main";
-import Popular from "./pages/Popular";
-import NewUpdate from "./pages/NewUpdate";
-import Upcomings from "./pages/Upcomings";
-import Series from "./pages/Series";
-import Movies from "./pages/Movies";
+
+import { AuthProvider } from "./api/Auth";
+import DetailEpisode from "./pages/DetailEpisode";
+import DetailMovie from "./pages/DetailMovie";
+import DetailSeason from "./pages/DetailSeason";
+import DetailSeries from "./pages/DetailSeries";
+import DetailSeriesNoSeason from "./pages/DetailSeriesNoSeason";
 import Genres from "./pages/Genres";
 import Login from "./pages/Login";
+import Main from "./pages/Main";
+import Movies from "./pages/Movies";
 import Mypage from "./pages/Mypage";
-import { AuthProvider } from "./api/Auth";
-import DetailSeries from "./pages/DetailSeries";
-import DetailEpisode from "./pages/DetailEpisode";
-import DetailSeason from "./pages/DetailSeason";
-import DetailSeriesNoSeason from "./pages/DetailSeriesNoSeason";
-import DetailMovie from "./pages/DetailMovie";
+import NewUpdate from "./pages/NewUpdate";
+import Popular from "./pages/Popular";
+import RootLayout from "./layouts/RootLayout";
+import Series from "./pages/Series";
 import Trailers from "./components/common/Trailers";
+import Upcomings from "./pages/Upcomings";
 
 export default function App() {
   return (

@@ -1,15 +1,11 @@
 import { twMerge } from "tailwind-merge";
 
 export default function Notify({
-  name,
-  content,
-  action,
-  read,
+  message,
+  is_read,
 }: {
-  name: string;
-  content: string;
-  action: string;
-  read: boolean;
+  message?: string;
+  is_read?: boolean;
 }) {
   return (
     <>
@@ -18,11 +14,12 @@ export default function Notify({
         <span
           className={twMerge(
             `block w-[10px] h-[10px] rounded-[100%] ${
-              read ? "bg-gray02" : "bg-main"
+              is_read ? "bg-gray02" : "bg-main"
             }`
-          )}></span>
-        <p className={twMerge(`${read ? "text-gray02" : "text-white01"}`)}>
-          [{name}] 님이 내 {content}에 {action}을 남겼습니다.
+          )}
+        ></span>
+        <p className={twMerge(`${is_read ? "text-gray02" : "text-white01"}`)}>
+          {message}
         </p>
       </div>
       {/* mobile */}
@@ -30,14 +27,16 @@ export default function Notify({
         <span
           className={twMerge(
             `block w-[10px] h-[10px] rounded-[100%] ${
-              read ? "bg-gray02" : "bg-main"
+              is_read ? "bg-gray02" : "bg-main"
             }`
-          )}></span>
+          )}
+        ></span>
         <p
           className={twMerge(
-            `${read ? "text-gray02" : "text-white01"} truncate`
-          )}>
-          [{name}] 님이 내 {content}에 {action}을 남겼습니다.
+            `${is_read ? "text-gray02" : "text-white01"} truncate`
+          )}
+        >
+          {message}
         </p>
       </div>
     </>

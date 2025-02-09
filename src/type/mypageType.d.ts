@@ -101,3 +101,14 @@ interface MySavedCounts {
   discussCount: number | null;
   clipCount: number | null;
 }
+
+interface Notification {
+  id: string;
+  user_id: string;
+  ip_id: string;
+  ip_type: "movie" | "episode" | "season";
+  event_type: string;
+  message: string;
+  created_at: Date;
+  is_read: boolean;
+}
