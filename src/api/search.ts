@@ -31,8 +31,8 @@ const tvSearch = async (keyword: string, page = 1) => {
   }
 };
 
-export const searchAPI = () => {
-  keywordSearch;
-  movieSearch;
-  tvSearch;
+export const searchAPI = {
+  keywordSearch,
+  movieSearch,
+  tvSearch,
 };
