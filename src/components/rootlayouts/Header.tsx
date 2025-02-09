@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Notification from "./Notification";
 import Searchbar from "./Searchbar";
@@ -44,6 +44,21 @@ export default function Header() {
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
+
+  const mypageRef = useRef(null);
+
+  // 다른 곳 클릭하면 창 닫음
+  // TODO: 타입 애러 해결
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (mypageRef.current && !mypageRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -148,6 +163,7 @@ export default function Header() {
             />
             {/* 햄버거 버튼 */}
             <img
+              ref={mypageRef}
               src={burgerButton}
               alt="Toggle Notification"
               className="cursor-pointer flex w-[20px]"

@@ -77,14 +77,22 @@ export default function Notification() {
       {/* 데스크탑용 알림 */}
       <div className="hidden tablet:flex w-[249px] h-[58px] justify-between">
         {[
-          ["리뷰", counts.reviewCount],
-          ["토론", counts.discussCount],
-          ["스크랩", counts.clipCount],
-        ].map(([label, count]) => (
-          <div key={label} className="text-center w-[47px] h-[58px]">
+          ["리뷰", counts.reviewCount, "review"],
+          ["토론", counts.discussCount, "discuss"],
+          ["스크랩", counts.clipCount, "scrap"],
+        ].map(([label, count, select]) => (
+          <button
+            onClick={() =>
+              navigate(`/myPage?tab=${select}`, {
+                state: { selectedTab: select },
+              })
+            }
+            key={label}
+            className="text-center w-[47px] h-[58px]"
+          >
             <p className="text-main text-[24px] font-bold">{count}</p>
             <p className="text-white03 text-[18px] font-400">{label}</p>
-          </div>
+          </button>
         ))}
       </div>
 
@@ -100,12 +108,20 @@ export default function Notification() {
       </div>
 
       {/* 마이페이지 & 알림 */}
-      <Link to="/mypage" className="hidden text-white01 tablet:flex">
+      <button
+        onClick={() => navigate("/myPage")}
+        className="hidden text-white01 tablet:flex"
+      >
         마이페이지
-      </Link>
-      <Link to="/mypage" className="hidden text-white01 tablet:flex">
+      </button>
+      <button
+        onClick={() =>
+          navigate("/myPage", { state: { selectedTab: "notify" } })
+        }
+        className="hidden text-white01 tablet:flex"
+      >
         알림
-      </Link>
+      </button>
 
       {/* 로그아웃 */}
       <div
@@ -155,11 +171,15 @@ export default function Notification() {
         </button>
 
         {/* SideToggleList 컴포넌트 */}
-        {["영화", "장르", "마이페이지"].map((title) => (
+        {[
+          { label: "영화", path: "movies" },
+          { label: "장르", path: "genres" },
+          { label: "마이페이지", path: "myPage" },
+        ].map((list) => (
           <SideToggleList
-            key={title}
-            title={title}
-            id={title.toLowerCase()}
+            key={list.label}
+            title={list.label}
+            id={list.path}
             clicked={toggleClicked}
             onClicked={handleToggleClicked}
           />
