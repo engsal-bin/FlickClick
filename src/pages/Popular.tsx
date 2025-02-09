@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import arrowLeft from "../assets/icon/arrow/arrowLeft.svg";
-import Contents from "../components/common/Contents";
 import { commonAPI } from "../api/common";
+import ContentsWithoutViewMore from "../components/common/ContentsWithoutViewMore";
 
-type Period = "today" | "week" | "30days" | null;
+type Period = "today" | "week";
 
 export default function Popular() {
-  const [trendMovieInfo, setTrendMovieInfo] = useState<BasicType[]>([]);
-  const [trendTvInfo, setTrendTvInfo] = useState<BasicType[]>([]);
+  const [trendInfos, setTrendInfos] = useState<BasicType[]>([]);
 
   // 선택태그 상태
-  const [selectedPeriod, setSelectedPeriod] = useState<Period>(null);
+  const [selectedPeriod, setSelectedPeriod] = useState<Period>("today");
 
   // 선택여부 확인 후 선택 or 선택 취소
   const handleSelect = (period: Period) => {
-    setSelectedPeriod((prev) => (prev === period ? null : period));
+    setSelectedPeriod((prev) => (prev === period ? prev : period));
+    if (period === selectedPeriod) return;
+    if (period === "today") fetchTrendAll();
+    else fetchTrendAll("week");
   };
 
   // 뒤로가기
@@ -22,58 +24,26 @@ export default function Popular() {
     window.history.back(); // 브라우저 히스토리에서 뒤로 가기
   };
 
+  const fetchTrendAll = async (day = "day") => {
+    try {
+      const trend = await commonAPI.getTrendingAll(1, day);
+      console.log(trend);
+
+      setTrendInfos(
+        trend["results"].map((item: TrendingAllResultsType) => ({
+          poster_path:
+            "https://image.tmdb.org/t/p/w220_and_h330_face" + item.poster_path,
+          id: item.id,
+          title: item.title,
+          media_type: item.media_type,
+          name: item.name,
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching upcoming movies:", error);
+    }
+  };
   useEffect(() => {
-    const fetchTrendAll = async () => {
-      const trend = [];
-      try {
-        const trend1 = await commonAPI.getTrendingAll(1);
-        const trend2 = await commonAPI.getTrendingAll(2);
-        const trend3 = await commonAPI.getTrendingAll(3);
-        const trend4 = await commonAPI.getTrendingAll(4);
-        trend.push(...trend1["results"]);
-        trend.push(...trend2["results"]);
-        trend.push(...trend3["results"]);
-        trend.push(...trend4["results"]);
-
-        const movieFilters = trend.filter((filter) => {
-          if (filter["media_type"] === "movie") {
-            return filter;
-          }
-        });
-        const tvFilters = trend.filter((filter) => {
-          if (filter["media_type"] === "tv") {
-            return filter;
-          }
-        });
-
-        setTrendMovieInfo(
-          movieFilters
-            .map((item: TrendingAllResultsType) => ({
-              poster_path:
-                "https://image.tmdb.org/t/p/w220_and_h330_face" +
-                item.poster_path,
-              id: item.id,
-              title: item.title,
-              media_type: item.media_type,
-            }))
-            .slice(0, 20)
-        );
-        setTrendTvInfo(
-          tvFilters
-            .map((item: TrendingAllResultsType) => ({
-              poster_path:
-                "https://image.tmdb.org/t/p/w220_and_h330_face" +
-                item.poster_path,
-              id: item.id,
-              title: item.title,
-              media_type: item.media_type,
-            }))
-            .slice(0, 20)
-        );
-      } catch (error) {
-        console.error("Error fetching upcoming movies:", error);
-      }
-    };
     fetchTrendAll();
   }, []);
 
@@ -109,35 +79,17 @@ export default function Popular() {
                 : "border-[1px] border-white03"
             } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
           >
-            최근 7일
-          </div>
-          <div
-            onClick={() => handleSelect("30days")}
-            className={`h-[31px] flex items-center ${
-              selectedPeriod === "30days"
-                ? "bg-gray01 border-[1px] border-gray01 text-white01"
-                : "border-[1px] border-white03"
-            } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
-          >
-            최근 30일
+            이번주
           </div>
         </div>
       </div>
+
       {/* 컨텐츠 */}
-      <Contents
-        to=""
-        showMore={false}
-        imgSrc={trendMovieInfo.map((item) => item.poster_path)}
-      >
-        MOVIE
-      </Contents>
-      <Contents
-        to=""
-        showMore={false}
-        imgSrc={trendTvInfo.map((item) => item.poster_path)}
-      >
-        TV
-      </Contents>
+      <div className="flex flex-wrap justify-start gap-4">
+        {trendInfos.map((info) => (
+          <ContentsWithoutViewMore info={info} key={info.id} />
+        ))}
+      </div>
     </div>
   );
 }
