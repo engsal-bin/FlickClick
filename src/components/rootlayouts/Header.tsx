@@ -1,17 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import mainLogo from "../../assets/logo/mainLogo.svg";
 import searchIcon from "../../assets/icon/searchIcon.svg";
 import cancelIcon from "../../assets/icon/cancelIcon.svg";
 import arrow01 from "../../assets/icon/arrow/arrow01.svg";
-
 import Notification from "./Notification";
 import Searchbar from "./Searchbar";
-import arrow01 from "../../assets/icon/arrow/arrow01.svg";
 import burgerButton from "../../assets/icon/burgerButton.svg";
-import cancelIcon from "../../assets/icon/cancelIcon.svg";
-import mainLogo from "../../assets/logo/mainLogo.svg";
-import searchIcon from "../../assets/icon/searchIcon.svg";
 import { useAuth } from "../../api/Auth";
 
 export default function Header() {
@@ -53,7 +48,6 @@ export default function Header() {
     }
   }, [navigate, previousPath]);
 
-          
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
@@ -123,12 +117,10 @@ export default function Header() {
             {isLoggedIn ? (
               <Link
                 to={"/mypage"}
-                className="flex items-center justify-between "
-              >
+                className="flex items-center justify-between ">
                 <img
                   src={user?.profile}
-                  className="w-[35px] h-[35px] bg-gray02 rounded-full mr-[10px]"
-                ></img>
+                  className="w-[35px] h-[35px] bg-gray02 rounded-full mr-[10px]"></img>
                 <div>{user?.name || "No Name"}</div>
               </Link>
             ) : (
@@ -159,7 +151,6 @@ export default function Header() {
             />
             {/* 햄버거 버튼 */}
             <img
-              ref={mypageRef}
               src={burgerButton}
               alt="Toggle Notification"
               className="cursor-pointer flex w-[20px]"
