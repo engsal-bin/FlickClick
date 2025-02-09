@@ -17,7 +17,6 @@ import DetailSeason from "./pages/DetailSeason";
 import DetailSeriesNoSeason from "./pages/DetailSeriesNoSeason";
 import DetailMovie from "./pages/DetailMovie";
 import Trailers from "./components/common/Trailers";
-import TrailerModal from "./components/common/TrailerModal";
 
 export default function App() {
   return (
@@ -38,15 +37,29 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           {/* 마이페이지 */}
           <Route path="/mypage" element={<Mypage />} />
+
           {/* 상세 페이지 */}
-          <Route path="/detailseries" element={<DetailSeries />} />
+
+          {/* 시리즈 상세페이지 - 시즌 유 */}
+          <Route path="/detailseries/:seriesid" element={<DetailSeries />} />
+          {/* 시리즈 상세페이지 - 시즌 무 */}
           <Route
-            path="/detailseason-noseason"
+            path="/detailseason-noseason/:id"
             element={<DetailSeriesNoSeason />}
           />
+          {/* 시즌 상세페이지 */}
+          <Route
+            path="/detailseason/:seriesid/:seasonnumber"
+            element={<DetailSeason />}
+          />
+          {/* 에피소드 상세페이지 */}
+          <Route
+            path="/detailepisode/:seriesid/:seasonnumber/:episodenumber"
+            element={<DetailEpisode />}
+          />
+
+          {/* 영화 상세페이지 */}
           <Route path="/detailmovie" element={<DetailMovie />} />
-          <Route path="/detailepisode" element={<DetailEpisode />} />
-          <Route path="/detailseason" element={<DetailSeason />} />
           {/* 예고편 */}
           <Route path="/trailers" element={<Trailers />} />
         </Route>
