@@ -172,7 +172,7 @@ export default function Header() {
         {/* 검색창 */}
         {isSearch && (
           <div className="absolute top-[80px] left-0 w-full h-full bg-black_50 z-20">
-            <div className="absolute left-0 w-full pb-[50px] bg-black z-30">
+            <div className="absolute left-0 w-full bg-black z-30">
               <Searchbar />
             </div>
           </div>
