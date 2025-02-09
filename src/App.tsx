@@ -25,7 +25,6 @@ export default function App() {
       <Routes>
         <Route element={<RootLayout />}>
           <Route path="/" element={<Main />} />
-          <Route path="/search" element={<Search />} />
           {/* 메인 페이지 내 분류 */}
           <Route path="/popular" element={<Popular />} />
           <Route path="/newupdate" element={<NewUpdate />} />
