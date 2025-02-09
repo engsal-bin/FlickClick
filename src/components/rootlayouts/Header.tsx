@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import mainLogo from "../../assets/logo/mainLogo.svg";
 import searchIcon from "../../assets/icon/searchIcon.svg";
 import cancelIcon from "../../assets/icon/cancelIcon.svg";
@@ -14,6 +14,8 @@ export default function Header() {
   const [isSearch, setIsSearch] = useState(false); // 검색창 오픈 상태
   const location = useLocation(); // 현재 경로 상태
   const { isLoggedIn, setIsLoggedin } = useAuth(); // (임시) 로그인 상태
+  const navigate = useNavigate();
+  const [previosPath, setPreviousPath] = useState("/");
 
   // 모바일에서 스크롤 막기&허용
   useEffect(() => {
@@ -39,6 +41,12 @@ export default function Header() {
       document.body.style.overflow = "auto";
     };
   }, [isSearch]);
+
+  useEffect(() => {
+    if (location.pathname !== "/search") {
+      setPreviousPath(location.pathname);
+    }
+  }, [navigate, previosPath]);
 
   return (
     <>
@@ -113,6 +121,7 @@ export default function Header() {
               }`}
               onClick={() => {
                 setIsSearch((prev) => !prev);
+                isSearch ? navigate(previosPath) : "";
               }}
             />
             {isLoggedIn ? (
