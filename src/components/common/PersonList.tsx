@@ -81,7 +81,7 @@ export default function PersonList({
       window.removeEventListener("resize", checkOverflow);
     };
   }, [personData]);
-  console.log(personData);
+  // console.log(personData);
   // console.log(personListRef.current?.scrollWidth);
   // console.log(personListRef.current?.clientWidth);
 
