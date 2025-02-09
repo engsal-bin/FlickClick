@@ -1,37 +1,73 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
-// 로그인 상태를 저장하는 타입
-interface AuthContextType {
-  isLoggedIn: boolean;
-  setIsLoggedin: () => void;
+import { supabase } from "../api"; // supabase 경로 맞춰줘야 함
+
+// 유저 정보 타입
+interface User {
+  id: string;
+  email: string;
+  profile: string;
+  name: string;
 }
 
-// 기본값
+interface AuthContextType {
+  isLoggedIn: boolean;
+  user: User | null;
+  setUser: (user: User | null) => void;
+  setIsLoggedin: (status: boolean) => void;
+}
+
 const defaultAuthContext: AuthContextType = {
   isLoggedIn: false,
+  user: null,
+  setUser: () => {},
   setIsLoggedin: () => {},
 };
 
-// Context 생성
 const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
-// Context 제공자 컴포넌트
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<User | null>(null);
 
-  // 로그인 상태 변경 함수
-  const setIsLoggedin = () => {
-    setIsLoggedIn((prev) => !prev);
-  };
+  // 최초 마운트 시 유저 세션 가져오기
+  useEffect(() => {
+    const fetchSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (error) {
+        console.error("세션 가져오기 실패:", error);
+        return;
+      }
+      if (data?.session?.user) {
+        const userInfo = data.session.user;
+        setUser({
+          id: userInfo.id,
+          email: userInfo.email ?? "",
+          profile: userInfo.user_metadata?.avatar_url,
+          name: userInfo.user_metadata?.name,
+        });
+        setIsLoggedIn(true);
+      }
+    };
+
+    fetchSession();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedin }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, user, setUser, setIsLoggedin: setIsLoggedIn }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Context 값 가져오기 위한 커스텀 훅
 export const useAuth = () => useContext(AuthContext);

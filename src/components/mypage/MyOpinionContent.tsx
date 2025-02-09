@@ -1,29 +1,32 @@
+import { Link } from "react-router-dom";
+import { formatDate } from "./../../utils/formattingDate";
+
 export default function MyOpinionContent({
-  content,
-  subject,
-  opinion,
-  date,
-}: {
-  content: string;
-  subject: string;
-  opinion: string;
-  date: string;
-}) {
+  argument_id,
+  topic,
+  ip_name,
+  ip_id,
+  comment,
+  comment_created_at,
+}: ArgumentComment) {
   return (
     <>
-      <div className="border-b-[1px] border-gray01  flex flex-col gap-[15px] mt-[30px]">
+      <Link
+        to={`/${ip_id}`}
+        className="border-b-[1px] border-gray01  flex flex-col gap-[15px] mt-[30px]"
+      >
         <div className="font-bold text-white03 tablet:text-[16px] mobile:text-[14px] flex gap-[5px]">
-          <p>{content}</p>
+          <p>{ip_name}</p>
           <p>|</p>
-          <p>{subject}</p>
+          <p>{topic}</p>
         </div>
         <p className="tablet:text-[20px] mobile:text-[16px] text-white01">
-          {opinion}
+          {comment}
         </p>
         <p className="font-light tablet:text-[14px] mobile:text-[12px] text-gray03 mb-[30px]">
-          {date}
+          {formatDate(comment_created_at)}
         </p>
-      </div>
+      </Link>
     </>
   );
 }
