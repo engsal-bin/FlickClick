@@ -149,6 +149,9 @@ export default function Searchbar() {
                 </div>
                 {currentTab === "전체" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchResults.map((result) => (
                       <div
                         key={result.id}
@@ -179,6 +182,9 @@ export default function Searchbar() {
                 )}
                 {currentTab === "시리즈" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchTVResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchTVResults.map((result) => (
                       <div
                         key={result.id}
@@ -207,6 +213,9 @@ export default function Searchbar() {
                 )}
                 {currentTab === "영화" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchMovieResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchMovieResults.map((result) => (
                       <div
                         key={result.id}
@@ -238,6 +247,7 @@ export default function Searchbar() {
           </div>
         </div>
       </div>
+
       {/* tablet */}
       <div className="desktop:hidden mobile:hidden tablet:flex">
         <div className="w-[100%] h-[100%] py-[50px] px-[58px] flex flex-col justify-between items-center">
@@ -298,6 +308,9 @@ export default function Searchbar() {
                 </div>
                 {currentTab === "전체" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchResults.map((result) => (
                       <div
                         key={result.id}
@@ -328,6 +341,9 @@ export default function Searchbar() {
                 )}
                 {currentTab === "시리즈" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchTVResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchTVResults.map((result) => (
                       <div
                         key={result.id}
@@ -356,6 +372,9 @@ export default function Searchbar() {
                 )}
                 {currentTab === "영화" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchMovieResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchMovieResults.map((result) => (
                       <div
                         key={result.id}
@@ -387,6 +406,7 @@ export default function Searchbar() {
           </div>
         </div>
       </div>
+
       {/* mobile */}
       <div className="desktop:hidden tablet:hidden mobile:flex">
         <div className="w-full h-full py-[50px] px-[10px] flex flex-col justify-between items-center ">
@@ -447,6 +467,11 @@ export default function Searchbar() {
                 </div>
                 {currentTab === "전체" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchResults.length === 0 && (
+                      <div className="text-[16px]">
+                        '{searchValue}'에 대한 검색 결과가 없습니다
+                      </div>
+                    )}
                     {searchResults.map((result) => (
                       <div
                         key={result.id}
@@ -477,6 +502,11 @@ export default function Searchbar() {
                 )}
                 {currentTab === "시리즈" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchTVResults.length === 0 && (
+                      <div className="text-[16px]">
+                        '{searchValue}'에 대한 검색 결과가 없습니다
+                      </div>
+                    )}
                     {searchTVResults.map((result) => (
                       <div
                         key={result.id}
@@ -505,6 +535,11 @@ export default function Searchbar() {
                 )}
                 {currentTab === "영화" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchMovieResults.length === 0 && (
+                      <div className="text-[16px]">
+                        '{searchValue}'에 대한 검색 결과가 없습니다
+                      </div>
+                    )}
                     {searchMovieResults.map((result) => (
                       <div
                         key={result.id}
