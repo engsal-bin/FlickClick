@@ -55,7 +55,6 @@ export default function Searchbar() {
     setCurrentTab(tab);
   };
 
-  // 검색어 입력 전 & 검색어 지웠을 때 보여줄 트랜드 컨텐츠 패칭
   const fetchTrendingContents = async () => {
     try {
       const response: ContentsType = await commonAPI.getTrendingAll(1);
