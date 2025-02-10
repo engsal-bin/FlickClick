@@ -3,6 +3,8 @@ import seachIcon from "../../assets/icon/searchIcon.svg";
 import { commonAPI } from "../../api/common";
 import { searchAPI } from "../../api/search";
 import useDebounce from "../../hooks/useDebounce";
+import { mediaTypeToPathName } from "../../constants/path";
+import { useNavigate } from "react-router-dom";
 
 interface ContentType {
   adult: boolean;
@@ -44,8 +46,9 @@ export default function Searchbar() {
   const [searchMovieResults, setSearchMovieResults] = useState<
     ContentType[] | []
   >([]);
-  const debouncedValue = useDebounce(searchValue, 500);
+  const debouncedValue = useDebounce(searchValue, 200);
   const [currentTab, setCurrentTab] = useState("전체");
+  const navigate = useNavigate();
 
   const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -55,7 +58,12 @@ export default function Searchbar() {
     setCurrentTab(tab);
   };
 
-  // 검색어 입력 전 & 검색어 지웠을 때 보여줄 트랜드 컨텐츠 패칭
+  const handleContentClick = (content: ContentType) => {
+    if (!content.media_type) return;
+    const path = mediaTypeToPathName[content.media_type as "movie" | "tv"];
+    if (path) navigate(`/${path}/${content.id}`);
+  };
+
   const fetchTrendingContents = async () => {
     try {
       const response: ContentsType = await commonAPI.getTrendingAll(1);
@@ -105,7 +113,12 @@ export default function Searchbar() {
             {!searchValue ? <p>트렌드 컨텐츠</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
-                <div className="flex text-[16px]" key={content.id}>
+                <div
+                  className="flex text-[16px] cursor-pointer"
+                  key={content.id}
+                  onClick={() => {
+                    handleContentClick(content);
+                  }}>
                   <div className="w-[20px] text-main mr-[20px]">
                     {index + 1}
                   </div>
@@ -149,10 +162,16 @@ export default function Searchbar() {
                 </div>
                 {currentTab === "전체" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -179,10 +198,16 @@ export default function Searchbar() {
                 )}
                 {currentTab === "시리즈" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchTVResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchTVResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -207,10 +232,16 @@ export default function Searchbar() {
                 )}
                 {currentTab === "영화" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchMovieResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchMovieResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -238,6 +269,7 @@ export default function Searchbar() {
           </div>
         </div>
       </div>
+
       {/* tablet */}
       <div className="desktop:hidden mobile:hidden tablet:flex">
         <div className="w-[100%] h-[100%] py-[50px] px-[58px] flex flex-col justify-between items-center">
@@ -254,7 +286,12 @@ export default function Searchbar() {
             {!searchValue ? <p>트렌드 컨텐츠</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
-                <div className="flex text-[16px]" key={content.id}>
+                <div
+                  className="flex text-[16px] cursor-pointer"
+                  key={content.id}
+                  onClick={() => {
+                    handleContentClick(content);
+                  }}>
                   <div className="w-[20px] text-main mr-[20px]">
                     {index + 1}
                   </div>
@@ -298,10 +335,16 @@ export default function Searchbar() {
                 </div>
                 {currentTab === "전체" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -328,10 +371,16 @@ export default function Searchbar() {
                 )}
                 {currentTab === "시리즈" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchTVResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchTVResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -356,10 +405,16 @@ export default function Searchbar() {
                 )}
                 {currentTab === "영화" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchMovieResults.length === 0 && (
+                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                    )}
                     {searchMovieResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -387,6 +442,7 @@ export default function Searchbar() {
           </div>
         </div>
       </div>
+
       {/* mobile */}
       <div className="desktop:hidden tablet:hidden mobile:flex">
         <div className="w-full h-full py-[50px] px-[10px] flex flex-col justify-between items-center ">
@@ -403,7 +459,12 @@ export default function Searchbar() {
             {!searchValue ? <p>트렌드 컨텐츠</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
-                <div className="flex text-[14px]" key={content.id}>
+                <div
+                  className="flex text-[14px] cursor-pointer"
+                  key={content.id}
+                  onClick={() => {
+                    handleContentClick(content);
+                  }}>
                   <div className="w-[20px] text-main mr-[20px]">
                     {index + 1}
                   </div>
@@ -447,10 +508,18 @@ export default function Searchbar() {
                 </div>
                 {currentTab === "전체" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchResults.length === 0 && (
+                      <div className="text-[16px]">
+                        '{searchValue}'에 대한 검색 결과가 없습니다
+                      </div>
+                    )}
                     {searchResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[70px] h-[94px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -477,10 +546,18 @@ export default function Searchbar() {
                 )}
                 {currentTab === "시리즈" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchTVResults.length === 0 && (
+                      <div className="text-[16px]">
+                        '{searchValue}'에 대한 검색 결과가 없습니다
+                      </div>
+                    )}
                     {searchTVResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[70px] h-[94px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -505,10 +582,18 @@ export default function Searchbar() {
                 )}
                 {currentTab === "영화" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
+                    {searchMovieResults.length === 0 && (
+                      <div className="text-[16px]">
+                        '{searchValue}'에 대한 검색 결과가 없습니다
+                      </div>
+                    )}
                     {searchMovieResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="min-w-[70px] h-[94px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}

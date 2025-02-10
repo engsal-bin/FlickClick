@@ -45,6 +45,7 @@ export default function Header() {
   useEffect(() => {
     if (location.pathname !== "/search") {
       setPreviousPath(location.pathname);
+      setIsSearch(false);
     }
   }, [navigate, previousPath]);
 
