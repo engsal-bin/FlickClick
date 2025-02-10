@@ -3,6 +3,8 @@ import seachIcon from "../../assets/icon/searchIcon.svg";
 import { commonAPI } from "../../api/common";
 import { searchAPI } from "../../api/search";
 import useDebounce from "../../hooks/useDebounce";
+import { mediaTypeToPathName } from "../../constants/path";
+import { useNavigate } from "react-router-dom";
 
 interface ContentType {
   adult: boolean;
@@ -46,6 +48,7 @@ export default function Searchbar() {
   >([]);
   const debouncedValue = useDebounce(searchValue, 200);
   const [currentTab, setCurrentTab] = useState("전체");
+  const navigate = useNavigate();
 
   const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -53,6 +56,12 @@ export default function Searchbar() {
 
   const handleTabChange = (tab: string) => {
     setCurrentTab(tab);
+  };
+
+  const handleContentClick = (content: ContentType) => {
+    if (!content.media_type) return;
+    const path = mediaTypeToPathName[content.media_type as "movie" | "tv"];
+    if (path) navigate(`/${path}/${content.id}`);
   };
 
   const fetchTrendingContents = async () => {
@@ -104,7 +113,12 @@ export default function Searchbar() {
             {!searchValue ? <p>트렌드 컨텐츠</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
-                <div className="flex text-[16px]" key={content.id}>
+                <div
+                  className="flex text-[16px] cursor-pointer"
+                  key={content.id}
+                  onClick={() => {
+                    handleContentClick(content);
+                  }}>
                   <div className="w-[20px] text-main mr-[20px]">
                     {index + 1}
                   </div>
@@ -154,7 +168,10 @@ export default function Searchbar() {
                     {searchResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -187,7 +204,10 @@ export default function Searchbar() {
                     {searchTVResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -218,7 +238,10 @@ export default function Searchbar() {
                     {searchMovieResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -263,7 +286,12 @@ export default function Searchbar() {
             {!searchValue ? <p>트렌드 컨텐츠</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
-                <div className="flex text-[16px]" key={content.id}>
+                <div
+                  className="flex text-[16px] cursor-pointer"
+                  key={content.id}
+                  onClick={() => {
+                    handleContentClick(content);
+                  }}>
                   <div className="w-[20px] text-main mr-[20px]">
                     {index + 1}
                   </div>
@@ -313,7 +341,10 @@ export default function Searchbar() {
                     {searchResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -346,7 +377,10 @@ export default function Searchbar() {
                     {searchTVResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -377,7 +411,10 @@ export default function Searchbar() {
                     {searchMovieResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -422,7 +459,12 @@ export default function Searchbar() {
             {!searchValue ? <p>트렌드 컨텐츠</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
-                <div className="flex text-[14px]" key={content.id}>
+                <div
+                  className="flex text-[14px] cursor-pointer"
+                  key={content.id}
+                  onClick={() => {
+                    handleContentClick(content);
+                  }}>
                   <div className="w-[20px] text-main mr-[20px]">
                     {index + 1}
                   </div>
@@ -474,7 +516,10 @@ export default function Searchbar() {
                     {searchResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[70px] h-[94px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -509,7 +554,10 @@ export default function Searchbar() {
                     {searchTVResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="w-[70px] h-[94px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -542,7 +590,10 @@ export default function Searchbar() {
                     {searchMovieResults.map((result) => (
                       <div
                         key={result.id}
-                        className="flex items-center gap-[20px] mb-[30px]">
+                        className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
+                        onClick={() => {
+                          handleContentClick(result);
+                        }}>
                         <div className="min-w-[70px] h-[94px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
