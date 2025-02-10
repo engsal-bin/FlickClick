@@ -44,7 +44,7 @@ export default function Searchbar() {
   const [searchMovieResults, setSearchMovieResults] = useState<
     ContentType[] | []
   >([]);
-  const debouncedValue = useDebounce(searchValue, 500);
+  const debouncedValue = useDebounce(searchValue, 200);
   const [currentTab, setCurrentTab] = useState("전체");
 
   const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
