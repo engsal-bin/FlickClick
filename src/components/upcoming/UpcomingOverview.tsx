@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import arrow from "../../assets/icon/arrow/arrow01.svg";
 
 export default function UpcomingOverview({
   overview,
@@ -29,8 +30,14 @@ export default function UpcomingOverview({
       <div className="flex justify-between text-white02 mt-[10px] text-[20px] max-[320px]:text-[16px]">
         <div>줄거리</div>
         {showButton && (
-          <button onClick={piusViewFunction}>
-            {plusView ? "간략히" : "상세히"}
+          <button onClick={piusViewFunction} className="flex items-center">
+            <p>더보기</p>
+            <img
+              src={arrow}
+              className={`ml-[10px] w-[18px] h-[18px] ${
+                plusView ? "rotate-180" : ""
+              }`}
+            />
           </button>
         )}
       </div>
