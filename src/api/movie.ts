@@ -63,6 +63,18 @@ const getProviders = async (movie_id: number, language = "ko-KR") => {
     console.error("API 호출 중 오류 발생:", error);
   }
 };
+const getMovie = async (movie_id: number) => {
+  try {
+    const response = await axiosInstance.get(`/movie/${movie_id}`, {
+      params: {
+        language: "ko-KR",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error);
+  }
+};
 export const movieAPI = {
   getMovieTrailer,
   getNowPlayingMovie,
@@ -70,4 +82,5 @@ export const movieAPI = {
   getCredits,
   getGenres,
   getProviders,
+  getMovie,
 };

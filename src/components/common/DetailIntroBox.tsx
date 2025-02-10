@@ -11,7 +11,7 @@ export default function DetailIntroBox({
   season?: TvSeasonsType;
 }) {
   // console.log(data?.poster_path);
-  console.log(data);
+  // console.log(data);
   return (
     <>
       <section
