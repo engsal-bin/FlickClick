@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { API_KEY, API_URL } from "../../api/axios";
-import axios from "axios";
+import { genreAPI } from "../../api/genre";
 
 type Genres = {
   id: number;
@@ -44,18 +43,26 @@ export default function GenreList(props: GenreListProps) {
   useEffect(() => {
     const fetchGenres = async () => {
       const mediaType = props.media === "tv" ? "tv" : "movie";
-      const GenresList = `genre/${mediaType}/list?api_key=${API_KEY}&language=ko-KR`;
+      // const GenresList = `genre/${mediaType}/list?api_key=${API_KEY}&language=ko-KR`;
 
       try {
-        const GenreResponse = await axios.get(`${API_URL}${GenresList}`);
-        const GenreData: Genres[] = GenreResponse.data.genres;
-
-        // 장르 이름을 매핑된 한글 값으로 변경
-        const mapGenreData = GenreData.map((data) => ({
-          ...data,
-          name: mappingGenres[data.name] || data.name, // 매핑되지 않은 값은 그대로 유지
-        }));
-        setGenres(mapGenreData);
+        if (mediaType === "tv") {
+          const GenreResponse = await genreAPI.getTVGenre();
+          const GenreData: Genres[] = GenreResponse.genres;
+          const mapGenreData = GenreData.map((data) => ({
+            ...data,
+            name: mappingGenres[data.name] || data.name, // 매핑되지 않은 값은 그대로 유지
+          }));
+          setGenres(mapGenreData);
+        } else {
+          const GenreResponse = await genreAPI.getMovieGenre();
+          const GenreData: Genres[] = GenreResponse.genres;
+          const mapGenreData = GenreData.map((data) => ({
+            ...data,
+            name: mappingGenres[data.name] || data.name, // 매핑되지 않은 값은 그대로 유지
+          }));
+          setGenres(mapGenreData);
+        }
       } catch (error) {
         console.log("Error fetching Genres", error);
       }
@@ -70,15 +77,14 @@ export default function GenreList(props: GenreListProps) {
       {Genres?.slice(0, moreView * 5).map((genre) => (
         <div
           key={genre.id}
-          className="flex justify-start items-center gap-[15px]"
-        >
+          className="flex justify-start items-center gap-[15px]">
           {/* 체크박스 */}
           <input
             type="checkbox"
             id="genre-checkbox"
             checked={checkedGenres.includes(genre) ? true : false}
             onChange={() => handleCheckedGenresChange(genre)}
-            className={`w-[16px] h-[16px] border-2 rounded-[3px] 
+            className={`w-[16px] h-[16px] border-2 rounded-[3px]
               appearance-none cursor-pointer ${
                 checkedGenres.includes(genre)
                   ? "bg-main border-white01"
@@ -99,14 +105,12 @@ export default function GenreList(props: GenreListProps) {
             : Genres?.slice(0, moreView * 5).length !== Genres.length
             ? "justify-between"
             : "justify-end"
-        } text-gray01`}
-      >
+        } text-gray01`}>
         {/* 더보기 */}
         {Genres?.slice(0, moreView * 5).length !== Genres.length && (
           <div
             className="text-[12px] cursor-pointer hover:text-gray03"
-            onClick={() => setMoreView((prev) => prev + 1)}
-          >
+            onClick={() => setMoreView((prev) => prev + 1)}>
             더보기
           </div>
         )}
@@ -114,8 +118,7 @@ export default function GenreList(props: GenreListProps) {
         {moreView !== 1 && (
           <div
             className="text-[12px] cursor-pointer hover:text-gray03"
-            onClick={() => setMoreView(1)}
-          >
+            onClick={() => setMoreView(1)}>
             접기
           </div>
         )}
