@@ -35,7 +35,6 @@ export default function Genres() {
     "90~120분": false,
     "120분 이상": false,
   });
-  // console.log(checked);
 
   // 체크박스 상태 변경 함수
   const handleCheckboxChange = (key: string) => {
