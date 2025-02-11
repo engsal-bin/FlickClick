@@ -85,11 +85,14 @@ export default function GenreList(props: GenreListProps) {
             checked={checkedGenres.includes(genre) ? true : false}
             onChange={() => handleCheckedGenresChange(genre)}
             className={`w-[16px] h-[16px] border-2 rounded-[3px]
-              appearance-none cursor-pointer ${
+              appearance-none cursor-pointer relative ${
                 checkedGenres.includes(genre)
-                  ? "bg-main border-white01"
+                  ? "bg-main border-none"
                   : "bg-black border-gray-400"
-              } transition-colors ease-in-out`}
+              } transition-colors ease-in-out after:content-[''] after:absolute after:left-[5px] after:top-[2px]
+            after:w-[6px] after:h-[10px] after:border-white
+            after:border-r-2 after:border-b-2 after:rotate-45
+            ${checkedGenres.includes(genre) ? "after:block" : "after:hidden"}`}
           />
           {/* 장르명 */}
           <label htmlFor="genre-checkbox" className="text-[13px]">
