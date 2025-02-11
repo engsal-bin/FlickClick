@@ -4,10 +4,6 @@ import selectTag from "../assets/icon/selectTag.svg";
 import ToggleList from "../components/genresPage/ToggleList";
 
 /* 타입 정리 */
-type ToggleState = {
-  [key: string]: boolean;
-};
-
 type Genres = {
   id: number;
   name: string;
@@ -49,11 +45,11 @@ export default function Genres() {
     }));
   };
   return (
-    <div className="w-full h-max flex flex-row justify-between text-white bg-black">
+    <div className="w-full h-max flex flex-row justify-between text-white bg-black mb-[50px]">
       {/* 사이드바 */}
-      <div className="w-[154px] h-full flex flex-col justify-start items-center top-[80px] gap-[30px] left-0 px-[15px]">
+      <div className="hidden tablet:min-w-[154px] tablet:w-[20%] h-full tablet:flex flex-col justify-start items-center top-[80px] gap-[30px] left-0 px-[15px]">
         {/* 태그 선택 */}
-        <div className="w-[124px] flex flex-col gap-[10px]">
+        <div className="w-full flex flex-col gap-[10px]">
           <p className="text-[24px] font-bold">태그 선택</p>
           <div className="w-[79px] flex justify-between">
             <p className="text-[12px] font-400">전체 초기화</p>
@@ -62,7 +58,7 @@ export default function Genres() {
         </div>
 
         {/* 구분선 */}
-        <div className="w-[124px] border-b-[1px] border-gray02"></div>
+        <div className="w-full border-b-[1px] border-gray02"></div>
 
         {/* 분류 리스트 */}
         <ToggleList
