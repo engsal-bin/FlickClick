@@ -14,19 +14,21 @@ export default function TimesList({
   return (
     <div
       className="w-[124px] flex flex-col justify-start items-start
-      text-[13px] font-light gap-[10px]"
-    >
+      text-[13px] font-light gap-[10px]">
       <div className="flex justify-center items-center gap-[15px]">
         <input
           type="checkbox"
           id="2025-checkbox"
           checked={checked["15분 이하"]}
           onChange={() => onCheckboxChange("15분 이하")}
-          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer ${
+          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer relative ${
             checked["15분 이하"]
-              ? "bg-main border-white01"
+              ? "bg-main border-none"
               : "bg-black border-gray-400"
-          } transition-colors ease-in-out`}
+          } transition-colors ease-in-out after:content-[''] after:absolute after:left-[5px] after:top-[2px]
+            after:w-[6px] after:h-[10px] after:border-white
+            after:border-r-2 after:border-b-2 after:rotate-45
+            ${checked["15분 이하"] ? "after:block" : "after:hidden"}`}
         />
         <label htmlFor="years-checkbox">15분 이하</label>
       </div>
@@ -36,11 +38,14 @@ export default function TimesList({
           id="2025-checkbox"
           checked={checked["15~30분"]}
           onChange={() => onCheckboxChange("15~30분")}
-          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer ${
+          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer relative ${
             checked["15~30분"]
-              ? "bg-main border-white01"
+              ? "bg-main border-none"
               : "bg-black border-gray-400"
-          } transition-colors ease-in-out`}
+          } transition-colors ease-in-out after:content-[''] after:absolute after:left-[5px] after:top-[2px]
+            after:w-[6px] after:h-[10px] after:border-white
+            after:border-r-2 after:border-b-2 after:rotate-45
+            ${checked["15~30분"] ? "after:block" : "after:hidden"}`}
         />
         <label htmlFor="years-checkbox">15~30분</label>
       </div>
@@ -50,11 +55,14 @@ export default function TimesList({
           id="2025-checkbox"
           checked={checked["30~60분"]}
           onChange={() => onCheckboxChange("30~60분")}
-          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer ${
+          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer relative ${
             checked["30~60분"]
-              ? "bg-main border-white01"
+              ? "bg-main border-none"
               : "bg-black border-gray-400"
-          } transition-colors ease-in-out`}
+          } transition-colors ease-in-out after:content-[''] after:absolute after:left-[5px] after:top-[2px]
+            after:w-[6px] after:h-[10px] after:border-white
+            after:border-r-2 after:border-b-2 after:rotate-45
+            ${checked["30~60분"] ? "after:block" : "after:hidden"}`}
         />
         <label htmlFor="years-checkbox">30~60분</label>
       </div>
@@ -64,11 +72,14 @@ export default function TimesList({
           id="2025-checkbox"
           checked={checked["60~90분"]}
           onChange={() => onCheckboxChange("60~90분")}
-          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer ${
+          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer relative ${
             checked["60~90분"]
-              ? "bg-main border-white01"
+              ? "bg-main border-none"
               : "bg-black border-gray-400"
-          } transition-colors ease-in-out`}
+          } transition-colors ease-in-out after:content-[''] after:absolute after:left-[5px] after:top-[2px]
+            after:w-[6px] after:h-[10px] after:border-white
+            after:border-r-2 after:border-b-2 after:rotate-45
+            ${checked["60~90분"] ? "after:block" : "after:hidden"}`}
         />
         <label htmlFor="years-checkbox">60~90분</label>
       </div>
@@ -78,11 +89,14 @@ export default function TimesList({
           id="2025-checkbox"
           checked={checked["90~120분"]}
           onChange={() => onCheckboxChange("90~120분")}
-          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer ${
+          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer relative ${
             checked["90~120분"]
-              ? "bg-main border-white01"
+              ? "bg-main border-none"
               : "bg-black border-gray-400"
-          } transition-colors ease-in-out`}
+          } transition-colors ease-in-out after:content-[''] after:absolute after:left-[5px] after:top-[2px]
+            after:w-[6px] after:h-[10px] after:border-white
+            after:border-r-2 after:border-b-2 after:rotate-45
+            ${checked["90~120분"] ? "after:block" : "after:hidden"}`}
         />
         <label htmlFor="years-checkbox">90~120분</label>
       </div>
@@ -92,11 +106,14 @@ export default function TimesList({
           id="2025-checkbox"
           checked={checked["120분 이상"]}
           onChange={() => onCheckboxChange("120분 이상")}
-          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer ${
+          className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer relative ${
             checked["120분 이상"]
-              ? "bg-main border-white01"
+              ? "bg-main border-none"
               : "bg-black border-gray-400"
-          } transition-colors ease-in-out`}
+          } transition-colors ease-in-out after:content-[''] after:absolute after:left-[5px] after:top-[2px]
+            after:w-[6px] after:h-[10px] after:border-white
+            after:border-r-2 after:border-b-2 after:rotate-45
+            ${checked["120분 이상"] ? "after:block" : "after:hidden"}`}
         />
         <label htmlFor="years-checkbox">120분 이상</label>
       </div>
