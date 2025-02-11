@@ -1,60 +1,69 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import OttIcon from "../OttIcon";
+import { genreAPI } from "../../api/genre";
 
-// ott 로고
-import appleTv from "../../assets/icon/ottIcon/appleTV.svg";
-import googlePlay from "../../assets/icon/ottIcon/googlePlay.svg";
-import disneyPlus from "../../assets/icon/ottIcon/disneyPlus.svg";
-import watcha from "../../assets/icon/ottIcon/watcha.svg";
-import primeVideo from "../../assets/icon/ottIcon/primeVideo.svg";
-import netflix from "../../assets/icon/ottIcon/netflix.svg";
-import wavve from "../../assets/icon/ottIcon/wavve.svg";
-
-type OttState = {
-  [key: string]: boolean;
-};
-
-// (임시) OTT서비스 데이터
-const ottServices = [
-  { key: "appleTv", src: appleTv, alt: "Apple TV" },
-  { key: "googlePlay", src: googlePlay, alt: "Google Play" },
-  { key: "disneyPlus", src: disneyPlus, alt: "Disney Plus" },
-  { key: "watcha", src: watcha, alt: "Watcha" },
-  { key: "primeVideo", src: primeVideo, alt: "Prime Video" },
-  { key: "netflix", src: netflix, alt: "Netflix" },
-  { key: "wavve", src: wavve, alt: "Wavve" },
-];
+interface ProviderType {
+  display_priorities: { [key: string]: number };
+  display_priority: number;
+  logo_path: string;
+  provider_id: number;
+  provider_name: string;
+}
 
 export default function OttIcons() {
-  // ott 선택 상태 관리
-  const [ottSelect, setOttSelect] = useState<OttState>({
-    appleTv: false,
-    googlePlay: false,
-    disneyPlus: false,
-    watcha: false,
-    primeVideo: false,
-    netflix: false,
-    wavve: false,
-  });
+  const [ottServices, setOttServices] = useState<ProviderType[] | []>([]);
+  const [selectedOtts, setSelectedOtts] = useState<ProviderType[] | []>([]);
 
-  // ott 선택 상태 변경 함수
-  const selectOtt = (key: string) => {
-    setOttSelect((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
+  const fetchOttServices = async () => {
+    try {
+      const tvProviders = await genreAPI.getTVProvider();
+      const movieProviders = await genreAPI.getMovieProvider();
+      const allProviders = [...tvProviders.results, ...movieProviders.results];
+      const deduplicatedProviders = [
+        ...new Set(allProviders.map((provider) => JSON.stringify(provider))),
+      ].map((provider) => JSON.parse(provider)) as ProviderType[];
+      const sortDeduplicatedProviders = deduplicatedProviders.sort(
+        (provider1, provider2) =>
+          provider2.display_priorities["KR"] -
+          provider1.display_priorities["KR"]
+      );
+      setOttServices(sortDeduplicatedProviders);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  const handleOttSelect = (service: ProviderType) => {
+    setSelectedOtts((prev) => {
+      const isAlreadySelected = prev.some(
+        (ott) => ott.provider_id === service.provider_id
+      );
+
+      if (isAlreadySelected) {
+        return prev.filter((ott) => ott.provider_id !== service.provider_id);
+      } else {
+        return [...prev, service];
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchOttServices();
+  }, []);
+
+  console.log(selectedOtts);
   return (
-    <div className="w-[124px] flex flex-wrap gap-[15px]">
+    <div className="w-full flex flex-wrap gap-[15px]">
       {/* ott서비스 아이콘 */}
       {ottServices.map((service) => (
         <OttIcon
-          key={service.key}
-          src={service.src}
-          isSelected={ottSelect[service.key]}
-          onClick={() => selectOtt(service.key)}
-          alt={service.alt}
+          key={service.provider_id}
+          src={service.logo_path}
+          alt={service.provider_name}
+          onClick={() => handleOttSelect(service)}
+          isSelected={selectedOtts.some(
+            (ott) => ott.provider_id === service.provider_id
+          )}
         />
       ))}
     </div>
