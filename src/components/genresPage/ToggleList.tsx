@@ -48,10 +48,12 @@ export default function ToggleList({
   };
 
   return (
-    <div className="w-[124px] flex flex-col justify-start gap-[30px]">
+    <div className="w-full flex flex-col justify-start gap-[30px]">
       <div className="flex flex-row justify-between items-center">
         {/* 분류명 */}
-        <p className="max-w-[110px] text-[18px] font-bold">{title}</p>
+        <p className="min-w-[110px] max-w-[170px] desktop:text-[20px] mobile:text-[18px] font-bold break-keep">
+          {title}
+        </p>
         {/* 토글버튼 */}
         <div className="w-[15px] h-[27px] flex flex-col justify-center">
           <img
@@ -63,7 +65,7 @@ export default function ToggleList({
         </div>
       </div>
       {toggles[toggleType] && (
-        <div className="w-[124px] flex flex-col justify-start items-start font-light">
+        <div className="w-full flex flex-col justify-start items-start font-light">
           {/* 서비스 하위리스트 */}
           {toggleType === "service" && <OttIcons />}
 
