@@ -51,7 +51,6 @@ export default function OttIcons() {
     fetchOttServices();
   }, []);
 
-  console.log(selectedOtts);
   return (
     <div className="w-full flex flex-wrap gap-[15px]">
       {/* ott서비스 아이콘 */}
