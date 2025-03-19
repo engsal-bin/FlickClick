@@ -186,16 +186,48 @@ interface TvSeasonsType {
 
 interface PersonDataType {
   adult: boolean;
+  cast_id?: number;
+  character?: string;
+  credit_id: string;
+  department?: string;
   gender: number;
-  id: number;
+  id: string;
+  known_for_department: string;
+  name: string;
+  order?: number;
+  original_name: string;
+  populartiy: number;
+  profile_path: string;
+}
+
+// 영화 출연진 타입
+interface movieCastPersonType {
+  adult: boolean;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  gender: number;
+  id: string;
+  known_for_department: string;
+  name: string;
+  order: number;
+  original_name: string;
+  populartiy: number;
+  profile_path: string;
+}
+
+// 영화 제작진 타입
+interface movieCrewPersonType {
+  adult: boolean;
+  credit_id: string;
+  department: string;
+  gender: number;
+  id: string;
   known_for_department: string;
   name: string;
   original_name: string;
-  popularity: number;
+  populartiy: number;
   profile_path: string;
-  character: string;
-  credit_id: string;
-  order: number;
 }
 
 interface EpisodeType {
