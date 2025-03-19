@@ -1,4 +1,5 @@
 import { axiosInstance } from "./axios";
+import { supabase } from "./index.ts";
 
 const getMovieTrailer = async (movie_id: number) => {
   try {
@@ -75,6 +76,22 @@ const getMovie = async (movie_id: number) => {
     console.error("API 호출 중 오류 발생:", error);
   }
 };
+
+const postMovieReview = async (
+  ip_id: string,
+  content: string,
+  author_id: string,
+  ip_name: string
+) => {
+  try {
+    await supabase
+      .from("movie_review")
+      .insert([{ ip_id, content, author_id, ip_name }])
+      .select();
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error);
+  }
+};
 export const movieAPI = {
   getMovieTrailer,
   getNowPlayingMovie,
@@ -83,4 +100,5 @@ export const movieAPI = {
   getGenres,
   getProviders,
   getMovie,
+  postMovieReview,
 };
