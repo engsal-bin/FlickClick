@@ -16,7 +16,7 @@ const getTrendingAll = async (
 };
 
 // 디스커버 API 호출 함수
-const getDiscover = async (targetType, {
+const getDiscover = async (targetType = "tv", {
   genres = [],
   releaseDateRange = { gte: null, lte: null },
   ottPlatforms = [],
