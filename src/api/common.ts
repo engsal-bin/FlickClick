@@ -72,8 +72,38 @@ const postArgument = async (
   }
 };
 
+const postArgumentOpinion = async (
+  argument_id: number,
+  content: string,
+  author_id: string,
+  argumentType: string
+) => {
+  try {
+    if (argumentType === "movie") {
+      await supabase
+        .from("movie_argument_comment")
+        .insert([{ argument_id, content, author_id }])
+        .select();
+    }
+    if (argumentType === "episode") {
+      await supabase
+        .from("episode_argument_comment")
+        .insert([{ argument_id, content, author_id }])
+        .select();
+    }
+    if (argumentType === "season") {
+      await supabase
+        .from("season_argument_comment")
+        .insert([{ argument_id, content, author_id }])
+        .select();
+    }
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error);
+  }
+};
 export const commonAPI = {
   getTrendingAll,
   postReview,
   postArgument,
+  postArgumentOpinion,
 };
