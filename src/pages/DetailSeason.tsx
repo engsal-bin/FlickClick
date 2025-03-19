@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ArgorithmIP from "../components/common/ArgorithmIP";
-import Argument from "../components/common/Argument";
+import Arguments from "../components/common/Arguments";
 import DetailIntroBox from "../components/common/DetailIntroBox";
 import Episodes from "../components/common/Episodes";
 import PersonList from "../components/common/PersonList";
@@ -178,7 +178,7 @@ export default function DetailSeason() {
           </div>
           {/* 리뷰창 */}
           {activeTab === 0 && <Reviews />}
-          {activeTab === 1 && <Argument />}
+          {activeTab === 1 && <Arguments />}
         </section>
         <ArgorithmIP label="추천" />
         <ArgorithmIP label="유사한 작품" />
