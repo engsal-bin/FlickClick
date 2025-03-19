@@ -1,32 +1,38 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import sendIcon from "../../assets/icon/send.svg";
 import sendBlueIcon from "../../assets/icon/sendBlue.svg";
-import { movieAPI } from "../../api/movie";
-import { tvAPI } from "../../api/tv";
+import { commonAPI } from "../../api/common";
 export default function InputTextarea({
   reviewOrArgumentOrOpinion,
 }: {
   reviewOrArgumentOrOpinion: "review" | "argument" | "opinion";
 }) {
-  const content = useRef<HTMLTextAreaElement | null>(null); // ref 객체
-
   const [text, setText] = useState("");
   const [isSend, setIsSend] = useState(false);
   const [placeHolder, setPlaceHolder] = useState("");
 
   const fn = async () => {
-    await movieAPI.postMovieReview(
-      "m",
-      text,
-      "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-      "Movie"
-    );
-    await tvAPI.postEpisodeReview(
-      "e",
-      text,
-      "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-      "Episode"
-    );
+    if (reviewOrArgumentOrOpinion === "review") {
+      await commonAPI.postReview(
+        "m",
+        text,
+        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
+        "Movie",
+        "movie"
+      );
+      await commonAPI.postReview(
+        "e",
+        text,
+        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
+        "Episode",
+        "episode"
+      );
+      setText("");
+    }
+    if (reviewOrArgumentOrOpinion === "argument") {
+    }
+    if (reviewOrArgumentOrOpinion === "opinion") {
+    }
   };
 
   useEffect(() => {
