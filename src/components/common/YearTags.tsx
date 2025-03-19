@@ -2,7 +2,7 @@ import Tag from "./Tag";
 
 
 
-export default function YearTags({ children, tags, selectTag }: { children: string; tags: { id: number; year: string }[]; selectTag: (id: number) => void }) {
+export default function YearTags({ children, tags, selectTag }: { children: string; tags: YearState[]; selectTag: (id: number) => void }) {
   return (
     <>
       {/* pc, tablet */}
@@ -12,7 +12,11 @@ export default function YearTags({ children, tags, selectTag }: { children: stri
         </p>
         <div className="flex flex-wrap gap-[10px]">
           {tags.map((tag) => (
-            <Tag key={tag.id}>{tag.year}</Tag>
+            <Tag
+            key={tag.id}
+            onClick={() => selectTag(tag.id)}
+            isSelected={tag.selected}
+            >{tag.year}</Tag>
           ))}
         </div>
       </div>
@@ -23,7 +27,11 @@ export default function YearTags({ children, tags, selectTag }: { children: stri
         </p>
         <div className="flex flex-wrap gap-[10px]">
           {tags.map((tag) => (
-            <Tag key={tag.id}>{tag.year}</Tag>
+            <Tag
+            key={tag.id}
+            onClick={() => selectTag(tag.id)}
+            isSelected={tag.selected}
+            >{tag.year}</Tag>
           ))}
         </div>
       </div>

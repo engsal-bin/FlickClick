@@ -27,11 +27,11 @@ export default function Series() {
   // 년도 - 단일 선택
   const [yearStates, setYearStates] = useState<YearState[]>(yearList);
   const selectYearRange = (id: number) => {
-    setYearStates((prev) =>
-      prev.map((year) =>
-        year.id === id ? { ...year, selected: !year.selected } : year
-      )
-    );
+    setYearStates((prev) => {
+      return prev.map((year) =>
+        year.id === id ? { ...year, selected: true } : { ...year, selected: false }
+      );
+    });
   };
 
   // OTT - 중복 선택
