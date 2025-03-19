@@ -4,7 +4,7 @@ import { commonAPI } from "../api/common.ts";
 import { movieAPI } from "../api/movie.ts";
 import { tvAPI } from "../api/tv.ts";
 import Banner from "../components/common/Banner";
-import Contents from "../components/common/Contents";
+import Contents from "../components/common/Contents.tsx";
 import MainThumbnail from "../components/common/MainThumbnail";
 
 export default function Main() {

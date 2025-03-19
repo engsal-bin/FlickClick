@@ -1,19 +1,8 @@
 import Tag from "./Tag";
 
-const tags = [
-  { id: 1, year: "1800년대" },
-  { id: 2, year: "1900년대" },
-  { id: 3, year: "2000년대" },
-  { id: 4, year: "2010년대" },
-  { id: 5, year: "2020년대" },
-  { id: 6, year: "2021년" },
-  { id: 7, year: "2022년" },
-  { id: 8, year: "2023년" },
-  { id: 9, year: "2024년" },
-  { id: 10, year: "2025년" },
-];
 
-export default function YearTags({ children }: { children: string }) {
+
+export default function YearTags({ children, tags, selectTag }: { children: string; tags: YearState[]; selectTag: (id: number) => void }) {
   return (
     <>
       {/* pc, tablet */}
@@ -23,7 +12,11 @@ export default function YearTags({ children }: { children: string }) {
         </p>
         <div className="flex flex-wrap gap-[10px]">
           {tags.map((tag) => (
-            <Tag key={tag.id}>{tag.year}</Tag>
+            <Tag
+            key={tag.id}
+            onClick={() => selectTag(tag.id)}
+            isSelected={tag.selected}
+            >{tag.year}</Tag>
           ))}
         </div>
       </div>
@@ -34,7 +27,11 @@ export default function YearTags({ children }: { children: string }) {
         </p>
         <div className="flex flex-wrap gap-[10px]">
           {tags.map((tag) => (
-            <Tag key={tag.id}>{tag.year}</Tag>
+            <Tag
+            key={tag.id}
+            onClick={() => selectTag(tag.id)}
+            isSelected={tag.selected}
+            >{tag.year}</Tag>
           ))}
         </div>
       </div>
