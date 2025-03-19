@@ -128,7 +128,7 @@ export default function DetailSeason() {
 
   return (
     <>
-      <DetailIntroBox contentId={Number(locationInfo[1])} type="tvSeries" />
+      <DetailIntroBox contentId={Number(locationInfo[1])} type="tvSeason" />
       <section
         className="border border-white flex flex-col jutify-evenly w-full 
       tablet:gap-[50px] mobile:gap-[30px] 
