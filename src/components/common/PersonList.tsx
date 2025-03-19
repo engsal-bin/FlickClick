@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { tvAPI } from "../../api/tv";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import { movieAPI } from "../../api/movie";
+import imagenone from "../../assets/icon/imagenone.svg";
 
 export default function PersonList({
   seriesId,
@@ -138,11 +139,12 @@ export default function PersonList({
               {/* 프로필 이미지 */}
               <div
                 className="bg-white tablet:w-[100px] mobile:w-[60px] 
-                aspect-square bg-cover bg-center rounded-full z-10"
+                aspect-square bg-cover bg-center rounded-full z-10
+                border-[1px] border-main"
                 style={{
                   backgroundImage: person.profile_path
                     ? `url(${IMAGE_BASE_URL}original${person.profile_path})`
-                    : `url(/default-profile.png)`, // 기본 이미지 처리
+                    : `url(${imagenone})`, // 기본 이미지 처리
                 }}
               ></div>
 
