@@ -52,6 +52,24 @@ export default function InputTextarea({
       );
     }
     if (reviewOrArgumentOrOpinion === "opinion") {
+      await commonAPI.postArgumentOpinion(
+        16,
+        text,
+        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
+        "movie"
+      );
+      await commonAPI.postArgumentOpinion(
+        7,
+        text,
+        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
+        "episode"
+      );
+      await commonAPI.postArgumentOpinion(
+        8,
+        text,
+        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
+        "season"
+      );
     }
   };
 
