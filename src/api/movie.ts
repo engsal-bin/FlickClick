@@ -8,6 +8,7 @@ const getMovieTrailer = async (movie_id: number) => {
     console.error("API 호출 중 오류 발생:", error);
   }
 };
+
 const getNowPlayingMovie = async (page = 1, language = "ko-KR") => {
   try {
     const response = await axiosInstance.get(`/movie/now_playing`, {
@@ -19,6 +20,7 @@ const getNowPlayingMovie = async (page = 1, language = "ko-KR") => {
     throw error;
   }
 };
+
 const getUpComingMovie = async (page = 1, language = "ko-KR") => {
   try {
     const response = await axiosInstance.get(`/movie/upcoming`, {
@@ -30,6 +32,19 @@ const getUpComingMovie = async (page = 1, language = "ko-KR") => {
     throw error;
   }
 };
+
+const getTrendMovie = async (language = "ko-KR") => {
+  try {
+    const response = await axiosInstance.get(`/movie/popular`, {
+      params: { language },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:");
+    throw error;
+  }
+};
+
 const getCredits = async (movie_id: number, language = "ko-KR") => {
   try {
     const response = await axiosInstance.get(`/movie/${movie_id}/credits`, {
@@ -40,6 +55,7 @@ const getCredits = async (movie_id: number, language = "ko-KR") => {
     console.error("API 호출 중 오류 발생:", error);
   }
 };
+
 const getGenres = async (language = "ko-KR") => {
   try {
     const response = await axiosInstance.get(`/genre/movie/list`, {
@@ -50,6 +66,7 @@ const getGenres = async (language = "ko-KR") => {
     console.error("API 호출 중 오류 발생:", error);
   }
 };
+
 const getProviders = async (movie_id: number, language = "ko-KR") => {
   try {
     const response = await axiosInstance.get(
@@ -63,6 +80,7 @@ const getProviders = async (movie_id: number, language = "ko-KR") => {
     console.error("API 호출 중 오류 발생:", error);
   }
 };
+
 const getMovie = async (movie_id: number) => {
   try {
     const response = await axiosInstance.get(`/movie/${movie_id}`, {
@@ -80,6 +98,7 @@ export const movieAPI = {
   getMovieTrailer,
   getNowPlayingMovie,
   getUpComingMovie,
+  getTrendMovie,
   getCredits,
   getGenres,
   getProviders,

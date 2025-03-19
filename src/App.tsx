@@ -61,7 +61,7 @@ export default function App() {
           />
 
           {/* 영화 상세페이지 */}
-          <Route path="/detailmovie" element={<DetailMovie />} />
+          <Route path="/detailmovie/:movieid" element={<DetailMovie />} />
           {/* 예고편 */}
           <Route path="/trailers" element={<Trailers />} />
         </Route>
