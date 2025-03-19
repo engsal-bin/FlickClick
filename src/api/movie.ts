@@ -75,6 +75,7 @@ const getMovie = async (movie_id: number) => {
     console.error("API 호출 중 오류 발생:", error);
   }
 };
+
 export const movieAPI = {
   getMovieTrailer,
   getNowPlayingMovie,
