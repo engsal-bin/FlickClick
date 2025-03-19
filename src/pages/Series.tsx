@@ -4,9 +4,9 @@ import SeriesTags from "../components/common/SeriesTags";
 import YearTags from "../components/common/YearTags";
 import { useEffect, useState } from "react";
 import DefaultSeriesView from "../components/series/DefaultSeriesView";
-import { tvAPI } from "../api/tv";
 import GridContents from "../components/common/GridContents";
 import { ottList, tvGenreList, yearList } from "../constants/tags";
+import { commonAPI } from "../api/common";
 
 export default function Series() {
   // 태그가 하나라도 선택됐는지 여부
@@ -70,7 +70,7 @@ export default function Series() {
 
     // 필터 옵션이 변경될 때마다 API 호출
     const fetchFilteredSeries = async () => {
-      const response = await tvAPI.fetchTVdiscover(filteredOptions);
+      const response = await commonAPI.getDiscover("tv",filteredOptions);
       setFilteredSeries(response);
     };
 
