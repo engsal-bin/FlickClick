@@ -21,8 +21,8 @@ export default function Arguments() {
     <div>
       <InputTextarea reviewOrArgumentOrOpinion={"argument"} />
       {/* 토론리스트 */}
-      {argumentContens.map((argumentConten) => (
-        <Argument argumentConten={argumentConten} />
+      {argumentContens.map((argumentConten, index) => (
+        <Argument argumentConten={argumentConten} key={index} />
       ))}
     </div>
   );

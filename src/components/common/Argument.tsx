@@ -70,8 +70,8 @@ export default function Argument({
           <hr className="border border-gray03 mb-[30px]" />
           <div className="tablet:px-[20px] mobile:px-[5px] flex flex-col tablet:gap-[30px] mobile:gap-[20px]">
             <div className="h-auto flex flex-col tablet:gap-[20px] mobile:gap-[10px]">
-              {reviews.map((review) => (
-                <ArgumentReview review={review} />
+              {reviews.map((review, index) => (
+                <ArgumentReview review={review} key={index} />
               ))}
             </div>
 
