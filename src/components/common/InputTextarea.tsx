@@ -27,9 +27,29 @@ export default function InputTextarea({
         "Episode",
         "episode"
       );
-      setText("");
     }
     if (reviewOrArgumentOrOpinion === "argument") {
+      await commonAPI.postArgument(
+        text,
+        "m",
+        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
+        "Movie",
+        "movie"
+      );
+      await commonAPI.postArgument(
+        text,
+        "e",
+        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
+        "Episode",
+        "episode"
+      );
+      await commonAPI.postArgument(
+        text,
+        "s",
+        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
+        "Season",
+        "season"
+      );
     }
     if (reviewOrArgumentOrOpinion === "opinion") {
     }
