@@ -11,6 +11,7 @@ const getOnTheAirTvSeriese = async (page = 1, language = "ko-KR") => {
     throw error;
   }
 };
+
 const getSeries = async (series_id: number) => {
   try {
     const response = await axiosInstance.get(`/tv/${series_id}`, {
@@ -24,6 +25,7 @@ const getSeries = async (series_id: number) => {
     throw error;
   }
 };
+
 const getSeason = async (series_id: number, season_number: number) => {
   try {
     const response = await axiosInstance.get(
@@ -40,6 +42,7 @@ const getSeason = async (series_id: number, season_number: number) => {
     throw error;
   }
 };
+
 const getSeasonCredits = async (series_id: number, season_number: number) => {
   try {
     const response = await axiosInstance.get(
@@ -56,6 +59,7 @@ const getSeasonCredits = async (series_id: number, season_number: number) => {
     throw error;
   }
 };
+
 const getEpisode = async (
   series_id: number,
   season_number: number,
@@ -77,6 +81,17 @@ const getEpisode = async (
   }
 };
 
+const getTrendTv = async (language = "ko-KR") => {
+  try {
+    const response = await axiosInstance.get(`/trending/tv/week`, {
+      params: { language },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:");
+    throw error;
+  }
+};
 
 export const tvAPI = {
   getOnTheAirTvSeriese,
@@ -84,4 +99,5 @@ export const tvAPI = {
   getSeason,
   getEpisode,
   getSeasonCredits,
+  getTrendTv,
 };
