@@ -244,3 +244,12 @@ interface GenreBasicType {
   name: string;
   id: number;
 }
+
+// 리뷰 타입
+interface ReviewType {
+  id: string;
+  content: string;
+  author: string;
+  date: string;
+  isMine?: boolean;
+}
