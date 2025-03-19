@@ -77,10 +77,36 @@ const getEpisode = async (
   }
 };
 
+// 시리즈 탭
+const fetchTVdiscover = async ({
+  genres = [],
+  firstAirDateRange = { gte: null, lte: null }, 
+  ottPlatforms = [], 
+  language = 'en-US',
+  region = 'US',
+}) => {
+  let endpoint = `/discover/tv?language=${language}&region=${region}&sort_by=first_air_date.asc`;
+
+  if (genres.length > 0) endpoint += `&with_genres=${genres.join(',')}`;
+  if (firstAirDateRange.gte) endpoint += `&first_air_date.gte=${firstAirDateRange.gte}`;
+  if (firstAirDateRange.lte) endpoint += `&first_air_date.lte=${firstAirDateRange.lte}`;
+  if (ottPlatforms.length > 0) endpoint += `&with_networks=${ottPlatforms.join(',')}`;
+
+  try {
+    const { data } = await axiosInstance.get(endpoint);
+    return data.results;
+  } catch (error) {
+    console.error('TMDB API 호출 오류:', error);
+    return [];
+  }
+};
+
+
 export const tvAPI = {
   getOnTheAirTvSeriese,
   getSeries,
   getSeason,
   getEpisode,
   getSeasonCredits,
+  fetchTVdiscover,
 };

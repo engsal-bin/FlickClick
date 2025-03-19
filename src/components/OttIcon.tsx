@@ -1,8 +1,8 @@
 interface OttIconProps {
-  src: string; // 이미지 경로
-  isSelected: boolean; // 선택 여부
-  onClick: () => void; // 클릭 이벤트
-  alt: string; // 대체 텍스트
+  src: string; 
+  isSelected: boolean; 
+  onClick: () => void; 
+  alt: string; 
 }
 
 const OttIcon = ({ src, isSelected, onClick, alt }: OttIconProps) => {
@@ -10,11 +10,12 @@ const OttIcon = ({ src, isSelected, onClick, alt }: OttIconProps) => {
     <img
       src={src}
       onClick={onClick}
-      className={
-        `cursor-pointer ${isSelected ? "opacity-100" : "opacity-30"}` +
-        "object-cover"
-      }
       alt={alt}
+      className={`cursor-pointer object-cover ${
+        isSelected
+          ? 'opacity-100' // 선택된 아이콘에 노란색 테두리 추가
+          : 'opacity-30'
+      }`}
     />
   );
 };
