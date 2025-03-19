@@ -5,6 +5,7 @@ import { IMAGE_BASE_URL } from "../../api/axios";
 import { useEffect, useState } from "react";
 import { movieAPI } from "../../api/movie";
 import { tvAPI } from "../../api/tv";
+import { useLocation } from "react-router-dom";
 
 export default function DetailIntroBox({
   contentId,
@@ -16,7 +17,11 @@ export default function DetailIntroBox({
   // console.log(data?.poster_path);
   console.log(contentId);
   const [tvContent, setTvContent] = useState<TvSeriesType>();
+  const [tvSeasonContent, setTvSeasonContent] = useState<TvSeasonsType>();
   const [movieContent, setMovieContent] = useState<MovieType>();
+  const location = useLocation();
+  const seasonId = location.pathname.split("/")[3];
+  console.log(movieContent);
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -24,10 +29,18 @@ export default function DetailIntroBox({
         if (type === "movie") {
           const movie = await movieAPI.getMovie(Number(contentId));
           setMovieContent(movie);
-        } else if (type === "tvSeries") {
+        } else if (type === "tvSeries" || type === "tvSeason") {
           const tvSeries = await tvAPI.getSeries(Number(contentId));
           setTvContent(tvSeries);
-          console.log(tvSeries);
+        }
+
+        if (type === "tvSeason" && seasonId !== "undefined") {
+          const tvSeason = await tvAPI.getSeason(
+            Number(contentId),
+            Number(seasonId)
+          );
+          setTvSeasonContent(tvSeason);
+          console.log(tvSeason);
         }
       } catch {
         console.error(Error);
@@ -36,15 +49,21 @@ export default function DetailIntroBox({
     fetchContent();
   }, [contentId, type]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <section
         className="relative h-auto flex flex-col 
-        bg-cover bg-center desktop:pb-[133px] tablet:pb-[14px] mobile:pb-[42px]"
+  bg-cover bg-center desktop:pb-[133px] tablet:pb-[14px] mobile:pb-[42px]"
         style={{
           backgroundImage: `url(${IMAGE_BASE_URL}original${
             type === "tvSeries"
               ? tvContent?.poster_path
+              : type === "tvSeason"
+              ? tvSeasonContent?.poster_path
               : movieContent?.poster_path
           })`,
         }}
@@ -76,13 +95,25 @@ export default function DetailIntroBox({
         >
           <div
             className="flex flex-col justify-between items-start
-            desktop:w-[540px] tablet:w-[436px] mobile:w-full
+            desktop:w-[540px] tablet:w-[500px] mobile:w-full
           gap-[35px] relative z-10 text-left text-white"
           >
             <div className="w-full flex flex-col gap-[10px]">
               {/* 컨텐츠 제목 */}
               <div className="w-full font-bold text-[40px] leading-auto">
-                {type === "tvSeries" ? tvContent?.name : movieContent?.title}
+                {`${
+                  type === "tvSeries" || type === "tvSeason"
+                    ? tvContent?.name
+                    : movieContent?.title
+                }${
+                  type === "tvSeason"
+                    ? ` 시즌 ${
+                        tvContent?.seasons.find(
+                          (season) => season.season_number === Number(seasonId)
+                        )?.name || ""
+                      }`
+                    : ""
+                }`}
               </div>
 
               {/* 컨텐츠 세부 정보 태그 */}
@@ -91,11 +122,13 @@ export default function DetailIntroBox({
                 <Tag>
                   {type === "tvSeries"
                     ? `${tvContent?.first_air_date.slice(0, 4)}`
+                    : type === "tvSeason"
+                    ? `${tvSeasonContent?.air_date.slice(0, 4)}`
                     : `${movieContent?.release_date.slice(0, 4)}`}
                 </Tag>
 
                 {/* 장르 */}
-                {type === "tvSeries"
+                {type === "tvSeries" || type === "tvSeason"
                   ? tvContent?.genres.map((genre) => (
                       <Tag key={genre.id}>{genre.name}</Tag>
                     ))
@@ -104,22 +137,22 @@ export default function DetailIntroBox({
                     ))}
 
                 {/* 시즌 or 에피소드 갯수 */}
-                {type === "tvSeries" ? (
-                  tvContent?.number_of_episodes ? (
-                    <Tag>{`에피소드 ${tvContent.number_of_episodes}개`}</Tag>
-                  ) : tvContent?.number_of_seasons ? (
-                    <Tag>{`시즌 ${tvContent.number_of_seasons}개`}</Tag>
-                  ) : null
-                ) : null}
+                {type === "tvSeries" && (
+                  <Tag>{`시즌 ${tvContent?.seasons.length}개`}</Tag>
+                )}
+                {type === "tvSeason" && (
+                  <Tag>{`에피소드 ${tvSeasonContent?.episodes.length}개`}</Tag>
+                )}
               </div>
             </div>
             <div className="flex flex-col gap-[10px]">
               <p className="text-white02 text-[16px] leading-[24px]">
-                시청할 수 있는 서비스
+                {type === "movie" ? "제작사" : "시청할 수 있는 서비스"}
               </p>
+
               {/* 시청할 수 있는 서비스 로고 */}
               <div className="flex gap-[10px]">
-                {type === "tvSeries"
+                {type === "tvSeries" || type === "tvSeason"
                   ? tvContent?.networks.map((network) => (
                       <div
                         key={network.id}
@@ -145,13 +178,23 @@ export default function DetailIntroBox({
             <div className="w-full font-light text-[16px] leading-[24px]">
               {type === "tvSeries"
                 ? tvContent?.overview
+                : type === "tvSeason"
+                ? tvSeasonContent?.overview
                 : movieContent?.overview}
             </div>
 
             {/* 태그라인 */}
             <div className="font-light text-[16px] leading-[24px]">
-              #
-              {type === "tvSeries" ? tvContent?.tagline : movieContent?.tagline}
+              {(() => {
+                const tagline =
+                  type === "tvSeries" || type === "tvSeason"
+                    ? tvContent?.tagline
+                    : type === "movie"
+                    ? movieContent?.tagline
+                    : "";
+
+                return tagline ? `#${tagline}` : "";
+              })()}
             </div>
             <button className="flex gap-[10px] w-auto h-auto px-[15px] py-[10px] border border-main rounded-[8px]">
               <img src={scrapIcon} alt="스크랩 버튼" />
@@ -168,6 +211,8 @@ export default function DetailIntroBox({
               backgroundImage: `url(${IMAGE_BASE_URL}original${
                 type === "tvSeries"
                   ? tvContent?.poster_path
+                  : type === "tvSeason"
+                  ? tvSeasonContent?.poster_path
                   : movieContent?.poster_path
               })`,
             }}
