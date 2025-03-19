@@ -2,16 +2,40 @@ import Tag from "./Tag";
 import cancelIcon from "../../assets/icon/cancelIcon.svg";
 import scrapIcon from "../../assets/icon/scrap_btn.svg";
 import { IMAGE_BASE_URL } from "../../api/axios";
+import { useEffect, useState } from "react";
+import { movieAPI } from "../../api/movie";
+import { tvAPI } from "../../api/tv";
 
 export default function DetailIntroBox({
-  data,
-  season,
+  contentId,
+  type,
 }: {
-  data?: TvSeriesType;
-  season?: TvSeasonsType;
+  contentId?: number;
+  type?: string;
 }) {
   // console.log(data?.poster_path);
-  // console.log(data);
+  console.log(contentId);
+  const [tvContent, setTvContent] = useState<TvSeriesType>();
+  const [movieContent, setMovieContent] = useState<MovieType>();
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        if (type === "movie") {
+          const movie = await movieAPI.getMovie(Number(contentId));
+          setMovieContent(movie);
+        } else if (type === "tvSeries") {
+          const tvSeries = await tvAPI.getSeries(Number(contentId));
+          setTvContent(tvSeries);
+          console.log(tvSeries);
+        }
+      } catch {
+        console.error(Error);
+      }
+    };
+    fetchContent();
+  }, [contentId, type]);
+
   return (
     <>
       <section
@@ -19,7 +43,9 @@ export default function DetailIntroBox({
         bg-cover bg-center desktop:pb-[133px] tablet:pb-[14px] mobile:pb-[42px]"
         style={{
           backgroundImage: `url(${IMAGE_BASE_URL}original${
-            season?.poster_path || data?.poster_path
+            type === "tvSeries"
+              ? tvContent?.poster_path
+              : movieContent?.poster_path
           })`,
         }}
       >
@@ -56,31 +82,35 @@ export default function DetailIntroBox({
             <div className="w-full flex flex-col gap-[10px]">
               {/* 컨텐츠 제목 */}
               <div className="w-full font-bold text-[40px] leading-auto">
-                {data?.name} {season && season.name}
+                {type === "tvSeries" ? tvContent?.name : movieContent?.title}
               </div>
 
               {/* 컨텐츠 세부 정보 태그 */}
               <div className="w-full flex gap-[10px] text-light">
                 {/* 방영연도 */}
                 <Tag>
-                  {season
-                    ? `${season.air_date.slice(0, 4)}`
-                    : `${data?.first_air_date.slice(0, 4)}`}
+                  {type === "tvSeries"
+                    ? `${tvContent?.first_air_date.slice(0, 4)}`
+                    : `${movieContent?.release_date.slice(0, 4)}`}
                 </Tag>
 
                 {/* 장르 */}
-                {data?.genres.map((genre) => (
-                  <Tag key={genre.id}>{genre.name}</Tag>
-                ))}
+                {type === "tvSeries"
+                  ? tvContent?.genres.map((genre) => (
+                      <Tag key={genre.id}>{genre.name}</Tag>
+                    ))
+                  : movieContent?.genres.map((genre) => (
+                      <Tag key={genre.id}>{genre.name}</Tag>
+                    ))}
 
                 {/* 시즌 or 에피소드 갯수 */}
-                {season?.episodes ? (
-                  <Tag>{`에피소드 ${String(season?.episodes.length)}개`}</Tag>
-                ) : (
-                  data?.number_of_seasons && (
-                    <Tag>{`시즌 ${String(data?.seasons.length)}개`}</Tag>
-                  )
-                )}
+                {type === "tvSeries" ? (
+                  tvContent?.number_of_episodes ? (
+                    <Tag>{`에피소드 ${tvContent.number_of_episodes}개`}</Tag>
+                  ) : tvContent?.number_of_seasons ? (
+                    <Tag>{`시즌 ${tvContent.number_of_seasons}개`}</Tag>
+                  ) : null
+                ) : null}
               </div>
             </div>
             <div className="flex flex-col gap-[10px]">
@@ -89,26 +119,39 @@ export default function DetailIntroBox({
               </p>
               {/* 시청할 수 있는 서비스 로고 */}
               <div className="flex gap-[10px]">
-                {data?.networks.map((network) => (
-                  <div
-                    key={network.id}
-                    className="w-[48px] h-[48px] bg-contain bg-no-repeat bg-center"
-                    style={{
-                      backgroundImage: `url(${IMAGE_BASE_URL}original${network.logo_path})`,
-                    }}
-                  ></div>
-                ))}
+                {type === "tvSeries"
+                  ? tvContent?.networks.map((network) => (
+                      <div
+                        key={network.id}
+                        className="w-[48px] h-[48px] bg-contain bg-no-repeat bg-center"
+                        style={{
+                          backgroundImage: `url(${IMAGE_BASE_URL}original${network.logo_path})`,
+                        }}
+                      ></div>
+                    ))
+                  : movieContent?.production_companies.map((company) => (
+                      <div
+                        key={company.id}
+                        className="w-[48px] h-[48px] bg-contain bg-no-repeat bg-center"
+                        style={{
+                          backgroundImage: `url(${IMAGE_BASE_URL}original${company.logo_path})`,
+                        }}
+                      ></div>
+                    ))}
               </div>
             </div>
 
             {/* 오버뷰 */}
             <div className="w-full font-light text-[16px] leading-[24px]">
-              {season ? season.overview : data?.overview}
+              {type === "tvSeries"
+                ? tvContent?.overview
+                : movieContent?.overview}
             </div>
 
             {/* 태그라인 */}
             <div className="font-light text-[16px] leading-[24px]">
-              #{data?.tagline}
+              #
+              {type === "tvSeries" ? tvContent?.tagline : movieContent?.tagline}
             </div>
             <button className="flex gap-[10px] w-auto h-auto px-[15px] py-[10px] border border-main rounded-[8px]">
               <img src={scrapIcon} alt="스크랩 버튼" />
@@ -123,7 +166,9 @@ export default function DetailIntroBox({
             z-10 bg-cover bg-center rounded-[8px]"
             style={{
               backgroundImage: `url(${IMAGE_BASE_URL}original${
-                season ? season.poster_path : data?.poster_path
+                type === "tvSeries"
+                  ? tvContent?.poster_path
+                  : movieContent?.poster_path
               })`,
             }}
           ></div>

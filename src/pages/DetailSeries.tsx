@@ -26,7 +26,7 @@ export default function DetailSeries() {
 
   return (
     <div>
-      <DetailIntroBox data={contentData} />
+      <DetailIntroBox contentId={Number(locationInfo[1])} type="tvSeries" />
       {contentData?.seasons.map((season) => (
         <SeasonBox
           key={season.id}
