@@ -48,3 +48,26 @@ export const yearList = [
       { id: 10768, key: "War & Politics", krKey: "전쟁 & 정치", selected: false },
       { id: 37, key: "Western", krKey: "서부", selected: false }
     ];
+
+    export const movieGenreList: GenreState[] = [
+      { id: 28, key: "Action", krKey: "액션", selected: false },
+      { id: 12, key: "Adventure", krKey: "모험", selected: false },
+      { id: 16, key: "Animation", krKey: "애니메이션", selected: false },
+      { id: 35, key: "Comedy", krKey: "코미디", selected: false },
+      { id: 80, key: "Crime", krKey: "범죄", selected: false },
+      { id: 99, key: "Documentary", krKey: "다큐멘터리", selected: false },
+      { id: 18, key: "Drama", krKey: "드라마", selected: false },
+      { id: 10751, key: "Family", krKey: "가족", selected: false },
+      { id: 14, key: "Fantasy", krKey: "판타지", selected: false },
+      { id: 36, key: "History", krKey: "역사", selected: false },
+      { id: 27, key: "Horror", krKey: "공포", selected: false },
+      { id: 10402, key: "Music", krKey: "음악", selected: false },
+      { id: 9648, key: "Mystery", krKey: "미스터리", selected: false },
+      { id: 10749, key: "Romance", krKey: "로맨스", selected: false },
+      { id: 878, key: "Science Fiction", krKey: "과학 소설", selected: false },
+      { id: 10770, key: "TV Movie", krKey: "TV 영화", selected: false },
+      { id: 53, key: "Thriller", krKey: "스릴러", selected: false },
+      { id: 10752, key: "War", krKey: "전쟁", selected: false },
+      { id: 37, key: "Western", krKey: "서부", selected: false },
+    ];
+    

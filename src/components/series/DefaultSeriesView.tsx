@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-// import Contents from "../common/Contents";
 import { commonAPI } from "../../api/common";
 import { tvAPI } from "../../api/tv";
-import Contents from "../common/Contents";
+import Contents from "../common/MediaList";
 
 
 export default function DefaultSeriesView() {

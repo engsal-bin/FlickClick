@@ -5,7 +5,7 @@ import YearTags from "../components/common/YearTags";
 import { useEffect, useState } from "react";
 import DefaultSeriesView from "../components/series/DefaultSeriesView";
 import GridContents from "../components/common/GridContents";
-import { ottList, tvGenreList, yearList } from "../constants/tags";
+import { movieGenreList, ottList, yearList } from "../constants/tags";
 import { commonAPI } from "../api/common";
 
 export default function Series() {
@@ -15,7 +15,7 @@ export default function Series() {
   const [filteredSeries, setFilteredSeries] = useState<TvShow[]>([]);
 
   // 장르 - 중복 선택
-  const [genreStates, setGenreStates] = useState<GenreState[]>(tvGenreList);
+  const [genreStates, setGenreStates] = useState<GenreState[]>(movieGenreList);
   const selectGenre = (id: number) => {
     setGenreStates((prev) =>
       prev.map((genre) =>

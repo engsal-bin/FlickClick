@@ -14,6 +14,7 @@ export default function Tags({ children, tags, selectTag}: { children: string; t
             <Tag
             key={tag.id}
             onClick={() => selectTag(tag.id)}
+            isSelected={tag.selected}
             >{tag.krKey}</Tag>
           ))}
         </div>
@@ -28,6 +29,7 @@ export default function Tags({ children, tags, selectTag}: { children: string; t
             <Tag
             key={tag.id}
             onClick={() => selectTag(tag.id)}
+            isSelected={tag.selected}
             >{tag.krKey}
             </Tag>
           ))}
