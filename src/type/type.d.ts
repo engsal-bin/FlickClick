@@ -326,7 +326,7 @@ interface ReviewType {
   isMine?: boolean;
 }
 
-interface popularContentType {
+interface trendContentType {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
