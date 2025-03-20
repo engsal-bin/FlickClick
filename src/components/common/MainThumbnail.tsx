@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import placeholderImg03 from "../../assets/placeholderImg03.svg";
 import { Link, useLocation } from "react-router-dom";
 import { tvAPI } from "../../api/tv";
 import { movieAPI } from "../../api/movie";
@@ -78,7 +77,7 @@ export default function MainThumbnail() {
         spaceBetween={10} // 슬라이드 사이 간격
         slidesPerView={1} // 한 번에 보여지는 슬라이드 수
         loop={true} // 무한 반복
-        className="w-full"
+        className="w-full hidden tablet:flex"
         onSlideChange={(swiper) => {
           swiperRef.current = swiper;
           setCurrentIndex(swiper.realIndex || 0);
@@ -128,6 +127,19 @@ export default function MainThumbnail() {
             </Link>
           </SwiperSlide>
         ))}
+
+        {/* 원형 토글 */}
+        <div className="relative bottom-0 tablet:flex mobile:hidden justify-center left-1/2 transform -translate-x-1/2 gap-[10px] z-50">
+          {contents?.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => swiperRef.current?.slideTo(index)} // 클릭 시 해당 인덱스로 이동
+              className={`w-[10px] h-[10px] rounded-full transition-all ${
+                currentIndex === index ? "bg-main" : "bg-white01_30"
+              }`}
+            ></button>
+          ))}
+        </div>
       </Swiper>
 
       {/* mobile 전용 */}
@@ -135,7 +147,7 @@ export default function MainThumbnail() {
         spaceBetween={10} // 슬라이드 사이 간격
         slidesPerView={1} // 한 번에 보여지는 슬라이드 수
         loop={true} // 무한 반복
-        className="w-full"
+        className="w-full flex tablet:hidden"
         onSlideChange={(swiper) => {
           swiperRef.current = swiper;
           setCurrentIndex(swiper.realIndex || 0);
@@ -186,20 +198,20 @@ export default function MainThumbnail() {
             </Link>
           </SwiperSlide>
         ))}
-      </Swiper>
 
-      {/* 원형 토글 */}
-      <div className="absolute tablet:bottom-[-70px] mobile:bottom-[190px] left-1/2 transform -translate-x-1/2 flex gap-[10px] z-50">
-        {contents?.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => swiperRef.current?.slideTo(index)} // 클릭 시 해당 인덱스로 이동
-            className={`w-[10px] h-[10px] rounded-full transition-all ${
-              currentIndex === index ? "bg-main" : "bg-white01_30"
-            }`}
-          ></button>
-        ))}
-      </div>
+        {/* 원형 토글 */}
+        <div className="relative bottom-0 tablet:hidden mobile:flex justify-center left-1/2 transform -translate-x-1/2 gap-[10px] z-50">
+          {contents?.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => swiperRef.current?.slideTo(index)} // 클릭 시 해당 인덱스로 이동
+              className={`w-[10px] h-[10px] rounded-full transition-all ${
+                currentIndex === index ? "bg-main" : "bg-white01_30"
+              }`}
+            ></button>
+          ))}
+        </div>
+      </Swiper>
     </>
   );
 }
