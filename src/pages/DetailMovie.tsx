@@ -1,12 +1,16 @@
 import { useState } from "react";
 import ArgorithmIP from "../components/common/ArgorithmIP";
-import Argument from "../components/common/Argument";
+import Arguments from "../components/common/Arguments";
 import DetailIntroBox from "../components/common/DetailIntroBox";
 import PersonList from "../components/common/PersonList";
 import Reviews from "../components/common/Reviews";
+import { useLocation } from "react-router-dom";
 
 export default function DetailMovie() {
   const [activeTab, setActiveTab] = useState<number>(0);
+  const location = useLocation();
+  const contentId = location.pathname.split("/")[2];
+
   // 더미데이터 예시
   const dummyreviews = [
     {
@@ -96,14 +100,14 @@ export default function DetailMovie() {
 
   return (
     <>
-      <DetailIntroBox />
+      <DetailIntroBox contentId={Number(contentId)} type="movie" />
       <section className="flex flex-col jutify-evenly w-full tablet:gap-[50px] mobile:gap-[30px] desktop:px-[128px] tablet:px-[40px] mobile:px-[10px] tablet:mt-[50px] mobile:mt-[30px]">
         {/* 영상 스와이퍼(아직 컴포넌트 완성 X) */}
 
         {/* 출연진 */}
-        <PersonList label="출연진" />
+        <PersonList seriesId={Number(contentId)} label="출연진" type="movie" />
         {/* 제작진 */}
-        <PersonList label="제작진" />
+        <PersonList seriesId={Number(contentId)} label="제작진" type="movie" />
         {/* 리뷰토론 */}
         <section className="flex flex-col">
           {/* 텝 */}
@@ -124,10 +128,10 @@ export default function DetailMovie() {
           </div>
           {/* 리뷰창 */}
           {activeTab === 0 && <Reviews />}
-          {activeTab === 1 && <Argument />}
+          {activeTab === 1 && <Arguments />}
         </section>
-        <ArgorithmIP label="추천" />
-        <ArgorithmIP label="유사한 작품" />
+        {/* <ArgorithmIP label="추천" />
+        <ArgorithmIP label="유사한 작품" /> */}
       </section>
     </>
   );

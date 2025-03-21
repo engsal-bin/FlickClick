@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ArgorithmIP from "../components/common/ArgorithmIP";
-import Argument from "../components/common/Argument";
+import Arguments from "../components/common/Arguments";
 import DetailIntroBox from "../components/common/DetailIntroBox";
 import Episodes from "../components/common/Episodes";
 import PersonList from "../components/common/PersonList";
@@ -128,7 +128,7 @@ export default function DetailSeason() {
 
   return (
     <>
-      <DetailIntroBox data={seriesData} season={seasonData} />
+      <DetailIntroBox contentId={Number(locationInfo[1])} type="tvSeason" />
       <section
         className="border border-white flex flex-col jutify-evenly w-full 
       tablet:gap-[50px] mobile:gap-[30px] 
@@ -142,14 +142,14 @@ export default function DetailSeason() {
           seriesId={Number(locationInfo[1])}
           seasonNum={Number(locationInfo[2])}
           label="출연진"
-          type="cast"
+          type="tv"
         />
         {/* 제작진 */}
         <PersonList
           seriesId={Number(locationInfo[1])}
           seasonNum={Number(locationInfo[2])}
           label="제작진"
-          type="crew"
+          type="tv"
         />
         {/* 에피소드 리스트 */}
         <Episodes
@@ -178,10 +178,10 @@ export default function DetailSeason() {
           </div>
           {/* 리뷰창 */}
           {activeTab === 0 && <Reviews />}
-          {activeTab === 1 && <Argument />}
+          {activeTab === 1 && <Arguments />}
         </section>
-        <ArgorithmIP label="추천" />
-        <ArgorithmIP label="유사한 작품" />
+        {/* <ArgorithmIP label="추천" />
+        <ArgorithmIP label="유사한 작품" /> */}
       </section>
     </>
   );

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { IMAGE_BASE_URL } from "../../api/axios";
+import imagenone2 from "../../assets/icon/imagenone2.svg";
 
 export default function Episodes({
   seriesId,
@@ -26,10 +27,13 @@ export default function Episodes({
           >
             {/* 스틸컷 */}
             <div
-              className="tablet:w-[323px] mobile:w-full bg-white bg-cover bg-center"
+              className="tablet:w-[323px] mobile:w-full bg-white bg-cover bg-center
+              border-[1px] border-main"
               style={{
                 aspectRatio: "1661 / 1000",
-                backgroundImage: `url(${IMAGE_BASE_URL}original${epi.still_path})`,
+                backgroundImage: epi.still_path
+                  ? `url(${IMAGE_BASE_URL}original${epi.still_path})`
+                  : `url(${imagenone2})`,
               }}
             ></div>
 

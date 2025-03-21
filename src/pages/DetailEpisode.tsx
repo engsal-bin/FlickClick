@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ArgorithmIP from "../components/common/ArgorithmIP";
-import Argument from "../components/common/Argument";
+import Arguments from "../components/common/Arguments";
 import DetailEpisodeIntroBox from "../components/common/DetailEpisodeIntroBox";
 import Episodes from "../components/common/Episodes";
 import PersonList from "../components/common/PersonList";
@@ -169,7 +169,7 @@ export default function DetailSeriesNoSeson() {
 
           {/* 리뷰창 */}
           {activeTab === 0 && <Reviews />}
-          {activeTab === 1 && <Argument />}
+          {activeTab === 1 && <Arguments />}
         </section>
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
