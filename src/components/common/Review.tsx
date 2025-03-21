@@ -6,21 +6,39 @@ import { useState } from "react";
 export default function Review({
   review,
   stateLifting,
+  movieOrSeasonOrEpisode,
 }: {
   review: MovieReviewType;
   stateLifting: () => void;
+  movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
 }) {
   const { user } = useAuth();
 
-  const [editContent, setEditContent] = useState("");
+  const [editContent, setEditContent] = useState(review.content);
 
   const [editStatus, setEditStatus] = useState(false);
 
   const reviewEdit = async (id: number) => {
-    await commonAPI.patchMovieReview(id, editContent);
+    if (movieOrSeasonOrEpisode === "movie") {
+      await commonAPI.patchMovieReview(id, editContent);
+    }
+    if (movieOrSeasonOrEpisode === "season") {
+      await commonAPI.patchSeasonReview(id, editContent);
+    }
+    if (movieOrSeasonOrEpisode === "episode") {
+      await commonAPI.patchEpisodeReview(id, editContent);
+    }
   };
   const reviewDelete = async (id: number) => {
-    await commonAPI.deleteMovieReview(id);
+    if (movieOrSeasonOrEpisode === "movie") {
+      await commonAPI.deleteMovieReview(id);
+    }
+    if (movieOrSeasonOrEpisode === "season") {
+      await commonAPI.deleteSeasonReview(id);
+    }
+    if (movieOrSeasonOrEpisode === "episode") {
+      await commonAPI.deleteEpisodeReview(id);
+    }
   };
 
   return (
@@ -59,8 +77,10 @@ export default function Review({
                 className="mr-[5px]"
                 onClick={async () => {
                   if (editStatus) {
-                    await reviewEdit(review.id);
-                    await stateLifting();
+                    if (editContent !== review.content) {
+                      await reviewEdit(review.id);
+                      await stateLifting();
+                    }
                     setEditStatus(false);
                   } else {
                     setEditStatus(true);

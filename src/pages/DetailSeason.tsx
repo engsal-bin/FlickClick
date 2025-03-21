@@ -18,7 +18,8 @@ export default function DetailSeason() {
   const [seriesData, setSeriesData] = useState<TvSeriesType>();
   // 시즌 데이터 상태
   const [seasonData, setSeasonData] = useState<TvSeasonsType>();
-  // console.log(locationInfo);
+
+  const contentId = locationInfo.slice(1, 3).join("/");
 
   useEffect(() => {
     const fetchSeries = async () => {
@@ -177,8 +178,10 @@ export default function DetailSeason() {
             ))}
           </div>
           {/* 리뷰창 */}
-          {activeTab === 0 && <Reviews />}
-          {activeTab === 1 && <Arguments />}
+          {activeTab === 0 && (
+            <Reviews movieOrSeasonOrEpisode={"season"} contentId={contentId} />
+          )}
+          {activeTab === 1 && <Arguments movieOrSeasonOrEpisode={"season"} />}
         </section>
         {/* <ArgorithmIP label="추천" />
         <ArgorithmIP label="유사한 작품" /> */}

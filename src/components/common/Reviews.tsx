@@ -12,23 +12,36 @@ export default function Reviews({
 }) {
   const [reviews, setReviews] = useState([]);
 
-  const fetchMovieReview = async () => {
-    const { data } = await commonAPI.getMovieReview(contentId);
-    console.log("data = ", data);
-    setReviews(data);
+  const fetchReview = async () => {
+    if (movieOrSeasonOrEpisode === "movie") {
+      const { data } = await commonAPI.getMovieReview(contentId);
+      console.log("data = ", data);
+      setReviews(data);
+    }
+    if (movieOrSeasonOrEpisode === "season") {
+      const { data } = await commonAPI.getSeasonReview(contentId);
+      console.log("data = ", data);
+      setReviews(data);
+    }
+    if (movieOrSeasonOrEpisode === "episode") {
+      const { data } = await commonAPI.getEpisodeReview(contentId);
+      console.log("data = ", data);
+      setReviews(data);
+    }
+    console.log("contentId = ", contentId);
   };
-  const getMovieReview = async () => {
-    await fetchMovieReview();
+  const getReview = async () => {
+    await fetchReview();
   };
   useEffect(() => {
-    fetchMovieReview();
+    fetchReview();
   }, []);
 
   return (
     <>
       <div>
         <InputTextarea
-          stateLifting={getMovieReview}
+          stateLifting={getReview}
           contentId={contentId}
           reviewOrArgumentOrOpinion={"review"}
           movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
@@ -40,7 +53,8 @@ export default function Reviews({
                 <Review
                   review={review}
                   key={index}
-                  stateLifting={getMovieReview}
+                  stateLifting={getReview}
+                  movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
                 />
               ))
             : "리뷰가 없습니다."}
