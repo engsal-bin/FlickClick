@@ -326,6 +326,16 @@ interface ReviewType {
   isMine?: boolean;
 }
 
+interface MovieReviewType {
+  author_id: string;
+  author_name: null;
+  content: string;
+  created_at: string;
+  id: number;
+  ip_id: string;
+  ip_name: string;
+}
+
 interface popularContentType {
   adult: boolean;
   backdrop_path: string;
@@ -346,3 +356,5 @@ interface popularContentType {
   vote_average: number;
   vote_count: number;
 }
+
+type movieOrSeasonOrEpisodeType = "movie" | "season" | "episode";
