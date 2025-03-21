@@ -1,6 +1,7 @@
 import { axiosInstance } from "./axios";
 import { supabase } from "./index.ts";
 import { movieAPI } from "./movie.ts";
+import { tvAPI } from "./tv.ts";
 
 const getTrendingAll = async (
   page: number,
@@ -52,24 +53,34 @@ const postReview = async (
   ip_id: string,
   content: string,
   author_id: string,
-  reviewType: string
+  review_type: string
 ) => {
-  const data = await movieAPI.getMovie(Number(ip_id));
-  const ip_name = data.title;
+  let ip_name = "";
   try {
-    if (reviewType === "movie") {
+    if (review_type === "movie") {
+      const data = await movieAPI.getMovie(Number(ip_id));
+      ip_name = data.title;
       await supabase
         .from("movie_review")
         .insert([{ ip_id, content, author_id, ip_name }])
         .select();
     }
-    if (reviewType === "season") {
+    if (review_type === "season") {
+      const ipIdSplit = ip_id.split("/");
+      const series_id = ipIdSplit[0];
+      const season_number = ipIdSplit[1];
+      const { name: series_name } = await tvAPI.getSeries(Number(series_id));
+      const { name: season_name } = await tvAPI.getSeason(
+        Number(series_id),
+        Number(season_number)
+      );
+      ip_name = `${series_name} ${season_name}`;
       await supabase
         .from("season_review")
         .insert([{ ip_id, content, author_id, ip_name }])
         .select();
     }
-    if (reviewType === "episode") {
+    if (review_type === "episode") {
       await supabase
         .from("episode_review")
         .insert([{ ip_id, content, author_id, ip_name }])
@@ -144,10 +155,10 @@ const postArgumentOpinion = async (
 };
 
 // 영화 리뷰 가져오기
-const getMovieReview = async (params: string) => {
+const getMovieReview = async (ip_id: string) => {
   try {
     const data = await supabase.rpc("get_reviews_by_movie", {
-      ip_param: params,
+      ip_param: ip_id,
     });
     return data;
   } catch (error) {
@@ -177,6 +188,73 @@ const deleteMovieReview = async (id: number) => {
   }
 };
 
+// tv season 리뷰 가져오기
+const getSeasonReview = async (ip_id: string) => {
+  try {
+    const data = await supabase.rpc("get_reviews_by_season", {
+      ip_param: ip_id,
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv season 리뷰 편집
+const patchSeasonReview = async (id: number, content: string) => {
+  try {
+    await supabase
+      .from("season_review")
+      .update({ content })
+      .eq("id", id)
+      .select();
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv season 리뷰 삭제
+const deleteSeasonReview = async (id: number) => {
+  try {
+    await supabase.from("season_review").delete().eq("id", id);
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv episode 리뷰 가져오기
+const getEpisodeReview = async (ip_id: string) => {
+  try {
+    const data = await supabase.rpc("get_reviews_by_episode", {
+      ip_param: ip_id,
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv episode 리뷰 편집
+const patchEpisodeReview = async (id: number, content: string) => {
+  try {
+    await supabase
+      .from("episode_review")
+      .update({ content })
+      .eq("id", id)
+      .select();
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv episode 리뷰 삭제
+const deleteEpisodeReview = async (id: number) => {
+  try {
+    await supabase.from("episode_review").delete().eq("id", id);
+  } catch (error) {
+    throw error;
+  }
+};
 export const commonAPI = {
   getTrendingAll,
   postReview,
@@ -186,4 +264,10 @@ export const commonAPI = {
   getMovieReview,
   patchMovieReview,
   deleteMovieReview,
+  getSeasonReview,
+  patchSeasonReview,
+  deleteSeasonReview,
+  getEpisodeReview,
+  patchEpisodeReview,
+  deleteEpisodeReview,
 };
