@@ -94,6 +94,33 @@ const getMovie = async (movie_id: number) => {
   }
 };
 
+const getRecommendMovie = async (series_id: number) => {
+  try {
+    const response = await axiosInstance.get(
+      `/movie/${series_id}/recommendations`,
+      {
+        params: { language: "ko-KR", page: 1 },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:");
+    throw error;
+  }
+};
+
+const getSimilarMovie = async (series_id: number) => {
+  try {
+    const response = await axiosInstance.get(`/movie/${series_id}/similar`, {
+      params: { language: "ko-KR", page: 1 },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:");
+    throw error;
+  }
+};
+
 export const movieAPI = {
   getMovieTrailer,
   getNowPlayingMovie,
@@ -103,4 +130,6 @@ export const movieAPI = {
   getGenres,
   getProviders,
   getMovie,
+  getRecommendMovie,
+  getSimilarMovie,
 };

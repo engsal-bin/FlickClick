@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ArgorithmIP from "../components/common/ArgorithmIP";
 import Arguments from "../components/common/Arguments";
 import DetailEpisodeIntroBox from "../components/common/DetailEpisodeIntroBox";
-import Episodes from "../components/common/Episodes";
 import PersonList from "../components/common/PersonList";
 import Reviews from "../components/common/Reviews";
 import { tvAPI } from "../api/tv";
@@ -171,14 +170,18 @@ export default function DetailSeriesNoSeson() {
           {activeTab === 0 && <Reviews />}
           {activeTab === 1 && <Arguments />}
         </section>
+
+        {/* 추천 */}
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
-          type="recommendations"
+          type="tv"
           label="추천"
         />
+
+        {/* 유사작품 */}
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
-          type="similar"
+          type="tv"
           label="유사한 작품"
         />
       </section>
