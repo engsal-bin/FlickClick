@@ -38,7 +38,7 @@ export default function ArgorithmIP({
       }
     };
     fetchData();
-  }, [seriesId, type]);
+  }, [seriesId, type, label]);
   console.log(contents);
 
   return (
@@ -61,43 +61,50 @@ export default function ArgorithmIP({
         className="w-full"
       >
         {/* <div className="flex justify-start gap-[30px] tablet:h-full mobile:h-[132.5px]"> */}
-        {contents?.map((item) => (
-          <SwiperSlide key={item.id} className="flex flex-col items-center">
-            <Link
-              to={
-                type === "tv"
-                  ? `/detailseries/${item.id}`
-                  : `/detailmovie/${item.id}`
-              }
-              className="w-full flex flex-col gap-[10px]"
-            >
-              {/* 컨텐츠 이미지 */}
-              <div
-                className="tablet:w-[200px] mobile:w-[100px] bg-gray02 
+        {contents?.length === 0 ? (
+          <div className="text-[16px] text-white02 font-light">
+            검색결과가 없습니다.
+          </div>
+        ) : (
+          contents?.map((item) => (
+            <SwiperSlide key={item.id} className="flex flex-col items-center">
+              <Link
+                to={
+                  type === "tv"
+                    ? `/detailseries/${item.id}`
+                    : `/detailmovie/${item.id}`
+                }
+                className="w-full flex flex-col gap-[10px]"
+              >
+                {/* 컨텐츠 이미지 */}
+                <div
+                  className="tablet:w-[200px] mobile:w-[100px] bg-gray02 
                   tablet:h-[300px] mobile:h-[132.5px]
                   rounded-[10px] overflow-hidden bg-cover bg-center"
-                style={{
-                  backgroundImage: `url(${IMAGE_BASE_URL}original${
-                    item.poster_path ? item.poster_path : item.backdrop_path
-                  })`,
-                }}
-              ></div>
+                  style={{
+                    backgroundImage: `url(${IMAGE_BASE_URL}original${
+                      item.poster_path ? item.poster_path : item.backdrop_path
+                    })`,
+                  }}
+                ></div>
 
-              {/* 제목(연도) */}
-              <div
-                className="font-bold text-[16px] text-white02
+                {/* 제목(연도) */}
+                <div
+                  className="font-bold text-[16px] text-white02
                   line-clamp-2 overflow-hidden whitespace-normal 
                   hover:line-clamp-none hover:overflow-visible"
-              >
-                {item.title ? item.title : item.name}(
-                {item.first_air_date
-                  ? item.first_air_date.slice(0, 4)
-                  : item.release_date?.slice(0, 4)}
-                )
-              </div>
-            </Link>
-          </SwiperSlide>
-        ))}
+                >
+                  {item.title ? item.title : item.name}(
+                  {item.first_air_date
+                    ? item.first_air_date.slice(0, 4)
+                    : item.release_date?.slice(0, 4)}
+                  )
+                </div>
+              </Link>
+            </SwiperSlide>
+          ))
+        )}
+
         {/* </div> */}
       </Swiper>
     </section>

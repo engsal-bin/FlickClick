@@ -170,11 +170,15 @@ export default function DetailSeriesNoSeson() {
           {activeTab === 0 && <Reviews />}
           {activeTab === 1 && <Arguments />}
         </section>
+
+        {/* 추천 */}
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
           type="tv"
           label="추천"
         />
+
+        {/* 유사작품 */}
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
           type="tv"

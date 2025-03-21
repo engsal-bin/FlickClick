@@ -130,8 +130,16 @@ export default function DetailMovie() {
           {activeTab === 0 && <Reviews />}
           {activeTab === 1 && <Arguments />}
         </section>
-        {/* <ArgorithmIP label="추천" />
-        <ArgorithmIP label="유사한 작품" /> */}
+
+        {/* 추천 */}
+        <ArgorithmIP seriesId={Number(contentId)} type="movie" label="추천" />
+
+        {/* 유사작품 */}
+        <ArgorithmIP
+          seriesId={Number(contentId)}
+          type="movie"
+          label="유사한 작품"
+        />
       </section>
     </>
   );

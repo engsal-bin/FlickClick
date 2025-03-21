@@ -180,8 +180,20 @@ export default function DetailSeason() {
           {activeTab === 0 && <Reviews />}
           {activeTab === 1 && <Arguments />}
         </section>
-        {/* <ArgorithmIP label="추천" />
-        <ArgorithmIP label="유사한 작품" /> */}
+
+        {/* 추천 */}
+        <ArgorithmIP
+          seriesId={Number(locationInfo[1])}
+          type="tv"
+          label="추천"
+        />
+
+        {/* 유사작품 */}
+        <ArgorithmIP
+          seriesId={Number(locationInfo[1])}
+          type="tv"
+          label="유사한 작품"
+        />
       </section>
     </>
   );
