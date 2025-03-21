@@ -19,12 +19,12 @@ export default function Trailers() {
         if (trailer.results.length > 0) {
           const youtubeVideos = trailer.results.filter(
             (video: VideoType) =>
-              video.type === "Trailer" && video.site === "YouTube"
+              video.type === "Trailer" && video.site === "YouTube",
           );
 
           if (youtubeVideos.length > 0) {
             youtubeVideos.sort((a: VideoType, b: VideoType) =>
-              a.published_at > b.published_at ? 1 : -1
+              a.published_at > b.published_at ? 1 : -1,
             );
 
             const dataKey = youtubeVideos.map((video: VideoType) => video.key);
@@ -32,7 +32,7 @@ export default function Trailers() {
 
             const thumbnails = youtubeVideos.map(
               (video: VideoType) =>
-                `https://img.youtube.com/vi/${video.key}/0.jpg`
+                `https://img.youtube.com/vi/${video.key}/0.jpg`,
             );
             setThumbnails(thumbnails);
           }

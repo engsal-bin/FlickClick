@@ -4,7 +4,7 @@ import { supabase } from "./index.ts";
 const getTrendingAll = async (
   page: number,
   day = "day",
-  language = "ko-KR"
+  language = "ko-KR",
 ) => {
   try {
     const response = await axiosInstance.get(`/trending/all/${day}`, {
@@ -17,38 +17,41 @@ const getTrendingAll = async (
 };
 
 // 디스커버 API 호출 함수
-const getDiscover = async (targetType = "tv", {
-  genres = [],
-  releaseDateRange = { gte: null, lte: null },
-  ottPlatforms = [],
-  language = 'en-US',
-  region = 'US',
-}) => {
+const getDiscover = async (
+  targetType = "tv",
+  {
+    genres = [],
+    releaseDateRange = { gte: null, lte: null },
+    ottPlatforms = [],
+    language = "en-US",
+    region = "US",
+  },
+) => {
   let endpoint = `/discover/${targetType}?language=${language}&region=${region}&sort_by=release_date.asc`;
 
-  if (genres.length > 0) endpoint += `&with_genres=${genres.join(',')}`;
-  if (releaseDateRange.gte) endpoint += `&primary_release_date.gte=${releaseDateRange.gte}`;
-  if (releaseDateRange.lte) endpoint += `&primary_release_date.lte=${releaseDateRange.lte}`;
-  if (ottPlatforms.length > 0) endpoint += `&with_watch_providers=${ottPlatforms.join(',')}`;
+  if (genres.length > 0) endpoint += `&with_genres=${genres.join(",")}`;
+  if (releaseDateRange.gte)
+    endpoint += `&primary_release_date.gte=${releaseDateRange.gte}`;
+  if (releaseDateRange.lte)
+    endpoint += `&primary_release_date.lte=${releaseDateRange.lte}`;
+  if (ottPlatforms.length > 0)
+    endpoint += `&with_watch_providers=${ottPlatforms.join(",")}`;
 
   try {
     const { data } = await axiosInstance.get(endpoint);
     return data.results;
   } catch (error) {
-    console.error('TMDB API 호출 오류:', error);
+    console.error("TMDB API 호출 오류:", error);
     return [];
   }
 };
-
-
-
 
 const postReview = async (
   ip_id: string,
   content: string,
   author_id: string,
   ip_name: string,
-  reviewType: string
+  reviewType: string,
 ) => {
   try {
     if (reviewType === "movie") {
@@ -73,7 +76,7 @@ const postArgument = async (
   ip_id: string,
   author_id: string,
   ip_name: string,
-  argumentType: string
+  argumentType: string,
 ) => {
   try {
     if (argumentType === "movie") {
@@ -103,7 +106,7 @@ const postArgumentOpinion = async (
   argument_id: number,
   content: string,
   author_id: string,
-  argumentType: string
+  argumentType: string,
 ) => {
   try {
     if (argumentType === "movie") {

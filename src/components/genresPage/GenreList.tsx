@@ -31,7 +31,7 @@ export default function GenreList(props: GenreListProps) {
   // 선택장르 상태 변경 함수
   const handleCheckedGenresChange = (genre: Genres) => {
     setCheckedGenres((prev) =>
-      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
+      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre],
     );
   };
 
@@ -97,8 +97,8 @@ export default function GenreList(props: GenreListProps) {
           moreView === 1
             ? "justify-start"
             : Genres?.slice(0, moreView * 5).length !== Genres.length
-            ? "justify-between"
-            : "justify-end"
+              ? "justify-between"
+              : "justify-end"
         } text-gray01`}
       >
         {/* 더보기 */}

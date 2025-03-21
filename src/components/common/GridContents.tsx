@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IMAGE_BASE_URL } from "../../api/axios";
 
-
-export default function GridContents({ series }: {series: TvShow[]}) {
+export default function GridContents({ series }: { series: TvShow[] }) {
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -8,7 +8,7 @@ export default function Review({ review }: { review: ReviewType }) {
           `text-white01 tablet:text-[18px] mobile:text-[14px] ${
             // !viewMoreStates[review.id] &&
             "line-clamp-5"
-          }`
+          }`,
         )}
       >
         {review.content}

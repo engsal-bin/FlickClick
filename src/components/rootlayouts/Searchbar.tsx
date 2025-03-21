@@ -36,12 +36,12 @@ interface ContentsType {
 
 export default function Searchbar() {
   const [trendingContents, setTrendingContents] = useState<ContentType[] | []>(
-    []
+    [],
   );
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState<ContentType[] | []>([]);
   const [searchTVResults, setSearchTVResults] = useState<ContentType[] | []>(
-    []
+    [],
   );
   const [searchMovieResults, setSearchMovieResults] = useState<
     ContentType[] | []
@@ -118,7 +118,8 @@ export default function Searchbar() {
                   key={content.id}
                   onClick={() => {
                     handleContentClick(content);
-                  }}>
+                  }}
+                >
                   <div className="w-[20px] text-main mr-[20px]">
                     {index + 1}
                   </div>
@@ -137,7 +138,8 @@ export default function Searchbar() {
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("전체")}>
+                      onClick={() => handleTabChange("전체")}
+                    >
                       전체
                     </li>
                     <li
@@ -146,7 +148,8 @@ export default function Searchbar() {
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("시리즈")}>
+                      onClick={() => handleTabChange("시리즈")}
+                    >
                       시리즈
                     </li>
                     <li
@@ -155,7 +158,8 @@ export default function Searchbar() {
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("영화")}>
+                      onClick={() => handleTabChange("영화")}
+                    >
                       영화
                     </li>
                   </ul>
@@ -171,7 +175,8 @@ export default function Searchbar() {
                         className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
                         onClick={() => {
                           handleContentClick(result);
-                        }}>
+                        }}
+                      >
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -207,7 +212,8 @@ export default function Searchbar() {
                         className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
                         onClick={() => {
                           handleContentClick(result);
-                        }}>
+                        }}
+                      >
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -241,7 +247,8 @@ export default function Searchbar() {
                         className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
                         onClick={() => {
                           handleContentClick(result);
-                        }}>
+                        }}
+                      >
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -291,7 +298,8 @@ export default function Searchbar() {
                   key={content.id}
                   onClick={() => {
                     handleContentClick(content);
-                  }}>
+                  }}
+                >
                   <div className="w-[20px] text-main mr-[20px]">
                     {index + 1}
                   </div>
@@ -310,7 +318,8 @@ export default function Searchbar() {
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("전체")}>
+                      onClick={() => handleTabChange("전체")}
+                    >
                       전체
                     </li>
                     <li
@@ -319,7 +328,8 @@ export default function Searchbar() {
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("시리즈")}>
+                      onClick={() => handleTabChange("시리즈")}
+                    >
                       시리즈
                     </li>
                     <li
@@ -328,7 +338,8 @@ export default function Searchbar() {
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("영화")}>
+                      onClick={() => handleTabChange("영화")}
+                    >
                       영화
                     </li>
                   </ul>
@@ -344,7 +355,8 @@ export default function Searchbar() {
                         className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
                         onClick={() => {
                           handleContentClick(result);
-                        }}>
+                        }}
+                      >
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -380,7 +392,8 @@ export default function Searchbar() {
                         className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
                         onClick={() => {
                           handleContentClick(result);
-                        }}>
+                        }}
+                      >
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -414,7 +427,8 @@ export default function Searchbar() {
                         className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
                         onClick={() => {
                           handleContentClick(result);
-                        }}>
+                        }}
+                      >
                         <div className="w-[109px] h-[144px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -464,7 +478,8 @@ export default function Searchbar() {
                   key={content.id}
                   onClick={() => {
                     handleContentClick(content);
-                  }}>
+                  }}
+                >
                   <div className="w-[20px] text-main mr-[20px]">
                     {index + 1}
                   </div>
@@ -483,7 +498,8 @@ export default function Searchbar() {
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("전체")}>
+                      onClick={() => handleTabChange("전체")}
+                    >
                       전체
                     </li>
                     <li
@@ -492,7 +508,8 @@ export default function Searchbar() {
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("시리즈")}>
+                      onClick={() => handleTabChange("시리즈")}
+                    >
                       시리즈
                     </li>
                     <li
@@ -501,7 +518,8 @@ export default function Searchbar() {
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("영화")}>
+                      onClick={() => handleTabChange("영화")}
+                    >
                       영화
                     </li>
                   </ul>
@@ -519,7 +537,8 @@ export default function Searchbar() {
                         className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
                         onClick={() => {
                           handleContentClick(result);
-                        }}>
+                        }}
+                      >
                         <div className="w-[70px] h-[94px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -557,7 +576,8 @@ export default function Searchbar() {
                         className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
                         onClick={() => {
                           handleContentClick(result);
-                        }}>
+                        }}
+                      >
                         <div className="w-[70px] h-[94px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
@@ -593,7 +613,8 @@ export default function Searchbar() {
                         className="flex items-center gap-[20px] mb-[30px] cursor-pointer"
                         onClick={() => {
                           handleContentClick(result);
-                        }}>
+                        }}
+                      >
                         <div className="min-w-[70px] h-[94px]">
                           <img
                             src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}

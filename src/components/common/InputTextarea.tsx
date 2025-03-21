@@ -18,14 +18,14 @@ export default function InputTextarea({
         text,
         "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
         "Movie",
-        "movie"
+        "movie",
       );
       await commonAPI.postReview(
         "e",
         text,
         "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
         "Episode",
-        "episode"
+        "episode",
       );
     }
     if (reviewOrArgumentOrOpinion === "argument") {
@@ -34,21 +34,21 @@ export default function InputTextarea({
         "m",
         "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
         "Movie",
-        "movie"
+        "movie",
       );
       await commonAPI.postArgument(
         text,
         "e",
         "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
         "Episode",
-        "episode"
+        "episode",
       );
       await commonAPI.postArgument(
         text,
         "s",
         "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
         "Season",
-        "season"
+        "season",
       );
     }
     if (reviewOrArgumentOrOpinion === "opinion") {
@@ -56,19 +56,19 @@ export default function InputTextarea({
         16,
         text,
         "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-        "movie"
+        "movie",
       );
       await commonAPI.postArgumentOpinion(
         7,
         text,
         "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-        "episode"
+        "episode",
       );
       await commonAPI.postArgumentOpinion(
         8,
         text,
         "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-        "season"
+        "season",
       );
     }
   };

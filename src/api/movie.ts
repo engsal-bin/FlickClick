@@ -73,7 +73,7 @@ const getProviders = async (movie_id: number, language = "ko-KR") => {
       `/movie/${movie_id}/watch/providers`,
       {
         params: { language },
-      }
+      },
     );
     return response.data;
   } catch (error) {

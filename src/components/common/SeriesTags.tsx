@@ -1,7 +1,14 @@
 import Tag from "./Tag";
 
-export default function Tags({ children, tags, selectTag}: { children: string; tags:GenreState[]; selectTag: (id: number) => void }) {
-  
+export default function Tags({
+  children,
+  tags,
+  selectTag,
+}: {
+  children: string;
+  tags: GenreState[];
+  selectTag: (id: number) => void;
+}) {
   return (
     <>
       {/* pc, tablet */}
@@ -12,10 +19,12 @@ export default function Tags({ children, tags, selectTag}: { children: string; t
         <div className="flex flex-wrap gap-[10px]">
           {tags.map((tag) => (
             <Tag
-            key={tag.id}
-            onClick={() => selectTag(tag.id)}
-            isSelected={tag.selected}
-            >{tag.krKey}</Tag>
+              key={tag.id}
+              onClick={() => selectTag(tag.id)}
+              isSelected={tag.selected}
+            >
+              {tag.krKey}
+            </Tag>
           ))}
         </div>
       </div>
@@ -27,10 +36,11 @@ export default function Tags({ children, tags, selectTag}: { children: string; t
         <div className="flex flex-wrap gap-[10px]">
           {tags.map((tag) => (
             <Tag
-            key={tag.id}
-            onClick={() => selectTag(tag.id)}
-            isSelected={tag.selected}
-            >{tag.krKey}
+              key={tag.id}
+              onClick={() => selectTag(tag.id)}
+              isSelected={tag.selected}
+            >
+              {tag.krKey}
             </Tag>
           ))}
         </div>

@@ -16,14 +16,13 @@ export default function MediaList({
   data,
   children,
 }: ChildProps) {
-
   const path =
     data?.map((item) =>
       item.media_type && mediaTypeToPathName[item.media_type as "movie" | "tv"]
         ? `/${mediaTypeToPathName[item.media_type as "movie" | "tv"]}/${
             item.id
           }`
-        : ""
+        : "",
     ) ?? [];
 
   const navigate = useNavigate();

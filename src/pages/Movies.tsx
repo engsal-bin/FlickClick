@@ -19,8 +19,8 @@ export default function Series() {
   const selectGenre = (id: number) => {
     setGenreStates((prev) =>
       prev.map((genre) =>
-        genre.id === id ? { ...genre, selected: !genre.selected } : genre
-      )
+        genre.id === id ? { ...genre, selected: !genre.selected } : genre,
+      ),
     );
   };
 
@@ -29,7 +29,9 @@ export default function Series() {
   const selectYearRange = (id: number) => {
     setYearStates((prev) => {
       return prev.map((year) =>
-        year.id === id ? { ...year, selected: true } : { ...year, selected: false }
+        year.id === id
+          ? { ...year, selected: true }
+          : { ...year, selected: false },
       );
     });
   };
@@ -39,16 +41,22 @@ export default function Series() {
   const selectOtt = (key: string) => {
     setOttStates((prev) =>
       prev.map((service) =>
-        service.key === key ? { ...service, selected: !service.selected } : service
-      )
+        service.key === key
+          ? { ...service, selected: !service.selected }
+          : service,
+      ),
     );
   };
 
   useEffect(() => {
     // 선택된 장르, 년도, OTT 필터링 옵션 생성
-    const selectedGenres = genreStates.filter((genre) => genre.selected).map((genre) => genre.id);
+    const selectedGenres = genreStates
+      .filter((genre) => genre.selected)
+      .map((genre) => genre.id);
     const selectedYears = yearStates.filter((year) => year.selected);
-    const selectedOttPlatforms = ottStates.filter((ott) => ott.selected).map((ott) => ott.key);
+    const selectedOttPlatforms = ottStates
+      .filter((ott) => ott.selected)
+      .map((ott) => ott.key);
 
     const filteredOptions: FilterOptions = {
       genre: selectedGenres,
@@ -57,20 +65,20 @@ export default function Series() {
         lte: selectedYears[0]?.lte || null,
       },
       ottPlatform: selectedOttPlatforms,
-      language: 'en-US',
-      region: 'US',
+      language: "en-US",
+      region: "US",
     };
 
     // 필터 옵션이 하나라도 선택되었는지 확인
     setIsTagsSelected(
       filteredOptions.genre.length > 0 ||
-      filteredOptions.firstAirDate.gte !== null ||
-      filteredOptions.ottPlatform.length > 0
+        filteredOptions.firstAirDate.gte !== null ||
+        filteredOptions.ottPlatform.length > 0,
     );
 
     // 필터 옵션이 변경될 때마다 API 호출
     const fetchFilteredSeries = async () => {
-      const response = await commonAPI.getDiscover("movie",filteredOptions);
+      const response = await commonAPI.getDiscover("movie", filteredOptions);
       setFilteredSeries(response);
     };
 
@@ -82,10 +90,20 @@ export default function Series() {
   return (
     <div className="flex flex-col justify-between items-center mb-[100px] desktop:gap-[50px] tablet:gap-[40px] mobile:gap-[30px] text-white bg-black">
       <MainThumbnail />
-      <SeriesTags tags={genreStates} selectTag={selectGenre}>장르</SeriesTags>
-      <YearTags tags={yearStates} selectTag={selectYearRange}>방영 연도</YearTags>
-      <OttTags selectedTag={ottStates} selectTag={selectOtt}>시청할 수 있는 서비스</OttTags>
-      {isTagsSelected ? <GridContents series={filteredSeries} /> : <DefaultSeriesView />}
+      <SeriesTags tags={genreStates} selectTag={selectGenre}>
+        장르
+      </SeriesTags>
+      <YearTags tags={yearStates} selectTag={selectYearRange}>
+        방영 연도
+      </YearTags>
+      <OttTags selectedTag={ottStates} selectTag={selectOtt}>
+        시청할 수 있는 서비스
+      </OttTags>
+      {isTagsSelected ? (
+        <GridContents series={filteredSeries} />
+      ) : (
+        <DefaultSeriesView />
+      )}
     </div>
   );
 }

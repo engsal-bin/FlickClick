@@ -15,7 +15,7 @@ export default function Notify({
           className={twMerge(
             `block w-[10px] h-[10px] rounded-[100%] ${
               is_read ? "bg-gray02" : "bg-main"
-            }`
+            }`,
           )}
         ></span>
         <p className={twMerge(`${is_read ? "text-gray02" : "text-white01"}`)}>
@@ -28,12 +28,12 @@ export default function Notify({
           className={twMerge(
             `block w-[10px] h-[10px] rounded-[100%] ${
               is_read ? "bg-gray02" : "bg-main"
-            }`
+            }`,
           )}
         ></span>
         <p
           className={twMerge(
-            `${is_read ? "text-gray02" : "text-white01"} truncate`
+            `${is_read ? "text-gray02" : "text-white01"} truncate`,
           )}
         >
           {message}
