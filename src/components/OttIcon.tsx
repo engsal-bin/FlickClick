@@ -10,12 +10,12 @@ const OttIcon = ({ src, isSelected, onClick, alt }: OttIconProps) => {
     <img
       src={`https://image.tmdb.org/t/p/original/${src}`}
       onClick={onClick}
+      className={
+        `cursor-pointer ${
+          isSelected ? "opacity-100" : "opacity-30"
+        } w-[40px] h-[40px]` + "object-cover rounded-[8px]"
+      }
       alt={alt}
-      className={`cursor-pointer object-cover ${
-        isSelected
-          ? "opacity-100" // 선택된 아이콘에 노란색 테두리 추가
-          : "opacity-30"
-      }`}
     />
   );
 };
