@@ -2,75 +2,54 @@ import { useEffect, useState } from "react";
 import sendIcon from "../../assets/icon/send.svg";
 import sendBlueIcon from "../../assets/icon/sendBlue.svg";
 import { commonAPI } from "../../api/common";
+import { useAuth } from "../../api/Auth";
 export default function InputTextarea({
   reviewOrArgumentOrOpinion,
+  movieOrSeasonOrEpisode,
+  contentId,
+  stateLifting,
 }: {
   reviewOrArgumentOrOpinion: "review" | "argument" | "opinion";
+  movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
+  contentId: string;
+  stateLifting: () => void;
 }) {
   const [text, setText] = useState("");
   const [isSend, setIsSend] = useState(false);
   const [placeHolder, setPlaceHolder] = useState("");
 
+  const { user } = useAuth();
+
   const fn = async () => {
+    if (!user?.id) return; // 사용자가 없으면 실행 안 함
+
     if (reviewOrArgumentOrOpinion === "review") {
       await commonAPI.postReview(
-        "m",
+        contentId,
         text,
-        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-        "Movie",
-        "movie"
-      );
-      await commonAPI.postReview(
-        "e",
-        text,
-        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-        "Episode",
-        "episode"
+        user.id, // ✅ 최신 값 사용
+        movieOrSeasonOrEpisode
       );
     }
     if (reviewOrArgumentOrOpinion === "argument") {
       await commonAPI.postArgument(
         text,
         "m",
-        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
+        user.id, // ✅ 최신 값 사용
         "Movie",
-        "movie"
-      );
-      await commonAPI.postArgument(
-        text,
-        "e",
-        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-        "Episode",
-        "episode"
-      );
-      await commonAPI.postArgument(
-        text,
-        "s",
-        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-        "Season",
-        "season"
+        movieOrSeasonOrEpisode
       );
     }
     if (reviewOrArgumentOrOpinion === "opinion") {
       await commonAPI.postArgumentOpinion(
         16,
         text,
-        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-        "movie"
-      );
-      await commonAPI.postArgumentOpinion(
-        7,
-        text,
-        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-        "episode"
-      );
-      await commonAPI.postArgumentOpinion(
-        8,
-        text,
-        "1be395d3-dd4b-4c68-b90e-738583c1f0e4",
-        "season"
+        user.id, // ✅ 최신 값 사용
+        movieOrSeasonOrEpisode
       );
     }
+
+    stateLifting();
   };
 
   useEffect(() => {

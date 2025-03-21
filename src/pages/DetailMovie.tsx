@@ -127,8 +127,10 @@ export default function DetailMovie() {
             ))}
           </div>
           {/* 리뷰창 */}
-          {activeTab === 0 && <Reviews />}
-          {activeTab === 1 && <Arguments />}
+          {activeTab === 0 && (
+            <Reviews movieOrSeasonOrEpisode={"movie"} contentId={contentId} />
+          )}
+          {activeTab === 1 && <Arguments movieOrSeasonOrEpisode={"movie"} />}
         </section>
         {/* <ArgorithmIP label="추천" />
         <ArgorithmIP label="유사한 작품" /> */}
