@@ -18,8 +18,9 @@ export default function DetailSeriesNoSeson() {
   const location = useLocation();
   // 시리즈 id, 시즌 id 저장
   const locationInfo = location.pathname.split("/").slice(1, 5);
-  // console.log(locationInfo);
 
+  const contentId = locationInfo.slice(1).join("/");
+  console.log("contentId =", contentId);
   useEffect(() => {
     const fetchEpisode = async () => {
       try {
@@ -168,8 +169,10 @@ export default function DetailSeriesNoSeson() {
           </div>
 
           {/* 리뷰창 */}
-          {activeTab === 0 && <Reviews />}
-          {activeTab === 1 && <Arguments />}
+          {activeTab === 0 && (
+            <Reviews movieOrSeasonOrEpisode={"episode"} contentId={contentId} />
+          )}
+          {activeTab === 1 && <Arguments movieOrSeasonOrEpisode={"episode"} />}
         </section>
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}

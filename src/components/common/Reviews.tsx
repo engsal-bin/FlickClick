@@ -15,12 +15,10 @@ export default function Reviews({
   const fetchReview = async () => {
     if (movieOrSeasonOrEpisode === "movie") {
       const { data } = await commonAPI.getMovieReview(contentId);
-      console.log("data = ", data);
       setReviews(data);
     }
     if (movieOrSeasonOrEpisode === "season") {
       const { data } = await commonAPI.getSeasonReview(contentId);
-      console.log("data = ", data);
       setReviews(data);
     }
     if (movieOrSeasonOrEpisode === "episode") {
@@ -48,16 +46,18 @@ export default function Reviews({
         />
         {/* 리뷰리스트 */}
         <div className="flex flex-col gap-[20px]">
-          {reviews.length > 0
-            ? reviews.map((review, index) => (
-                <Review
-                  review={review}
-                  key={index}
-                  stateLifting={getReview}
-                  movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
-                />
-              ))
-            : "리뷰가 없습니다."}
+          {reviews.length > 0 ? (
+            reviews.map((review, index) => (
+              <Review
+                review={review}
+                key={index}
+                stateLifting={getReview}
+                movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
+              />
+            ))
+          ) : (
+            <div>리뷰가 없습니다.</div>
+          )}
         </div>
       </div>
     </>
