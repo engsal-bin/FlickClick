@@ -89,7 +89,12 @@ export default function DetailSeriesNoSeson() {
           {activeTab === 0 && (
             <Reviews movieOrSeasonOrEpisode={"episode"} contentId={contentId} />
           )}
-          {activeTab === 1 && <Arguments movieOrSeasonOrEpisode={"episode"} />}
+          {activeTab === 1 && (
+            <Arguments
+              contentId={contentId}
+              movieOrSeasonOrEpisode={"episode"}
+            />
+          )}
         </section>
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}

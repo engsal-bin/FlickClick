@@ -50,7 +50,9 @@ export default function DetailMovie() {
           {activeTab === 0 && (
             <Reviews movieOrSeasonOrEpisode={"movie"} contentId={contentId} />
           )}
-          {activeTab === 1 && <Arguments movieOrSeasonOrEpisode={"movie"} />}
+          {activeTab === 1 && (
+            <Arguments movieOrSeasonOrEpisode={"movie"} contentId={contentId} />
+          )}
         </section>
         {/* <ArgorithmIP label="추천" />
         <ArgorithmIP label="유사한 작품" /> */}

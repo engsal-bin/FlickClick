@@ -99,7 +99,12 @@ export default function DetailSeason() {
           {activeTab === 0 && (
             <Reviews movieOrSeasonOrEpisode={"season"} contentId={contentId} />
           )}
-          {activeTab === 1 && <Arguments movieOrSeasonOrEpisode={"season"} />}
+          {activeTab === 1 && (
+            <Arguments
+              contentId={contentId}
+              movieOrSeasonOrEpisode={"season"}
+            />
+          )}
         </section>
         {/* <ArgorithmIP label="추천" />
         <ArgorithmIP label="유사한 작품" /> */}

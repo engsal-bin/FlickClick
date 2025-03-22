@@ -11,7 +11,7 @@ export default function InputTextarea({
 }: {
   reviewOrArgumentOrOpinion: "review" | "argument" | "opinion";
   movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
-  contentId: string;
+  contentId: string | number;
   stateLifting: () => void;
 }) {
   const [text, setText] = useState("");
@@ -25,26 +25,25 @@ export default function InputTextarea({
 
     if (reviewOrArgumentOrOpinion === "review") {
       await commonAPI.postReview(
-        contentId,
+        String(contentId),
         text,
-        user.id, // ✅ 최신 값 사용
+        user.id,
         movieOrSeasonOrEpisode
       );
     }
     if (reviewOrArgumentOrOpinion === "argument") {
       await commonAPI.postArgument(
         text,
-        "m",
-        user.id, // ✅ 최신 값 사용
-        "Movie",
+        String(contentId),
+        user.id,
         movieOrSeasonOrEpisode
       );
     }
     if (reviewOrArgumentOrOpinion === "opinion") {
       await commonAPI.postArgumentOpinion(
-        16,
+        Number(contentId),
         text,
-        user.id, // ✅ 최신 값 사용
+        user.id,
         movieOrSeasonOrEpisode
       );
     }

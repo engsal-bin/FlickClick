@@ -6,8 +6,10 @@ import ArgumentReview from "./ArgumentReview";
 
 export default function Argument({
   argumentConten,
+  movieOrSeasonOrEpisode,
 }: {
-  argumentConten: ReviewType;
+  argumentConten: ArgumentType;
+  movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
 }) {
   const [isArgumentToggleOpen, setIsArgumentToggleOpen] = useState(false);
   // 더미 토론 데이터 예시
@@ -35,11 +37,11 @@ export default function Argument({
       <div className="h-auto flex justify-between tablet:flex-row mobile:flex-col tablet:gap-[20px] mobile:gap-[10px]">
         <div className="flex items-center h-auto">
           <img
-            src=""
+            src={argumentConten.author_img_url}
             className="bg-white h-[45px] aspect-square rounded-full"
           />
           <p className="text-white01 text-bold text-[18px] ml-[13px]">
-            {argumentConten.content}
+            {argumentConten.topic}
           </p>
         </div>
         <div className="text-gray03 flex items-center gap-[30px] mobile:justify-between">
@@ -47,9 +49,9 @@ export default function Argument({
             <>
               <p className="mobile:hidden">3</p>
               <div>
-                <p>{argumentConten.date}</p>
+                <p>{argumentConten.created_at}</p>
                 <p>
-                  작성자: <span>{argumentConten.author}</span>
+                  작성자: <span>{argumentConten.author_name}</span>
                 </p>
               </div>
             </>
@@ -75,7 +77,12 @@ export default function Argument({
               ))}
             </div>
 
-            <InputTextarea reviewOrArgumentOrOpinion="opinion" />
+            <InputTextarea
+              stateLifting={() => {}}
+              contentId={argumentConten.id}
+              reviewOrArgumentOrOpinion="opinion"
+              movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
+            />
           </div>
         </div>
       )}
