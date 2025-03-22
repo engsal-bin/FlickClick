@@ -368,4 +368,14 @@ interface ArgumentType {
   topic: string;
 }
 
+interface OpinionType {
+  argument_id: number;
+  author_id: string;
+  author_img_url: string;
+  author_name: string;
+  content: number;
+  created_at: string;
+  id: number;
+}
+
 type movieOrSeasonOrEpisodeType = "movie" | "season" | "episode";
