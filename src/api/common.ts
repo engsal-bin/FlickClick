@@ -322,6 +322,42 @@ const getEpisodeArgument = async (ip_id: string) => {
     throw error;
   }
 };
+
+// 영화 토론 의견 가져오기
+const getMovieArgumentOpinion = async (specific_id: number) => {
+  try {
+    const data = await supabase.rpc("get_argument_opinions_by_movie", {
+      specific_id,
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv season 토론 의견 가져오기
+const getSeasonArgumentOpinion = async (specific_id: number) => {
+  try {
+    const data = await supabase.rpc("get_argument_opinions_by_season", {
+      specific_id,
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv episode 토론 의견 가져오기
+const getEpisodeArgumentOpinion = async (specific_id: number) => {
+  try {
+    const data = await supabase.rpc("get_argument_opinions_by_episode", {
+      specific_id,
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
 export const commonAPI = {
   getTrendingAll,
   postReview,
@@ -340,4 +376,7 @@ export const commonAPI = {
   getMovieArgument,
   getSeasonArgument,
   getEpisodeArgument,
+  getMovieArgumentOpinion,
+  getSeasonArgumentOpinion,
+  getEpisodeArgumentOpinion,
 };
