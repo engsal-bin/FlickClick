@@ -28,7 +28,7 @@ export default function Reviews({
     }
     console.log("contentId = ", contentId);
   };
-  const getReview = async () => {
+  const stateLifting = async () => {
     await fetchReview();
   };
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function Reviews({
     <>
       <div>
         <InputTextarea
-          stateLifting={getReview}
+          stateLifting={stateLifting}
           contentId={contentId}
           reviewOrArgumentOrOpinion={"review"}
           movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
@@ -51,7 +51,7 @@ export default function Reviews({
               <Review
                 review={review}
                 key={index}
-                stateLifting={getReview}
+                stateLifting={stateLifting}
                 movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
               />
             ))
