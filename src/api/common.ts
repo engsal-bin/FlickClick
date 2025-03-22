@@ -81,6 +81,16 @@ const postReview = async (
         .select();
     }
     if (review_type === "episode") {
+      const ipIdSplit = ip_id.split("/");
+      const series_id = ipIdSplit[0];
+      const season_number = ipIdSplit[1];
+      const episode_number = ipIdSplit[2];
+      const { name: series_name } = await tvAPI.getSeries(Number(series_id));
+      const { name: season_name } = await tvAPI.getSeason(
+        Number(series_id),
+        Number(season_number)
+      );
+      ip_name = `${series_name} ${season_name} ${episode_number}화`;
       await supabase
         .from("episode_review")
         .insert([{ ip_id, content, author_id, ip_name }])
@@ -96,23 +106,44 @@ const postArgument = async (
   topic: string,
   ip_id: string,
   author_id: string,
-  ip_name: string,
   argumentType: string
 ) => {
+  let ip_name = "";
   try {
     if (argumentType === "movie") {
+      const data = await movieAPI.getMovie(Number(ip_id));
+      ip_name = data.title;
       await supabase
         .from("movie_argument")
         .insert([{ topic, ip_id, author_id, ip_name }])
         .select();
     }
     if (argumentType === "episode") {
+      const ipIdSplit = ip_id.split("/");
+      const series_id = ipIdSplit[0];
+      const season_number = ipIdSplit[1];
+      const { name: series_name } = await tvAPI.getSeries(Number(series_id));
+      const { name: season_name } = await tvAPI.getSeason(
+        Number(series_id),
+        Number(season_number)
+      );
+      ip_name = `${series_name} ${season_name}`;
       await supabase
         .from("episode_argument")
         .insert([{ topic, ip_id, author_id, ip_name }])
         .select();
     }
     if (argumentType === "season") {
+      const ipIdSplit = ip_id.split("/");
+      const series_id = ipIdSplit[0];
+      const season_number = ipIdSplit[1];
+      const episode_number = ipIdSplit[2];
+      const { name: series_name } = await tvAPI.getSeries(Number(series_id));
+      const { name: season_name } = await tvAPI.getSeason(
+        Number(series_id),
+        Number(season_number)
+      );
+      ip_name = `${series_name} ${season_name} ${episode_number}화`;
       await supabase
         .from("season_argument")
         .insert([{ topic, ip_id, author_id, ip_name }])
@@ -255,6 +286,42 @@ const deleteEpisodeReview = async (id: number) => {
     throw error;
   }
 };
+
+// 영화 토론 가져오기
+const getMovieArgument = async (ip_id: string) => {
+  try {
+    const data = await supabase.rpc("get_arguments_by_movie", {
+      ip_param: ip_id,
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv season 토론 가져오기
+const getSeasonArgument = async (ip_id: string) => {
+  try {
+    const data = await supabase.rpc("get_arguments_by_season", {
+      ip_param: ip_id,
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv episode 토론 가져오기
+const getEpisodeArgument = async (ip_id: string) => {
+  try {
+    const data = await supabase.rpc("get_arguments_by_episode", {
+      ip_param: ip_id,
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
 export const commonAPI = {
   getTrendingAll,
   postReview,
@@ -270,4 +337,7 @@ export const commonAPI = {
   getEpisodeReview,
   patchEpisodeReview,
   deleteEpisodeReview,
+  getMovieArgument,
+  getSeasonArgument,
+  getEpisodeArgument,
 };
