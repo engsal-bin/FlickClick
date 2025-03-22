@@ -1,8 +1,9 @@
 import InputTextarea from "./InputTextarea";
 import arrowRight from "../../assets/icon/arrow/arrowRight.svg";
 import arrowBottom from "../../assets/icon/arrow/arrowBottom.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArgumentReview from "./ArgumentReview";
+import { commonAPI } from "../../api/common";
 
 export default function Argument({
   argumentConten,
@@ -12,6 +13,7 @@ export default function Argument({
   movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
 }) {
   const [isArgumentToggleOpen, setIsArgumentToggleOpen] = useState(false);
+  const [argumentOpinions, setArgumentOpinions] = useState([]);
   // 더미 토론 데이터 예시
   const reviews = [
     {
@@ -31,6 +33,30 @@ export default function Argument({
       isMine: false,
     },
   ];
+
+  const fetchArgumentOpinion = async () => {
+    if (movieOrSeasonOrEpisode === "movie") {
+      const { data } = await commonAPI.getMovieArgumentOpinion(
+        argumentConten.id
+      );
+      setArgumentOpinions(data);
+    }
+    if (movieOrSeasonOrEpisode === "season") {
+      const { data } = await commonAPI.getSeasonArgumentOpinion(
+        argumentConten.id
+      );
+      setArgumentOpinions(data);
+    }
+    if (movieOrSeasonOrEpisode === "episode") {
+      const { data } = await commonAPI.getEpisodeArgumentOpinion(
+        argumentConten.id
+      );
+      setArgumentOpinions(data);
+    }
+  };
+  useEffect(() => {
+    fetchArgumentOpinion();
+  }, []);
   return (
     <div className="flex flex-col gap-[20px] tablet:px-[20px] tablet:py-[30px] mobile:px-[10px] mobile:py-[20px] rounded-[10px] border border-gray03 mb-5">
       {/* 토론 */}
@@ -72,13 +98,13 @@ export default function Argument({
           <hr className="border border-gray03 mb-[30px]" />
           <div className="tablet:px-[20px] mobile:px-[5px] flex flex-col tablet:gap-[30px] mobile:gap-[20px]">
             <div className="h-auto flex flex-col tablet:gap-[20px] mobile:gap-[10px]">
-              {reviews.map((review, index) => (
-                <ArgumentReview review={review} key={index} />
+              {argumentOpinions.map((argumentOpinion, index) => (
+                <ArgumentReview opinion={argumentOpinion} key={index} />
               ))}
             </div>
 
             <InputTextarea
-              stateLifting={() => {}}
+              stateLifting={fetchArgumentOpinion}
               contentId={argumentConten.id}
               reviewOrArgumentOrOpinion="opinion"
               movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
