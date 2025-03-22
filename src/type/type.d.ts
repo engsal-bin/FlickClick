@@ -357,4 +357,15 @@ interface popularContentType {
   vote_count: number;
 }
 
+interface ArgumentType {
+  author_id: string;
+  author_img_url: string;
+  author_name: string;
+  created_at: string;
+  id: number;
+  ip_id: string;
+  ip_name: string;
+  topic: string;
+}
+
 type movieOrSeasonOrEpisodeType = "movie" | "season" | "episode";
