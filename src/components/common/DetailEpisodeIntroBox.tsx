@@ -1,7 +1,6 @@
 import { IMAGE_BASE_URL } from "../../api/axios";
 import cancelIcon from "../../assets/icon/cancelIcon.svg";
 import scrapIcon from "../../assets/icon/scrap_btn.svg";
-import placeholderImg03 from "../../assets/placeholderImg03.svg";
 import Tag from "./Tag";
 
 export default function DetailEpisodeIntroBox({

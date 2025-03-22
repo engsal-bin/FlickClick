@@ -21,7 +21,7 @@ export default function DetailIntroBox({
   const [movieContent, setMovieContent] = useState<MovieType>();
   const location = useLocation();
   const seasonId = location.pathname.split("/")[3];
-  console.log(movieContent);
+  console.log(tvContent);
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -57,7 +57,7 @@ export default function DetailIntroBox({
     <>
       <section
         className="relative h-auto flex flex-col 
-  bg-cover bg-center desktop:pb-[133px] tablet:pb-[14px] mobile:pb-[42px]"
+        bg-cover bg-center desktop:pb-[133px] tablet:pb-[14px] mobile:pb-[42px]"
         style={{
           backgroundImage: `url(${IMAGE_BASE_URL}original${
             type === "tvSeries"
@@ -69,7 +69,7 @@ export default function DetailIntroBox({
         }}
       >
         {/* 블러 오버레이 */}
-        <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-lg"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-lg"></div>
         <div
           className="flex justify-end w-full z-10 
           desktop:mb-[57px] tablet:mb-[70px] mobile:mb-[30px]"
@@ -117,7 +117,7 @@ export default function DetailIntroBox({
               </div>
 
               {/* 컨텐츠 세부 정보 태그 */}
-              <div className="w-full flex gap-[10px] text-light">
+              <div className="w-full flex gap-[10px] text-light flex-wrap">
                 {/* 방영연도 */}
                 <Tag>
                   {type === "tvSeries"
