@@ -14,25 +14,6 @@ export default function Argument({
 }) {
   const [isArgumentToggleOpen, setIsArgumentToggleOpen] = useState(false);
   const [argumentOpinions, setArgumentOpinions] = useState([]);
-  // 더미 토론 데이터 예시
-  const reviews = [
-    {
-      id: "1",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit hic deleniti necessitatibus quam maxime eveniet nemo, ea natus tempora aspernatur impedit in consectetur voluptas, commodi eum dolore. Voluptate, ad repellendus.Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit hic deleniti necessitatibus quam maxime eveniet nemo, ea natus tempora aspernatur impedit in consectetur voluptas, commodi eum dolore. Voluptate, ad repellendus.",
-      author: "김예빈",
-      date: "2024.10.22",
-      isMine: true,
-    },
-    {
-      id: "2",
-      content:
-        "이 영화 정말 재미있습니다! 다른 사람들도 꼭 봐야 할 영화인 것 같아요. 특별히 연출이 좋았어요.",
-      author: "이철수",
-      date: "2024.10.23",
-      isMine: false,
-    },
-  ];
 
   const fetchArgumentOpinion = async () => {
     if (movieOrSeasonOrEpisode === "movie") {
