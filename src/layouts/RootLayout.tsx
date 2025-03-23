@@ -6,6 +6,8 @@ import topButtonHover from "../assets/icon/fixedButton/topButton_hover.svg";
 import chatbotButtonDefault from "../assets/icon/fixedButton/chatbot_default.svg";
 import chatbotButtonHover from "../assets/icon/fixedButton/chatbot_hover.svg";
 import mainLogo from "../assets/logo/mainlogo-img-only.svg";
+import cancel from "../assets/icon/tagCancelIcon.svg";
+import send from "../assets/icon/send.svg"
 
 export default function RootLayout() {
   const [topButtonImage, setTopButtonImage] = useState(topButtonDefault);
@@ -20,19 +22,44 @@ export default function RootLayout() {
   const [messages, setMessages] = useState<{ sender: "user" | "bot"; text: string }[]>([]);
   const [inputText, setInputText] = useState("");
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (inputText.trim() === "") return;
-
+  
     const userMessage: { sender: "user" | "bot"; text: string } = { sender: "user", text: inputText };
     setMessages((prev) => [...prev, userMessage]);
-
-    setTimeout(() => {
-      const botMessage: { sender: "user" | "bot"; text: string } = { sender: "bot", text: `안녕하세요! "${inputText}"에 대해 도와드릴까요?` };
-      setMessages((prev) => [...prev, botMessage]);
-    }, 1000);
-
     setInputText("");
+  
+    // 로딩 메시지 추가
+    const loadingMessage = { sender: "bot" as const, text: "생각하는 중..." };
+    setMessages((prev) => [...prev, loadingMessage]);
+  
+    try {
+      const API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo", // TODO:모델 변경할까?
+          messages: [{ role: "system", content: "너는 친절한 챗봇이야." }, { role: "user", content: inputText }],
+          max_tokens: 100,
+        }),
+      });
+  
+      const data = await response.json();
+      const botMessage = { sender: "bot" as const, text: data.choices[0]?.message?.content || "오류가 발생했어요!" };
+  
+      // 로딩 메시지 제거하고 실제 응답 추가
+      setMessages((prev) => [...prev.slice(0, -1), botMessage]);
+    } catch (error) {
+      console.error("API 호출 오류:", error);
+      setMessages((prev) => [...prev.slice(0, -1), { sender: "bot", text: "응답을 가져오지 못했어요 😢" }]);
+    }
   };
+  
 
   const [isComposing, setIsComposing] = useState(false);
 
@@ -98,13 +125,24 @@ export default function RootLayout() {
         }
       </div>
 
-      {/* 챗봇 UI (글래스 모피즘 스타일 적용) */}
+      {/* 챗봇 UI */}
       {isChatbotOpen && (
         <div className="fixed bottom-[5px] right-[50px] w-[300px] h-[400px] bg-white bg-opacity-30 backdrop-blur-lg border border-white border-opacity-30 shadow-lg flex flex-col rounded-lg z-50">
           {/* 챗봇 헤더 */}
-          <div className="bg-gray-800 text-white p-3 flex justify-between rounded-lg">
-            <span>챗봇</span>
-            <button onClick={() => setIsChatbotOpen(false)}>X</button>
+          <div className="text-white p-3 grid grid-cols-3 items-center rounded-lg">
+            <div></div>
+            <div className="flex-1 flex justify-center items-center">
+              {[1,1,1].map((_)=><img
+                src={mainLogo}
+                className="w-[17px] h-[13px] animate-spin"
+                alt="로고"
+              />)}
+            </div>
+            <div className="flex justify-end">
+              <button onClick={() => setIsChatbotOpen(false)}>
+                <img src={cancel} alt="챗봇 닫기" />
+              </button>
+            </div>
           </div>
 
           {/* 챗봇 메시지 영역 */}
@@ -122,7 +160,7 @@ export default function RootLayout() {
           </div>
 
           {/* 입력창 */}
-          <div className="p-2 border-t flex">
+          <div className="py-1 px-2 flex h-[30px]  m-2 rounded-[10px] bg-white">
             <input
               type="text"
               value={inputText}
@@ -130,11 +168,11 @@ export default function RootLayout() {
               onKeyDown={handleKeyDown}
               onCompositionStart={handleCompositionStart}
               onCompositionEnd={handleCompositionEnd}
-              className="flex-1 p-2 border rounded-md focus:outline-none"
-              placeholder="메시지를 입력하세요..."
+              className="flex-1 focus:outline-none bg-transparen text-[14px] placeholder:text-gray-400"
+              placeholder="ex) 영화 추천해줘"
             />
-            <button onClick={sendMessage} className="ml-2 bg-blue-500 text-white px-3 py-1 rounded-md">
-              전송
+            <button onClick={sendMessage} >
+              <img src={send} alt="전송" className="w-[15px] h-[15px]"/>
             </button>
           </div>
         </div>
