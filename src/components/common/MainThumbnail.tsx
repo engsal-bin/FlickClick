@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { tvAPI } from "../../api/tv";
 import { movieAPI } from "../../api/movie";
 import { IMAGE_BASE_URL } from "../../api/axios";
-import { Swiper, SwiperSlide } from "swiper/react"; // Swiper import
+import { Swiper, SwiperSlide } from "swiper/react"; 
 import "swiper/swiper-bundle.css"; // Swiper 스타일 import
 
 export default function MainThumbnail() {
@@ -119,7 +119,7 @@ export default function MainThumbnail() {
                 <div
                   className="text-[24px] leading-[40px] 
                   line-clamp-2 overflow-hidden whitespace-normal 
-                  hover:line-clamp-none hover:overflow-visible"
+                  hover:line-clamp-none hover:overflow-visible duration-300"
                 >
                   {content.overview}
                 </div>
@@ -133,7 +133,7 @@ export default function MainThumbnail() {
           {contents?.map((_, index) => (
             <button
               key={index}
-              onClick={() => swiperRef.current?.slideTo(index)} // 클릭 시 해당 인덱스로 이동
+              onClick={() => swiperRef.current?.slideTo(index)} 
               className={`w-[10px] h-[10px] rounded-full transition-all ${
                 currentIndex === index ? "bg-main" : "bg-white01_30"
               }`}
