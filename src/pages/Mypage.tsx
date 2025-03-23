@@ -44,7 +44,7 @@ export default function Mypage() {
     setMovieClips(clips.filter((clip) => clip.ip_type === "movie"));
   }, [clips]);
 
-  return (
+  return ( 
     <div className="w-full y-full flex-1 pt-[100px] tablet:px-[50px] mobile:pt-0 mobile:px-[10px] text-gray01">
       <TabMenu selectedTab={selectedTab} />
       <div className="mt-[30px]">

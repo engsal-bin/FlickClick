@@ -18,24 +18,32 @@ const getTrendingAll = async (
 
 // 디스커버 API 호출 함수
 const getDiscover = async (
-  targetType = "tv",
-  {
-    genres = [],
-    releaseDateRange = { gte: null, lte: null },
-    ottPlatforms = [],
-    language = "en-US",
-    region = "US",
-  },
-) => {
-  let endpoint = `/discover/${targetType}?language=${language}&region=${region}&sort_by=release_date.asc`;
+  targetType: string = "tv",
+  genres: number[] = [],
+  dateGte: string | null = null,
+  dateLte: string | null = null,
+  ottPlatforms: number[] = [],
+  language: string = "en-US",
+  region: string = "US",
+  page: number = 1,
+): Promise<Content[]> => {
+  let endpoint = `/discover/${targetType}?language=${language}&watch_region=${region}&page=${page}`;
 
-  if (genres.length > 0) endpoint += `&with_genres=${genres.join(",")}`;
-  if (releaseDateRange.gte)
-    endpoint += `&primary_release_date.gte=${releaseDateRange.gte}`;
-  if (releaseDateRange.lte)
-    endpoint += `&primary_release_date.lte=${releaseDateRange.lte}`;
+  console.log(
+    "디스커버 API 호출 TargetType:",
+    genres,
+    dateGte,
+    ottPlatforms
+  )
+  if (genres.length > 0) endpoint += `&with_genres=${genres.join("|")}`;
+  if (dateGte)
+    endpoint += `&first_air_date.gte=${dateGte}`;
+  if (dateLte)
+    endpoint += `&first_air_date.lte=${dateLte}`;
   if (ottPlatforms.length > 0)
-    endpoint += `&with_watch_providers=${ottPlatforms.join(",")}`;
+    endpoint += `&with_watch_providers=${ottPlatforms.join("|")}`;
+
+  console.log("디스커버 api 엔드포인트", endpoint)
 
   try {
     const { data } = await axiosInstance.get(endpoint);

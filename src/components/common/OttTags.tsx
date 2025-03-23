@@ -7,7 +7,7 @@ export default function OttTags({
 }: {
   children: string;
   selectedTag: OttState[];
-  selectTag: (key: string) => void;
+  selectTag: (id: number) => void;
 }) {
   return (
     <div className="w-full tablet:px-[50px] mobile:px-[10px]">
@@ -19,8 +19,8 @@ export default function OttTags({
           <OttIcon
             key={service.key}
             src={service.src}
-            isSelected={service.selected} // 여기 수정!
-            onClick={() => selectTag(service.key)}
+            isSelected={service.selected} 
+            onClick={() => selectTag(service.id)}
             alt={service.alt}
           />
         ))}

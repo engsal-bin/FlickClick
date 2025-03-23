@@ -1,10 +1,10 @@
-type TvShow = {
+type Content = {
   adult: boolean;
   backdrop_path: string | null;
   first_air_date: string;
   genre_ids: number[];
   id: number;
-  media_type: "tv";
+  media_type: "tv" | "movie";
   name: string;
   origin_country: string[];
   original_language: string;
@@ -15,6 +15,7 @@ type TvShow = {
   vote_average: number;
   vote_count: number;
 };
+
 type GenreState = {
   id: number;
   krKey: string;
@@ -31,6 +32,7 @@ type YearState = {
 };
 
 type OttState = {
+  id: number
   key: string;
   src: string;
   alt: string;
@@ -40,7 +42,7 @@ type OttState = {
 type FilterOptions = {
   genre: number[];
   firstAirDate: { gte: string | null; lte: string | null };
-  ottPlatform: string[];
+  ottPlatform: number[];
   language: string;
   region: string;
 };

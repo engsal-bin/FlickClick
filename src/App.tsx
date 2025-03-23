@@ -1,7 +1,6 @@
 import "./css/index.css";
-
 import { Route, Routes } from "react-router";
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from "./api/Auth";
 import DetailEpisode from "./pages/DetailEpisode";
 import DetailMovie from "./pages/DetailMovie";
@@ -21,7 +20,11 @@ import Trailers from "./components/common/Trailers";
 import Upcomings from "./pages/Upcomings";
 
 export default function App() {
+
+const queryClient = new QueryClient();
+
   return (
+    <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <Routes>
         <Route element={<RootLayout />}>
@@ -67,5 +70,6 @@ export default function App() {
         </Route>
       </Routes>
     </AuthProvider>
+    </QueryClientProvider>
   );
 }

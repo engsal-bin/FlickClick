@@ -81,13 +81,13 @@ export const yearList = [
 ];
 
 export const ottList: OttState[] = [
-  { key: "appleTv", src: appleTv, alt: "Apple TV", selected: false },
-  { key: "googlePlay", src: googlePlay, alt: "Google Play", selected: false },
-  { key: "disneyPlus", src: disneyPlus, alt: "Disney Plus", selected: false },
-  { key: "watcha", src: watcha, alt: "Watcha", selected: false },
-  { key: "primeVideo", src: primeVideo, alt: "Prime Video", selected: false },
-  { key: "netflix", src: netflix, alt: "Netflix", selected: false },
-  { key: "wavve", src: wavve, alt: "Wavve", selected: false },
+  { id: 2, key: "appleTv", src: appleTv, alt: "Apple TV", selected: false },
+  { id: 2, key: "googlePlay", src: googlePlay, alt: "Google Play", selected: false },
+  { id: 337, key: "disneyPlus", src: disneyPlus, alt: "Disney Plus", selected: false },
+  { id: 97, key: "watcha", src: watcha, alt: "Watcha", selected: false },
+  { id: 9, key: "primeVideo", src: primeVideo, alt: "Prime Video", selected: false },
+  { id: 8,key: "netflix", src: netflix, alt: "Netflix", selected: false },
+  { id: 356, key: "wavve", src: wavve, alt: "Wavve", selected: false },
 ];
 
 export const tvGenreList: GenreState[] = [
