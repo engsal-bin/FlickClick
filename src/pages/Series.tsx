@@ -75,7 +75,6 @@ export default function Series() {
   });
   
   
-  // inView가 true일 때 다음 페이지 로드
   if (inView && hasNextPage && !isFetchingNextPage) {
     fetchNextPage();
   }
@@ -92,7 +91,6 @@ export default function Series() {
       <OttTags selectedTag={ottStates} selectTag={selectOtt}>
         시청할 수 있는 서비스
       </OttTags>
-
       {isTagsSelected ? (
         <div className="w-full md:px-10 px-[10px]">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -101,7 +99,7 @@ export default function Series() {
             )}
           </div>
           <div ref={ref} className="w-full flex justify-center mt-4">
-            {isFetchingNextPage && <p>Loading more...</p>}
+            {isFetchingNextPage && <p className="md:text-[16px] text-[14px] md:py-8 py-5">Loading more...</p>}
           </div>
         </div>
       ) : (
