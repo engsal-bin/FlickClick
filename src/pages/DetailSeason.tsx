@@ -18,7 +18,8 @@ export default function DetailSeason() {
   const [seriesData, setSeriesData] = useState<TvSeriesType>();
   // 시즌 데이터 상태
   const [seasonData, setSeasonData] = useState<TvSeasonsType>();
-  // console.log(locationInfo);
+
+  const contentId = locationInfo.slice(1, 3).join("/");
 
   useEffect(() => {
     const fetchSeries = async () => {
@@ -28,7 +29,6 @@ export default function DetailSeason() {
           Number(`${locationInfo[1]}`),
           Number(`${locationInfo[2]}`),
         );
-        // console.log(season);
         setSeriesData(series);
         setSeasonData(season);
       } catch (error) {
@@ -37,92 +37,11 @@ export default function DetailSeason() {
     };
     fetchSeries();
   }, []);
-  // console.log(seasonData);
-
-  // 더미데이터 예시
-  const dummyreviews = [
-    {
-      id: "1",
-      ip_name: "슬기로운 의사생활",
-      ip_id: "100102023",
-      content:
-        "이 영화가 실화 기반이라니 믿기지 않습니다. 리뷰가 엄청나게 길어지면 두 줄 혹은 그 이상으로 들어나기 더보기 가능",
-      author_id: "3334212",
-      member_name: "김예빈",
-      created_at: "2024.10.22",
-    },
-    {
-      id: "2",
-      ip_name: "슬기로운 의사생활",
-      ip_id: "100102023",
-      content:
-        "이 영화가 실화 기반이라니 믿기지 않습니다. 리뷰가 엄청나게 길어지면 두 줄 혹은 그 이상으로 들어나기 더보기 가능",
-      author_id: "3334212",
-      member_name: "김예빈",
-      created_at: "2024.10.22",
-    },
-    {
-      id: "3",
-      ip_name: "슬기로운 의사생활",
-      ip_id: "100102023",
-      content:
-        "이 영화가 실화 기반이라니 믿기지 않습니다. 리뷰가 엄청나게 길어지면 두 줄 혹은 그 이상으로 들어나기 더보기 가능",
-      author_id: "3334212",
-      member_name: "김예빈",
-      created_at: "2024.10.22",
-    },
-  ];
-
-  const dummyarguments = [
-    {
-      id: "1",
-      ip_name: "슬기로운 의사생활",
-      ip_id: "100102023",
-      type: "season",
-      topic: "이 영화가 실화 기반임?",
-      author_id: "3334212",
-      author_name: "김예빈",
-      created_at: "2024.10.22",
-    },
-    {
-      id: "2",
-      ip_name: "슬기로운 의사생활",
-      ip_id: "100102023",
-      type: "season",
-      topic: "이 영화가 실화 기반임?",
-      author_id: "3334212",
-      author_name: "김예빈",
-      created_at: "2024.10.22",
-    },
-    {
-      id: "3",
-      ip_name: "슬기로운 의사생활",
-      ip_id: "100102023",
-      type: "season",
-      topic: "이 영화가 실화 기반임?",
-      author_id: "3334212",
-      author_name: "김예빈",
-      created_at: "2024.10.22",
-    },
-  ];
-
-  const dummyargumentscomment = [
-    {
-      id: "23",
-      created_at: "2020312",
-      argument_id: "1",
-      author_id: "23948059890235",
-      content:
-        "이 영화가 실화 기반이라니 믿기지 않습니다. 리뷰가 엄청나게 길어지면 두 줄 혹은 그 이상으로 들어나기",
-    },
-  ];
 
   const tabs = [
-    { label: "리뷰", content: dummyreviews },
+    { label: "리뷰" },
     {
       label: "토론",
-      content: dummyarguments,
-      subcontent: dummyargumentscomment,
     },
   ];
 
@@ -177,11 +96,30 @@ export default function DetailSeason() {
             ))}
           </div>
           {/* 리뷰창 */}
-          {activeTab === 0 && <Reviews />}
-          {activeTab === 1 && <Arguments />}
+          {activeTab === 0 && (
+            <Reviews movieOrSeasonOrEpisode={"season"} contentId={contentId} />
+          )}
+          {activeTab === 1 && (
+            <Arguments
+              contentId={contentId}
+              movieOrSeasonOrEpisode={"season"}
+            />
+          )}
         </section>
-        {/* <ArgorithmIP label="추천" />
-        <ArgorithmIP label="유사한 작품" /> */}
+
+        {/* 추천 */}
+        <ArgorithmIP
+          seriesId={Number(locationInfo[1])}
+          type="tv"
+          label="추천"
+        />
+
+        {/* 유사작품 */}
+        <ArgorithmIP
+          seriesId={Number(locationInfo[1])}
+          type="tv"
+          label="유사한 작품"
+        />
       </section>
     </>
   );

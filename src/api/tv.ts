@@ -93,6 +93,33 @@ const getTrendTv = async (language = "ko-KR") => {
   }
 };
 
+const getRecommendTv = async (series_id: number) => {
+  try {
+    const response = await axiosInstance.get(
+      `/tv/${series_id}/recommendations`,
+      {
+        params: { language: "ko-KR", page: 1 },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:");
+    throw error;
+  }
+};
+
+const getSimilarTv = async (series_id: number) => {
+  try {
+    const response = await axiosInstance.get(`/tv/${series_id}/similar`, {
+      params: { language: "ko-KR", page: 1 },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:");
+    throw error;
+  }
+};
+
 export const tvAPI = {
   getOnTheAirTvSeriese,
   getSeries,
@@ -100,4 +127,6 @@ export const tvAPI = {
   getEpisode,
   getSeasonCredits,
   getTrendTv,
+  getRecommendTv,
+  getSimilarTv,
 };

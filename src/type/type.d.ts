@@ -326,7 +326,7 @@ interface ReviewType {
   isMine?: boolean;
 }
 
-interface popularContentType {
+interface trendContentType {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -346,3 +346,57 @@ interface popularContentType {
   vote_average: number;
   vote_count: number;
 }
+
+interface RecommendContentsType {
+  backdrop_path: string;
+  id: number;
+  name?: string;
+  original_name?: string;
+  overview: string;
+  poster_path: string;
+  media_type: string;
+  adult: boolean;
+  original_language: string;
+  genre_ids: number[];
+  popularity: number;
+  first_air_date?: string;
+  vote_average: number;
+  vote_count: number;
+  original_country?: string[];
+  title?: string;
+  original_title?: string;
+  release_date?: string;
+  video?: boolean;
+}
+
+interface ArgumentType {
+  author_id: string;
+  author_img_url: string;
+  author_name: string;
+  created_at: string;
+  id: number;
+  ip_id: string;
+  ip_name: string;
+  topic: string;
+}
+
+interface MovieReviewType {
+  author_id: string;
+  author_name: null;
+  content: string;
+  created_at: string;
+  id: number;
+  ip_id: string;
+  ip_name: string;
+}
+interface OpinionType {
+  argument_id: number;
+  author_id: string;
+  author_img_url: string;
+  author_name: string;
+  content: number;
+  created_at: string;
+  id: number;
+}
+
+type movieOrSeasonOrEpisodeType = "movie" | "season" | "episode";
