@@ -1,18 +1,17 @@
+import { useEffect, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import MainThumbnail from "../components/common/MainThumbnail";
 import OttTags from "../components/common/OttTags";
 import SeriesTags from "../components/common/SeriesTags";
 import YearTags from "../components/common/YearTags";
-import { useState } from "react";
 import DefaultSeriesView from "../components/series/DefaultSeriesView";
+import GridContents from "../components/common/GridContents";
 import { movieGenreList, ottList, yearList } from "../constants/tags";
 import { commonAPI } from "../api/common";
-import GridContents from "../components/common/GridContents";
 
 export default function Series() {
   const { ref, inView } = useInView();
-
   const [genreStates, setGenreStates] = useState<GenreState[]>(movieGenreList);
   const [yearStates, setYearStates] = useState<YearState[]>(yearList);
   const [ottStates, setOttStates] = useState<OttState[]>(ottList);
@@ -48,7 +47,6 @@ export default function Series() {
   const isTagsSelected =
     selectedGenres.length > 0 || selectedYear || selectedOttPlatforms.length > 0;
 
-  // 무한 스크롤
   const {
     data,
     fetchNextPage,
@@ -73,11 +71,12 @@ export default function Series() {
       return lastPage.length > 0 ? allPages.length + 1 : undefined;
     }
   });
-  
-  
-  if (inView && hasNextPage && !isFetchingNextPage) {
-    fetchNextPage();
-  }
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
     <div className="flex flex-col justify-between items-center mb-[100px] desktop:gap-[50px] tablet:gap-[40px] mobile:gap-[30px] text-white bg-black">
