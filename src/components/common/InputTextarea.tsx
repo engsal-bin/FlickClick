@@ -20,7 +20,11 @@ export default function InputTextarea({
 
   const { user } = useAuth();
 
-  const fn = async () => {
+  const write = async () => {
+    if (text.length === 0) {
+      alert("1글자 이상 입력해주세요");
+      return;
+    }
     if (!user?.id) return; // 사용자가 없으면 실행 안 함
 
     if (reviewOrArgumentOrOpinion === "review") {
@@ -30,6 +34,7 @@ export default function InputTextarea({
         user.id,
         movieOrSeasonOrEpisode
       );
+      setText("");
     }
     if (reviewOrArgumentOrOpinion === "argument") {
       await commonAPI.postArgument(
@@ -38,6 +43,7 @@ export default function InputTextarea({
         user.id,
         movieOrSeasonOrEpisode
       );
+      setText("");
     }
     if (reviewOrArgumentOrOpinion === "opinion") {
       await commonAPI.postArgumentOpinion(
@@ -46,8 +52,8 @@ export default function InputTextarea({
         user.id,
         movieOrSeasonOrEpisode
       );
+      setText("");
     }
-
     stateLifting();
   };
 
@@ -64,14 +70,20 @@ export default function InputTextarea({
   return (
     <div className="flex justify-between mb-[30px] tablet:px-[30px] mobile:px-[10px]  tablet:h-[86px] mobile:h-[59px] border border-gray02 rounded-[10px]">
       <textarea
+        value={text}
         onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            write();
+          }
+        }}
         placeholder={placeHolder}
         className="outline-none w-full h-full pt-[31px] mobile:pt-[20px] bg-black tablet tablet:text-[20px] mobile:text-[16px] placeholder:text-gray03 text-gray03  resize-none"
       ></textarea>
       <button>
         <img
           onClick={() => {
-            fn();
+            write();
           }}
           src={isSend ? sendBlueIcon : sendIcon}
           alt="입력 전송 버튼"
