@@ -31,13 +31,25 @@ export default function Review({
   };
   const reviewDelete = async (id: number) => {
     if (movieOrSeasonOrEpisode === "movie") {
-      await commonAPI.deleteMovieReview(id);
+      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      if (deleteCheck) {
+        await commonAPI.deleteMovieReview(id);
+      }
+      return;
     }
     if (movieOrSeasonOrEpisode === "season") {
-      await commonAPI.deleteSeasonReview(id);
+      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      if (deleteCheck) {
+        await commonAPI.deleteSeasonReview(id);
+      }
+      return;
     }
     if (movieOrSeasonOrEpisode === "episode") {
-      await commonAPI.deleteEpisodeReview(id);
+      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      if (deleteCheck) {
+        await commonAPI.deleteEpisodeReview(id);
+      }
+      return;
     }
   };
 
@@ -45,6 +57,7 @@ export default function Review({
     <div key={review.id} className="h-auto flex flex-col gap-[15px]">
       {editStatus ? (
         <textarea
+          className="resize-none"
           onChange={(e) => {
             setEditContent(e.target.value);
           }}
