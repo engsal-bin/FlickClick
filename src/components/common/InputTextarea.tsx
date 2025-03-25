@@ -58,7 +58,7 @@ export default function InputTextarea({
   };
 
   useEffect(() => {
-    text ? setIsSend(true) : setIsSend(false);
+    text.trim() ? setIsSend(true) : setIsSend(false);
     if (reviewOrArgumentOrOpinion === "review") {
       setPlaceHolder("리뷰를 입력해주세요");
     } else if (reviewOrArgumentOrOpinion === "argument") {
@@ -83,7 +83,7 @@ export default function InputTextarea({
       <button>
         <img
           onClick={() => {
-            write();
+            isSend ? write() : alert("한 글자 이상 입력하셔야 합니다.");
           }}
           src={isSend ? sendBlueIcon : sendIcon}
           alt="입력 전송 버튼"
