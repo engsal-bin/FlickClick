@@ -51,7 +51,7 @@ export default function Arguments({
           />
         ))
       ) : (
-        <div>토론이 없습니다.</div>
+        <p className="text-white">토론이 없습니다.</p>
       )}
     </div>
   );
