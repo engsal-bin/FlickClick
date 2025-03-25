@@ -62,7 +62,7 @@ export default function Review({
           onChange={(e) => {
             setEditContent(e.target.value);
           }}
-          value={review.content}
+          defaultValue={review.content}
         ></textarea>
       ) : (
         <p

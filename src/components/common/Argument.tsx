@@ -16,7 +16,7 @@ export default function Argument({
   movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
 }) {
   const [isArgumentToggleOpen, setIsArgumentToggleOpen] = useState(false);
-  const [argumentOpinions, setArgumentOpinions] = useState([]);
+  const [argumentOpinions, setArgumentOpinions] = useState<OpinionType[]>([]);
   const [editContent, setEditContent] = useState(argumentContent.topic);
   const [editStatus, setEditStatus] = useState(false);
 
@@ -94,7 +94,7 @@ export default function Argument({
               onChange={(e) => {
                 setEditContent(e.target.value);
               }}
-              value={argumentContent.topic}
+              defaultValue={argumentContent.topic}
             ></textarea>
           ) : (
             <p className="text-white01 text-bold text-[18px] ml-[13px]">
@@ -104,7 +104,9 @@ export default function Argument({
         </div>
         <div className="flex justify-between w-60">
           <p className="flex items-center h-12 text-white">
-            {argumentOpinions.length > 0 && argumentOpinions.length}
+            {argumentOpinions.length > 0 &&
+              argumentOpinions.filter((opinion) => opinion.content.length > 0)
+                .length}
           </p>
           <div className="flex-none text-gray03 flex items-center gap-[30px] w-[207px] mobile:justify-between">
             <>
