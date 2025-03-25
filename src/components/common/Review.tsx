@@ -2,6 +2,7 @@ import { twMerge } from "tailwind-merge";
 import { useAuth } from "../../api/Auth";
 import { commonAPI } from "../../api/common";
 import { useState } from "react";
+import { formatDate } from "../../utils/formattingDate";
 
 export default function Review({
   review,
@@ -18,6 +19,8 @@ export default function Review({
 
   const [editStatus, setEditStatus] = useState(false);
 
+  const [view, setView] = useState(false);
+
   const reviewEdit = async (id: number) => {
     if (movieOrSeasonOrEpisode === "movie") {
       await commonAPI.patchMovieReview(id, editContent);
@@ -31,13 +34,25 @@ export default function Review({
   };
   const reviewDelete = async (id: number) => {
     if (movieOrSeasonOrEpisode === "movie") {
-      await commonAPI.deleteMovieReview(id);
+      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      if (deleteCheck) {
+        await commonAPI.deleteMovieReview(id);
+      }
+      return;
     }
     if (movieOrSeasonOrEpisode === "season") {
-      await commonAPI.deleteSeasonReview(id);
+      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      if (deleteCheck) {
+        await commonAPI.deleteSeasonReview(id);
+      }
+      return;
     }
     if (movieOrSeasonOrEpisode === "episode") {
-      await commonAPI.deleteEpisodeReview(id);
+      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      if (deleteCheck) {
+        await commonAPI.deleteEpisodeReview(id);
+      }
+      return;
     }
   };
 
@@ -45,30 +60,35 @@ export default function Review({
     <div key={review.id} className="h-auto flex flex-col gap-[15px]">
       {editStatus ? (
         <textarea
+          className="resize-none"
           onChange={(e) => {
             setEditContent(e.target.value);
           }}
-        >
-          {review.content}
-        </textarea>
+          defaultValue={review.content}
+        ></textarea>
       ) : (
-        <p
-          className={twMerge(
-            `text-white01 tablet:text-[18px] mobile:text-[14px] ${
-              // !viewMoreStates[review.id] &&
-              "line-clamp-5"
-            }`
+        <div className="">
+          <p
+            className={twMerge(
+              `text-white01 tablet:text-[18px] mobile:text-[14px] break-words ${
+                !view && "line-clamp-5"
+              }`
+            )}
+          >
+            {review.content}
+          </p>
+          {review.content.length > 500 && (
+            <button className=" text-gray03" onClick={() => setView(!view)}>
+              {view ? "간략히" : "더보기"}
+            </button>
           )}
-        >
-          {review.content}
-          <button className="inline text-gray03">더 보기</button>
-        </p>
+        </div>
       )}
 
       <div className="flex justify-between tablet:text-[14px] mobile:text-[12px]">
         <p className="flex gap-[10px]">
           <span className="text-white01">{review.author_name}</span>
-          <span className="text-gray03">{review.created_at}</span>
+          <span className="text-gray03">{formatDate(review.updated_at)}</span>
         </p>
         {user?.id === review.author_id && (
           <div className="text-white03 flex gap-[20px]">
