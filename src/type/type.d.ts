@@ -374,6 +374,7 @@ interface ArgumentType {
   author_img_url: string;
   author_name: string;
   created_at: string;
+  updated_at: string;
   id: number;
   ip_id: string;
   ip_name: string;
@@ -385,6 +386,7 @@ interface MovieReviewType {
   author_name: null;
   content: string;
   created_at: string;
+  updated_at: string;
   id: number;
   ip_id: string;
   ip_name: string;
@@ -396,6 +398,7 @@ interface OpinionType {
   author_name: string;
   content: number;
   created_at: string;
+  updated_at: string;
   id: number;
 }
 
