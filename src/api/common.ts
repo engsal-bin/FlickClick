@@ -302,6 +302,28 @@ const getMovieArgument = async (ip_id: string) => {
   }
 };
 
+// 영화 토론 편집
+const patchMovieArgument = async (id: number, topic: string) => {
+  try {
+    await supabase
+      .from("movie_argument")
+      .update({ topic, updated_at })
+      .eq("id", id)
+      .select();
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 영화 토론 삭제
+const deleteMovieArgument = async (id: number) => {
+  try {
+    await supabase.from("movie_argument").delete().eq("id", id);
+  } catch (error) {
+    throw error;
+  }
+};
+
 // tv season 토론 가져오기
 const getSeasonArgument = async (ip_id: string) => {
   try {
@@ -314,6 +336,28 @@ const getSeasonArgument = async (ip_id: string) => {
   }
 };
 
+// tv season 토론 편집
+const patchSeasonArgument = async (id: number, topic: string) => {
+  try {
+    await supabase
+      .from("season_argument")
+      .update({ topic, updated_at })
+      .eq("id", id)
+      .select();
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv season 삭제
+const deleteSeasonArgument = async (id: number) => {
+  try {
+    await supabase.from("season_argument").delete().eq("id", id);
+  } catch (error) {
+    throw error;
+  }
+};
+
 // tv episode 토론 가져오기
 const getEpisodeArgument = async (ip_id: string) => {
   try {
@@ -321,6 +365,28 @@ const getEpisodeArgument = async (ip_id: string) => {
       ip_param: ip_id,
     });
     return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv episode 토론 편집
+const patchEpisodeArgument = async (id: number, topic: string) => {
+  try {
+    await supabase
+      .from("episode_argument")
+      .update({ topic, updated_at })
+      .eq("id", id)
+      .select();
+  } catch (error) {
+    throw error;
+  }
+};
+
+// tv episode 삭제
+const deleteEpisodeArgument = async (id: number) => {
+  try {
+    await supabase.from("episode_argument").delete().eq("id", id);
   } catch (error) {
     throw error;
   }
@@ -377,8 +443,14 @@ export const commonAPI = {
   patchEpisodeReview,
   deleteEpisodeReview,
   getMovieArgument,
+  patchMovieArgument,
+  deleteMovieArgument,
   getSeasonArgument,
+  patchSeasonArgument,
+  deleteSeasonArgument,
   getEpisodeArgument,
+  patchEpisodeArgument,
+  deleteEpisodeArgument,
   getMovieArgumentOpinion,
   getSeasonArgumentOpinion,
   getEpisodeArgumentOpinion,

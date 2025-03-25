@@ -7,33 +7,73 @@ import { commonAPI } from "../../api/common";
 import { formatDate } from "../../utils/formattingDate";
 
 export default function Argument({
-  argumentConten,
+  argumentContent,
+  stateLifting,
   movieOrSeasonOrEpisode,
 }: {
-  argumentConten: ArgumentType;
+  argumentContent: ArgumentType;
+  stateLifting: () => void;
   movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
 }) {
   const [isArgumentToggleOpen, setIsArgumentToggleOpen] = useState(false);
   const [argumentOpinions, setArgumentOpinions] = useState([]);
+  const [editContent, setEditContent] = useState(argumentContent.topic);
+  const [editStatus, setEditStatus] = useState(false);
 
   const fetchArgumentOpinion = async () => {
     if (movieOrSeasonOrEpisode === "movie") {
       const { data } = await commonAPI.getMovieArgumentOpinion(
-        argumentConten.id
+        argumentContent.id
       );
       setArgumentOpinions(data);
     }
     if (movieOrSeasonOrEpisode === "season") {
       const { data } = await commonAPI.getSeasonArgumentOpinion(
-        argumentConten.id
+        argumentContent.id
       );
       setArgumentOpinions(data);
     }
     if (movieOrSeasonOrEpisode === "episode") {
       const { data } = await commonAPI.getEpisodeArgumentOpinion(
-        argumentConten.id
+        argumentContent.id
       );
       setArgumentOpinions(data);
+    }
+  };
+
+  const argumentEdit = async () => {
+    if (movieOrSeasonOrEpisode === "movie") {
+      await commonAPI.patchMovieArgument(argumentContent.id, editContent);
+    }
+    if (movieOrSeasonOrEpisode === "episode") {
+      await commonAPI.patchEpisodeArgument(argumentContent.id, editContent);
+    }
+    if (movieOrSeasonOrEpisode === "season") {
+      await commonAPI.patchSeasonArgument(argumentContent.id, editContent);
+    }
+  };
+
+  const argumentDelete = async () => {
+    if (movieOrSeasonOrEpisode === "movie") {
+      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      if (deleteCheck) {
+        await commonAPI.deleteMovieArgument(argumentContent.id);
+      }
+      return;
+    }
+    if (movieOrSeasonOrEpisode === "season") {
+      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      if (deleteCheck) {
+        await commonAPI.deleteSeasonArgument(argumentContent.id);
+      }
+      return;
+    }
+    if (movieOrSeasonOrEpisode === "episode") {
+      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      if (deleteCheck) {
+        await commonAPI.deleteEpisodeArgument(argumentContent.id);
+      }
+      return;
     }
   };
   useEffect(() => {
@@ -45,25 +85,66 @@ export default function Argument({
       <div className="h-auto flex justify-between tablet:flex-row mobile:flex-col tablet:gap-[20px] mobile:gap-[10px]">
         <div className="flex items-center h-auto">
           <img
-            src={argumentConten.author_img_url}
+            src={argumentContent.author_img_url}
             className="bg-white h-[45px] aspect-square rounded-full"
           />
-          <p className="text-white01 text-bold text-[18px] ml-[13px]">
-            {argumentConten.topic}
-          </p>
-        </div>
-        <div className="text-gray03 flex items-center gap-[30px] mobile:justify-between">
-          {!isArgumentToggleOpen && (
-            <>
-              <p className="mobile:hidden">3</p>
-              <div>
-                <p>{formatDate(argumentConten.updated_at)}</p>
-                <p>
-                  작성자: <span>{argumentConten.author_name}</span>
-                </p>
-              </div>
-            </>
+          {editStatus ? (
+            <textarea
+              className="resize-none"
+              onChange={(e) => {
+                setEditContent(e.target.value);
+              }}
+              value={argumentContent.topic}
+            ></textarea>
+          ) : (
+            <p className="text-white01 text-bold text-[18px] ml-[13px]">
+              {argumentContent.topic}
+            </p>
           )}
+        </div>
+        <div className="flex-none text-gray03 flex items-center gap-[30px] w-[207px] mobile:justify-between">
+          <>
+            <p className="mobile:hidden">3</p>
+            <div>
+              <p>{formatDate(argumentContent.updated_at)}</p>
+              <div className="flex justify-between">
+                <p>
+                  작성자: <span>{argumentContent.author_name}</span>
+                </p>
+                {argumentOpinions.length == 0 && (
+                  <div>
+                    <button
+                      className="mr-[5px]"
+                      onClick={async () => {
+                        if (editStatus) {
+                          if (editContent !== argumentContent.topic) {
+                            await argumentEdit();
+                            await stateLifting();
+                          }
+                          setEditStatus(false);
+                        } else {
+                          setEditStatus(true);
+                        }
+                      }}
+                    >
+                      <span>편집</span>
+                    </button>
+                    |
+                    <button
+                      className="ml-[5px]"
+                      onClick={async () => {
+                        await argumentDelete();
+                        await stateLifting();
+                      }}
+                    >
+                      <span>삭제</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </>
+
           <button
             onClick={() => setIsArgumentToggleOpen(!isArgumentToggleOpen)}
           >
@@ -87,7 +168,7 @@ export default function Argument({
 
             <InputTextarea
               stateLifting={fetchArgumentOpinion}
-              contentId={argumentConten.id}
+              contentId={argumentContent.id}
               reviewOrArgumentOrOpinion="opinion"
               movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
             />

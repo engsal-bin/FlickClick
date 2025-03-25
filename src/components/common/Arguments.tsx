@@ -44,7 +44,8 @@ export default function Arguments({
       {argumentlists.length > 0 ? (
         argumentlists.map((argumentlist, index) => (
           <Argument
-            argumentConten={argumentlist}
+            stateLifting={fetchArgument}
+            argumentContent={argumentlist}
             key={index}
             movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
           />
