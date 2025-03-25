@@ -3,6 +3,9 @@ import { supabase } from "./index.ts";
 import { movieAPI } from "./movie.ts";
 import { tvAPI } from "./tv.ts";
 
+// 변경 시간
+const updated_at = new Date().toISOString();
+
 const getTrendingAll = async (
   page: number,
   day = "day",
@@ -202,7 +205,7 @@ const patchMovieReview = async (id: number, content: string) => {
   try {
     await supabase
       .from("movie_review")
-      .update({ content })
+      .update({ content, updated_at })
       .eq("id", id)
       .select();
   } catch (error) {
@@ -236,7 +239,7 @@ const patchSeasonReview = async (id: number, content: string) => {
   try {
     await supabase
       .from("season_review")
-      .update({ content })
+      .update({ content, updated_at })
       .eq("id", id)
       .select();
   } catch (error) {
@@ -270,7 +273,7 @@ const patchEpisodeReview = async (id: number, content: string) => {
   try {
     await supabase
       .from("episode_review")
-      .update({ content })
+      .update({ content, updated_at })
       .eq("id", id)
       .select();
   } catch (error) {
