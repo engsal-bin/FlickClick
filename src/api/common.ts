@@ -404,6 +404,22 @@ const getMovieArgumentOpinion = async (specific_id: number) => {
   }
 };
 
+// 토론 의견 수정 기능 없음 삭제 기능만 있음 삭제 시 의견을 빈 문자열로 만들어서 빈 문자열인 content는 삭제된 의견입니다로 보여주게 함
+const content = "";
+
+// 영화 토론 의견 수정
+const patchMovieArgumentOpinion = async (id: number) => {
+  try {
+    await supabase
+      .from("movie_argument_comment")
+      .update({ content })
+      .eq("id", id)
+      .select();
+  } catch (error) {
+    throw error;
+  }
+};
+
 // tv season 토론 의견 가져오기
 const getSeasonArgumentOpinion = async (specific_id: number) => {
   try {
@@ -411,6 +427,19 @@ const getSeasonArgumentOpinion = async (specific_id: number) => {
       specific_id,
     });
     return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 영화 토론 의견 수정
+const patchSeasonArgumentOpinion = async (id: number) => {
+  try {
+    await supabase
+      .from("season_argument_comment")
+      .update({ content })
+      .eq("id", id)
+      .select();
   } catch (error) {
     throw error;
   }
@@ -427,6 +456,20 @@ const getEpisodeArgumentOpinion = async (specific_id: number) => {
     throw error;
   }
 };
+
+// 영화 토론 의견 수정
+const patchEpisodeArgumentOpinion = async (id: number) => {
+  try {
+    await supabase
+      .from("episode_argument_comment")
+      .update({ content })
+      .eq("id", id)
+      .select();
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const commonAPI = {
   getTrendingAll,
   postReview,
@@ -452,6 +495,9 @@ export const commonAPI = {
   patchEpisodeArgument,
   deleteEpisodeArgument,
   getMovieArgumentOpinion,
+  patchMovieArgumentOpinion,
   getSeasonArgumentOpinion,
+  patchSeasonArgumentOpinion,
   getEpisodeArgumentOpinion,
+  patchEpisodeArgumentOpinion,
 };
