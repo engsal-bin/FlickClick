@@ -102,57 +102,61 @@ export default function Argument({
             </p>
           )}
         </div>
-        <div className="flex-none text-gray03 flex items-center gap-[30px] w-[207px] mobile:justify-between">
-          <>
-            <p className="mobile:hidden">3</p>
-            <div>
-              <p>{formatDate(argumentContent.updated_at)}</p>
-              <div className="flex justify-between">
-                <p>
-                  작성자: <span>{argumentContent.author_name}</span>
-                </p>
-                {argumentOpinions.length == 0 && (
-                  <div>
-                    <button
-                      className="mr-[5px]"
-                      onClick={async () => {
-                        if (editStatus) {
-                          if (editContent !== argumentContent.topic) {
-                            await argumentEdit();
-                            await stateLifting();
+        <div className="flex justify-between w-60">
+          <p className="flex items-center h-12 text-white">
+            {argumentOpinions.length > 0 && argumentOpinions.length}
+          </p>
+          <div className="flex-none text-gray03 flex items-center gap-[30px] w-[207px] mobile:justify-between">
+            <>
+              <div>
+                <p>{formatDate(argumentContent.updated_at)}</p>
+                <div className="flex justify-between">
+                  <p>
+                    작성자: <span>{argumentContent.author_name}</span>
+                  </p>
+                  {argumentOpinions.length == 0 && (
+                    <div>
+                      <button
+                        className="mr-[5px]"
+                        onClick={async () => {
+                          if (editStatus) {
+                            if (editContent !== argumentContent.topic) {
+                              await argumentEdit();
+                              await stateLifting();
+                            }
+                            setEditStatus(false);
+                          } else {
+                            setEditStatus(true);
                           }
-                          setEditStatus(false);
-                        } else {
-                          setEditStatus(true);
-                        }
-                      }}
-                    >
-                      <span>편집</span>
-                    </button>
-                    |
-                    <button
-                      className="ml-[5px]"
-                      onClick={async () => {
-                        await argumentDelete();
-                        await stateLifting();
-                      }}
-                    >
-                      <span>삭제</span>
-                    </button>
-                  </div>
-                )}
+                        }}
+                      >
+                        <span>편집</span>
+                      </button>
+                      |
+                      <button
+                        className="ml-[5px]"
+                        onClick={async () => {
+                          await argumentDelete();
+                          await stateLifting();
+                        }}
+                      >
+                        <span>삭제</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          </>
+            </>
 
-          <button
-            onClick={() => setIsArgumentToggleOpen(!isArgumentToggleOpen)}
-          >
-            <img
-              src={isArgumentToggleOpen ? arrowBottom : arrowRight}
-              alt="토론 펼치기 버튼"
-            />
-          </button>
+            <button
+              onClick={() => setIsArgumentToggleOpen(!isArgumentToggleOpen)}
+            >
+              <img
+                src={isArgumentToggleOpen ? arrowBottom : arrowRight}
+                alt="토론 펼치기 버튼"
+              />
+            </button>
+          </div>
         </div>
       </div>
       {/* 토론의 댓글 */}
