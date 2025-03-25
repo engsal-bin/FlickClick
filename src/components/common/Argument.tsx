@@ -167,7 +167,12 @@ export default function Argument({
             <div className="h-auto flex flex-col tablet:gap-[20px] mobile:gap-[10px]">
               {argumentOpinions.length > 0 ? (
                 argumentOpinions.map((argumentOpinion, index) => (
-                  <ArgumentReview opinion={argumentOpinion} key={index} />
+                  <ArgumentReview
+                    opinion={argumentOpinion}
+                    key={index}
+                    movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
+                    stateLifting={fetchArgumentOpinion}
+                  />
                 ))
               ) : (
                 <p className="text-white">의견이 없습니다.</p>
