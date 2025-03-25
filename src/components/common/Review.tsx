@@ -19,6 +19,8 @@ export default function Review({
 
   const [editStatus, setEditStatus] = useState(false);
 
+  const [view, setView] = useState(false);
+
   const reviewEdit = async (id: number) => {
     if (movieOrSeasonOrEpisode === "movie") {
       await commonAPI.patchMovieReview(id, editContent);
@@ -65,17 +67,22 @@ export default function Review({
           defaultValue={review.content}
         ></textarea>
       ) : (
-        <p
-          className={twMerge(
-            `text-white01 tablet:text-[18px] mobile:text-[14px] ${
-              // !viewMoreStates[review.id] &&
-              "line-clamp-5"
-            }`
+        <div className="">
+          <p
+            className={twMerge(
+              `text-white01 tablet:text-[18px] mobile:text-[14px] break-words ${
+                !view && "line-clamp-5"
+              }`
+            )}
+          >
+            {review.content}
+          </p>
+          {review.content.length > 500 && (
+            <button className=" text-gray03" onClick={() => setView(!view)}>
+              {view ? "간략히" : "더보기"}
+            </button>
           )}
-        >
-          {review.content}
-          <button className="inline text-gray03">더 보기</button>
-        </p>
+        </div>
       )}
 
       <div className="flex justify-between tablet:text-[14px] mobile:text-[12px]">
