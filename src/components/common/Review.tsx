@@ -62,9 +62,8 @@ export default function Review({
           onChange={(e) => {
             setEditContent(e.target.value);
           }}
-        >
-          {review.content}
-        </textarea>
+          value={review.content}
+        ></textarea>
       ) : (
         <p
           className={twMerge(
