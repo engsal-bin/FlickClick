@@ -396,7 +396,7 @@ interface OpinionType {
   author_id: string;
   author_img_url: string;
   author_name: string;
-  content: number;
+  content: string;
   created_at: string;
   updated_at: string;
   id: number;
