@@ -62,9 +62,9 @@ export default function InputTextarea({
     if (reviewOrArgumentOrOpinion === "review") {
       setPlaceHolder("리뷰를 입력해주세요");
     } else if (reviewOrArgumentOrOpinion === "argument") {
-      setPlaceHolder("토론 주제를 입력하다!");
+      setPlaceHolder("토론 주제를 입력해주세요");
     } else {
-      setPlaceHolder("의견를 입력하세요");
+      setPlaceHolder("의견를 입력해주세요");
     }
   }, [text]);
   return (
