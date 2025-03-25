@@ -4,6 +4,7 @@ import arrowBottom from "../../assets/icon/arrow/arrowBottom.svg";
 import { useEffect, useState } from "react";
 import ArgumentReview from "./ArgumentReview";
 import { commonAPI } from "../../api/common";
+import { formatDate } from "../../utils/formattingDate";
 
 export default function Argument({
   argumentConten,
@@ -56,7 +57,7 @@ export default function Argument({
             <>
               <p className="mobile:hidden">3</p>
               <div>
-                <p>{argumentConten.created_at}</p>
+                <p>{formatDate(argumentConten.updated_at)}</p>
                 <p>
                   작성자: <span>{argumentConten.author_name}</span>
                 </p>

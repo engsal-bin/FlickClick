@@ -1,4 +1,5 @@
 import { useAuth } from "../../api/Auth";
+import { formatDate } from "../../utils/formattingDate";
 
 export default function ArgumentReview({ opinion }: { opinion: OpinionType }) {
   const { user } = useAuth();
@@ -39,7 +40,7 @@ export default function ArgumentReview({ opinion }: { opinion: OpinionType }) {
               <span
                 className={opinion.author_id === user?.id ? "" : "text-white03"}
               >
-                {opinion.created_at}
+                {formatDate(opinion.updated_at)}
               </span>
             </p>
           </div>
