@@ -165,9 +165,13 @@ export default function Argument({
           <hr className="border border-gray03 mb-[30px]" />
           <div className="tablet:px-[20px] mobile:px-[5px] flex flex-col tablet:gap-[30px] mobile:gap-[20px]">
             <div className="h-auto flex flex-col tablet:gap-[20px] mobile:gap-[10px]">
-              {argumentOpinions.map((argumentOpinion, index) => (
-                <ArgumentReview opinion={argumentOpinion} key={index} />
-              ))}
+              {argumentOpinions.length > 0 ? (
+                argumentOpinions.map((argumentOpinion, index) => (
+                  <ArgumentReview opinion={argumentOpinion} key={index} />
+                ))
+              ) : (
+                <p className="text-white">의견이 없습니다.</p>
+              )}
             </div>
 
             <InputTextarea
