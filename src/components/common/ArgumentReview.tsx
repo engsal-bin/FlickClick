@@ -40,7 +40,7 @@ export default function ArgumentReview({ opinion }: { opinion: OpinionType }) {
               <span
                 className={opinion.author_id === user?.id ? "" : "text-white03"}
               >
-                {formatDate(opinion.updated_at)}
+                {formatDate(opinion.created_at)}
               </span>
             </p>
           </div>
