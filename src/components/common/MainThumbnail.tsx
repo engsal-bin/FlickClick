@@ -72,6 +72,8 @@ export default function MainThumbnail() {
     };
     fetchData();
   }, [location.pathname]);
+  console.log(contents);
+  console.log(currentIndex);
 
   return (
     /* 임시로 시리즈 상세 페이지에 연결함 */
@@ -151,7 +153,11 @@ export default function MainThumbnail() {
           {contents?.map((_, index) => (
             <button
               key={index}
-              onClick={() => swiperRef.current?.slideTo(index)} // 클릭 시 해당 인덱스로 이동
+              onClick={() => {
+                if (swiperRef.current) {
+                  swiperRef.current.slideToLoop(index);
+                }
+              }}
               className={`w-[10px] h-[10px] rounded-full transition-all ${
                 currentIndex === index ? "bg-main" : "bg-white01_30"
               }`}
