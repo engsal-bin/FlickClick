@@ -34,8 +34,7 @@ export type TvShow = {
 
 export type GenreState = {
   id: number;
-  krKey: string;
-  key: string;
+  name: string;
   selected: boolean;
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import OttIcon from "../OttIcon";
-import { OttState } from "../../type/seriesType";
+import type { OttState } from "../../type/seriesType";
 
 // ott 로고
 import appleTv from "../../assets/icon/ottIcon/appleTV.svg";
@@ -13,7 +13,7 @@ import wavve from "../../assets/icon/ottIcon/wavve.svg";
 
 interface OttIconsProps {
   ottStates: OttState[];
-  setOttStates: React.Dispatch<React.SetStateAction<OttState[]>>;
+  setOttStates?: React.Dispatch<React.SetStateAction<OttState[]>>;
 }
 
 // (임시) OTT서비스 데이터
@@ -30,13 +30,13 @@ const ottServices = [
 export default function OttIcons({ ottStates, setOttStates }: OttIconsProps) {
   // ott 선택 상태 변경 함수
   const selectOtt = (id: number) => {
-    setOttStates((prev) =>
-      prev.map((service) =>
-        service.id === id
-          ? { ...service, selected: !service.selected }
-          : service
-      )
-    );
+    if (setOttStates) {
+      setOttStates((prev) =>
+        prev.map((service) =>
+          service.id === id ? { ...service, selected: !service.selected } : service
+        )
+      );
+    }
   };
 
   return (
