@@ -198,7 +198,7 @@ export default function DetailIntroBox({
                     : movieContent?.title
                 }${
                   type === "tvSeason"
-                    ? ` 시즌 ${
+                    ? ` ${
                         tvContent?.seasons.find(
                           (season) => season.season_number === Number(seasonId)
                         )?.name || ""
