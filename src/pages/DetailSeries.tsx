@@ -3,7 +3,6 @@ import SeasonBox from "../components/common/SeasonBox";
 import { tvAPI } from "../api/tv";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import ArgorithmIP from "../components/common/ArgorithmIP";
 
 export default function DetailSeries() {
   const [contentData, setContentData] = useState<TvSeriesType>();

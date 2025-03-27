@@ -20,7 +20,7 @@ export default function PersonList({
   const [isOverflow, setIsOverflow] = useState(false);
   // console.log(seriesId);
   // console.log(seasonNum);
-  console.log(personData);
+  // console.log(personData);
 
   // Tv 시리즈 데이터 불러오기
   useEffect(() => {
