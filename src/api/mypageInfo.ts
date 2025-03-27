@@ -60,7 +60,6 @@ export const getArgumentsCommentedByUId = async (
 };
 
 // 회원별 스크랩된 게시물
-
 export const getClipsByUId = async (
   userId: string,
 ): Promise<SavedClips[] | null> => {
@@ -132,4 +131,68 @@ export const getClipCountByUId = async (
   }
 
   return data;
+};
+
+// 컨텐츠 스크랩하기
+export const postClippedData = async (
+  ip_id: string,
+  poster_path: string,
+  owner_id: string,
+  ip_name: string,
+  summary: string,
+  dataType: string
+) => {
+  try {
+    if (dataType === "movie") {
+      await supabase
+        .from("clipped_movie")
+        .insert([{ ip_id, poster_path, owner_id, ip_name, summary }]);
+    }
+    if (dataType === "season") {
+      await supabase
+        .from("clipped_season")
+        .insert([{ ip_id, poster_path, owner_id, ip_name, summary }]);
+    }
+    if (dataType === "episode") {
+      await supabase
+        .from("clipped_episode")
+        .insert([{ ip_id, poster_path, owner_id, ip_name, summary }]);
+    }
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error);
+  }
+};
+
+// 스크랩 된 컨텐츠 제거하기
+export const deleteClippedData = async (
+  ip_id: string,
+  owner_id: string,
+  dataType: string
+) => {
+  try {
+    if (dataType === "movie") {
+      await supabase
+        .from("clipped_movie")
+        .delete()
+        .eq("ip_id", ip_id)
+        .eq("owner_id", owner_id);
+    }
+    if (dataType === "season") {
+      await supabase
+        .from("clipped_season")
+        .delete()
+        .eq("ip_id", ip_id)
+        .eq("owner_id", owner_id);
+    }
+    if (dataType === "episode") {
+      await supabase
+        .from("clipped_episode")
+        .delete()
+        .eq("ip_id", ip_id)
+        .eq("owner_id", owner_id);
+    }
+    console.log("스크랩이 성공적으로 삭제되었습니다.");
+  } catch (error) {
+    console.error("스크랩 삭제 중 오류 발생:", error);
+  }
 };

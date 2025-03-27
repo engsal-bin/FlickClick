@@ -56,7 +56,7 @@ export default function Reviews({
               />
             ))
           ) : (
-            <div>리뷰가 없습니다.</div>
+            <p className="text-white">리뷰가 없습니다.</p>
           )}
         </div>
       </div>

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { tvAPI } from "../../api/tv";
 import { movieAPI } from "../../api/movie";
 import { IMAGE_BASE_URL } from "../../api/axios";
-import { Swiper, SwiperSlide } from "swiper/react"; 
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css"; // Swiper 스타일 import
 
 export default function MainThumbnail() {
@@ -11,9 +11,11 @@ export default function MainThumbnail() {
   const location = useLocation();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const swiperRef = useRef<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const trendTv = await tvAPI.getTrendTv();
         const trendMovie = await movieAPI.getTrendMovie();
@@ -64,6 +66,8 @@ export default function MainThumbnail() {
         }
       } catch (error) {
         console.error(Error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -84,56 +88,74 @@ export default function MainThumbnail() {
         }}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
       >
-        {contents?.map((content) => (
-          <SwiperSlide key={content.id}>
-            <Link
-              key={content.id}
-              to={
-                content.title
-                  ? `/detailmovie/${content.id}`
-                  : `/detailseries/${content.id}`
-              }
-              className="relative hidden tablet:flex flex-col justify-center 
+        {isLoading
+          ? Array.from({ length: 5 }).map((_, index) => (
+              <SwiperSlide key={index}>
+                <div className="animate-pulse w-full mobile:h-[420px] tablet:h-[700px] bg-gray-700 ">
+                  <div
+                    className="w-full h-full flex flex-col justify-end items-start 
+                    gap-[10px] relative z-10 text-white bg-gray-700 rounded-md py-[80px] px-[100px]"
+                  >
+                    <div className="w-full h-[50px] bg-gray-600 rounded-md"></div>
+                    <div className="w-full h-[150px] bg-gray-600 rounded-md"></div>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))
+          : contents?.map((content) => (
+              <SwiperSlide key={content.id}>
+                <Link
+                  key={content.id}
+                  to={
+                    content.title
+                      ? `/detailmovie/${content.id}`
+                      : `/detailseries/${content.id}`
+                  }
+                  className="relative hidden tablet:flex flex-col justify-center 
               items-center w-full h-[720px] bg-cover bg-center py-[80px] px-[100px]"
-              style={{
-                backgroundImage: `url(${IMAGE_BASE_URL}original${content.backdrop_path})`,
-              }}
-            >
-              {/* 그라데이션 오버레이 */}
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-black 
-              via-black/50 to-transparent opacity-100"
-              ></div>
-
-              {/* 텍스트 */}
-              <div
-                className="w-full h-full flex flex-col justify-end items-start 
-                gap-[10px] relative z-10 text-white"
-              >
-                {/* 제목 */}
-                <div className="font-bold text-[60px] leading-none">
-                  {content.title ? content.title : content.name}
-                </div>
-
-                {/* 오버뷰 */}
-                <div
-                  className="text-[24px] leading-[40px] 
-                  line-clamp-2 overflow-hidden whitespace-normal 
-                  hover:line-clamp-none hover:overflow-visible duration-300"
+                  style={{
+                    backgroundImage: `url(${IMAGE_BASE_URL}original${content.backdrop_path})`,
+                  }}
                 >
-                  {content.overview}
-                </div>
-              </div>
-            </Link>
-          </SwiperSlide>
-        ))}
+                  {/* 그라데이션 오버레이 */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-t from-black 
+              via-black/50 to-transparent opacity-100"
+                  ></div>
+
+                  {/* 텍스트 */}
+                  <div
+                    className="w-full h-full flex flex-col justify-end items-start 
+                    gap-[10px] relative z-10 text-white"
+                  >
+                    {/* 제목 */}
+                    <div className="font-bold text-[60px] leading-none">
+                      {content.title ? content.title : content.name}
+                    </div>
+
+                    {/* 오버뷰 */}
+                    <div
+                      className="text-[24px] leading-[40px] 
+                  line-clamp-2 overflow-hidden whitespace-normal 
+                  hover:line-clamp-none hover:overflow-visible"
+                    >
+                      {content.overview}
+                    </div>
+                  </div>
+                </Link>
+              </SwiperSlide>
+            ))}
 
         {/* 원형 토글 */}
         <div className="relative bottom-0 tablet:flex mobile:hidden justify-center left-1/2 transform -translate-x-1/2 gap-[10px] z-50">
           {contents?.map((_, index) => (
             <button
               key={index}
-              onClick={() => swiperRef.current?.slideTo(index)} 
+              onClick={() => {
+                if (swiperRef.current) {
+                  swiperRef.current.slideToLoop(index);
+                }
+              }}
               className={`w-[10px] h-[10px] rounded-full transition-all ${
                 currentIndex === index ? "bg-main" : "bg-white01_30"
               }`}
