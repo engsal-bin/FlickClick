@@ -6,11 +6,11 @@ import OttTags from "../components/common/OttTags";
 import SeriesTags from "../components/common/SeriesTags";
 import YearTags from "../components/common/YearTags";
 import GridContents from "../components/common/GridContents";
-import DefaultSeriesView from "../components/series/DefaultSeriesView";
 import { ottList, movieGenreList, yearList } from "../constants/tags";
 import { commonAPI } from "../api/common";
 import GridSkeletonList from "../components/skeletons/GridSkeletonList";
 import { Content, GenreState, OttState, YearState } from "../type/seriesType";
+import DefaultMoviesView from "../components/default-view/DefaultMoviesView";
 
 export default function Movies() {
   const { ref, inView } = useInView();
@@ -122,7 +122,7 @@ export default function Movies() {
           )}
         </>
       ) : (
-        <DefaultSeriesView />
+        <DefaultMoviesView />
       )}
     </div>
   );

@@ -5,7 +5,7 @@ import MainThumbnail from "../components/common/MainThumbnail";
 import OttTags from "../components/common/OttTags";
 import SeriesTags from "../components/common/SeriesTags";
 import YearTags from "../components/common/YearTags";
-import DefaultSeriesView from "../components/series/DefaultSeriesView";
+import DefaultSeriesView from "../components/default-view/DefaultSeriesView";
 import GridContents from "../components/common/GridContents";
 import { movieGenreList, ottList, yearList } from "../constants/tags";
 import { commonAPI } from "../api/common";
