@@ -115,132 +115,165 @@ export default function DetailEpisodeIntroBox({
 
   return (
     <>
-      {/* tablet 이상 */}
-      <section
-        className="relative h-auto flex flex-col bg-cover bg-center 
-        desktop:pb-[133px] tablet:pb-[14px] mobile:pb-[42px]"
-        style={{
-          backgroundImage: `url(${IMAGE_BASE_URL}original${episode?.still_path})`,
-        }}
-      >
-        {/* 블러 오버레이 */}
-        <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-lg"></div>
-        <div className="flex justify-end w-full z-10 desktop:mb-[57px] tablet:mb-[70px] mobile:mb-[30px]">
-          <button className="tablet:w-[26px] mobile:w-[19px] h-auto tablet:mt-[50px] mobile:mt-[30px] desktop:mr-[50px] tablet:mr-[30px] mobile:mr-[10px]">
-            <img src={cancelIcon} alt="닫기 버튼" />
-          </button>
-        </div>
-        {/* 콘텐츠 소개 영역 */}
-        <section className="w-full h-auto flex flex-col gap-[35px] justify-between tablet:pb-[100px] tablet:pt-[50px] desktop:px-[136px] tablet:px-[31px] mobile:px-[10px]">
-          <div
-            className="w-full flex tablet:flex-row mobile:flex-col-reverse 
-          justify-between relative z-10 text-left text-white"
-          >
-            <div className="w-full flex flex-col gap-[10px]">
-              {/* 제목 */}
-              <div className="font-bold text-[40px] leading-auto">
-                {episode?.name}
-              </div>
-              <div className="flex gap-[10px] text-light">
-                {/* 에피소드 방영일 */}
-                <Tag>{episode?.air_date}</Tag>
-
-                {/* 장르 */}
-                {series?.genres.map((genre) => (
-                  <Tag key={genre.id}>{genre.name}</Tag>
-                ))}
-
-                {/* 시즌 */}
-                {episode?.season_number && (
-                  <Tag>{`시즌 ${String(episode?.season_number)}`}</Tag>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-[10px]">
-                <p className="text-white02 text-[16px] leading-[24px]">
-                  시청할 수 있는 서비스
-                </p>
-
-                {/* 시청할 수 있는 서비스 로고 */}
-                <div className="flex gap-[10px]">
-                  {series?.networks.map((network) => (
-                    <div
-                      key={network.id}
-                      className="w-[48px] h-[48px] bg-contain bg-no-repeat bg-center"
-                      style={{
-                        backgroundImage: `url(${IMAGE_BASE_URL}original${network.logo_path})`,
-                      }}
-                    ></div>
-                  ))}
-                </div>
-              </div>
+      {!series && !episode ? (
+        <div
+          className="animate-pulse flex flex-col 
+        tablet:flex-row mobile:flex-col-reverse 
+        desktop:gap-[160px] tablet:gap-[50px] mobile:gap-[30px] 
+        tablet:justify-between tablet:items-start
+        mobile:justify-center mobile:items-center 
+        tablet:pb-[146px] tablet:pt-[70px] 
+        desktop:px-[136px] tablet:px-[31px] mobile:px-[10px]"
+        >
+          {/* 텍스트 영역 스켈레톤 */}
+          <div className="flex flex-col gap-[35px] desktop:w-[540px] tablet:w-[500px] mobile:w-full">
+            <div className="w-full h-[40px] bg-gray-700 rounded-md"></div>{" "}
+            {/* 제목 */}
+            <div className="flex gap-[10px]">
+              <div className="w-[80px] h-[24px] bg-gray-600 rounded-md"></div>{" "}
+              {/* 연도 */}
+              <div className="w-[100px] h-[24px] bg-gray-600 rounded-md"></div>{" "}
+              {/* 장르 */}
             </div>
-
-            {/* 스틸컷 */}
-            <div
-              className="tablet:w-full tablet:max-w-[369px] tablet:h-[205px] 
-              mobile:w-full mobile:h-[205px] rounded-[10px] z-10 bg-cover bg-center"
-              style={{
-                backgroundImage: `url(${IMAGE_BASE_URL}original${episode?.still_path})`,
-              }}
-            ></div>
+            <div className="w-full h-[100px] bg-gray-600 rounded-md"></div>{" "}
+            {/* 오버뷰 */}
           </div>
 
-          <div className="flex flex-col items-start z-10 gap-[10px]">
-            {/* 오버뷰 */}
-            <div className="font-light text-[16px] leading-[24px] text-white03">
-              {episode?.overview}
-            </div>
-
-            {/* 태그라인 */}
-
-            <div className="font-light text-[16px] leading-[24px] text-white03">
-              #{series?.tagline}
-            </div>
-
-            {/* 스크랩 버튼 */}
-
-            <button
-              className={`flex gap-[10px] w-auto h-auto px-[15px] py-[10px] 
-                border ${
-                  clippedlist?.some(
-                    (clip) =>
-                      clip.ip_id === `${contentId}/${seasonId}/${episodeId}`
-                  )
-                    ? "border-main"
-                    : "border-white01"
-                }  rounded-[8px]`}
-              onClick={() => {
-                clipContent();
-              }}
-            >
-              <img
-                src={
-                  clippedlist?.some(
-                    (clip) =>
-                      clip.ip_id === `${contentId}/${seasonId}/${episodeId}`
-                  )
-                    ? scrapIcon
-                    : noScrapIcon
-                }
-                alt="스크랩 버튼"
-              />
-              <span
-                className={`${
-                  clippedlist?.some(
-                    (clip) =>
-                      clip.ip_id === `${contentId}/${seasonId}/${episodeId}`
-                  )
-                    ? "text-main"
-                    : "text-white01"
-                }`}
-              >
-                스크랩
-              </span>
+          {/* 포스터 스켈레톤 */}
+          <div
+            className="desktop:w-[324px] tablet:w-[220px] mobile:w-[220px] 
+          desktop:h-[453.6px] tablet:h-[308px] mobile:h-[308px] 
+          bg-gray-700 rounded-md"
+          ></div>
+        </div>
+      ) : (
+        <section
+          className="relative h-auto flex flex-col bg-cover bg-center 
+      desktop:pb-[133px] tablet:pb-[14px] mobile:pb-[42px]"
+          style={{
+            backgroundImage: `url(${IMAGE_BASE_URL}original${episode?.still_path})`,
+          }}
+        >
+          {/* tablet 이상 */}
+          {/* 블러 오버레이 */}
+          <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-lg"></div>
+          <div className="flex justify-end w-full z-10 desktop:mb-[57px] tablet:mb-[70px] mobile:mb-[30px]">
+            <button className="tablet:w-[26px] mobile:w-[19px] h-auto tablet:mt-[50px] mobile:mt-[30px] desktop:mr-[50px] tablet:mr-[30px] mobile:mr-[10px]">
+              <img src={cancelIcon} alt="닫기 버튼" />
             </button>
           </div>
+          {/* 콘텐츠 소개 영역 */}
+          <section className="w-full h-auto flex flex-col gap-[35px] justify-between tablet:pb-[100px] tablet:pt-[50px] desktop:px-[136px] tablet:px-[31px] mobile:px-[10px]">
+            <div
+              className="w-full flex tablet:flex-row mobile:flex-col-reverse 
+        justify-between relative z-10 text-left text-white"
+            >
+              <div className="w-full flex flex-col gap-[10px]">
+                {/* 제목 */}
+                <div className="font-bold text-[40px] leading-auto">
+                  {episode?.name}
+                </div>
+                <div className="flex gap-[10px] text-light">
+                  {/* 에피소드 방영일 */}
+                  <Tag>{episode?.air_date}</Tag>
+
+                  {/* 장르 */}
+                  {series?.genres.map((genre) => (
+                    <Tag key={genre.id}>{genre.name}</Tag>
+                  ))}
+
+                  {/* 시즌 */}
+                  {episode?.season_number && (
+                    <Tag>{`시즌 ${String(episode?.season_number)}`}</Tag>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-[10px]">
+                  <p className="text-white02 text-[16px] leading-[24px]">
+                    시청할 수 있는 서비스
+                  </p>
+
+                  {/* 시청할 수 있는 서비스 로고 */}
+                  <div className="flex gap-[10px]">
+                    {series?.networks.map((network) => (
+                      <div
+                        key={network.id}
+                        className="w-[48px] h-[48px] bg-contain bg-no-repeat bg-center"
+                        style={{
+                          backgroundImage: `url(${IMAGE_BASE_URL}original${network.logo_path})`,
+                        }}
+                      ></div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* 스틸컷 */}
+              <div
+                className="tablet:w-full tablet:max-w-[369px] tablet:h-[205px] 
+            mobile:w-full mobile:h-[205px] rounded-[10px] z-10 bg-cover bg-center"
+                style={{
+                  backgroundImage: `url(${IMAGE_BASE_URL}original${episode?.still_path})`,
+                }}
+              ></div>
+            </div>
+
+            <div className="flex flex-col items-start z-10 gap-[10px]">
+              {/* 오버뷰 */}
+              <div className="font-light text-[16px] leading-[24px] text-white03">
+                {episode?.overview}
+              </div>
+
+              {/* 태그라인 */}
+
+              <div className="font-light text-[16px] leading-[24px] text-white03">
+                #{series?.tagline}
+              </div>
+
+              {/* 스크랩 버튼 */}
+
+              <button
+                className={`flex gap-[10px] w-auto h-auto px-[15px] py-[10px] 
+              border ${
+                clippedlist?.some(
+                  (clip) =>
+                    clip.ip_id === `${contentId}/${seasonId}/${episodeId}`
+                )
+                  ? "border-main"
+                  : "border-white01"
+              }  rounded-[8px]`}
+                onClick={() => {
+                  clipContent();
+                }}
+              >
+                <img
+                  src={
+                    clippedlist?.some(
+                      (clip) =>
+                        clip.ip_id === `${contentId}/${seasonId}/${episodeId}`
+                    )
+                      ? scrapIcon
+                      : noScrapIcon
+                  }
+                  alt="스크랩 버튼"
+                />
+                <span
+                  className={`${
+                    clippedlist?.some(
+                      (clip) =>
+                        clip.ip_id === `${contentId}/${seasonId}/${episodeId}`
+                    )
+                      ? "text-main"
+                      : "text-white01"
+                  }`}
+                >
+                  스크랩
+                </span>
+              </button>
+            </div>
+          </section>
         </section>
-      </section>
+      )}
     </>
   );
 }
