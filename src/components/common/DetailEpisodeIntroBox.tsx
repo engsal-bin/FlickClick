@@ -54,6 +54,11 @@ export default function DetailEpisodeIntroBox({
 
   // 컨텐츠 스크랩하기
   const clipContent = async () => {
+    if (!user) {
+      alert("로그인해주세요");
+      return;
+    }
+
     if (
       user?.id &&
       episode?.still_path &&
