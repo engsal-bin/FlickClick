@@ -39,12 +39,17 @@ export default function DefaultSeriesView() {
       }
     };
 
-    //   // 신규 업데이트
+    // 신규 업데이트
     const fetchNewUpdate = async () => {
       try {
         const newUpdataResponse = await tvAPI.getOnTheAirTvSeriese();
         console.log(newUpdataResponse);
-        setNewUpateImgSrc(newUpdataResponse.results);
+        // media_type을 'tv'로 설정
+        const newUpdateWithType = newUpdataResponse.results.map((item: Content) => ({
+          ...item,
+          media_type: 'tv'
+        }));
+        setNewUpateImgSrc(newUpdateWithType);
       } catch (error) {
         console.error("Error fetching new updates:", error);
       }
@@ -53,6 +58,7 @@ export default function DefaultSeriesView() {
     fetchTrendAll();
     fetchNewUpdate();
   }, []);
+
   return (
     <div>
       <Contents to="/popular" showMore={false} data={trendingData}>

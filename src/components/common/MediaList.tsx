@@ -23,7 +23,7 @@ export default function MediaList({
         ? `/${mediaTypeToPathName[item.media_type as "movie" | "tv"]}/${
             item.id
           }`
-        : ""
+        : "",
     ) ?? [];
 
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function MediaList({
             )}
           </div>
 
-          <div className="flex justify-between overflow-y-auto">
+          <div className="flex justify-between overflow-y-auto gap-[10px]">
             {data.map((item, index) => {
               return (
                 <img
@@ -74,7 +74,7 @@ export default function MediaList({
             )}
           </div>
 
-          <div className="flex overflow-y-auto">
+          <div className="flex overflow-y-auto gap-[10px]">
             {data.map((item, index) => {
               return (
                 <img

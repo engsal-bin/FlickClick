@@ -3,7 +3,6 @@ import arrowBottom from "../../assets/icon/arrow/arrowBottom.svg";
 import arrowRight from "../../assets/icon/arrow/arrowRight.svg";
 import OttIcons from "./OttIcons";
 import MediaList from "./MediaList";
-import GenreList from "./GenreList";
 import YearsList from "./YearsList";
 import TimesList from "./TimesList";
 import type { CheckedState, Genres, OttState } from "../../type/seriesType";
