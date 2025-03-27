@@ -24,6 +24,11 @@ export default function DetailSeries() {
     fetchSeries();
   }, []);
 
+  // 첫 렌더링 시 화면 상단 위치
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
     <div>
       <DetailIntroBox contentId={Number(locationInfo[1])} type="tvSeries" />

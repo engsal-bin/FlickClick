@@ -7,7 +7,6 @@ import DetailEpisode from "./pages/DetailEpisode";
 import DetailMovie from "./pages/DetailMovie";
 import DetailSeason from "./pages/DetailSeason";
 import DetailSeries from "./pages/DetailSeries";
-import DetailSeriesNoSeason from "./pages/DetailSeriesNoSeason";
 import Genres from "./pages/Genres";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
@@ -42,13 +41,9 @@ export default function App() {
 
           {/* 상세 페이지 */}
 
-          {/* 시리즈 상세페이지 - 시즌 유 */}
+          {/* 시리즈 상세페이지 */}
           <Route path="/detailseries/:seriesid" element={<DetailSeries />} />
-          {/* 시리즈 상세페이지 - 시즌 무 */}
-          <Route
-            path="/detailseason-noseason/:id"
-            element={<DetailSeriesNoSeason />}
-          />
+
           {/* 시즌 상세페이지 */}
           <Route
             path="/detailseason/:seriesid/:seasonnumber"
