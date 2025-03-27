@@ -10,7 +10,7 @@ export default function ArgumentReview({ opinion }: { opinion: OpinionType }) {
         }`}
       >
         <div
-          className={`desktop:max-w-[894px] tablet:max-w-[558px] rounded-[10px] w-auto h-full flex justify-between items-center px-[20px] py-[15px] ${
+          className={`desktop:max-w-[894px] tablet:max-w-[558px] rounded-[10px] w-auto h-full flex justify-between items-start px-[20px] py-[15px] ${
             opinion.author_id === user?.id
               ? "bg-main30 text-black01"
               : "bg-gray01"

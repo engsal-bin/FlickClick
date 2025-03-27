@@ -120,6 +120,17 @@ const getSimilarTv = async (series_id: number) => {
   }
 };
 
+const getGenres = async (language = "ko-KR") => {
+  try {
+    const response = await axiosInstance.get(`/genre/tv/list`, {
+      params: { language },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error);
+  }
+};
+
 export const tvAPI = {
   getOnTheAirTvSeriese,
   getSeries,
@@ -129,4 +140,5 @@ export const tvAPI = {
   getTrendTv,
   getRecommendTv,
   getSimilarTv,
+  getGenres,
 };

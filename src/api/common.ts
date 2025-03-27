@@ -28,6 +28,8 @@ const getDiscover = async (
   language: string = "en-US",
   region: string = "US",
   page: number = 1,
+  runtimeGte: number | null = null,
+  runtimeLte: number | null = null,
 ): Promise<Content[]> => {
   let endpoint = `/discover/${targetType}?language=${language}&watch_region=${region}&page=${page}`;
 
@@ -35,7 +37,9 @@ const getDiscover = async (
     "디스커버 API 호출 TargetType:",
     genres,
     dateGte,
-    ottPlatforms
+    ottPlatforms,
+    runtimeGte,
+    runtimeLte
   )
   if (genres.length > 0) endpoint += `&with_genres=${genres.join("|")}`;
   if (dateGte)
@@ -44,6 +48,10 @@ const getDiscover = async (
     endpoint += `&first_air_date.lte=${dateLte}`;
   if (ottPlatforms.length > 0)
     endpoint += `&with_watch_providers=${ottPlatforms.join("|")}`;
+  if (runtimeGte)
+    endpoint += `&with_runtime.gte=${runtimeGte}`;
+  if (runtimeLte)
+    endpoint += `&with_runtime.lte=${runtimeLte}`;
 
   console.log("디스커버 api 엔드포인트", endpoint)
 

@@ -27,7 +27,9 @@ export default function Series() {
   const selectYearRange = (id: number) => {
     setYearStates((prev) =>
       prev.map((year) =>
-        year.id === id ? { ...year, selected: true } : { ...year, selected: false }
+        year.id === id
+          ? { ...year, selected: true }
+          : { ...year, selected: false }
       )
     );
   };
@@ -35,42 +37,50 @@ export default function Series() {
   const selectOtt = (id: number) => {
     setOttStates((prev) =>
       prev.map((service) =>
-        service.id === id ? { ...service, selected: !service.selected } : service
+        service.id === id
+          ? { ...service, selected: !service.selected }
+          : service
       )
     );
   };
 
   const selectedGenres = genreStates.filter((g) => g.selected).map((g) => g.id);
   const selectedYear = yearStates.find((y) => y.selected);
-  const selectedOttPlatforms = ottStates.filter((o) => o.selected).map((o) => o.id);
+  const selectedOttPlatforms = ottStates
+    .filter((o) => o.selected)
+    .map((o) => o.id);
 
   const isTagsSelected =
-    selectedGenres.length > 0 || selectedYear || selectedOttPlatforms.length > 0;
+    selectedGenres.length > 0 ||
+    selectedYear ||
+    selectedOttPlatforms.length > 0;
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery<Content[], Error, Content[], [string, number[]?, YearState?, number[]?], number>({
-    queryKey: ["series", selectedGenres, selectedYear, selectedOttPlatforms],
-    initialPageParam: 1,
-    queryFn: async ({ pageParam = 1 }) => { 
-      return await commonAPI.getDiscover(
-        "tv",
-        selectedGenres,
-        selectedYear?.gte || null,
-        selectedYear?.lte || null,
-        selectedOttPlatforms,
-        "en-US",
-        "US",
-        pageParam
-      );
-    },
-    getNextPageParam: (lastPage: Content[], allPages: Content[][]) => {
-      return lastPage.length > 0 ? allPages.length + 1 : undefined;
-    }
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery<
+      Content[],
+      Error,
+      Content[],
+      [string, number[]?, YearState?, number[]?],
+      number
+    >({
+      queryKey: ["series", selectedGenres, selectedYear, selectedOttPlatforms],
+      initialPageParam: 1,
+      queryFn: async ({ pageParam = 1 }) => {
+        return await commonAPI.getDiscover(
+          "tv",
+          selectedGenres,
+          selectedYear?.gte || null,
+          selectedYear?.lte || null,
+          selectedOttPlatforms,
+          "en-US",
+          "US",
+          pageParam
+        );
+      },
+      getNextPageParam: (lastPage: Content[], allPages: Content[][]) => {
+        return lastPage.length > 0 ? allPages.length + 1 : undefined;
+      },
+    });
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -94,11 +104,19 @@ export default function Series() {
         <div className="w-full md:px-10 px-[10px]">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {data?.pages?.map((page: Content[]) =>
-              Array.isArray(page) ? page.map((content: Content) => <GridContents key={content.id} content={content} />) : null
+              Array.isArray(page)
+                ? page.map((content: Content) => (
+                    <GridContents key={content.id} content={content} />
+                  ))
+                : null
             )}
           </div>
           <div ref={ref} className="w-full flex justify-center mt-4">
-            {isFetchingNextPage && <p className="md:text-[16px] text-[14px] md:py-8 py-5">Loading more...</p>}
+            {isFetchingNextPage && (
+              <p className="md:text-[16px] text-[14px] md:py-8 py-5">
+                Loading more...
+              </p>
+            )}
           </div>
         </div>
       ) : (

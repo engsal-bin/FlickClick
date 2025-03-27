@@ -41,7 +41,10 @@ export default function RootLayout() {
         />
       </button>
       {/* 챗봇 */}
-      <Chatbot isChatbotOpen={isChatbotOpen} setIschatbotOpen={setIsChatbotOpen}/>
+      <Chatbot
+        isChatbotOpen={isChatbotOpen}
+        setIschatbotOpen={setIsChatbotOpen}
+      />
     </div>
   );
 }
