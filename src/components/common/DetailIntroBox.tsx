@@ -1,11 +1,18 @@
 import Tag from "./Tag";
 import cancelIcon from "../../assets/icon/cancelIcon.svg";
 import scrapIcon from "../../assets/icon/scrap_btn.svg";
+import noScrapIcon from "../../assets/icon/noScrapIcon.svg";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import { useEffect, useState } from "react";
 import { movieAPI } from "../../api/movie";
 import { tvAPI } from "../../api/tv";
 import { useLocation } from "react-router-dom";
+import {
+  deleteClippedData,
+  getClipsByUId,
+  postClippedData,
+} from "../../api/mypageInfo";
+import { useAuth } from "../../api/Auth";
 
 export default function DetailIntroBox({
   contentId,
@@ -14,44 +21,128 @@ export default function DetailIntroBox({
   contentId?: number;
   type?: string;
 }) {
-  // console.log(data?.poster_path);
-  console.log(contentId);
   const [tvContent, setTvContent] = useState<TvSeriesType>();
   const [tvSeasonContent, setTvSeasonContent] = useState<TvSeasonsType>();
   const [movieContent, setMovieContent] = useState<MovieType>();
   const location = useLocation();
+  const contentType =
+    location.pathname.split("/")[1] === "detailmovie"
+      ? "movie"
+      : location.pathname.split("/")[1] === "detailseason"
+      ? "season"
+      : location.pathname.split("/")[1] === "detailseries"
+      ? "series"
+      : "episode";
   const seasonId = location.pathname.split("/")[3];
-  console.log(tvContent);
+  const { user } = useAuth();
+  const [ipId, setIpId] = useState<string>("");
+  const [posterPath, setPosterPath] = useState<string>("");
+  const [contentName, setContentName] = useState<string>("");
+  const [overview, setOverview] = useState<string>("");
+  const [clippedlist, setClippedList] = useState<SavedClips[] | null>([]);
 
+  // 컨텐츠 데이터 불러오기
   useEffect(() => {
     const fetchContent = async () => {
-      try {
-        if (type === "movie") {
-          const movie = await movieAPI.getMovie(Number(contentId));
-          setMovieContent(movie);
-        } else if (type === "tvSeries" || type === "tvSeason") {
-          const tvSeries = await tvAPI.getSeries(Number(contentId));
-          setTvContent(tvSeries);
-        }
+      if (user?.id)
+        try {
+          // 스크랩 데이터 불러오기
+          const clippedData = await getClipsByUId(user?.id);
+          setClippedList(clippedData);
 
-        if (type === "tvSeason" && seasonId !== "undefined") {
-          const tvSeason = await tvAPI.getSeason(
-            Number(contentId),
-            Number(seasonId)
-          );
-          setTvSeasonContent(tvSeason);
-          console.log(tvSeason);
+          if (type === "movie") {
+            const movie = await movieAPI.getMovie(Number(contentId));
+            setMovieContent(movie);
+            setIpId(movie.id);
+            setPosterPath(movie.poster_path);
+            setContentName(movie.title);
+            setOverview(movie.overview);
+          } else if (type === "tvSeries" || type === "tvSeason") {
+            const tvSeries = await tvAPI.getSeries(Number(contentId));
+            setTvContent(tvSeries);
+            setIpId(`${tvSeries.id}/${seasonId}`);
+            setPosterPath(tvSeries.poster_path);
+            setContentName(tvSeries.name);
+            setOverview(tvSeries.overview);
+          }
+
+          if (type === "tvSeason") {
+            const tvSeason = await tvAPI.getSeason(
+              Number(contentId),
+              Number(seasonId)
+            );
+            setTvSeasonContent(tvSeason);
+          }
+        } catch {
+          console.error(Error);
         }
-      } catch {
-        console.error(Error);
-      }
     };
     fetchContent();
-  }, [contentId, type]);
+  }, [contentId, type, user]);
 
+  // 첫 렌더링 시 화면 상단 위치
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // 컨텐츠 스크랩하기
+  const clipContent = async () => {
+    if (
+      posterPath !== undefined &&
+      user?.id &&
+      contentName &&
+      overview !== undefined &&
+      contentType
+    )
+      try {
+        // 스크랩 데이터 불러오기
+        const clippedData = await getClipsByUId(user?.id);
+        console.log("스크랩 데이터", clippedData);
+        // 현재 콘텐츠가 스크랩되었는지 확인
+        const isClipped =
+          contentType === "movie"
+            ? clippedData?.some((clip) => clip.ip_id === contentId?.toString())
+            : clippedData?.some(
+                (clip) =>
+                  clip.ip_id ===
+                  `${contentId?.toString()}/${seasonId.toString()}`
+              );
+
+        // 스크랩 된 상태이면 삭제
+        if (isClipped) {
+          const response = await deleteClippedData(ipId, user?.id, contentType);
+          console.log("클립 제거 성공:", response);
+          setClippedList(
+            (prev) => prev?.filter((clip) => clip.ip_id !== ipId) || []
+          );
+        } else {
+          const response = await postClippedData(
+            ipId,
+            posterPath,
+            user?.id,
+            contentName,
+            overview,
+            contentType
+          );
+          console.log("클립 성공:", response);
+          setClippedList((prev) => [
+            ...(prev || []),
+            {
+              ip_id: ipId,
+              ip_name: contentName,
+              ip_type: contentType as "movie" | "season",
+              poster_path: posterPath,
+            },
+          ]);
+        }
+        // 상태 업데이트를 위해 최신 데이터를 다시 불러오기
+        const updatedClippedData = await getClipsByUId(user.id);
+        setClippedList(updatedClippedData);
+        console.log("업데이트 된 스크랩 데이터", updatedClippedData);
+      } catch (error) {
+        console.error("클립 실패:", error);
+      }
+  };
 
   return (
     <>
@@ -107,7 +198,7 @@ export default function DetailIntroBox({
                     : movieContent?.title
                 }${
                   type === "tvSeason"
-                    ? ` 시즌 ${
+                    ? ` ${
                         tvContent?.seasons.find(
                           (season) => season.season_number === Number(seasonId)
                         )?.name || ""
@@ -146,6 +237,7 @@ export default function DetailIntroBox({
               </div>
             </div>
             <div className="flex flex-col gap-[10px]">
+              {/* 제작사 or 시청할 수 있는 서비스 */}
               <p className="text-white02 text-[16px] leading-[24px]">
                 {type === "movie" ? "제작사" : "시청할 수 있는 서비스"}
               </p>
@@ -196,10 +288,51 @@ export default function DetailIntroBox({
                 return tagline ? `#${tagline}` : "";
               })()}
             </div>
-            <button className="flex gap-[10px] w-auto h-auto px-[15px] py-[10px] border border-main rounded-[8px]">
-              <img src={scrapIcon} alt="스크랩 버튼" />
-              <span className="text-main">스크랩</span>
-            </button>
+
+            {/* 스크랩 버튼 */}
+            {contentType !== "series" && (
+              <button
+                className={`flex gap-[10px] w-auto h-auto px-[15px] py-[10px] 
+                border ${
+                  clippedlist?.some((clip) =>
+                    contentType === "movie"
+                      ? clip.ip_id === contentId?.toString()
+                      : clip.ip_id === `${contentId}/${seasonId}`
+                  )
+                    ? "border-main"
+                    : "border-white01"
+                }  rounded-[8px]`}
+                onClick={() => {
+                  clipContent();
+                }}
+              >
+                <img
+                  src={
+                    clippedlist?.some((clip) =>
+                      contentType === "movie"
+                        ? clip.ip_id === contentId?.toString()
+                        : clip.ip_id === `${contentId}/${seasonId}`
+                    )
+                      ? scrapIcon
+                      : noScrapIcon
+                  }
+                  alt="스크랩 버튼"
+                />
+                <span
+                  className={`${
+                    clippedlist?.some((clip) =>
+                      contentType === "movie"
+                        ? clip.ip_id === contentId?.toString()
+                        : clip.ip_id === `${contentId}/${seasonId}`
+                    )
+                      ? "text-main"
+                      : "text-white01"
+                  }`}
+                >
+                  스크랩
+                </span>
+              </button>
+            )}
           </div>
 
           {/* 포스터 이미지 */}

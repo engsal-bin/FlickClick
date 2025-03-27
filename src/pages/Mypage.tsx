@@ -43,12 +43,15 @@ export default function Mypage() {
     setEpisodeClips(clips.filter((clip) => clip.ip_type === "episode"));
     setMovieClips(clips.filter((clip) => clip.ip_type === "movie"));
   }, [clips]);
+  console.log(seasonClips);
+  console.log(episodeClips);
+  console.log(movieClips);
 
   return (
     <div className="w-full y-full flex-1 pt-[100px] tablet:px-[50px] mobile:pt-0 mobile:px-[10px] text-gray01">
       <TabMenu selectedTab={selectedTab} />
       <div className="mt-[30px]">
-        {selectedTab === "notify" && <NotifyTab userId={user?.id}/>}
+        {selectedTab === "notify" && <NotifyTab userId={user?.id} />}
         {selectedTab === "review" &&
           reviews?.map((review) => (
             <Review key={review.review_id} {...review} />

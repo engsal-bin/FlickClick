@@ -1,7 +1,16 @@
+import { useEffect, useState } from "react";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import cancelIcon from "../../assets/icon/cancelIcon.svg";
 import scrapIcon from "../../assets/icon/scrap_btn.svg";
+import noScrapIcon from "../../assets/icon/noScrapIcon.svg";
 import Tag from "./Tag";
+import { useAuth } from "../../api/Auth";
+import { useLocation } from "react-router-dom";
+import {
+  deleteClippedData,
+  getClipsByUId,
+  postClippedData,
+} from "../../api/mypageInfo";
 
 export default function DetailEpisodeIntroBox({
   series,
@@ -10,7 +19,95 @@ export default function DetailEpisodeIntroBox({
   series?: TvSeriesType;
   episode?: EpisodeType;
 }) {
-  // console.log(series);
+  const location = useLocation();
+  const contentType = "episode";
+  const contentId = location.pathname.split("/")[2];
+  const seasonId = location.pathname.split("/")[3];
+  const episodeId = location.pathname.split("/")[4];
+  const { user } = useAuth();
+  const [ipId, _] = useState<string>(
+    `${contentId?.toString()}/${seasonId.toString()}/${episodeId.toString()}`
+  );
+  const [clippedlist, setClippedList] = useState<SavedClips[] | null>([]);
+  console.log(series);
+  console.log(episode);
+
+  // 컨텐츠 데이터 불러오기
+  useEffect(() => {
+    const fetchContent = async () => {
+      if (user?.id)
+        try {
+          // 스크랩 데이터 불러오기
+          const clippedData = await getClipsByUId(user?.id);
+          setClippedList(clippedData);
+        } catch {
+          console.error(Error);
+        }
+    };
+    fetchContent();
+  }, [contentId, user]);
+
+  // 첫 렌더링 시 화면 상단 위치
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // 컨텐츠 스크랩하기
+  const clipContent = async () => {
+    if (
+      user?.id &&
+      episode?.still_path &&
+      episode.name &&
+      episode.overview &&
+      contentType
+    )
+      try {
+        // 스크랩 데이터 불러오기
+        const clippedData = await getClipsByUId(user?.id);
+        console.log("스크랩 데이터", clippedData);
+        // 현재 콘텐츠가 스크랩되었는지 확인
+        const isClipped = clippedData?.some(
+          (clip) =>
+            clip.ip_id ===
+            `${contentId?.toString()}/${seasonId.toString()}/${episodeId.toString()}`
+        );
+
+        // 스크랩 된 상태이면 삭제
+        if (isClipped) {
+          const response = await deleteClippedData(ipId, user?.id, contentType);
+          console.log("클립 제거 성공:", response);
+          setClippedList(
+            (prev) => prev?.filter((clip) => clip.ip_id !== ipId) || []
+          );
+        } else {
+          const response = await postClippedData(
+            ipId,
+            episode?.still_path,
+            user?.id,
+            `${series?.name} ${episode.name}`,
+            episode.overview,
+            contentType
+          );
+          console.log("클립 성공:", response);
+          setClippedList((prev) => [
+            ...(prev || []),
+            {
+              ip_id: ipId,
+              ip_name: `${series?.name} ${episode.name}`,
+              ip_type: "episode",
+              poster_path: episode.still_path,
+            },
+          ]);
+        }
+        // 상태 업데이트를 위해 최신 데이터를 다시 불러오기
+        const updatedClippedData = await getClipsByUId(user.id);
+        setClippedList(updatedClippedData);
+        console.log("업데이트 된 스크랩 데이터", updatedClippedData);
+      } catch (error) {
+        console.error("클립 실패:", error);
+      }
+  };
+
   return (
     <>
       {/* tablet 이상 */}
@@ -97,9 +194,44 @@ export default function DetailEpisodeIntroBox({
             </div>
 
             {/* 스크랩 버튼 */}
-            <button className="flex gap-[10px] w-auto h-auto px-[15px] py-[10px] border border-main rounded-[8px] mt-[35px]">
-              <img src={scrapIcon} alt="스크랩 버튼" />
-              <span className="text-main">스크랩</span>
+
+            <button
+              className={`flex gap-[10px] w-auto h-auto px-[15px] py-[10px] 
+                border ${
+                  clippedlist?.some(
+                    (clip) =>
+                      clip.ip_id === `${contentId}/${seasonId}/${episodeId}`
+                  )
+                    ? "border-main"
+                    : "border-white01"
+                }  rounded-[8px]`}
+              onClick={() => {
+                clipContent();
+              }}
+            >
+              <img
+                src={
+                  clippedlist?.some(
+                    (clip) =>
+                      clip.ip_id === `${contentId}/${seasonId}/${episodeId}`
+                  )
+                    ? scrapIcon
+                    : noScrapIcon
+                }
+                alt="스크랩 버튼"
+              />
+              <span
+                className={`${
+                  clippedlist?.some(
+                    (clip) =>
+                      clip.ip_id === `${contentId}/${seasonId}/${episodeId}`
+                  )
+                    ? "text-main"
+                    : "text-white01"
+                }`}
+              >
+                스크랩
+              </span>
             </button>
           </div>
         </section>

@@ -18,8 +18,9 @@ export default function PersonList({
   const [personData, setPersonData] = useState<PersonDataType[]>([]);
   const personListRef = useRef<HTMLDivElement>(null);
   const [isOverflow, setIsOverflow] = useState(false);
-  console.log(seriesId);
-  console.log(seasonNum);
+  // console.log(seriesId);
+  // console.log(seasonNum);
+  // console.log(personData);
 
   // Tv 시리즈 데이터 불러오기
   useEffect(() => {
@@ -131,7 +132,7 @@ export default function PersonList({
           personData.map((person) => (
             <div
               key={
-                person.id +
+                person.credit_id +
                 `${label === "출연진" ? person.character : person.department}`
               }
               className="flex flex-col gap-[5px] items-center"
