@@ -72,8 +72,6 @@ export default function MainThumbnail() {
     };
     fetchData();
   }, [location.pathname]);
-  console.log(contents);
-  console.log(currentIndex);
 
   return (
     /* 임시로 시리즈 상세 페이지에 연결함 */
