@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import arrowRight from "../../assets/icon/arrow/arrowRight.svg";
 import { IMAGE_BASE_URL } from "../../api/axios";
+import noImage from "../../assets/icon/imagenone2.svg";
 
 interface SeasonType {
   air_date: string;
@@ -39,12 +40,16 @@ export default function SeasonBox({
         <div className="flex w-full tablet:gap-[35px] mobile:gap-[10px]">
           {/* 이미지 */}
           <div
-            className="rounded-[10px] 
+            className={`rounded-[10px] 
             tablet:w-[150px] mobile:w-[80px]  
             tablet:h-[200px] mobile:h-[106.67px]  
-            bg-cover bg-center"
+            bg-cover bg-center ${
+              season?.poster_path ? "" : "border-[1px] border-main"
+            }`}
             style={{
-              backgroundImage: `url('${IMAGE_BASE_URL}original${season?.poster_path})`,
+              backgroundImage: season?.poster_path
+                ? `url('${IMAGE_BASE_URL}original${season?.poster_path})`
+                : `url(${noImage})`,
             }}
           ></div>
 
