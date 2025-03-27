@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import OttIcon from "../OttIcon";
+import { OttState } from "../../type/seriesType";
+import { ottList } from "../../constants/tags";
 
 // ott 로고
 import appleTv from "../../assets/icon/ottIcon/appleTV.svg";
@@ -10,9 +12,10 @@ import primeVideo from "../../assets/icon/ottIcon/primeVideo.svg";
 import netflix from "../../assets/icon/ottIcon/netflix.svg";
 import wavve from "../../assets/icon/ottIcon/wavve.svg";
 
-type OttState = {
-  [key: string]: boolean;
-};
+interface OttIconsProps {
+  ottStates: OttState[];
+  setOttStates: React.Dispatch<React.SetStateAction<OttState[]>>;
+}
 
 // (임시) OTT서비스 데이터
 const ottServices = [
@@ -25,35 +28,25 @@ const ottServices = [
   { key: "wavve", src: wavve, alt: "Wavve" },
 ];
 
-export default function OttIcons() {
-  // ott 선택 상태 관리
-  const [ottSelect, setOttSelect] = useState<OttState>({
-    appleTv: false,
-    googlePlay: false,
-    disneyPlus: false,
-    watcha: false,
-    primeVideo: false,
-    netflix: false,
-    wavve: false,
-  });
-
+export default function OttIcons({ ottStates, setOttStates }: OttIconsProps) {
   // ott 선택 상태 변경 함수
-  const selectOtt = (key: string) => {
-    setOttSelect((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
+  const selectOtt = (id: number) => {
+    setOttStates((prev) =>
+      prev.map((service) =>
+        service.id === id ? { ...service, selected: !service.selected } : service
+      )
+    );
   };
 
   return (
     <div className="w-[124px] flex flex-wrap gap-[15px]">
       {/* ott서비스 아이콘 */}
-      {ottServices.map((service) => (
+      {ottStates.map((service) => (
         <OttIcon
           key={service.key}
           src={service.src}
-          isSelected={ottSelect[service.key]}
-          onClick={() => selectOtt(service.key)}
+          isSelected={service.selected}
+          onClick={() => selectOtt(service.id)}
           alt={service.alt}
         />
       ))}

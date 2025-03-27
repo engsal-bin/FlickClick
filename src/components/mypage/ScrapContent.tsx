@@ -6,7 +6,7 @@ export default function ScrapContent({
   poster_path,
 }: SavedClips) {
   return (
-    <Link to={`/${ip_id}`} className="flex flex-col gap-[10px]">
+    <Link to={`/detailmovie/${ip_id}`} className="flex flex-col gap-[10px]">
       <figure
         className={`tablet:w-[212px] tablet:h-[306px] mobile:w-[93px] mobile:h-[134px] bg-gray03 rounded-[10px]`}
       >

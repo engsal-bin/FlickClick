@@ -31,6 +31,11 @@ export default function Chatbot({
 
     try {
       const API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+      const ORGANIZATION_ID = import.meta.env.VITE_OPENAI_ORGANIZATION_ID;
+      
+      if (!API_KEY) {
+        throw new Error("API 키가 설정되지 않았습니다.");
+      }
 
       const response = await fetch(
         "https://api.openai.com/v1/chat/completions",
@@ -38,32 +43,52 @@ export default function Chatbot({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${API_KEY}`,
+            "Authorization": `Bearer ${API_KEY}`,
+            ...(ORGANIZATION_ID && { "OpenAI-Organization": ORGANIZATION_ID }),
           },
           body: JSON.stringify({
-            model: "gpt-3.5-turbo", // TODO:모델 변경할까?
+            model: "gpt-3.5-turbo",
             messages: [
-              { role: "system", content: "너는 친절한 챗봇이야." },
+              { 
+                role: "system", 
+                content: "너는 영화와 TV 시리즈에 대해 전문적인 지식을 가진 친절한 챗봇이야. 사용자의 질문에 대해 명확하고 유용한 답변을 제공해줘." 
+              },
               { role: "user", content: inputText },
             ],
-            max_tokens: 100,
+            max_tokens: 500,
+            temperature: 0.7,
+            presence_penalty: 0.6,
+            frequency_penalty: 0.5,
           }),
         }
       );
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("API 응답 오류:", errorData);
+        throw new Error(errorData.error?.message || "API 요청에 실패했습니다.");
+      }
+
       const data = await response.json();
+      
+      if (!data.choices?.[0]?.message?.content) {
+        throw new Error("응답 데이터 형식이 올바르지 않습니다.");
+      }
+
       const botMessage = {
         sender: "bot" as const,
-        text: data.choices[0]?.message?.content || "오류가 발생했어요!",
+        text: data.choices[0].message.content,
       };
 
-      // 로딩 메시지 제거하고 실제 응답 추가
       setMessages((prev) => [...prev.slice(0, -1), botMessage]);
     } catch (error) {
       console.error("API 호출 오류:", error);
       setMessages((prev) => [
         ...prev.slice(0, -1),
-        { sender: "bot", text: "응답을 가져오지 못했어요 😢" },
+        { 
+          sender: "bot", 
+          text: `죄송합니다. 오류가 발생했습니다: ${error instanceof Error ? error.message : "알 수 없는 오류"}` 
+        },
       ]);
     }
   };
@@ -141,10 +166,10 @@ export default function Chatbot({
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`p-2 my-1 rounded-md text-sm ${
+                className={`p-2 my-1 rounded-md text-sm max-w-[80%] break-words whitespace-pre-wrap ${
                   msg.sender === "user"
-                    ? "bg-main text-white self-end"
-                    : "bg-gray-200 text-black self-start"
+                    ? "bg-main text-white self-end ml-auto"
+                    : "bg-gray-200 text-black self-start mr-auto"
                 }`}
               >
                 {msg.text}

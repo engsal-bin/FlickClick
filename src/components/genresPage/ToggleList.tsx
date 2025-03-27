@@ -27,6 +27,8 @@ interface ToggleListProps {
   checked: CheckedState;
   onCheckboxChange: (key: string) => void;
   availableGenres?: Genres[];
+  ottStates?: OttState[];
+  setOttStates?: React.Dispatch<React.SetStateAction<OttState[]>>;
 }
 
 export default function ToggleList({
@@ -35,6 +37,8 @@ export default function ToggleList({
   checked,
   onCheckboxChange,
   availableGenres = [],
+  ottStates = [],
+  setOttStates,
 }: ToggleListProps) {
   // 여러 개의 토글 상태 관리
   const [toggles, setToggles] = useState<ToggleState>({
@@ -72,7 +76,9 @@ export default function ToggleList({
       {toggles[toggleType] && (
         <div className="w-[124px] flex flex-col justify-start items-start font-light">
           {/* 서비스 하위리스트 */}
-          {toggleType === "service" && <OttIcons />}
+          {toggleType === "service" && (
+            <OttIcons ottStates={ottStates} setOttStates={setOttStates} />
+          )}
 
           {/* 타입 하위리스트 */}
           {toggleType === "type" && (

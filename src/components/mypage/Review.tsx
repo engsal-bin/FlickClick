@@ -8,10 +8,23 @@ export default function Review({
   content,
   created_at,
 }: Review) {
+  const getRoutePath = () => {
+    const slashCount = (ip_id.match(/\//g) || []).length;
+    
+    switch (slashCount) {
+      case 1:
+        return `/detailseason/${ip_id}`;
+      case 2:
+        return `/detailepisode/${ip_id}`;
+      default:
+        return `/detailmovie/${ip_id}`;
+    }
+  };
+
   return (
     <>
       <Link
-        to={`/${ip_id}`}
+        to={getRoutePath()}
         className="border-b-[1px] border-gray01  flex flex-col gap-[15px] mt-[30px]"
       >
         <p className="font-bold text-white03 tablet:text-[16px] mobile:text-[14px]">

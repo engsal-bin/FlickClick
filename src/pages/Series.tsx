@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, InfiniteData } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import MainThumbnail from "../components/common/MainThumbnail";
 import OttTags from "../components/common/OttTags";
@@ -9,6 +9,7 @@ import DefaultSeriesView from "../components/series/DefaultSeriesView";
 import GridContents from "../components/common/GridContents";
 import { movieGenreList, ottList, yearList } from "../constants/tags";
 import { commonAPI } from "../api/common";
+import GridSkeletonList from "../components/skeletons/GridSkeletonList";
 
 export default function Series() {
   const { ref, inView } = useInView();
@@ -56,13 +57,7 @@ export default function Series() {
     selectedOttPlatforms.length > 0;
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<
-      Content[],
-      Error,
-      Content[],
-      [string, number[]?, YearState?, number[]?],
-      number
-    >({
+    useInfiniteQuery<Content[], Error, InfiniteData<Content[]>, [string, number[]?, YearState?, number[]?], number>({
       queryKey: ["series", selectedGenres, selectedYear, selectedOttPlatforms],
       initialPageParam: 1,
       queryFn: async ({ pageParam = 1 }) => {
@@ -77,7 +72,7 @@ export default function Series() {
           pageParam
         );
       },
-      getNextPageParam: (lastPage: Content[], allPages: Content[][]) => {
+      getNextPageParam: (lastPage, allPages) => {
         return lastPage.length > 0 ? allPages.length + 1 : undefined;
       },
     });
@@ -101,24 +96,30 @@ export default function Series() {
         시청할 수 있는 서비스
       </OttTags>
       {isTagsSelected ? (
-        <div className="w-full md:px-10 px-[10px]">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {data?.pages?.map((page: Content[]) =>
-              Array.isArray(page)
-                ? page.map((content: Content) => (
-                    <GridContents key={content.id} content={content} />
-                  ))
-                : null
-            )}
-          </div>
-          <div ref={ref} className="w-full flex justify-center mt-4">
-            {isFetchingNextPage && (
-              <p className="md:text-[16px] text-[14px] md:py-8 py-5">
-                Loading more...
-              </p>
-            )}
-          </div>
-        </div>
+        <>
+          {isFetchingNextPage ? (
+            <GridSkeletonList />
+          ) : (
+            <div className="w-full md:px-10 px-[10px]">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {data?.pages?.map((page: Content[]) =>
+                  Array.isArray(page)
+                    ? page.map((content: Content) => (
+                        <GridContents key={content.id} content={content} />
+                      ))
+                    : null
+                )}
+              </div>
+              <div ref={ref} className="w-full flex justify-center mt-4">
+                {isFetchingNextPage && (
+                  <p className="md:text-[16px] text-[14px] md:py-8 py-5">
+                    Loading more...
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+        </>
       ) : (
         <DefaultSeriesView />
       )}

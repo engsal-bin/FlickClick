@@ -10,9 +10,22 @@ export default function CreatedDiscussContent({
   created_at,
   profile_image,
 }: Argument) {
+  const getRoutePath = () => {
+    const slashCount = (ip_id.match(/\//g) || []).length;
+    
+    switch (slashCount) {
+      case 1:
+        return `/detailseason/${ip_id}`;
+      case 2:
+        return `/detailepisode/${ip_id}`;
+      default:
+        return `/detailmovie/${ip_id}`;
+    }
+  };
+
   return (
     <Link
-      to={`/${ip_id}`}
+      to={getRoutePath()}
       className="flex items-center justify-between border border-gray01 rounded-[10px] py-[30px] px-[20px]"
     >
       <div className="flex mobile:items-start tablet:items-center gap-[10px]">

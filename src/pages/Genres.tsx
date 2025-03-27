@@ -8,11 +8,10 @@ import { useInView } from "react-intersection-observer";
 import GridContents from "../components/common/GridContents";
 import { movieAPI } from "../api/movie";
 import { tvAPI } from "../api/tv";
+import GridSkeletonList from "../components/skeletons/GridSkeletonList";
+import { ottList } from "../constants/tags";
 
-/* 타입 정리 */
-type ToggleState = {
-  [key: string]: boolean;
-};
+
 
 type Genres = {
   id: number;
@@ -30,6 +29,7 @@ type RuntimeRange = {
 
 export default function Genres() {
   const { ref, inView } = useInView();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [selectedYear, setSelectedYear] = useState<{ gte: string | null; lte: string | null }>({
     gte: null,
@@ -40,6 +40,7 @@ export default function Genres() {
     lte: null,
   });
   const [availableGenres, setAvailableGenres] = useState<Genres[]>([]);
+  const [ottStates, setOttStates] = useState(ottList);
 
   // 체크박스 상태 관리 (MediaList)
   const [checked, setChecked] = useState<CheckedState>({
@@ -86,6 +87,9 @@ export default function Genres() {
       "90~120분": false,
       "120분 이상": false,
     });
+
+    // OTT 상태 초기화
+    setOttStates(ottList);
 
     // 선택된 장르 초기화
     setSelectedGenres([]);
@@ -197,16 +201,20 @@ export default function Genres() {
   };
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ["genres", selectedGenres, selectedYear, selectedRuntime],
+    queryKey: ["genres", selectedGenres, selectedYear, selectedRuntime, checked, ottStates],
     initialPageParam: 1,
     queryFn: async ({ pageParam = 1 }) => {
       const targetType = checked.series ? "tv" : checked.movies ? "movie" : "tv";
+      const selectedServices = ottStates
+        .filter(service => service.selected)
+        .map(service => service.id);
+      
       return await commonAPI.getDiscover(
         targetType,
         selectedGenres,
         selectedYear.gte,
         selectedYear.lte,
-        [],
+        selectedServices,
         "en-US",
         "US",
         pageParam,
@@ -228,12 +236,22 @@ export default function Genres() {
   const isTagsSelected = Object.values(checked).some(value => value);
 
   return (
-    <div className="w-full h-max flex flex-row justify-between text-white bg-black">
+    <div className="w-full h-max flex flex-row justify-between text-white bg-black relative">
       {/* 사이드바 */}
-      <div className="w-[154px] h-full flex flex-col justify-start items-center top-[80px] gap-[30px] left-0 px-[15px]">
+      <div className={`fixed md:static w-[154px] h-full flex flex-col justify-start items-center top-[80px] gap-[30px] left-0 px-[15px] bg-black z-50 transition-transform duration-300 ease-in-out md:translate-x-0 ${
+        isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}>
         {/* 태그 선택 */}
         <div className="w-[124px] flex flex-col gap-[10px]">
-          <p className="text-[24px] font-bold">태그 선택</p>
+          <div className="flex justify-between items-center">
+            <p className="text-[24px] font-bold">태그 선택</p>
+            <button 
+              className="md:hidden text-white"
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              ✕
+            </button>
+          </div>
           <div className="w-[79px] flex justify-between cursor-pointer" onClick={handleResetAll}>
             <p className="text-[12px] font-400">전체 초기화</p>
             <img src={eraser} alt="초기화" />
@@ -249,6 +267,8 @@ export default function Genres() {
           toggleType="service"
           checked={checked}
           onCheckboxChange={handleCheckboxChange}
+          ottStates={ottStates}
+          setOttStates={setOttStates}
         />
         <ToggleList
           title="타입"
@@ -281,17 +301,35 @@ export default function Genres() {
 
       {/* 컨텐츠 영역 */}
       <div className="flex-1">
+        {/* 모바일 사이드바 토글 버튼 */}
+        <button 
+          className="md:hidden fixed top-[90px] left-4 z-40 bg-black text-white p-2 rounded"
+          onClick={() => setIsSidebarOpen(true)}
+        >
+          ☰
+        </button>
+
         {isTagsSelected ? (
-          <div className="w-full md:px-10 px-[10px]">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {data?.pages?.map((page) =>
-                Array.isArray(page) ? page.map((content) => <GridContents key={content.id} content={content} />) : null
-              )}
-            </div>
-            <div ref={ref} className="w-full flex justify-center mt-4">
-              {isFetchingNextPage && <p>Loading more...</p>}
-            </div>
-          </div>
+          <>
+            {isFetchingNextPage ? (
+              <GridSkeletonList />
+            ) : (
+              <div className="w-full md:px-10 px-[10px]">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {data?.pages?.map((page) =>
+                    Array.isArray(page) ? page.map((content) => (
+                      <div key={content.id} className="w-full aspect-[2/3]">
+                        <GridContents content={content} />
+                      </div>
+                    )) : null
+                  )}
+                </div>
+                <div ref={ref} className="w-full flex justify-center mt-4">
+                  {isFetchingNextPage && <p>Loading more...</p>}
+                </div>
+              </div>
+            )}
+          </>
         ) : (
           <div className="w-full flex flex-col justify-start items-center mt-[150px]">
             <img src={selectTag} />

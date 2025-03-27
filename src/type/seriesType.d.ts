@@ -31,8 +31,8 @@ type YearState = {
   selected: boolean;
 };
 
-type OttState = {
-  id: number
+export type OttState = {
+  id: number;
   key: string;
   src: string;
   alt: string;
