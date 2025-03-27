@@ -10,6 +10,7 @@ import GridContents from "../components/common/GridContents";
 import { movieGenreList, ottList, yearList } from "../constants/tags";
 import { commonAPI } from "../api/common";
 import GridSkeletonList from "../components/skeletons/GridSkeletonList";
+import { Content, GenreState, OttState, YearState } from "../type/seriesType";
 
 export default function Series() {
   const { ref, inView } = useInView();
@@ -57,7 +58,13 @@ export default function Series() {
     selectedOttPlatforms.length > 0;
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<Content[], Error, InfiniteData<Content[]>, [string, number[]?, YearState?, number[]?], number>({
+    useInfiniteQuery<
+      Content[],
+      Error,
+      InfiniteData<Content[]>,
+      [string, number[]?, YearState?, number[]?],
+      number
+    >({
       queryKey: ["series", selectedGenres, selectedYear, selectedOttPlatforms],
       initialPageParam: 1,
       queryFn: async ({ pageParam = 1 }) => {

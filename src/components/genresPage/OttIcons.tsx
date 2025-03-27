@@ -1,7 +1,6 @@
 import React from "react";
 import OttIcon from "../OttIcon";
 import { OttState } from "../../type/seriesType";
-import { ottList } from "../../constants/tags";
 
 // ott 로고
 import appleTv from "../../assets/icon/ottIcon/appleTV.svg";
@@ -33,7 +32,9 @@ export default function OttIcons({ ottStates, setOttStates }: OttIconsProps) {
   const selectOtt = (id: number) => {
     setOttStates((prev) =>
       prev.map((service) =>
-        service.id === id ? { ...service, selected: !service.selected } : service
+        service.id === id
+          ? { ...service, selected: !service.selected }
+          : service
       )
     );
   };

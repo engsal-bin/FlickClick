@@ -1,4 +1,4 @@
-type Content = {
+export type Content = {
   adult: boolean;
   backdrop_path: string | null;
   first_air_date: string;
@@ -16,14 +16,30 @@ type Content = {
   vote_count: number;
 };
 
-type GenreState = {
+export type TvShow = {
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  first_air_date: string;
+  vote_average: number;
+  vote_count: number;
+  genre_ids: number[];
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  popularity: number;
+};
+
+export type GenreState = {
   id: number;
   krKey: string;
   key: string;
   selected: boolean;
 };
 
-type YearState = {
+export type YearState = {
   id: number;
   year: string;
   gte: string;
@@ -37,6 +53,34 @@ export type OttState = {
   src: string;
   alt: string;
   selected: boolean;
+};
+
+export type Genres = {
+  id: number;
+  name: string;
+};
+
+export type CheckedState = {
+  [key: string]: boolean;
+};
+
+export type RuntimeRange = {
+  gte: number | null;
+  lte: number | null;
+};
+
+export type Content = {
+  id: number;
+  title: string;
+  name: string;
+  poster_path: string;
+  backdrop_path: string;
+  overview: string;
+  vote_average: number;
+  release_date: string;
+  first_air_date: string;
+  genre_ids: number[];
+  media_type: string;
 };
 
 type FilterOptions = {

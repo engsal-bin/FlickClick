@@ -3,9 +3,9 @@ import arrowBottom from "../../assets/icon/arrow/arrowBottom.svg";
 import arrowRight from "../../assets/icon/arrow/arrowRight.svg";
 import OttIcons from "./OttIcons";
 import MediaList from "./MediaList";
-import GenreList from "./GenreList";
 import YearsList from "./YearsList";
 import TimesList from "./TimesList";
+import { OttState } from "../../type/seriesType";
 
 /* 타입 정리 */
 type ToggleState = {
@@ -96,7 +96,10 @@ export default function ToggleList({
               {availableGenres.length > 0 && (
                 <div className="flex flex-col gap-[10px]">
                   {availableGenres.map((genre) => (
-                    <div key={genre.id} className="flex justify-start items-center gap-[15px]">
+                    <div
+                      key={genre.id}
+                      className="flex justify-start items-center gap-[15px]"
+                    >
                       <input
                         type="checkbox"
                         id={`genre-${genre.id}`}
@@ -108,7 +111,10 @@ export default function ToggleList({
                             : "bg-black border-gray-400"
                         } transition-colors ease-in-out`}
                       />
-                      <label htmlFor={`genre-${genre.id}`} className="text-[13px]">
+                      <label
+                        htmlFor={`genre-${genre.id}`}
+                        className="text-[13px]"
+                      >
                         {genre.name}
                       </label>
                     </div>

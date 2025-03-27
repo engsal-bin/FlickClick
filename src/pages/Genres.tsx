@@ -10,22 +10,7 @@ import { movieAPI } from "../api/movie";
 import { tvAPI } from "../api/tv";
 import GridSkeletonList from "../components/skeletons/GridSkeletonList";
 import { ottList } from "../constants/tags";
-
-
-
-type Genres = {
-  id: number;
-  name: string;
-};
-
-type CheckedState = {
-  [key: string]: boolean;
-};
-
-type RuntimeRange = {
-  gte: number | null;
-  lte: number | null;
-};
+import type { Content, Genres, CheckedState, RuntimeRange } from "../type/seriesType";
 
 export default function Genres() {
   const { ref, inView } = useInView();
@@ -315,10 +300,10 @@ export default function Genres() {
               <GridSkeletonList />
             ) : (
               <div className="w-full md:px-10 px-[10px]">
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-items-center">
                   {data?.pages?.map((page) =>
                     Array.isArray(page) ? page.map((content) => (
-                      <div key={content.id} className="w-full aspect-[2/3]">
+                      <div key={content.id} className="w-full max-w-[200px] aspect-[2/3]">
                         <GridContents content={content} />
                       </div>
                     )) : null

@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { commonAPI } from "../../api/common";
 import { tvAPI } from "../../api/tv";
 import Contents from "../common/MediaList";
+import { Content } from "../../type/seriesType";
 
 export default function DefaultSeriesView() {
-  const [trendingData, settrendingData] = useState<TvShow[]>([]);
-  const [newUpdateData, setNewUpateImgSrc] = useState<TvShow[]>([]);
+  const [trendingData, settrendingData] = useState<Content[]>([]);
+  const [newUpdateData, setNewUpateImgSrc] = useState<Content[]>([]);
 
   useEffect(() => {
     // 인기 급상승
@@ -20,16 +21,16 @@ export default function DefaultSeriesView() {
         const trendPage4 = await commonAPI.getTrendingAll(3);
         const trendResponse = [
           ...trendPage1.results.filter(
-            (item: TrendingAllResultsType) => item.media_type === "tv",
+            (item: TrendingAllResultsType) => item.media_type === "tv"
           ),
           ...trendPage2.results.filter(
-            (item: TrendingAllResultsType) => item.media_type === "tv",
+            (item: TrendingAllResultsType) => item.media_type === "tv"
           ),
           ...trendPage3.results.filter(
-            (item: TrendingAllResultsType) => item.media_type === "tv",
+            (item: TrendingAllResultsType) => item.media_type === "tv"
           ),
           ...trendPage4.results.filter(
-            (item: TrendingAllResultsType) => item.media_type === "tv",
+            (item: TrendingAllResultsType) => item.media_type === "tv"
           ),
         ].slice(0, 20);
         settrendingData(trendResponse);
