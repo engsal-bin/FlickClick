@@ -32,6 +32,21 @@ export default function DetailEpisodeIntroBox({
   console.log(series);
   console.log(episode);
 
+  // 컨텐츠 데이터 불러오기
+  useEffect(() => {
+    const fetchContent = async () => {
+      if (user?.id)
+        try {
+          // 스크랩 데이터 불러오기
+          const clippedData = await getClipsByUId(user?.id);
+          setClippedList(clippedData);
+        } catch {
+          console.error(Error);
+        }
+    };
+    fetchContent();
+  }, [contentId, user]);
+
   // 첫 렌더링 시 화면 상단 위치
   useEffect(() => {
     window.scrollTo(0, 0);
