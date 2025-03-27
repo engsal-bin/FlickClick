@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { tvAPI } from "../../api/tv";
 import { movieAPI } from "../../api/movie";
 import { IMAGE_BASE_URL } from "../../api/axios";
-import { Swiper, SwiperSlide } from "swiper/react"; // Swiper import
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css"; // Swiper 스타일 import
 
 export default function MainThumbnail() {

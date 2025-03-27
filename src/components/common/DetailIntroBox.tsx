@@ -29,10 +29,10 @@ export default function DetailIntroBox({
     location.pathname.split("/")[1] === "detailmovie"
       ? "movie"
       : location.pathname.split("/")[1] === "detailseason"
-      ? "season"
-      : location.pathname.split("/")[1] === "detailseries"
-      ? "series"
-      : "episode";
+        ? "season"
+        : location.pathname.split("/")[1] === "detailseries"
+          ? "series"
+          : "episode";
   const seasonId = location.pathname.split("/")[3];
   const { user } = useAuth();
   const [ipId, setIpId] = useState<string>("");
@@ -196,8 +196,8 @@ export default function DetailIntroBox({
               type === "tvSeries"
                 ? tvContent?.poster_path
                 : type === "tvSeason"
-                ? tvSeasonContent?.poster_path
-                : movieContent?.poster_path
+                  ? tvSeasonContent?.poster_path
+                  : movieContent?.poster_path
             })`,
           }}
         >
@@ -257,8 +257,8 @@ export default function DetailIntroBox({
                     {type === "tvSeries"
                       ? `${tvContent?.first_air_date.slice(0, 4)}`
                       : type === "tvSeason"
-                      ? `${tvSeasonContent?.air_date.slice(0, 4)}`
-                      : `${movieContent?.release_date.slice(0, 4)}`}
+                        ? `${tvSeasonContent?.air_date.slice(0, 4)}`
+                        : `${movieContent?.release_date.slice(0, 4)}`}
                   </Tag>
 
                   {/* 장르 */}
@@ -314,8 +314,8 @@ export default function DetailIntroBox({
                 {type === "tvSeries"
                   ? tvContent?.overview
                   : type === "tvSeason"
-                  ? tvSeasonContent?.overview
-                  : movieContent?.overview}
+                    ? tvSeasonContent?.overview
+                    : movieContent?.overview}
               </div>
 
               {/* 태그라인 */}
@@ -325,8 +325,8 @@ export default function DetailIntroBox({
                     type === "tvSeries" || type === "tvSeason"
                       ? tvContent?.tagline
                       : type === "movie"
-                      ? movieContent?.tagline
-                      : "";
+                        ? movieContent?.tagline
+                        : "";
 
                   return tagline ? `#${tagline}` : "";
                 })()}
@@ -388,8 +388,8 @@ export default function DetailIntroBox({
                   type === "tvSeries"
                     ? tvContent?.poster_path
                     : type === "tvSeason"
-                    ? tvSeasonContent?.poster_path
-                    : movieContent?.poster_path
+                      ? tvSeasonContent?.poster_path
+                      : movieContent?.poster_path
                 })`,
               }}
             ></div>

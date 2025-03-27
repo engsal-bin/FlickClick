@@ -10,7 +10,7 @@ export default function EpisodeContent({
   upstream_ip_name,
 }: SavedClips) {
   return (
-    <Link to={`/${ip_id}`} className="flex">
+    <Link to={`/detailepisode/${ip_id}`} className="flex">
       <div className="tablet:flex justify-between items-center gap-[30px]">
         <div className="min-w-[323px] h-[180px] mb-[30px] tablet:mb-0 object-cover rounded-[10px]">
           <div

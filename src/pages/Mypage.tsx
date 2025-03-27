@@ -47,7 +47,7 @@ export default function Mypage() {
   console.log(episodeClips);
   console.log(movieClips);
 
-  return (
+  return ( 
     <div className="w-full y-full flex-1 pt-[100px] tablet:px-[50px] mobile:pt-0 mobile:px-[10px] text-gray01">
       <TabMenu selectedTab={selectedTab} />
       <div className="mt-[30px]">

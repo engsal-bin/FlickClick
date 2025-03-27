@@ -24,7 +24,7 @@ export default function Contents({
         ? `/${mediaTypeToPathName[item.media_type as "movie" | "tv"]}/${
             item.id
           }`
-        : ""
+        : "",
     ) ?? [];
   const navigate = useNavigate();
   const dataRef = useRef<HTMLDivElement>(null);

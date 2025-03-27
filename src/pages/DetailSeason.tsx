@@ -27,7 +27,7 @@ export default function DetailSeason() {
         const series = await tvAPI.getSeries(Number(`${locationInfo[1]}`));
         const season = await tvAPI.getSeason(
           Number(`${locationInfo[1]}`),
-          Number(`${locationInfo[2]}`)
+          Number(`${locationInfo[2]}`),
         );
         setSeriesData(series);
         setSeasonData(season);

@@ -44,8 +44,8 @@ export default function UpcomingOtt({ movie_id }: { movie_id: number }) {
 
         const filteredServices = ottServiceList.filter((info) =>
           flatrate.some(
-            (service: OttServiceType) => service.provider_name === info.alt
-          )
+            (service: OttServiceType) => service.provider_name === info.alt,
+          ),
         );
 
         setOttServicesInfos(filteredServices);

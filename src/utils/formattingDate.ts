@@ -17,4 +17,3 @@ export const formatDate = (originalDate: string | Date): string => {
 
 // 사용 예시
 console.log(formatDate("2025-02-09T06:56:25.916557+00:00"));
-// 출력 예시: 2025-02-09, 오후 03:26
