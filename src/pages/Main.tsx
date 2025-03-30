@@ -33,7 +33,7 @@ export default function Main() {
               title: item.title,
               media_type: item.media_type,
             }))
-            .slice(0, 20),
+            .slice(0, 20)
         );
 
         const combinedArr = [
@@ -46,7 +46,7 @@ export default function Main() {
               media_type: "tv",
               title: item.name,
               popularity: item.popularity,
-            }),
+            })
           ),
           ...nowPlayingMovie.results.map(
             (item: NowPlayingMovieResultsType) => ({
@@ -57,7 +57,7 @@ export default function Main() {
               media_type: "movie",
               title: item.title,
               popularity: item.popularity,
-            }),
+            })
           ),
         ];
 
@@ -71,7 +71,7 @@ export default function Main() {
             id: item.id,
             title: item.title,
             media_type: item.media_type,
-          })) as BasicType[],
+          })) as BasicType[]
         );
 
         setUpcomingData(
@@ -82,7 +82,7 @@ export default function Main() {
             id: item.id,
             title: item.title,
             media_type: "movie",
-          })),
+          }))
         );
       } catch (error) {
         console.error("Error fetching data:", error);

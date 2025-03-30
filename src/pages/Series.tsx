@@ -91,45 +91,47 @@ export default function Series() {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <div className="flex flex-col justify-between items-center mb-[100px] desktop:gap-[50px] tablet:gap-[40px] mobile:gap-[30px] text-white bg-black">
+    <div className="h-full flex flex-col justify-start items-center mb-[100px] text-white bg-black">
       <MainThumbnail />
-      <SeriesTags tags={genreStates} selectTag={selectGenre}>
-        장르
-      </SeriesTags>
-      <YearTags tags={yearStates} selectTag={selectYearRange}>
-        방영 연도
-      </YearTags>
-      <OttTags selectedTag={ottStates} selectTag={selectOtt}>
-        시청할 수 있는 서비스
-      </OttTags>
-      {isTagsSelected ? (
-        <>
-          {isFetchingNextPage ? (
-            <GridSkeletonList />
-          ) : (
-            <div className="w-full md:px-10 px-[10px]">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {data?.pages?.map((page: Content[]) =>
-                  Array.isArray(page)
-                    ? page.map((content: Content) => (
-                        <GridContents key={content.id} content={content} />
-                      ))
-                    : null
-                )}
+      <div className="flex flex-col desktop:gap-[50px] tablet:gap-[40px] mobile:gap-[30px] w-full">
+        <SeriesTags tags={genreStates} selectTag={selectGenre}>
+          장르
+        </SeriesTags>
+        <YearTags tags={yearStates} selectTag={selectYearRange}>
+          방영 연도
+        </YearTags>
+        <OttTags selectedTag={ottStates} selectTag={selectOtt}>
+          시청할 수 있는 서비스
+        </OttTags>
+        {isTagsSelected ? (
+          <>
+            {isFetchingNextPage ? (
+              <GridSkeletonList />
+            ) : (
+              <div className="w-full md:px-10 px-[10px]">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {data?.pages?.map((page: Content[]) =>
+                    Array.isArray(page)
+                      ? page.map((content: Content) => (
+                          <GridContents key={content.id} content={content} />
+                        ))
+                      : null
+                  )}
+                </div>
+                <div ref={ref} className="w-full flex justify-center mt-4">
+                  {isFetchingNextPage && (
+                    <p className="md:text-[16px] text-[14px] md:py-8 py-5">
+                      Loading more...
+                    </p>
+                  )}
+                </div>
               </div>
-              <div ref={ref} className="w-full flex justify-center mt-4">
-                {isFetchingNextPage && (
-                  <p className="md:text-[16px] text-[14px] md:py-8 py-5">
-                    Loading more...
-                  </p>
-                )}
-              </div>
-            </div>
-          )}
-        </>
-      ) : (
-        <DefaultSeriesView />
-      )}
+            )}
+          </>
+        ) : (
+          <DefaultSeriesView />
+        )}
+      </div>
     </div>
   );
 }
