@@ -222,6 +222,7 @@ export default function Argument({
             </div>
 
             <InputTextarea
+              stateLifting={fetchArgumentOpinion}
               contentId={argumentContent.id}
               reviewOrArgumentOrOpinion="opinion"
               movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}

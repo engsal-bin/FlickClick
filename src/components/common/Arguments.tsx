@@ -71,6 +71,7 @@ export default function Arguments({
   return (
     <div>
       <InputTextarea
+        stateLifting={() => {}}
         contentId={contentId}
         reviewOrArgumentOrOpinion={"argument"}
         movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}

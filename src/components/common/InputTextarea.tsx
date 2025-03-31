@@ -3,15 +3,18 @@ import sendIcon from "../../assets/icon/send.svg";
 import sendBlueIcon from "../../assets/icon/sendBlue.svg";
 import { commonAPI } from "../../api/common";
 import { useAuth } from "../../api/Auth";
+import { supabase } from "../../api";
 
 export default function InputTextarea({
   reviewOrArgumentOrOpinion,
   movieOrSeasonOrEpisode,
   contentId,
+  stateLifting,
 }: {
   reviewOrArgumentOrOpinion: "review" | "argument" | "opinion";
   movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
   contentId: string | number;
+  stateLifting: () => void;
 }) {
   const [text, setText] = useState("");
   const [isSend, setIsSend] = useState(false);
@@ -57,7 +60,49 @@ export default function InputTextarea({
       setText("");
     }
   };
+  useEffect(() => {
+    const movieArgumentOpinionSubscription = supabase
+      .channel("movie_argument_comment")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "movie_argument_comment" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          stateLifting();
+        }
+      )
+      .subscribe();
 
+    const episodeArgumentOpinionSubscription = supabase
+      .channel("episode_argument_comment")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "episode_argument_comment" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          stateLifting();
+        }
+      )
+      .subscribe();
+
+    const seasonArgumentOpinionSubscription = supabase
+      .channel("season_argument_comment")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "season_argument_comment" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          stateLifting();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      movieArgumentOpinionSubscription.unsubscribe();
+      episodeArgumentOpinionSubscription.unsubscribe();
+      seasonArgumentOpinionSubscription.unsubscribe();
+    };
+  }, []);
   useEffect(() => {
     text.trim() ? setIsSend(true) : setIsSend(false);
     if (reviewOrArgumentOrOpinion === "review") {

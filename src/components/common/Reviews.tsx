@@ -75,6 +75,7 @@ export default function Reviews({
     <>
       <div>
         <InputTextarea
+          stateLifting={() => {}}
           contentId={contentId}
           reviewOrArgumentOrOpinion={"review"}
           movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
