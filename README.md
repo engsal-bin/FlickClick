@@ -3,7 +3,8 @@
 <br/>
 
 <h2>🎯 프로젝트 목표</h2>
-<p>React와 TypeScript 개발 역량을 향상시키고, Axios와 Supabase를 활용한 데이터 관리 및 API 요청 처리 방법을 익히는 것을 목표로 합니다.</p>
+<p>React와 TypeScript 개발 역량을 향상시키고,</p>
+<p>Axios와 Supabase를 활용한 데이터 관리 및 API 요청 처리 방법을 익히는 것을 목표로 합니다.</p>
 <br/>
 
 <h2>🤝 팀원</h2>
