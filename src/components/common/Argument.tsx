@@ -5,14 +5,13 @@ import { useEffect, useState } from "react";
 import ArgumentReview from "./ArgumentReview";
 import { commonAPI } from "../../api/common";
 import { formatDate } from "../../utils/formattingDate";
+import { supabase } from "../../api";
 
 export default function Argument({
   argumentContent,
-  stateLifting,
   movieOrSeasonOrEpisode,
 }: {
   argumentContent: ArgumentType;
-  stateLifting: () => void;
   movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
 }) {
   const [isArgumentToggleOpen, setIsArgumentToggleOpen] = useState(false);
@@ -78,10 +77,49 @@ export default function Argument({
   };
   useEffect(() => {
     fetchArgumentOpinion();
+    const movieArgumentOpinionSubscription = supabase
+      .channel("movie_argument_comment")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "movie_argument_comment" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          fetchArgumentOpinion();
+        }
+      )
+      .subscribe();
+    const episodeArgumentOpinionSubscription = supabase
+      .channel("episode_argument_comment")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "episode_argument_comment" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          fetchArgumentOpinion();
+        }
+      )
+      .subscribe();
+    const seasonArgumentOpinionSubscription = supabase
+      .channel("season_argument_comment")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "season_argument_comment" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          fetchArgumentOpinion();
+        }
+      )
+      .subscribe();
+    return () => {
+      movieArgumentOpinionSubscription.unsubscribe();
+      episodeArgumentOpinionSubscription.unsubscribe();
+      seasonArgumentOpinionSubscription.unsubscribe();
+    };
   }, []);
   return (
     <div className="flex flex-col gap-[20px] tablet:px-[20px] tablet:py-[30px] mobile:px-[10px] mobile:py-[20px] rounded-[10px] border border-gray03 mb-5">
       {/* 토론 */}
+
       <div className="h-auto flex justify-between tablet:flex-row mobile:flex-col tablet:gap-[20px] mobile:gap-[10px]">
         <div className="flex items-center h-auto">
           <img
@@ -124,7 +162,6 @@ export default function Argument({
                           if (editStatus) {
                             if (editContent !== argumentContent.topic) {
                               await argumentEdit();
-                              await stateLifting();
                             }
                             setEditStatus(false);
                           } else {
@@ -139,7 +176,6 @@ export default function Argument({
                         className="ml-[5px]"
                         onClick={async () => {
                           await argumentDelete();
-                          await stateLifting();
                         }}
                       >
                         <span>삭제</span>
@@ -161,6 +197,7 @@ export default function Argument({
           </div>
         </div>
       </div>
+
       {/* 토론의 댓글 */}
       {isArgumentToggleOpen && (
         <div>
@@ -173,7 +210,6 @@ export default function Argument({
                     opinion={argumentOpinion}
                     key={index}
                     movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
-                    stateLifting={fetchArgumentOpinion}
                   />
                 ))
               ) : (
@@ -182,7 +218,6 @@ export default function Argument({
             </div>
 
             <InputTextarea
-              stateLifting={fetchArgumentOpinion}
               contentId={argumentContent.id}
               reviewOrArgumentOrOpinion="opinion"
               movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
