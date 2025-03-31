@@ -121,7 +121,7 @@ const postArgument = async (
         .insert([{ topic, ip_id, author_id, ip_name }])
         .select();
     }
-    if (argumentType === "episode") {
+    if (argumentType === "season") {
       const ipIdSplit = ip_id.split("/");
       const series_id = ipIdSplit[0];
       const season_number = ipIdSplit[1];
@@ -132,11 +132,11 @@ const postArgument = async (
       );
       ip_name = `${series_name} ${season_name}`;
       await supabase
-        .from("episode_argument")
+        .from("season_argument")
         .insert([{ topic, ip_id, author_id, ip_name }])
         .select();
     }
-    if (argumentType === "season") {
+    if (argumentType === "episode") {
       const ipIdSplit = ip_id.split("/");
       const series_id = ipIdSplit[0];
       const season_number = ipIdSplit[1];
@@ -148,7 +148,7 @@ const postArgument = async (
       );
       ip_name = `${series_name} ${season_name} ${episode_number}화`;
       await supabase
-        .from("season_argument")
+        .from("episode_argument")
         .insert([{ topic, ip_id, author_id, ip_name }])
         .select();
     }
