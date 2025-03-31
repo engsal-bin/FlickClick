@@ -1,5 +1,5 @@
 ![Frame 151](https://github.com/user-attachments/assets/2e668af3-5ea1-4968-b030-3d4c3be5d47f)
-<h3 align="center">FlickClick은 사용자가 최신 영화 및 TV 시리즈 콘텐츠를 편리하게 검색하고 관리할 수 있는 플랫폼입니다.</h3>
+<h4 align="center">FlickClick은 사용자가 최신 영화 및 TV 시리즈 콘텐츠를 편리하게 검색하고 관리할 수 있는 플랫폼입니다.</h4>
 <br/>
 
 <h2>🎯 프로젝트 목표</h2>
