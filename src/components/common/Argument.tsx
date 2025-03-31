@@ -119,85 +119,81 @@ export default function Argument({
   return (
     <div className="flex flex-col gap-[20px] tablet:px-[20px] tablet:py-[30px] mobile:px-[10px] mobile:py-[20px] rounded-[10px] border border-gray03 mb-5">
       {/* 토론 */}
-
-      <div className="h-auto flex justify-between tablet:flex-row mobile:flex-col tablet:gap-[20px] mobile:gap-[10px]">
-        <div className="flex items-center h-auto">
-          <img
-            src={argumentContent.author_img_url}
-            className="bg-white h-[45px] aspect-square rounded-full"
-          />
-          {editStatus ? (
-            <textarea
-              className="resize-none"
-              onChange={(e) => {
-                setEditContent(e.target.value);
-              }}
-              defaultValue={argumentContent.topic}
-            ></textarea>
-          ) : (
-            <p className="text-white01 text-bold text-[18px] ml-[13px]">
-              {argumentContent.topic}
+      <button onClick={() => setIsArgumentToggleOpen(!isArgumentToggleOpen)}>
+        <div className="h-auto flex justify-between tablet:flex-row mobile:flex-col tablet:gap-[20px] mobile:gap-[10px]">
+          <div className="flex items-center h-auto">
+            <img
+              src={argumentContent.author_img_url}
+              className="bg-white h-[45px] aspect-square rounded-full"
+            />
+            {editStatus ? (
+              <textarea
+                className="resize-none"
+                onChange={(e) => {
+                  setEditContent(e.target.value);
+                }}
+                defaultValue={argumentContent.topic}
+              ></textarea>
+            ) : (
+              <p className="text-white01 text-bold text-[18px] ml-[13px]">
+                {argumentContent.topic}
+              </p>
+            )}
+          </div>
+          <div className="flex justify-between w-60">
+            <p className="flex items-center h-12 text-white">
+              {argumentOpinions.length > 0 &&
+                argumentOpinions.filter((opinion) => opinion.content.length > 0)
+                  .length}
             </p>
-          )}
-        </div>
-        <div className="flex justify-between w-60">
-          <p className="flex items-center h-12 text-white">
-            {argumentOpinions.length > 0 &&
-              argumentOpinions.filter((opinion) => opinion.content.length > 0)
-                .length}
-          </p>
-          <div className="flex-none text-gray03 flex items-center gap-[30px] w-[207px] mobile:justify-between">
-            <>
-              <div>
-                <p>{formatDate(argumentContent.updated_at)}</p>
-                <div className="flex justify-between">
-                  <p>
-                    작성자: <span>{argumentContent.author_name}</span>
-                  </p>
-                  {argumentOpinions.length == 0 && (
-                    <div>
-                      <button
-                        className="mr-[5px]"
-                        onClick={async () => {
-                          if (editStatus) {
-                            if (editContent !== argumentContent.topic) {
-                              await argumentEdit();
+            <div className="flex-none text-gray03 flex items-center gap-[30px] w-[207px] mobile:justify-between">
+              <>
+                <div>
+                  <p>{formatDate(argumentContent.updated_at)}</p>
+                  <div className="flex justify-between">
+                    <p>
+                      작성자: <span>{argumentContent.author_name}</span>
+                    </p>
+                    {argumentOpinions.length == 0 && (
+                      <div>
+                        <button
+                          className="mr-[5px]"
+                          onClick={async () => {
+                            if (editStatus) {
+                              if (editContent !== argumentContent.topic) {
+                                await argumentEdit();
+                              }
+                              setEditStatus(false);
+                            } else {
+                              setEditStatus(true);
                             }
-                            setEditStatus(false);
-                          } else {
-                            setEditStatus(true);
-                          }
-                        }}
-                      >
-                        <span>편집</span>
-                      </button>
-                      |
-                      <button
-                        className="ml-[5px]"
-                        onClick={async () => {
-                          await argumentDelete();
-                        }}
-                      >
-                        <span>삭제</span>
-                      </button>
-                    </div>
-                  )}
+                          }}
+                        >
+                          <span>편집</span>
+                        </button>
+                        |
+                        <button
+                          className="ml-[5px]"
+                          onClick={async () => {
+                            await argumentDelete();
+                          }}
+                        >
+                          <span>삭제</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </>
+              </>
 
-            <button
-              onClick={() => setIsArgumentToggleOpen(!isArgumentToggleOpen)}
-            >
               <img
                 src={isArgumentToggleOpen ? arrowBottom : arrowRight}
                 alt="토론 펼치기 버튼"
               />
-            </button>
+            </div>
           </div>
         </div>
-      </div>
-
+      </button>
       {/* 토론의 댓글 */}
       {isArgumentToggleOpen && (
         <div>
