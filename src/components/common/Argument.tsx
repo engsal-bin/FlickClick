@@ -6,6 +6,7 @@ import ArgumentReview from "./ArgumentReview";
 import { commonAPI } from "../../api/common";
 import { formatDate } from "../../utils/formattingDate";
 import { supabase } from "../../api";
+import { useAuth } from "../../api/Auth";
 
 export default function Argument({
   argumentContent,
@@ -18,7 +19,7 @@ export default function Argument({
   const [argumentOpinions, setArgumentOpinions] = useState<OpinionType[]>([]);
   const [editContent, setEditContent] = useState(argumentContent.topic);
   const [editStatus, setEditStatus] = useState(false);
-
+  const { user } = useAuth();
   const fetchArgumentOpinion = async () => {
     if (movieOrSeasonOrEpisode === "movie") {
       const { data } = await commonAPI.getMovieArgumentOpinion(
@@ -154,34 +155,35 @@ export default function Argument({
                     <p>
                       작성자: <span>{argumentContent.author_name}</span>
                     </p>
-                    {argumentOpinions.length == 0 && (
-                      <div>
-                        <button
-                          className="mr-[5px]"
-                          onClick={async () => {
-                            if (editStatus) {
-                              if (editContent !== argumentContent.topic) {
-                                await argumentEdit();
+                    {argumentOpinions.length == 0 &&
+                      user?.id === argumentContent.author_id && (
+                        <div>
+                          <button
+                            className="mr-[5px]"
+                            onClick={async () => {
+                              if (editStatus) {
+                                if (editContent !== argumentContent.topic) {
+                                  await argumentEdit();
+                                }
+                                setEditStatus(false);
+                              } else {
+                                setEditStatus(true);
                               }
-                              setEditStatus(false);
-                            } else {
-                              setEditStatus(true);
-                            }
-                          }}
-                        >
-                          <span>편집</span>
-                        </button>
-                        |
-                        <button
-                          className="ml-[5px]"
-                          onClick={async () => {
-                            await argumentDelete();
-                          }}
-                        >
-                          <span>삭제</span>
-                        </button>
-                      </div>
-                    )}
+                            }}
+                          >
+                            <span>편집</span>
+                          </button>
+                          |
+                          <button
+                            className="ml-[5px]"
+                            onClick={async () => {
+                              await argumentDelete();
+                            }}
+                          >
+                            <span>삭제</span>
+                          </button>
+                        </div>
+                      )}
                   </div>
                 </div>
               </>
