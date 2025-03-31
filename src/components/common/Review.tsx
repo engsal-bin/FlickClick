@@ -86,7 +86,7 @@ export default function Review({
       <div className="flex justify-between tablet:text-[14px] mobile:text-[12px]">
         <p className="flex gap-[10px]">
           <span className="text-white01">{review.author_name}</span>
-          <span className="text-gray03">{formatDate(review.updated_at)}</span>
+          <span className="text-gray03">{review.updated_at}</span>
         </p>
         {user?.id === review.author_id && (
           <div className="text-white03 flex gap-[20px]">
