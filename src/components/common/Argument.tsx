@@ -11,9 +11,11 @@ import { useAuth } from "../../api/Auth";
 export default function Argument({
   argumentContent,
   movieOrSeasonOrEpisode,
+  stateLifting,
 }: {
   argumentContent: ArgumentType;
   movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
+  stateLifting: () => void;
 }) {
   const [isArgumentToggleOpen, setIsArgumentToggleOpen] = useState(false);
   const [argumentOpinions, setArgumentOpinions] = useState<OpinionType[]>([]);
@@ -78,6 +80,7 @@ export default function Argument({
   };
   useEffect(() => {
     fetchArgumentOpinion();
+    stateLifting();
     const movieArgumentOpinionSubscription = supabase
       .channel("movie_argument_comment")
       .on(
@@ -89,6 +92,7 @@ export default function Argument({
         }
       )
       .subscribe();
+
     const episodeArgumentOpinionSubscription = supabase
       .channel("episode_argument_comment")
       .on(
@@ -100,6 +104,7 @@ export default function Argument({
         }
       )
       .subscribe();
+
     const seasonArgumentOpinionSubscription = supabase
       .channel("season_argument_comment")
       .on(
@@ -111,12 +116,13 @@ export default function Argument({
         }
       )
       .subscribe();
+
     return () => {
       movieArgumentOpinionSubscription.unsubscribe();
       episodeArgumentOpinionSubscription.unsubscribe();
       seasonArgumentOpinionSubscription.unsubscribe();
     };
-  }, []);
+  }, [argumentContent.id]);
   return (
     <div className="flex flex-col gap-[20px] tablet:px-[20px] tablet:py-[30px] mobile:px-[10px] mobile:py-[20px] rounded-[10px] border border-gray03 mb-5">
       {/* 토론 */}
