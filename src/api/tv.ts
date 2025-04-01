@@ -34,7 +34,7 @@ const getSeason = async (series_id: number, season_number: number) => {
         params: {
           language: "ko-KR",
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -51,7 +51,7 @@ const getSeasonCredits = async (series_id: number, season_number: number) => {
         params: {
           language: "ko-KR",
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -63,7 +63,7 @@ const getSeasonCredits = async (series_id: number, season_number: number) => {
 const getEpisode = async (
   series_id: number,
   season_number: number,
-  episode_number: number,
+  episode_number: number
 ) => {
   try {
     const response = await axiosInstance.get(
@@ -72,7 +72,7 @@ const getEpisode = async (
         params: {
           language: "ko-KR",
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -121,6 +121,7 @@ const getSimilarTv = async (series_id: number) => {
 };
 
 const getGenres = async (language = "ko-KR") => {
+  console.log("언어", language);
   try {
     const response = await axiosInstance.get(`/genre/tv/list`, {
       params: { language },

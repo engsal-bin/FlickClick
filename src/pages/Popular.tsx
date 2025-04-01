@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import arrowLeft from "../assets/icon/arrow/arrowLeft.svg";
 import { commonAPI } from "../api/common";
 import ContentsWithoutViewMore from "../components/common/ContentsWithoutViewMore";
+import { useLanguageStore } from "../store/useLanguageStore";
+import { menuTranslations } from "../translations/menu";
 
 type Period = "today" | "week";
 
@@ -10,6 +12,8 @@ export default function Popular() {
 
   // 선택태그 상태
   const [selectedPeriod, setSelectedPeriod] = useState<Period>("today");
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   // 선택여부 확인 후 선택 or 선택 취소
   const handleSelect = (period: Period) => {
@@ -37,7 +41,7 @@ export default function Popular() {
           title: item.title,
           media_type: item.media_type,
           name: item.name,
-        })),
+        }))
       );
     } catch (error) {
       console.error("Error fetching upcoming movies:", error);
@@ -58,7 +62,7 @@ export default function Popular() {
       {/* 주제 및 태그 */}
       <div className="flex flex-col gap-[20px]">
         {/* 주제 */}
-        <div className="text-xl font-bold text-white01">인기 급상승</div>
+        <div className="text-xl font-bold text-white01">{t.trending}</div>
         {/* 태그 */}
         <div className="flex gap-[10px] text-white03 font-light">
           <div
@@ -69,7 +73,7 @@ export default function Popular() {
                 : "border-[1px] border-white03"
             } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
           >
-            오늘
+            {t.today}
           </div>
           <div
             onClick={() => handleSelect("week")}
@@ -79,7 +83,7 @@ export default function Popular() {
                 : "border-[1px] border-white03"
             } rounded-[8px] py-[6px] px-[10px] cursor-pointer`}
           >
-            이번주
+            {t.thisWeek}
           </div>
         </div>
       </div>

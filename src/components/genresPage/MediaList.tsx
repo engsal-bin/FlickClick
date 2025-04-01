@@ -49,7 +49,7 @@ export default function MediaList({
     <div className="flex flex-col gap-[10px]">
       <div
         ref={containerRef}
-        className="flex gap-[15px] overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing whitespace-nowrap min-w-max"
+        className="flex flex-col gap-[15px] overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing whitespace-nowrap min-w-max"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}

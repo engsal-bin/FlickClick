@@ -5,6 +5,8 @@ import { searchAPI } from "../../api/search";
 import useDebounce from "../../hooks/useDebounce";
 import { mediaTypeToPathName } from "../../constants/path";
 import { useNavigate } from "react-router-dom";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 interface ContentType {
   adult: boolean;
@@ -36,12 +38,12 @@ interface ContentsType {
 
 export default function Searchbar() {
   const [trendingContents, setTrendingContents] = useState<ContentType[] | []>(
-    [],
+    []
   );
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState<ContentType[] | []>([]);
   const [searchTVResults, setSearchTVResults] = useState<ContentType[] | []>(
-    [],
+    []
   );
   const [searchMovieResults, setSearchMovieResults] = useState<
     ContentType[] | []
@@ -49,6 +51,8 @@ export default function Searchbar() {
   const debouncedValue = useDebounce(searchValue, 200);
   const [currentTab, setCurrentTab] = useState("전체");
   const navigate = useNavigate();
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -103,14 +107,14 @@ export default function Searchbar() {
           <div className="flex">
             <input
               className="w-[620px] h-[41px] mr-[4px] font-light text-white01 text-[18px] bg-black border-b-[2px] border-b-white01 focus:outline-none"
-              placeholder="검색어를 입력하세요"
+              placeholder={t.searchPlaceholder}
               value={searchValue}
               onChange={handleSearchInput}
             />
             <img src={seachIcon} />
           </div>
           <div className="w-[650px] flex flex-col gap-[20px] mt-[50px] text-white01 font-bold text-[18px]">
-            {!searchValue ? <p>트렌드 컨텐츠</p> : ""}
+            {!searchValue ? <p>{t.trendingContent}</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
                 <div
@@ -283,14 +287,14 @@ export default function Searchbar() {
           <div className="flex text-[18px]">
             <input
               className="w-[620px] h-[41px] mr-[4px] font-light text-white01 bg-black border-b-[2px] border-b-white01 focus:outline-none"
-              placeholder="검색어를 입력하세요"
+              placeholder={t.searchPlaceholder}
               value={searchValue}
               onChange={handleSearchInput}
             />
             <img src={seachIcon} />
           </div>
           <div className="w-[650px] flex flex-col gap-[20px] mt-[50px] text-white01 font-bold text-[18px]">
-            {!searchValue ? <p>트렌드 컨텐츠</p> : ""}
+            {!searchValue ? <p>{t.trendingContent}</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
                 <div
@@ -439,7 +443,7 @@ export default function Searchbar() {
                           <p className="font-bold text-[20px] text-white01">
                             {result.name || result.title}
                           </p>
-                          <p className="font-normal text-[14px] text-gray03 flex gap-[5px]">
+                          <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
                             <p>영화</p>
                             <p>|</p>
                             <p>
@@ -463,14 +467,14 @@ export default function Searchbar() {
           <div className="flex text-[18px] w-full">
             <input
               className="w-full h-[35px] mr-[4px] font-light text-white01 bg-black border-b-[2px] border-b-white01 focus:outline-none"
-              placeholder="검색어를 입력하세요"
+              placeholder={t.searchPlaceholder}
               value={searchValue}
               onChange={handleSearchInput}
             />
             <img src={seachIcon} />
           </div>
           <div className="w-full flex flex-col gap-[20px] mt-[50px] text-white01 font-bold text-[18px]">
-            {!searchValue ? <p>트렌드 컨텐츠</p> : ""}
+            {!searchValue ? <p>{t.trendingContent}</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
                 <div

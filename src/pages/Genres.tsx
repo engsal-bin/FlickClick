@@ -107,10 +107,10 @@ export default function Genres() {
     const fetchGenres = async () => {
       try {
         if (checked.series) {
-          const tvGenres = await tvAPI.getGenres();
+          const tvGenres = await tvAPI.getGenres(t.languageParams);
           setAvailableGenres(tvGenres.genres);
         } else if (checked.movies) {
-          const movieGenres = await movieAPI.getGenres();
+          const movieGenres = await movieAPI.getGenres(t.languageParams);
           setAvailableGenres(movieGenres.genres);
         } else {
           setAvailableGenres([]);
@@ -324,7 +324,7 @@ export default function Genres() {
             className="w-[79px] flex justify-between cursor-pointer"
             onClick={handleResetAll}
           >
-            <p className="text-[12px] font-400">전체 초기화</p>
+            <p className="text-[12px] font-400">{t.resetTags}</p>
             <img src={eraser} alt="초기화" />
           </div>
         </div>

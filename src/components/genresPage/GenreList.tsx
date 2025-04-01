@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_KEY, API_URL } from "../../api/axios";
 import axios from "axios";
-import { Genres } from "../../type/seriesType";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 
@@ -36,7 +35,7 @@ export default function GenreList(props: GenreListProps) {
   // 선택장르 상태 변경 함수
   const handleCheckedGenresChange = (genre: Genres) => {
     setCheckedGenres((prev) =>
-      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre],
+      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
     );
   };
 
