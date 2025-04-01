@@ -48,11 +48,11 @@ export default function Searchbar() {
   const [searchMovieResults, setSearchMovieResults] = useState<
     ContentType[] | []
   >([]);
-  const debouncedValue = useDebounce(searchValue, 200);
-  const [currentTab, setCurrentTab] = useState("전체");
-  const navigate = useNavigate();
   const { language } = useLanguageStore();
   const t = menuTranslations[language];
+  const debouncedValue = useDebounce(searchValue, 200);
+  const [currentTab, setCurrentTab] = useState(t.all);
+  const navigate = useNavigate();
 
   const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -144,7 +144,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => handleTabChange("전체")}
                     >
-                      전체
+                      {t.all}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
@@ -154,7 +154,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => handleTabChange("시리즈")}
                     >
-                      시리즈
+                      {t.series}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
@@ -164,14 +164,16 @@ export default function Searchbar() {
                       }`}
                       onClick={() => handleTabChange("영화")}
                     >
-                      영화
+                      {t.movie}
                     </li>
                   </ul>
                 </div>
                 {currentTab === "전체" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchResults.length === 0 && (
-                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                      <div>
+                        '{searchValue}'{t.noSearchResults}
+                      </div>
                     )}
                     {searchResults.map((result) => (
                       <div
@@ -208,7 +210,9 @@ export default function Searchbar() {
                 {currentTab === "시리즈" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchTVResults.length === 0 && (
-                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                      <div>
+                        '{searchValue}'{t.noSearchResults}
+                      </div>
                     )}
                     {searchTVResults.map((result) => (
                       <div
@@ -243,7 +247,9 @@ export default function Searchbar() {
                 {currentTab === "영화" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchMovieResults.length === 0 && (
-                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                      <div>
+                        '{searchValue}'{t.noSearchResults}
+                      </div>
                     )}
                     {searchMovieResults.map((result) => (
                       <div
@@ -324,7 +330,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => handleTabChange("전체")}
                     >
-                      전체
+                      {t.all}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
@@ -334,7 +340,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => handleTabChange("시리즈")}
                     >
-                      시리즈
+                      {t.series}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
@@ -344,14 +350,16 @@ export default function Searchbar() {
                       }`}
                       onClick={() => handleTabChange("영화")}
                     >
-                      영화
+                      {t.movie}
                     </li>
                   </ul>
                 </div>
                 {currentTab === "전체" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchResults.length === 0 && (
-                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                      <div>
+                        '{searchValue}'{t.noSearchResults}
+                      </div>
                     )}
                     {searchResults.map((result) => (
                       <div
@@ -423,7 +431,9 @@ export default function Searchbar() {
                 {currentTab === "영화" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchMovieResults.length === 0 && (
-                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                      <div>
+                        '{searchValue}' {t.noSearchResults}
+                      </div>
                     )}
                     {searchMovieResults.map((result) => (
                       <div
@@ -504,7 +514,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => handleTabChange("전체")}
                     >
-                      전체
+                      {t.all}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 text-[16px] cursor-pointer ${
@@ -514,7 +524,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => handleTabChange("시리즈")}
                     >
-                      시리즈
+                      {t.series}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 text-[16px] cursor-pointer ${
@@ -524,7 +534,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => handleTabChange("영화")}
                     >
-                      영화
+                      {t.movie}
                     </li>
                   </ul>
                 </div>
@@ -532,7 +542,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchResults.length === 0 && (
                       <div className="text-[16px]">
-                        '{searchValue}'에 대한 검색 결과가 없습니다
+                        '{searchValue}'{t.noSearchResults}
                       </div>
                     )}
                     {searchResults.map((result) => (
@@ -571,7 +581,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchTVResults.length === 0 && (
                       <div className="text-[16px]">
-                        '{searchValue}'에 대한 검색 결과가 없습니다
+                        '{searchValue}'{t.noSearchResults}
                       </div>
                     )}
                     {searchTVResults.map((result) => (
@@ -593,7 +603,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className="font-normal text-[12px] text-gray03 flex gap-[5px]">
-                            <p>시리즈</p>
+                            <p>{t.series}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}
@@ -608,7 +618,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchMovieResults.length === 0 && (
                       <div className="text-[16px]">
-                        '{searchValue}'에 대한 검색 결과가 없습니다
+                        '{searchValue}'{t.noSearchResults}
                       </div>
                     )}
                     {searchMovieResults.map((result) => (
@@ -630,7 +640,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className="font-normal text-[12px] text-gray03 flex gap-[5px]">
-                            <p>영화</p>
+                            <p>{t.movie}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}

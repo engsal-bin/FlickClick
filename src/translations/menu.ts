@@ -42,6 +42,8 @@ export const menuTranslations = {
     resetTags: "태그 초기화",
     searchPlaceholder: "검색어를 입력해주세요",
     trendingContent: "트렌드 컨텐츠",
+    all: "전체",
+    noSearchResults: "에 대한 검색 결과가 없습니다.",
   },
   en: {
     series: "Series",
@@ -86,5 +88,7 @@ export const menuTranslations = {
     resetTags: "Reset Tags",
     searchPlaceholder: "Enter search term",
     trendingContent: "Trending Content",
+    all: "All",
+    noSearchResults: " has no search results.",
   },
 };
