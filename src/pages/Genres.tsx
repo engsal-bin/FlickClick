@@ -10,13 +10,16 @@ import { movieAPI } from "../api/movie";
 import { tvAPI } from "../api/tv";
 import GridSkeletonList from "../components/skeletons/GridSkeletonList";
 import { ottList } from "../constants/tags";
-import type { Content, Genres, CheckedState, RuntimeRange } from "../type/seriesType";
+import type { Genres, CheckedState, RuntimeRange } from "../type/seriesType";
 
 export default function Genres() {
   const { ref, inView } = useInView();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
-  const [selectedYear, setSelectedYear] = useState<{ gte: string | null; lte: string | null }>({
+  const [selectedYear, setSelectedYear] = useState<{
+    gte: string | null;
+    lte: string | null;
+  }>({
     gte: null,
     lte: null,
   });
@@ -78,7 +81,7 @@ export default function Genres() {
 
     // 선택된 장르 초기화
     setSelectedGenres([]);
-    
+
     // 선택된 연도 초기화
     setSelectedYear({
       gte: null,
@@ -132,85 +135,159 @@ export default function Genres() {
       }
 
       // 장르 선택 처리
-      const selectedGenre = availableGenres.find(genre => genre.name === key);
+      const selectedGenre = availableGenres.find((genre) => genre.name === key);
       if (selectedGenre) {
-        setSelectedGenres(prev => {
+        setSelectedGenres((prev) => {
           if (newState[key]) {
             return [...prev, selectedGenre.id];
           } else {
-            return prev.filter(id => id !== selectedGenre.id);
+            return prev.filter((id) => id !== selectedGenre.id);
           }
         });
       }
 
       // 상영시간 필터링 처리
       if (key === "15분 이하") {
-        setSelectedRuntime(prev => ({ ...prev, lte: newState[key] ? 15 : null }));
+        setSelectedRuntime((prev) => ({
+          ...prev,
+          lte: newState[key] ? 15 : null,
+        }));
       } else if (key === "15~30분") {
-        setSelectedRuntime(prev => ({ ...prev, gte: newState[key] ? 15 : null, lte: newState[key] ? 30 : null }));
+        setSelectedRuntime((prev) => ({
+          ...prev,
+          gte: newState[key] ? 15 : null,
+          lte: newState[key] ? 30 : null,
+        }));
       } else if (key === "30~60분") {
-        setSelectedRuntime(prev => ({ ...prev, gte: newState[key] ? 30 : null, lte: newState[key] ? 60 : null }));
+        setSelectedRuntime((prev) => ({
+          ...prev,
+          gte: newState[key] ? 30 : null,
+          lte: newState[key] ? 60 : null,
+        }));
       } else if (key === "60~90분") {
-        setSelectedRuntime(prev => ({ ...prev, gte: newState[key] ? 60 : null, lte: newState[key] ? 90 : null }));
+        setSelectedRuntime((prev) => ({
+          ...prev,
+          gte: newState[key] ? 60 : null,
+          lte: newState[key] ? 90 : null,
+        }));
       } else if (key === "90~120분") {
-        setSelectedRuntime(prev => ({ ...prev, gte: newState[key] ? 90 : null, lte: newState[key] ? 120 : null }));
+        setSelectedRuntime((prev) => ({
+          ...prev,
+          gte: newState[key] ? 90 : null,
+          lte: newState[key] ? 120 : null,
+        }));
       } else if (key === "120분 이상") {
-        setSelectedRuntime(prev => ({ ...prev, gte: newState[key] ? 120 : null }));
+        setSelectedRuntime((prev) => ({
+          ...prev,
+          gte: newState[key] ? 120 : null,
+        }));
       }
 
       // 연도 필터링 처리
       if (key === "2025년") {
-        setSelectedYear(prev => ({ ...prev, gte: newState[key] ? "2025-01-01" : null, lte: newState[key] ? "2025-12-31" : null }));
+        setSelectedYear((prev) => ({
+          ...prev,
+          gte: newState[key] ? "2025-01-01" : null,
+          lte: newState[key] ? "2025-12-31" : null,
+        }));
       } else if (key === "2024년") {
-        setSelectedYear(prev => ({ ...prev, gte: newState[key] ? "2024-01-01" : null, lte: newState[key] ? "2024-12-31" : null }));
+        setSelectedYear((prev) => ({
+          ...prev,
+          gte: newState[key] ? "2024-01-01" : null,
+          lte: newState[key] ? "2024-12-31" : null,
+        }));
       } else if (key === "2023년") {
-        setSelectedYear(prev => ({ ...prev, gte: newState[key] ? "2023-01-01" : null, lte: newState[key] ? "2023-12-31" : null }));
+        setSelectedYear((prev) => ({
+          ...prev,
+          gte: newState[key] ? "2023-01-01" : null,
+          lte: newState[key] ? "2023-12-31" : null,
+        }));
       } else if (key === "2022년") {
-        setSelectedYear(prev => ({ ...prev, gte: newState[key] ? "2022-01-01" : null, lte: newState[key] ? "2022-12-31" : null }));
+        setSelectedYear((prev) => ({
+          ...prev,
+          gte: newState[key] ? "2022-01-01" : null,
+          lte: newState[key] ? "2022-12-31" : null,
+        }));
       } else if (key === "2021년") {
-        setSelectedYear(prev => ({ ...prev, gte: newState[key] ? "2021-01-01" : null, lte: newState[key] ? "2021-12-31" : null }));
+        setSelectedYear((prev) => ({
+          ...prev,
+          gte: newState[key] ? "2021-01-01" : null,
+          lte: newState[key] ? "2021-12-31" : null,
+        }));
       } else if (key === "2020년") {
-        setSelectedYear(prev => ({ ...prev, gte: newState[key] ? "2020-01-01" : null, lte: newState[key] ? "2020-12-31" : null }));
+        setSelectedYear((prev) => ({
+          ...prev,
+          gte: newState[key] ? "2020-01-01" : null,
+          lte: newState[key] ? "2020-12-31" : null,
+        }));
       } else if (key === "2010년대") {
-        setSelectedYear(prev => ({ ...prev, gte: newState[key] ? "2010-01-01" : null, lte: newState[key] ? "2019-12-31" : null }));
+        setSelectedYear((prev) => ({
+          ...prev,
+          gte: newState[key] ? "2010-01-01" : null,
+          lte: newState[key] ? "2019-12-31" : null,
+        }));
       } else if (key === "2000년대") {
-        setSelectedYear(prev => ({ ...prev, gte: newState[key] ? "2000-01-01" : null, lte: newState[key] ? "2009-12-31" : null }));
+        setSelectedYear((prev) => ({
+          ...prev,
+          gte: newState[key] ? "2000-01-01" : null,
+          lte: newState[key] ? "2009-12-31" : null,
+        }));
       } else if (key === "1990년대") {
-        setSelectedYear(prev => ({ ...prev, gte: newState[key] ? "1990-01-01" : null, lte: newState[key] ? "1999-12-31" : null }));
+        setSelectedYear((prev) => ({
+          ...prev,
+          gte: newState[key] ? "1990-01-01" : null,
+          lte: newState[key] ? "1999-12-31" : null,
+        }));
       } else if (key === "1980년대") {
-        setSelectedYear(prev => ({ ...prev, gte: newState[key] ? "1980-01-01" : null, lte: newState[key] ? "1989-12-31" : null }));
+        setSelectedYear((prev) => ({
+          ...prev,
+          gte: newState[key] ? "1980-01-01" : null,
+          lte: newState[key] ? "1989-12-31" : null,
+        }));
       }
 
       return newState;
     });
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ["genres", selectedGenres, selectedYear, selectedRuntime, checked, ottStates],
-    initialPageParam: 1,
-    queryFn: async ({ pageParam = 1 }) => {
-      const targetType = checked.series ? "tv" : checked.movies ? "movie" : "tv";
-      const selectedServices = ottStates
-        .filter(service => service.selected)
-        .map(service => service.id);
-      
-      return await commonAPI.getDiscover(
-        targetType,
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [
+        "genres",
         selectedGenres,
-        selectedYear.gte,
-        selectedYear.lte,
-        selectedServices,
-        "en-US",
-        "US",
-        pageParam,
-        selectedRuntime.gte,
-        selectedRuntime.lte
-      );
-    },
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length > 0 ? allPages.length + 1 : undefined;
-    },
-  });
+        selectedYear,
+        selectedRuntime,
+        checked,
+        ottStates,
+      ],
+      initialPageParam: 1,
+      queryFn: async ({ pageParam = 1 }) => {
+        const targetType = checked.series
+          ? "tv"
+          : checked.movies
+            ? "movie"
+            : "tv";
+        const selectedServices = ottStates
+          .filter((service) => service.selected)
+          .map((service) => service.id);
+
+        return await commonAPI.getDiscover(
+          targetType,
+          selectedGenres,
+          selectedYear.gte,
+          selectedYear.lte,
+          selectedServices,
+          "en-US",
+          "US",
+          pageParam,
+          selectedRuntime.gte,
+          selectedRuntime.lte
+        );
+      },
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage.length > 0 ? allPages.length + 1 : undefined;
+      },
+    });
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -218,26 +295,31 @@ export default function Genres() {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const isTagsSelected = Object.values(checked).some(value => value);
+  const isTagsSelected = Object.values(checked).some((value) => value);
 
   return (
     <div className="w-full h-max flex flex-row justify-between text-white bg-black relative">
       {/* 사이드바 */}
-      <div className={`fixed md:static w-[154px] h-full flex flex-col justify-start items-center top-[80px] gap-[30px] left-0 px-[15px] bg-black z-50 transition-transform duration-300 ease-in-out md:translate-x-0 ${
-        isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}>
+      <div
+        className={`fixed md:static w-[154px] h-full flex flex-col justify-start items-center top-[80px] gap-[30px] left-0 px-[15px] bg-black z-50 transition-transform duration-300 ease-in-out md:translate-x-0 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         {/* 태그 선택 */}
         <div className="w-[124px] flex flex-col gap-[10px]">
           <div className="flex justify-between items-center">
             <p className="text-[24px] font-bold">태그 선택</p>
-            <button 
+            <button
               className="md:hidden text-white"
               onClick={() => setIsSidebarOpen(false)}
             >
               ✕
             </button>
           </div>
-          <div className="w-[79px] flex justify-between cursor-pointer" onClick={handleResetAll}>
+          <div
+            className="w-[79px] flex justify-between cursor-pointer"
+            onClick={handleResetAll}
+          >
             <p className="text-[12px] font-400">전체 초기화</p>
             <img src={eraser} alt="초기화" />
           </div>
@@ -287,7 +369,7 @@ export default function Genres() {
       {/* 컨텐츠 영역 */}
       <div className="flex-1">
         {/* 모바일 사이드바 토글 버튼 */}
-        <button 
+        <button
           className="md:hidden fixed top-[90px] left-4 z-40 bg-black text-white p-2 rounded"
           onClick={() => setIsSidebarOpen(true)}
         >
@@ -302,11 +384,16 @@ export default function Genres() {
               <div className="w-full md:px-10 px-[10px]">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-items-center">
                   {data?.pages?.map((page) =>
-                    Array.isArray(page) ? page.map((content) => (
-                      <div key={content.id} className="w-full max-w-[200px] aspect-[2/3]">
-                        <GridContents content={content} />
-                      </div>
-                    )) : null
+                    Array.isArray(page)
+                      ? page.map((content) => (
+                          <div
+                            key={content.id}
+                            className="w-full max-w-[200px] aspect-[2/3]"
+                          >
+                            <GridContents content={content} />
+                          </div>
+                        ))
+                      : null
                   )}
                 </div>
                 <div ref={ref} className="w-full flex justify-center mt-4">

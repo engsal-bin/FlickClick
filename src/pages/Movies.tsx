@@ -5,12 +5,12 @@ import MainThumbnail from "../components/common/MainThumbnail";
 import OttTags from "../components/common/OttTags";
 import SeriesTags from "../components/common/SeriesTags";
 import YearTags from "../components/common/YearTags";
+import DefaultMoviesView from "../components/default-view/DefaultMoviesView";
 import GridContents from "../components/common/GridContents";
 import { ottList, movieGenreList, yearList } from "../constants/tags";
 import { commonAPI } from "../api/common";
 import GridSkeletonList from "../components/skeletons/GridSkeletonList";
 import { Content, GenreState, OttState, YearState } from "../type/seriesType";
-import DefaultMoviesView from "../components/default-view/DefaultMoviesView";
 
 export default function Movies() {
   const { ref, inView } = useInView();
@@ -57,7 +57,7 @@ export default function Movies() {
     selectedYear ||
     selectedOttPlatforms.length > 0;
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery<
       Content[],
       Error,
@@ -101,26 +101,24 @@ export default function Movies() {
         시청할 수 있는 서비스
       </OttTags>
       {isTagsSelected ? (
-        <>
-          {isFetchingNextPage ? (
+        <div className="w-full md:px-10 px-[10px]">
+          {isLoading ? (
             <GridSkeletonList />
           ) : (
-            <div className="w-full md:px-10 px-[10px]">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {data?.pages?.map((page: Content[]) =>
-                  Array.isArray(page)
-                    ? page.map((content: Content) => (
-                        <GridContents key={content.id} content={content} />
-                      ))
-                    : null
-                )}
-              </div>
-              <div ref={ref} className="w-full flex justify-center mt-4">
-                {isFetchingNextPage && <p>Loading more...</p>}
-              </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {data?.pages?.map((page: Content[]) =>
+                Array.isArray(page)
+                  ? page.map((content: Content) => (
+                      <GridContents key={content.id} content={content} />
+                    ))
+                  : null
+              )}
             </div>
           )}
-        </>
+          <div ref={ref} className="w-full flex justify-center mt-4">
+            {isFetchingNextPage && <p>Loading more...</p>}
+          </div>
+        </div>
       ) : (
         <DefaultMoviesView />
       )}

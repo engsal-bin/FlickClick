@@ -1,55 +1,50 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { commonAPI } from "../../api/common";
 import { tvAPI } from "../../api/tv";
 import Contents from "../common/MediaList";
 import { Content } from "../../type/seriesType";
 
 export default function DefaultSeriesView() {
-  const [trendingData, settrendingData] = useState<Content[]>([]);
-  const [newUpdateData, setNewUpateImgSrc] = useState<Content[]>([]);
+  const [trendingData, setTrendingData] = useState<Content[]>([]);
+  const [newUpdateData, setNewUpdateData] = useState<Content[]>([]);
 
   useEffect(() => {
-    // 인기 급상승
     const fetchTrendAll = async () => {
       try {
         const trendPage1 = await commonAPI.getTrendingAll(1);
-        console.log(trendPage1);
         const trendPage2 = await commonAPI.getTrendingAll(2);
-        console.log(trendPage2);
         const trendPage3 = await commonAPI.getTrendingAll(3);
-        console.log(trendPage3);
-        const trendPage4 = await commonAPI.getTrendingAll(3);
+        const trendPage4 = await commonAPI.getTrendingAll(4);
         const trendResponse = [
           ...trendPage1.results.filter(
-            (item: TrendingAllResultsType) => item.media_type === "tv"
+            (item: Content) => item.media_type === "tv"
           ),
           ...trendPage2.results.filter(
-            (item: TrendingAllResultsType) => item.media_type === "tv"
+            (item: Content) => item.media_type === "tv"
           ),
           ...trendPage3.results.filter(
-            (item: TrendingAllResultsType) => item.media_type === "tv"
+            (item: Content) => item.media_type === "tv"
           ),
           ...trendPage4.results.filter(
-            (item: TrendingAllResultsType) => item.media_type === "tv"
+            (item: Content) => item.media_type === "tv"
           ),
         ].slice(0, 20);
-        settrendingData(trendResponse);
+        setTrendingData(trendResponse);
       } catch (error) {
-        console.error("Error fetching upcoming movies:", error);
+        console.error("Error fetching trending series:", error);
       }
     };
 
-    // 신규 업데이트
     const fetchNewUpdate = async () => {
       try {
         const newUpdataResponse = await tvAPI.getOnTheAirTvSeriese();
-        console.log(newUpdataResponse);
-        // media_type을 'tv'로 설정
-        const newUpdateWithType = newUpdataResponse.results.map((item: Content) => ({
-          ...item,
-          media_type: 'tv'
-        }));
-        setNewUpateImgSrc(newUpdateWithType);
+        const newUpdateWithType = newUpdataResponse.results.map(
+          (item: Content) => ({
+            ...item,
+            media_type: "tv",
+          })
+        );
+        setNewUpdateData(newUpdateWithType);
       } catch (error) {
         console.error("Error fetching new updates:", error);
       }
