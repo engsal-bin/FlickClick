@@ -73,7 +73,7 @@ const getProviders = async (movie_id: number, language = "ko-KR") => {
       `/movie/${movie_id}/watch/providers`,
       {
         params: { language },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -81,11 +81,11 @@ const getProviders = async (movie_id: number, language = "ko-KR") => {
   }
 };
 
-const getMovie = async (movie_id: number) => {
+const getMovie = async (movie_id: number, languageParams: string = "ko-KR") => {
   try {
     const response = await axiosInstance.get(`/movie/${movie_id}`, {
       params: {
-        language: "ko-KR",
+        language: languageParams,
       },
     });
     return response.data;

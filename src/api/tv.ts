@@ -29,13 +29,17 @@ const getSeries = async (
   }
 };
 
-const getSeason = async (series_id: number, season_number: number) => {
+const getSeason = async (
+  series_id: number,
+  season_number: number,
+  languageParams: string = "ko-KR"
+) => {
   try {
     const response = await axiosInstance.get(
       `/tv/${series_id}/season/${season_number}`,
       {
         params: {
-          language: "ko-KR",
+          language: languageParams,
         },
       }
     );
