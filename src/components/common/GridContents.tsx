@@ -13,7 +13,7 @@ export default function GridContents({ content }: { content: Content }) {
   return (
     <div
       key={content.id}
-      className="relative w-[200px] h-[265px]  rounded-lg overflow-hidden"
+      className="relative w-[200px] h-[265px] rounded-lg "
       onClick={() =>
         navigate(
           `/${content.media_type === "tv" ? "detailseries" : "detailmovie"}/${content.id}`
