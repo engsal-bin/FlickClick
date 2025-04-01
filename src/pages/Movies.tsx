@@ -31,7 +31,7 @@ export default function Movies() {
     setYearStates((prev) =>
       prev.map((year) =>
         year.id === id
-          ? { ...year, selected: true }
+          ? { ...year, selected: !year.selected }
           : { ...year, selected: false }
       )
     );

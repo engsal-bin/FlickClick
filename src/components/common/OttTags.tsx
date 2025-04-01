@@ -1,3 +1,4 @@
+import { OttState } from "../../type/seriesType";
 import OttIcon from "../OttIcon";
 
 export default function OttTags({
@@ -19,7 +20,7 @@ export default function OttTags({
           <OttIcon
             key={service.key}
             src={service.src}
-            isSelected={service.selected} 
+            isSelected={service.selected}
             onClick={() => selectTag(service.id)}
             alt={service.alt}
           />
