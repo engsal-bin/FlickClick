@@ -409,7 +409,7 @@ export default function Genres() {
         ) : (
           <div className="w-full flex flex-col justify-start items-center mt-[150px]">
             <img src={selectTag} />
-            <p className="text-[18px] text-gray01">태그를 선택해주세요.</p>
+            <p className="text-[18px] text-gray01">{t.noTagSelected}</p>
           </div>
         )}
       </div>

@@ -44,6 +44,8 @@ export const menuTranslations = {
     trendingContent: "트렌드 컨텐츠",
     all: "전체",
     noSearchResults: "에 대한 검색 결과가 없습니다.",
+    noTagSelected: "태그를 선택해주세요",
+    country: "KR",
   },
   en: {
     series: "Series",
@@ -90,5 +92,7 @@ export const menuTranslations = {
     trendingContent: "Trending Content",
     all: "All",
     noSearchResults: " has no search results.",
+    noTagSelected: "No Tag selected yet",
+    country: "US",
   },
 };

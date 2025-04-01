@@ -78,8 +78,8 @@ export default function Series() {
           selectedYear?.gte || null,
           selectedYear?.lte || null,
           selectedOttPlatforms,
-          "en-US",
-          "US",
+          t.languageParams,
+          t.country,
           pageParam
         );
         return response.map((content) => ({

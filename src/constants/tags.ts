@@ -6,75 +6,85 @@ import watcha from "../assets/icon/ottIcon/watcha.svg";
 import primeVideo from "../assets/icon/ottIcon/primeVideo.svg";
 import netflix from "../assets/icon/ottIcon/netflix.svg";
 import wavve from "../assets/icon/ottIcon/wavve.svg";
-import { GenreState, OttState } from "../type/seriesType";
+import { GenreState, OttState, YearState } from "../type/seriesType";
 
-export const yearList = [
+export const yearList: YearState[] = [
   {
     id: 1,
-    year: "1800년대",
+    key: "1800s",
+    krKey: "1800년대",
     gte: "1800-01-01",
     lte: "1899-12-31",
     selected: false,
   },
   {
     id: 2,
-    year: "1900년대",
+    key: "1900s",
+    krKey: "1900년대",
     gte: "1900-01-01",
     lte: "1999-12-31",
     selected: false,
   },
   {
     id: 3,
-    year: "2000년대",
+    key: "2000s",
+    krKey: "2000년대",
     gte: "2000-01-01",
     lte: "2009-12-31",
     selected: false,
   },
   {
     id: 4,
-    year: "2010년대",
+    key: "2010s",
+    krKey: "2010년대",
     gte: "2010-01-01",
     lte: "2019-12-31",
     selected: false,
   },
   {
     id: 5,
-    year: "2020년대",
+    key: "2020",
+    krKey: "2020년",
     gte: "2020-01-01",
-    lte: "2029-12-31",
+    lte: "2020-12-31",
     selected: false,
   },
   {
     id: 6,
-    year: "2021년",
+    key: "2021",
+    krKey: "2021년",
     gte: "2021-01-01",
     lte: "2021-12-31",
     selected: false,
   },
   {
     id: 7,
-    year: "2022년",
+    key: "2022",
+    krKey: "2022년",
     gte: "2022-01-01",
     lte: "2022-12-31",
     selected: false,
   },
   {
     id: 8,
-    year: "2023년",
+    key: "2023",
+    krKey: "2023년",
     gte: "2023-01-01",
     lte: "2023-12-31",
     selected: false,
   },
   {
     id: 9,
-    year: "2024년",
+    key: "2024",
+    krKey: "2024년",
     gte: "2024-01-01",
     lte: "2024-12-31",
     selected: false,
   },
   {
     id: 10,
-    year: "2025년",
+    key: "2025",
+    krKey: "2025년",
     gte: "2025-01-01",
     lte: "2025-12-31",
     selected: false,

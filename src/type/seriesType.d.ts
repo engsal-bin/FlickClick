@@ -41,7 +41,8 @@ export type GenreState = {
 
 export type YearState = {
   id: number;
-  year: string;
+  key: string;
+  krKey: string;
   gte: string;
   lte: string;
   selected: boolean;

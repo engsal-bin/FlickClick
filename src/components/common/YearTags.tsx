@@ -1,3 +1,5 @@
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { YearState } from "../../type/seriesType";
 import Tag from "./Tag";
 
 export default function YearTags({
@@ -9,6 +11,7 @@ export default function YearTags({
   tags: YearState[];
   selectTag: (id: number) => void;
 }) {
+  const { language } = useLanguageStore();
   return (
     <>
       {/* pc, tablet */}
@@ -23,7 +26,7 @@ export default function YearTags({
               onClick={() => selectTag(tag.id)}
               isSelected={tag.selected}
             >
-              {tag.year}
+              {language === "ko" ? tag.krKey : tag.key}
             </Tag>
           ))}
         </div>
@@ -40,7 +43,7 @@ export default function YearTags({
               onClick={() => selectTag(tag.id)}
               isSelected={tag.selected}
             >
-              {tag.year}
+              {language === "ko" ? tag.krKey : tag.key}
             </Tag>
           ))}
         </div>

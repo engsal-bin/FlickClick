@@ -15,10 +15,26 @@ export default function DefaultSeriesView() {
   useEffect(() => {
     const fetchTrendAll = async () => {
       try {
-        const trendPage1 = await commonAPI.getTrendingAll(1);
-        const trendPage2 = await commonAPI.getTrendingAll(2);
-        const trendPage3 = await commonAPI.getTrendingAll(3);
-        const trendPage4 = await commonAPI.getTrendingAll(4);
+        const trendPage1 = await commonAPI.getTrendingAll(
+          1,
+          "day",
+          t.languageParams
+        );
+        const trendPage2 = await commonAPI.getTrendingAll(
+          2,
+          "day",
+          t.languageParams
+        );
+        const trendPage3 = await commonAPI.getTrendingAll(
+          3,
+          "day",
+          t.languageParams
+        );
+        const trendPage4 = await commonAPI.getTrendingAll(
+          4,
+          "day",
+          t.languageParams
+        );
         const trendResponse = [
           ...trendPage1.results.filter(
             (item: Content) => item.media_type === "tv"
