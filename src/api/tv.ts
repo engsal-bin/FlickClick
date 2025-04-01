@@ -12,11 +12,14 @@ const getOnTheAirTvSeriese = async (page = 1, language = "ko-KR") => {
   }
 };
 
-const getSeries = async (series_id: number) => {
+const getSeries = async (
+  series_id: number,
+  languageParams: string = "ko-KR"
+) => {
   try {
     const response = await axiosInstance.get(`/tv/${series_id}`, {
       params: {
-        language: "ko-KR",
+        language: languageParams,
       },
     });
     return response.data;
