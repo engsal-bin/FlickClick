@@ -206,7 +206,7 @@ export default function Searchbar() {
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
                             <p>
-                              {result.media_type === "tv" ? "시리즈" : "영화"}
+                              {result.media_type === "tv" ? t.series : t.movie}
                             </p>
                             <p>|</p>
                             <p>
@@ -248,7 +248,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
-                            <p>시리즈</p>
+                            <p>{t.series}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}
@@ -289,7 +289,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
-                            <p>영화</p>
+                            <p>{t.movie}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}
@@ -404,7 +404,7 @@ export default function Searchbar() {
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
                             <p>
-                              {result.media_type === "tv" ? "시리즈" : "영화"}
+                              {result.media_type === "tv" ? t.series : t.movie}
                             </p>
                             <p>|</p>
                             <p>
@@ -446,7 +446,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
-                            <p>시리즈</p>
+                            <p>{t.series}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}
@@ -487,7 +487,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
-                            <p>영화</p>
+                            <p>{t.movie}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}
@@ -602,7 +602,7 @@ export default function Searchbar() {
                           </p>
                           <p className=" font-normal text-[12px] text-gray03 flex gap-[5px]">
                             <p>
-                              {result.media_type === "tv" ? "시리즈" : "영화"}
+                              {result.media_type === "tv" ? t.series : t.movie}
                             </p>
                             <p>|</p>
                             <p>
