@@ -34,12 +34,11 @@ export default function Genres() {
   const { language } = useLanguageStore();
   const t = menuTranslations[language];
 
-  // 체크박스 상태 관리 (MediaList)
   const [checked, setChecked] = useState<CheckedState>({
     series: false,
     movies: false,
-    "2025년": false,
-    "2024년": false,
+    after2025: false,
+    "2020to2025": false,
     "2023년": false,
     "2022년": false,
     "2021년": false,
@@ -80,29 +79,19 @@ export default function Genres() {
       "120분 이상": false,
     });
 
-    // OTT 상태 초기화
     setOttStates(ottList);
-
-    // 선택된 장르 초기화
     setSelectedGenres([]);
-
-    // 선택된 연도 초기화
     setSelectedYear({
       gte: null,
       lte: null,
     });
-
-    // 선택된 상영시간 초기화
     setSelectedRuntime({
       gte: null,
       lte: null,
     });
-
-    // 사용 가능한 장르 목록 초기화
     setAvailableGenres([]);
   };
 
-  // 장르 데이터 가져오기
   useEffect(() => {
     const fetchGenres = async () => {
       try {
@@ -123,7 +112,6 @@ export default function Genres() {
     fetchGenres();
   }, [checked.series, checked.movies]);
 
-  // 체크박스 상태 변경 함수
   const handleCheckboxChange = (key: string) => {
     setChecked((prev) => {
       const newState = {

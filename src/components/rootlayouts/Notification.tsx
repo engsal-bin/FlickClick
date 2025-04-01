@@ -87,7 +87,7 @@ export default function Notification() {
         ].map(([label, count, select]) => (
           <button
             onClick={() =>
-              navigate(`/myPage?tab=${select}`, {
+              navigate(`/mypage?tab=${select}`, {
                 state: { selectedTab: select },
               })
             }
@@ -116,14 +116,14 @@ export default function Notification() {
 
       {/* 마이페이지 & 알림 */}
       <button
-        onClick={() => navigate("/myPage")}
+        onClick={() => navigate("/mypage")}
         className="hidden text-white01 tablet:flex"
       >
         {t.mypage}
       </button>
       <button
         onClick={() =>
-          navigate("/myPage", { state: { selectedTab: "notify" } })
+          navigate("/mypage", { state: { selectedTab: "notify" } })
         }
         className="hidden text-white01 tablet:flex"
       >
