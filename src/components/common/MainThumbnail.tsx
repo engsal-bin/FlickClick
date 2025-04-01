@@ -5,6 +5,8 @@ import { movieAPI } from "../../api/movie";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css"; // Swiper 스타일 import
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function MainThumbnail() {
   const [contents, setContents] = useState<trendContentType[]>();
@@ -12,13 +14,15 @@ export default function MainThumbnail() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const swiperRef = useRef<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const trendTv = await tvAPI.getTrendTv();
-        const trendMovie = await movieAPI.getTrendMovie();
+        const trendTv = await tvAPI.getTrendTv(t.languageParams);
+        const trendMovie = await movieAPI.getTrendMovie(t.languageParams);
 
         const shuffleArray = (array: trendContentType[]) => {
           return array
@@ -32,7 +36,6 @@ export default function MainThumbnail() {
           ...trendMovie.results,
         ]);
 
-        // 백드롭패스 이미지가 있는 것들만 필터링 후 5개 자르기
         if (location.pathname === "/") {
           setContents(
             trendSum
@@ -71,10 +74,9 @@ export default function MainThumbnail() {
       }
     };
     fetchData();
-  }, [location.pathname]);
+  }, [location.pathname, t.languageParams]);
 
   return (
-    /* 임시로 시리즈 상세 페이지에 연결함 */
     <>
       {/* tablet 이상 */}
       <Swiper
