@@ -18,7 +18,6 @@ export default function DetailMovie() {
     },
   ];
 
-  // 첫 렌더링 시 화면 상단 위치
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);

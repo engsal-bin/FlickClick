@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import { Content } from "../../type/seriesType";
 import { useEffect } from "react";
+import defaultImage from "../../assets/icon/imagenone2.svg";
 
 export default function GridContents({ content }: { content: Content }) {
   const navigate = useNavigate();
@@ -21,9 +22,13 @@ export default function GridContents({ content }: { content: Content }) {
       }
     >
       <img
-        src={`${IMAGE_BASE_URL}original${content.poster_path}`}
-        alt={content.name}
-        className="w-full h-full object-cover"
+        src={
+          content.poster_path
+            ? `${IMAGE_BASE_URL}original${content.poster_path}`
+            : defaultImage
+        }
+        alt={content.name || "no image"}
+        className="w-full h-full object-cover rounded-lg"
       />
     </div>
   );
