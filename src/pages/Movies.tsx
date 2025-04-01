@@ -68,7 +68,7 @@ export default function Movies() {
       queryKey: ["movies", selectedGenres, selectedYear, selectedOttPlatforms],
       initialPageParam: 1,
       queryFn: async ({ pageParam = 1 }) => {
-        return await commonAPI.getDiscover(
+        const response = await commonAPI.getDiscover(
           "movie",
           selectedGenres,
           selectedYear?.gte || null,
@@ -78,6 +78,10 @@ export default function Movies() {
           "US",
           pageParam
         );
+        return response.map((content) => ({
+          ...content,
+          media_type: "movie",
+        }));
       },
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.length > 0 ? allPages.length + 1 : undefined;

@@ -271,7 +271,7 @@ export default function Genres() {
           .filter((service) => service.selected)
           .map((service) => service.id);
 
-        return await commonAPI.getDiscover(
+        const response = await commonAPI.getDiscover(
           targetType,
           selectedGenres,
           selectedYear.gte,
@@ -283,6 +283,10 @@ export default function Genres() {
           selectedRuntime.gte,
           selectedRuntime.lte
         );
+        return response.map((content) => ({
+          ...content,
+          media_type: targetType,
+        }));
       },
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.length > 0 ? allPages.length + 1 : undefined;
