@@ -11,6 +11,8 @@ import { tvAPI } from "../api/tv";
 import GridSkeletonList from "../components/skeletons/GridSkeletonList";
 import { ottList } from "../constants/tags";
 import type { Genres, CheckedState, RuntimeRange } from "../type/seriesType";
+import { useLanguageStore } from "../store/useLanguageStore";
+import { menuTranslations } from "../translations/menu";
 
 export default function Genres() {
   const { ref, inView } = useInView();
@@ -29,6 +31,8 @@ export default function Genres() {
   });
   const [availableGenres, setAvailableGenres] = useState<Genres[]>([]);
   const [ottStates, setOttStates] = useState(ottList);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   // 체크박스 상태 관리 (MediaList)
   const [checked, setChecked] = useState<CheckedState>({
@@ -127,14 +131,12 @@ export default function Genres() {
         [key]: !prev[key],
       };
 
-      // 타입 선택 시 다른 타입 해제
       if (key === "series" && newState[key]) {
         newState.movies = false;
       } else if (key === "movies" && newState[key]) {
         newState.series = false;
       }
 
-      // 장르 선택 처리
       const selectedGenre = availableGenres.find((genre) => genre.name === key);
       if (selectedGenre) {
         setSelectedGenres((prev) => {
@@ -146,7 +148,6 @@ export default function Genres() {
         });
       }
 
-      // 상영시간 필터링 처리
       if (key === "15분 이하") {
         setSelectedRuntime((prev) => ({
           ...prev,
@@ -183,7 +184,6 @@ export default function Genres() {
         }));
       }
 
-      // 연도 필터링 처리
       if (key === "2025년") {
         setSelectedYear((prev) => ({
           ...prev,
@@ -312,7 +312,7 @@ export default function Genres() {
         {/* 태그 선택 */}
         <div className="w-[124px] flex flex-col gap-[10px]">
           <div className="flex justify-between items-center">
-            <p className="text-[24px] font-bold">태그 선택</p>
+            <p className="text-[24px] font-bold">{t.genres}</p>
             <button
               className="md:hidden text-white"
               onClick={() => setIsSidebarOpen(false)}
@@ -334,22 +334,22 @@ export default function Genres() {
 
         {/* 분류 리스트 */}
         <ToggleList
-          title="사용할 수 있는 서비스"
+          title={t.type}
+          toggleType="type"
+          checked={checked}
+          onCheckboxChange={handleCheckboxChange}
+        />
+        <ToggleList
+          title={t.streamingService}
           toggleType="service"
           checked={checked}
           onCheckboxChange={handleCheckboxChange}
           ottStates={ottStates}
           setOttStates={setOttStates}
         />
-        <ToggleList
-          title="타입"
-          toggleType="type"
-          checked={checked}
-          onCheckboxChange={handleCheckboxChange}
-        />
         {(checked.series || checked.movies) && (
           <ToggleList
-            title="장르"
+            title={t.genres}
             toggleType="genres"
             checked={checked}
             onCheckboxChange={handleCheckboxChange}
@@ -357,13 +357,13 @@ export default function Genres() {
           />
         )}
         <ToggleList
-          title="연도"
+          title={t.year}
           toggleType="years"
           checked={checked}
           onCheckboxChange={handleCheckboxChange}
         />
         <ToggleList
-          title="상영시간"
+          title={t.runtime}
           toggleType="times"
           checked={checked}
           onCheckboxChange={handleCheckboxChange}

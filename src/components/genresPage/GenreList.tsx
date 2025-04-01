@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { API_KEY, API_URL } from "../../api/axios";
 import axios from "axios";
+import { Genres } from "../../type/seriesType";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 type Genres = {
   id: number;
@@ -25,8 +28,10 @@ interface GenreListProps {
 }
 
 export default function GenreList(props: GenreListProps) {
-  // 선택장르 상태 관리
+  const [moreView, setMoreView] = useState(1);
   const [checkedGenres, setCheckedGenres] = useState<Genres[]>([]);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   // 선택장르 상태 변경 함수
   const handleCheckedGenresChange = (genre: Genres) => {
@@ -37,9 +42,6 @@ export default function GenreList(props: GenreListProps) {
 
   // 장르 상태 관리
   const [Genres, setGenres] = useState<Genres[]>([]);
-
-  // 보기 상태 관리
-  const [moreView, setMoreView] = useState<number>(1);
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -107,7 +109,7 @@ export default function GenreList(props: GenreListProps) {
             className="text-[12px] cursor-pointer hover:text-gray03"
             onClick={() => setMoreView((prev) => prev + 1)}
           >
-            더보기
+            {t.viewMore}
           </div>
         )}
         {/* 접기 */}
@@ -116,7 +118,7 @@ export default function GenreList(props: GenreListProps) {
             className="text-[12px] cursor-pointer hover:text-gray03"
             onClick={() => setMoreView(1)}
           >
-            접기
+            {t.viewLess}
           </div>
         )}
       </div>

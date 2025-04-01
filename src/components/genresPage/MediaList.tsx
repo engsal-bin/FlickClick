@@ -1,17 +1,24 @@
 import { useState, useRef, useEffect } from "react";
 import type { CheckedState } from "../../type/seriesType";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 interface MediaListProps {
   checked: CheckedState;
   onCheckboxChange: (key: string) => void;
 }
 
-export default function MediaList({ checked, onCheckboxChange }: MediaListProps) {
+export default function MediaList({
+  checked,
+  onCheckboxChange,
+}: MediaListProps) {
   // 스와이퍼 상태 관리
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   // 마우스 이벤트 핸들러
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -40,7 +47,6 @@ export default function MediaList({ checked, onCheckboxChange }: MediaListProps)
 
   return (
     <div className="flex flex-col gap-[10px]">
-      <div className="text-[16px]">미디어 타입</div>
       <div
         ref={containerRef}
         className="flex gap-[15px] overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing whitespace-nowrap min-w-max"
@@ -62,7 +68,7 @@ export default function MediaList({ checked, onCheckboxChange }: MediaListProps)
             } transition-colors ease-in-out`}
           />
           <label htmlFor="series-checkbox" className="text-[13px]">
-            시리즈
+            {t.series}
           </label>
         </div>
         <div className="flex items-center gap-[15px]">
@@ -78,7 +84,7 @@ export default function MediaList({ checked, onCheckboxChange }: MediaListProps)
             } transition-colors ease-in-out`}
           />
           <label htmlFor="movies-checkbox" className="text-[13px]">
-            영화
+            {t.movies}
           </label>
         </div>
       </div>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useAuth } from "../../api/Auth";
 import { formatDate } from "../../utils/formattingDate";
 import { commonAPI } from "../../api/common";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function ArgumentReview({
   opinion,
@@ -14,6 +16,8 @@ export default function ArgumentReview({
 }) {
   const { user } = useAuth();
   const [view, setView] = useState(false);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   const opinionDelete = async () => {
     const deleteCheck = confirm("정말 삭제하시겠습니까?");
@@ -96,7 +100,7 @@ export default function ArgumentReview({
               </div>
             </>
           ) : (
-            <p>삭제된 의견입니다.</p>
+            <p>{t.deletedOpinion}</p>
           )}
         </div>
       </div>

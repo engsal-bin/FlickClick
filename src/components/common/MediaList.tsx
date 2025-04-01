@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { mediaTypeToPathName } from "../../constants/path";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import { Content } from "../../type/seriesType";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 interface ChildProps {
   to: string;
@@ -27,6 +29,8 @@ export default function MediaList({
     ) ?? [];
 
   const navigate = useNavigate();
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   if (data)
     return (
@@ -39,7 +43,7 @@ export default function MediaList({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[20px]">
-                더보기
+                {t.viewMore}
               </Link>
             )}
           </div>
@@ -69,7 +73,7 @@ export default function MediaList({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[12px]">
-                더보기
+                {t.viewMore}
               </Link>
             )}
           </div>

@@ -16,19 +16,15 @@ import { useAuth } from "../../api/Auth";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 
-// 타입 정의
 type ToggleClickedType = {
   [key: string]: boolean;
 };
 
-// Notification 컴포넌트
 export default function Notification() {
   const navigate = useNavigate();
   const { language, setLanguage } = useLanguageStore();
   const t = menuTranslations[language];
 
-  // 상태 변수 정의
-  const [isTranslate, setIsTranslate] = useState(false); // 언어 변환 상태
   const [toggleClicked, setToggleClicked] = useState<ToggleClickedType>({
     series: false,
     movies: false,
@@ -77,7 +73,7 @@ export default function Notification() {
   }, [navigate]);
 
   const toggleLanguage = () => {
-    setLanguage(language === 'ko' ? 'en' : 'ko');
+    setLanguage(language === "ko" ? "en" : "ko");
   };
 
   return (
@@ -109,7 +105,10 @@ export default function Notification() {
       {/* 언어 변경 */}
       <div className="justify-between hidden tablet:flex">
         <p className="text-white01">{t.languageChange}</p>
-        <div className="w-[68px] flex justify-between cursor-pointer" onClick={toggleLanguage}>
+        <div
+          className="w-[68px] flex justify-between cursor-pointer"
+          onClick={toggleLanguage}
+        >
           <img src={changeIcon} />
           <p className="text-white01">{t.language}</p>
         </div>
@@ -167,9 +166,7 @@ export default function Notification() {
           <p className="text-white01">{t.languageChange}</p>
           <div className="w-[60px] flex justify-between gap-[5px]">
             <img src={tranlateLang} />
-            <div className="text-white01 text-[14px]">
-              {t.language}
-            </div>
+            <div className="text-white01 text-[14px]">{t.language}</div>
           </div>
         </div>
 

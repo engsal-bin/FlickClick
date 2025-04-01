@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import arrow from "../../assets/icon/arrow/arrow01.svg";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function UpcomingOverview({
   overview,
@@ -11,6 +13,8 @@ export default function UpcomingOverview({
   piusViewFunction: () => void;
 }) {
   const [isMiddleScreen, setIsMiddleScreen] = useState(false);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -31,7 +35,7 @@ export default function UpcomingOverview({
         <div>줄거리</div>
         {showButton && (
           <button onClick={piusViewFunction} className="flex items-center">
-            <p>더보기</p>
+            <p>{t.viewMore}</p>
             <img
               src={arrow}
               className={`ml-[10px] w-[18px] h-[18px] ${
