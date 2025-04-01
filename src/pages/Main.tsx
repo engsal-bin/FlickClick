@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useLanguageStore } from "../store/useLanguageStore";
+import { menuTranslations } from "../translations/menu";
 
 import { commonAPI } from "../api/common.ts";
 import { movieAPI } from "../api/movie.ts";
@@ -11,6 +13,8 @@ export default function Main() {
   const [trendingData, setTrendingData] = useState<BasicType[]>([]);
   const [newUpdateData, setNewUpdateData] = useState<BasicType[]>([]);
   const [upComingData, setUpcomingData] = useState<BasicType[]>([]);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -33,7 +37,7 @@ export default function Main() {
               title: item.title,
               media_type: item.media_type,
             }))
-            .slice(0, 20),
+            .slice(0, 20) as BasicType[],
         );
 
         const combinedArr = [
@@ -82,7 +86,7 @@ export default function Main() {
             id: item.id,
             title: item.title,
             media_type: "movie",
-          })),
+          })) as BasicType[],
         );
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -95,19 +99,19 @@ export default function Main() {
   return (
     <div className="flex flex-col justify-between items-center mb-[100px] desktop:gap-[50px] tablet:gap-[40px] mobile:gap-[30px] text-white bg-black">
       <MainThumbnail />
-      <Banner />
       <Contents to="/popular" showMore trendingData={trendingData}>
-        인기 급상승
+        {t.trending}
       </Contents>
       <Contents to="/newupdate" showMore trendingData={upComingData}>
-        신규 업데이트
+        {t.newUpdate}
       </Contents>
       <Contents to="/upcomings" showMore trendingData={newUpdateData}>
-        공개 예정
+        {t.upcoming}
       </Contents>
       <Contents to="" showMore={false}>
-        새해에 봐야하는 ☀️
+        {t.newYear}
       </Contents>
+      <Banner />
     </div>
   );
 }

@@ -3,10 +3,14 @@ import { commonAPI } from "../../api/common";
 import { movieAPI } from "../../api/movie";
 import Contents from "../common/MediaList";
 import { Content } from "../../type/seriesType";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function DefaultMoviesView() {
   const [trendingData, setTrendingData] = useState<Content[]>([]);
   const [newUpdateData, setNewUpdateData] = useState<Content[]>([]);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   useEffect(() => {
     const fetchTrendAll = async () => {
@@ -57,10 +61,10 @@ export default function DefaultMoviesView() {
   return (
     <div>
       <Contents to="/popular" showMore={false} data={trendingData}>
-        영화 인기 급상승
+        {t.movieTrending}
       </Contents>
       <Contents to="/newupdate" showMore={false} data={newUpdateData}>
-        영화 신규 업데이트
+        {t.movieNewUpdate}
       </Contents>
     </div>
   );

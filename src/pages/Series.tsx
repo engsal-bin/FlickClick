@@ -11,12 +11,16 @@ import { commonAPI } from "../api/common";
 import GridSkeletonList from "../components/skeletons/GridSkeletonList";
 import { Content, GenreState, OttState, YearState } from "../type/seriesType";
 import DefaultSeriesView from "../components/default-view/DefaultSeriesView";
+import { useLanguageStore } from "../store/useLanguageStore";
+import { menuTranslations } from "../translations/menu";
 
 export default function Series() {
   const { ref, inView } = useInView();
   const [genreStates, setGenreStates] = useState<GenreState[]>(tvGenreList);
   const [yearStates, setYearStates] = useState<YearState[]>(yearList);
   const [ottStates, setOttStates] = useState<OttState[]>(ottList);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   const selectGenre = (id: number) => {
     setGenreStates((prev) =>
@@ -98,13 +102,13 @@ export default function Series() {
     <div className="flex flex-col justify-between items-center mb-[100px] desktop:gap-[50px] tablet:gap-[40px] mobile:gap-[30px] text-white bg-black">
       <MainThumbnail />
       <SeriesTags tags={genreStates} selectTag={selectGenre}>
-        장르
+        {t.genres}
       </SeriesTags>
       <YearTags tags={yearStates} selectTag={selectYearRange}>
-        방영 연도
+        {t.year}
       </YearTags>
       <OttTags selectedTag={ottStates} selectTag={selectOtt}>
-        시청할 수 있는 서비스
+        {t.streamingService}
       </OttTags>
       {isTagsSelected ? (
         <div className="w-full md:px-10 px-[10px]">

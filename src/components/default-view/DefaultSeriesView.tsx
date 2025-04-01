@@ -3,10 +3,14 @@ import { commonAPI } from "../../api/common";
 import { tvAPI } from "../../api/tv";
 import Contents from "../common/MediaList";
 import { Content } from "../../type/seriesType";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function DefaultSeriesView() {
   const [trendingData, setTrendingData] = useState<Content[]>([]);
   const [newUpdateData, setNewUpdateData] = useState<Content[]>([]);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   useEffect(() => {
     const fetchTrendAll = async () => {
@@ -57,10 +61,10 @@ export default function DefaultSeriesView() {
   return (
     <div>
       <Contents to="/popular" showMore={false} data={trendingData}>
-        시리즈 인기 급상승
+        {t.seriesTrending}
       </Contents>
       <Contents to="/newupdate" showMore={false} data={newUpdateData}>
-        시리즈 신규 업데이트
+        {t.seriesNewUpdate}
       </Contents>
     </div>
   );
