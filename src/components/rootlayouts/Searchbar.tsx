@@ -1,5 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import seachIcon from "../../assets/icon/searchIcon.svg";
+import defaultImage from "../../assets/icon/imagenone2.svg";
 import { commonAPI } from "../../api/common";
 import { searchAPI } from "../../api/search";
 import useDebounce from "../../hooks/useDebounce";
@@ -103,7 +104,7 @@ export default function Searchbar() {
 
   useEffect(() => {
     console.log("선택된 탭 바뀜", currentTab);
-  }, []);
+  }, [currentTab]);
 
   return (
     <>
@@ -191,7 +192,11 @@ export default function Searchbar() {
                       >
                         <div className="w-[109px] h-[144px]">
                           <img
-                            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
+                            src={
+                              result.poster_path
+                                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`
+                                : defaultImage
+                            }
                             className="w-full h-full rounded-[8px]"
                           />
                         </div>
@@ -230,7 +235,11 @@ export default function Searchbar() {
                       >
                         <div className="w-[109px] h-[144px]">
                           <img
-                            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
+                            src={
+                              result.poster_path
+                                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`
+                                : defaultImage
+                            }
                             className="w-full h-full rounded-[8px]"
                           />
                         </div>
@@ -267,7 +276,11 @@ export default function Searchbar() {
                       >
                         <div className="w-[109px] h-[144px]">
                           <img
-                            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
+                            src={
+                              result.poster_path
+                                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`
+                                : defaultImage
+                            }
                             className="w-full h-full rounded-[8px]"
                           />
                         </div>
@@ -377,7 +390,11 @@ export default function Searchbar() {
                       >
                         <div className="w-[109px] h-[144px]">
                           <img
-                            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
+                            src={
+                              result.poster_path
+                                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`
+                                : defaultImage
+                            }
                             className="w-full h-full rounded-[8px]"
                           />
                         </div>
@@ -416,7 +433,11 @@ export default function Searchbar() {
                       >
                         <div className="w-[109px] h-[144px]">
                           <img
-                            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
+                            src={
+                              result.poster_path
+                                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`
+                                : defaultImage
+                            }
                             className="w-full h-full rounded-[8px]"
                           />
                         </div>
@@ -453,7 +474,11 @@ export default function Searchbar() {
                       >
                         <div className="w-[109px] h-[144px]">
                           <img
-                            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
+                            src={
+                              result.poster_path
+                                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`
+                                : defaultImage
+                            }
                             className="w-full h-full rounded-[8px]"
                           />
                         </div>
@@ -563,7 +588,11 @@ export default function Searchbar() {
                       >
                         <div className="w-[70px] h-[94px]">
                           <img
-                            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
+                            src={
+                              result.poster_path
+                                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`
+                                : defaultImage
+                            }
                             className="w-full h-full rounded-[8px]"
                           />
                         </div>
@@ -602,7 +631,11 @@ export default function Searchbar() {
                       >
                         <div className="w-[70px] h-[94px]">
                           <img
-                            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
+                            src={
+                              result.poster_path
+                                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`
+                                : defaultImage
+                            }
                             className="w-full h-full rounded-[8px]"
                           />
                         </div>
@@ -639,7 +672,11 @@ export default function Searchbar() {
                       >
                         <div className="min-w-[70px] h-[94px]">
                           <img
-                            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`}
+                            src={
+                              result.poster_path
+                                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${result.poster_path}`
+                                : defaultImage
+                            }
                             className="w-full h-full rounded-[8px]"
                           />
                         </div>
