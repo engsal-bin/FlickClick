@@ -1,9 +1,10 @@
-import { Argument, ArgumentComment } from "../../type/mypageType";
 import {
   getArgumentsCommentedByUId,
   getArgumentsCreatedByUserId,
 } from "../../api/mypageInfo";
 import { useEffect, useState } from "react";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 import CreatedDiscuss from "./CreatedDiscuss";
 import MyOpinion from "./MyOpinion";
@@ -13,6 +14,8 @@ const DiscussTab = ({ userId }: { userId: string | undefined }) => {
   const [discussType, setDiscussType] = useState("createdDiscuss");
   const [discusses, setDiscusses] = useState<Argument[] | null>([]);
   const [myOpinions, setMyOpinions] = useState<ArgumentComment[] | null>([]);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   useEffect(() => {
     if (!userId) return;
@@ -39,13 +42,13 @@ const DiscussTab = ({ userId }: { userId: string | undefined }) => {
           onClick={() => setDiscussType("createdDiscuss")}
           isSelected={discussType === "createdDiscuss"}
         >
-          생성한 토론
+          {t.generatedDiscussion}
         </Tag>
         <Tag
           onClick={() => setDiscussType("myOpinion")}
           isSelected={discussType === "myOpinion"}
         >
-          내 의견
+          {t.myOpinion}
         </Tag>
       </div>
       <div className="mt-[30px]">

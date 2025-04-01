@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 import { supabase } from "../../api";
 import Notify from "./Notify";
 
 const NotifyTab = ({ userId }: { userId: string | undefined }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -40,7 +43,7 @@ const NotifyTab = ({ userId }: { userId: string | undefined }) => {
     );
   }
 
-  return <div>알림이 없습니다</div>;
+  return <div>{t.noNotifications}</div>;
 };
 
 export default NotifyTab;

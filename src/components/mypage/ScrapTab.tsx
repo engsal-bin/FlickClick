@@ -1,3 +1,5 @@
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 import ScrapEpisode from "./ScrapEpisode";
 import ScrapMovie from "./ScrapMovie";
 import ScrapSeason from "./ScrapSeason";
@@ -12,6 +14,8 @@ interface ScrapTabProps {
 
 const ScrapTab = ({ seasonClips, episodeClips, movieClips }: ScrapTabProps) => {
   const [scrapType, setScrapType] = useState("season");
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   return (
     <div>
@@ -23,10 +27,10 @@ const ScrapTab = ({ seasonClips, episodeClips, movieClips }: ScrapTabProps) => {
             isSelected={scrapType === type}
           >
             {type === "season"
-              ? "시즌"
+              ? t.season
               : type === "episode"
-                ? "에피소드"
-                : "영화"}
+                ? t.episode
+                : t.movie}
           </Tag>
         ))}
       </div>

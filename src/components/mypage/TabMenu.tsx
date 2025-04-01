@@ -1,14 +1,18 @@
 import { useNavigate } from "react-router-dom";
-
-const tabNames = {
-  notify: "알림",
-  review: "리뷰",
-  discuss: "토론",
-  scrap: "스크랩",
-};
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 const TabMenu = ({ selectedTab }: { selectedTab: string }) => {
   const navigate = useNavigate();
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
+
+  const tabNames = {
+    notify: t.notification,
+    review: t.review,
+    discuss: t.discuss,
+    scrap: t.scrap,
+  };
 
   return (
     <div className="hidden tablet:flex flex-row border-b-[1px] border-gray01">

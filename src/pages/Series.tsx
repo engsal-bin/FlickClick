@@ -6,7 +6,7 @@ import OttTags from "../components/common/OttTags";
 import SeriesTags from "../components/common/SeriesTags";
 import YearTags from "../components/common/YearTags";
 import GridContents from "../components/common/GridContents";
-import { movieGenreList, ottList, yearList } from "../constants/tags";
+import { ottList, tvGenreList, yearList } from "../constants/tags";
 import { commonAPI } from "../api/common";
 import GridSkeletonList from "../components/skeletons/GridSkeletonList";
 import { Content, GenreState, OttState, YearState } from "../type/seriesType";
@@ -14,7 +14,7 @@ import DefaultSeriesView from "../components/default-view/DefaultSeriesView";
 
 export default function Series() {
   const { ref, inView } = useInView();
-  const [genreStates, setGenreStates] = useState<GenreState[]>(movieGenreList);
+  const [genreStates, setGenreStates] = useState<GenreState[]>(tvGenreList);
   const [yearStates, setYearStates] = useState<YearState[]>(yearList);
   const [ottStates, setOttStates] = useState<OttState[]>(ottList);
 

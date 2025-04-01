@@ -13,6 +13,8 @@ import changeIcon from "../../assets/icon/changeIcon.svg";
 import logoutIcon from "../../assets/icon/logoutIcon.svg";
 import tranlateLang from "../../assets/icon/translate_lang.svg";
 import { useAuth } from "../../api/Auth";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 // 타입 정의
 type ToggleClickedType = {
@@ -22,6 +24,8 @@ type ToggleClickedType = {
 // Notification 컴포넌트
 export default function Notification() {
   const navigate = useNavigate();
+  const { language, setLanguage } = useLanguageStore();
+  const t = menuTranslations[language];
 
   // 상태 변수 정의
   const [isTranslate, setIsTranslate] = useState(false); // 언어 변환 상태
@@ -72,14 +76,18 @@ export default function Notification() {
     navigate("/");
   }, [navigate]);
 
+  const toggleLanguage = () => {
+    setLanguage(language === 'ko' ? 'en' : 'ko');
+  };
+
   return (
     <div className="flex flex-col justify-between h-full border-white">
       {/* 데스크탑용 알림 */}
       <div className="hidden tablet:flex w-[249px] h-[58px] justify-between">
         {[
-          ["리뷰", counts.reviewCount, "review"],
-          ["토론", counts.discussCount, "discuss"],
-          ["스크랩", counts.clipCount, "scrap"],
+          [t.review, counts.reviewCount, "review"],
+          [t.discuss, counts.discussCount, "discuss"],
+          [t.scrap, counts.clipCount, "scrap"],
         ].map(([label, count, select]) => (
           <button
             onClick={() =>
@@ -100,10 +108,10 @@ export default function Notification() {
 
       {/* 언어 변경 */}
       <div className="justify-between hidden tablet:flex">
-        <p className="text-white01">언어 변경</p>
-        <div className="w-[68px] flex justify-between">
+        <p className="text-white01">{t.languageChange}</p>
+        <div className="w-[68px] flex justify-between cursor-pointer" onClick={toggleLanguage}>
           <img src={changeIcon} />
-          <p className="text-white01">{isTranslate ? "영어" : "한국어"}</p>
+          <p className="text-white01">{t.language}</p>
         </div>
       </div>
 
@@ -112,7 +120,7 @@ export default function Notification() {
         onClick={() => navigate("/myPage")}
         className="hidden text-white01 tablet:flex"
       >
-        마이페이지
+        {t.mypage}
       </button>
       <button
         onClick={() =>
@@ -120,7 +128,7 @@ export default function Notification() {
         }
         className="hidden text-white01 tablet:flex"
       >
-        알림
+        {t.notification}
       </button>
 
       {/* 로그아웃 */}
@@ -129,15 +137,15 @@ export default function Notification() {
         onClick={onClickLogOut}
       >
         <img src={logoutIcon} className="mr-[15px]" />
-        <p className="text-warn">로그아웃</p>
+        <p className="text-warn">{t.logout}</p>
       </div>
 
       {/* 모바일용 알림창 */}
       <div className="tablet:hidden flex flex-col items-center gap-[20px] pt-[50px] px-[20px]">
         {[
-          { name: "시리즈", key: "series" },
-          { name: "영화", key: "movies" },
-          { name: "장르", key: "genres" },
+          { name: t.series, key: "series" },
+          { name: t.movies, key: "movies" },
+          { name: t.genres, key: "genres" },
         ].map((category) => (
           <div key={category.key} className="w-full border-white border-1">
             <Link
@@ -154,13 +162,13 @@ export default function Notification() {
         {/* 언어변경 버튼 */}
         <div
           className="flex items-center justify-between w-full border-white cursor-pointer border-1"
-          onClick={() => setIsTranslate((prev) => !prev)}
+          onClick={toggleLanguage}
         >
-          <p className="text-white01">언어변경</p>
+          <p className="text-white01">{t.languageChange}</p>
           <div className="w-[60px] flex justify-between gap-[5px]">
             <img src={tranlateLang} />
             <div className="text-white01 text-[14px]">
-              {isTranslate ? "영어" : "한국어"}
+              {t.language}
             </div>
           </div>
         </div>
@@ -171,14 +179,14 @@ export default function Notification() {
           className="flex justify-between items-center gap-[15px]"
         >
           <img src={logoutIcon} />
-          <p className="text-warn">로그아웃</p>
+          <p className="text-warn">{t.logout}</p>
         </button>
 
         {/* SideToggleList 컴포넌트 */}
         {[
-          { label: "영화", path: "movies" },
-          { label: "장르", path: "genres" },
-          { label: "마이페이지", path: "myPage" },
+          { label: t.movies, path: "movies" },
+          { label: t.genres, path: "genres" },
+          { label: t.mypage, path: "myPage" },
         ].map((list) => (
           <SideToggleList
             key={list.label}

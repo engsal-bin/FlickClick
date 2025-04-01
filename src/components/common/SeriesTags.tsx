@@ -1,4 +1,6 @@
 import Tag from "./Tag";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { GenreState } from "../../type/seriesType";
 
 export default function Tags({
   children,
@@ -9,6 +11,8 @@ export default function Tags({
   tags: GenreState[];
   selectTag: (id: number) => void;
 }) {
+  const { language } = useLanguageStore();
+
   return (
     <>
       {/* pc, tablet */}
@@ -23,7 +27,7 @@ export default function Tags({
               onClick={() => selectTag(tag.id)}
               isSelected={tag.selected}
             >
-              {tag.krKey}
+              {language === 'ko' ? tag.krKey : tag.key}
             </Tag>
           ))}
         </div>
@@ -40,7 +44,7 @@ export default function Tags({
               onClick={() => selectTag(tag.id)}
               isSelected={tag.selected}
             >
-              {tag.krKey}
+              {language === 'ko' ? tag.krKey : tag.key}
             </Tag>
           ))}
         </div>
