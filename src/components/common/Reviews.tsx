@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import InputTextarea from "./InputTextarea";
 import Review from "./Review";
 import { commonAPI } from "../../api/common";
+import { supabase } from "../../api";
 
 export default function Reviews({
   movieOrSeasonOrEpisode,
@@ -28,18 +29,53 @@ export default function Reviews({
     }
     console.log("contentId = ", contentId);
   };
-  const stateLifting = async () => {
-    await fetchReview();
-  };
+
   useEffect(() => {
     fetchReview();
+    const movieReviewSubscription = supabase
+      .channel("movie_review")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "movie_review" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          fetchReview();
+        }
+      )
+      .subscribe();
+    const episodeReviewSubscription = supabase
+      .channel("episode_review")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "episode_review" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          fetchReview();
+        }
+      )
+      .subscribe();
+    const seasonReviewSubscription = supabase
+      .channel("season_review")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "season_review" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          fetchReview();
+        }
+      )
+      .subscribe();
+    return () => {
+      movieReviewSubscription.unsubscribe();
+      episodeReviewSubscription.unsubscribe();
+      seasonReviewSubscription.unsubscribe();
+    };
   }, []);
-
   return (
     <>
       <div>
         <InputTextarea
-          stateLifting={stateLifting}
+          stateLifting={() => {}}
           contentId={contentId}
           reviewOrArgumentOrOpinion={"review"}
           movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
@@ -51,7 +87,6 @@ export default function Reviews({
               <Review
                 review={review}
                 key={index}
-                stateLifting={stateLifting}
                 movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
               />
             ))

@@ -6,11 +6,9 @@ import { formatDate } from "../../utils/formattingDate";
 
 export default function Review({
   review,
-  stateLifting,
   movieOrSeasonOrEpisode,
 }: {
   review: MovieReviewType;
-  stateLifting: () => void;
   movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
 }) {
   const { user } = useAuth();
@@ -104,7 +102,6 @@ export default function Review({
                   if (editStatus) {
                     if (editContent !== review.content) {
                       await reviewEdit(review.id);
-                      await stateLifting();
                     }
                     setEditStatus(false);
                   } else {
@@ -119,7 +116,6 @@ export default function Review({
                 className="ml-[5px]"
                 onClick={async () => {
                   await reviewDelete(review.id);
-                  await stateLifting();
                 }}
               >
                 <span>삭제</span>
