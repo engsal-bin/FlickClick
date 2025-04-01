@@ -2,11 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { mediaTypeToPathName } from "../../constants/path";
 import { IMAGE_BASE_URL } from "../../api/axios";
+import { Content } from "../../type/seriesType";
 
 interface ChildProps {
   to: string;
   showMore?: boolean;
-  data?: TvShow[];
+  data?: Content[];
   children?: React.ReactNode;
 }
 
@@ -16,14 +17,13 @@ export default function MediaList({
   data,
   children,
 }: ChildProps) {
-
   const path =
     data?.map((item) =>
       item.media_type && mediaTypeToPathName[item.media_type as "movie" | "tv"]
         ? `/${mediaTypeToPathName[item.media_type as "movie" | "tv"]}/${
             item.id
           }`
-        : ""
+        : "",
     ) ?? [];
 
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function MediaList({
             )}
           </div>
 
-          <div className="flex justify-between overflow-y-auto">
+          <div className="flex justify-between overflow-y-auto gap-[10px]">
             {data.map((item, index) => {
               return (
                 <img
@@ -74,7 +74,7 @@ export default function MediaList({
             )}
           </div>
 
-          <div className="flex overflow-y-auto">
+          <div className="flex overflow-y-auto gap-[10px]">
             {data.map((item, index) => {
               return (
                 <img

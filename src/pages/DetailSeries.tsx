@@ -3,7 +3,6 @@ import SeasonBox from "../components/common/SeasonBox";
 import { tvAPI } from "../api/tv";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import ArgorithmIP from "../components/common/ArgorithmIP";
 
 export default function DetailSeries() {
   const [contentData, setContentData] = useState<TvSeriesType>();
@@ -24,6 +23,11 @@ export default function DetailSeries() {
     };
     fetchSeries();
   }, []);
+
+  // 첫 렌더링 시 화면 상단 위치
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
     <div>

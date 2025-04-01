@@ -10,17 +10,17 @@ export default function UpcomingVideo({ movie_id }: { movie_id: number }) {
         if (trailer.results.length > 0) {
           const youtubeVideos = trailer.results.filter(
             (video: VideoType) =>
-              video.type === "Trailer" && video.site === "YouTube"
+              video.type === "Trailer" && video.site === "YouTube",
           );
 
           if (youtubeVideos.length > 0) {
             youtubeVideos.sort((a: VideoType, b: VideoType) =>
-              a.published_at > b.published_at ? 1 : -1
+              a.published_at > b.published_at ? 1 : -1,
             );
           }
 
           const trailerSiteFilter = youtubeVideos.map(
-            (video: VideoType) => `https://www.youtube.com/embed/${video.key}`
+            (video: VideoType) => `https://www.youtube.com/embed/${video.key}`,
           );
 
           setTrailerSite(trailerSiteFilter);

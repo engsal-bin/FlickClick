@@ -3,16 +3,12 @@ import arrowBottom from "../../assets/icon/arrow/arrowBottom.svg";
 import arrowRight from "../../assets/icon/arrow/arrowRight.svg";
 import OttIcons from "./OttIcons";
 import MediaList from "./MediaList";
-import GenreList from "./GenreList";
 import YearsList from "./YearsList";
 import TimesList from "./TimesList";
+import type { CheckedState, Genres, OttState } from "../../type/seriesType";
 
 /* 타입 정리 */
 type ToggleState = {
-  [key: string]: boolean;
-};
-
-type CheckedState = {
   [key: string]: boolean;
 };
 
@@ -21,6 +17,9 @@ interface ToggleListProps {
   toggleType: string;
   checked: CheckedState;
   onCheckboxChange: (key: string) => void;
+  availableGenres?: Genres[];
+  ottStates?: OttState[];
+  setOttStates?: React.Dispatch<React.SetStateAction<OttState[]>>;
 }
 
 export default function ToggleList({
@@ -28,6 +27,9 @@ export default function ToggleList({
   toggleType,
   checked,
   onCheckboxChange,
+  availableGenres = [],
+  ottStates = [],
+  setOttStates,
 }: ToggleListProps) {
   // 여러 개의 토글 상태 관리
   const [toggles, setToggles] = useState<ToggleState>({
@@ -65,7 +67,9 @@ export default function ToggleList({
       {toggles[toggleType] && (
         <div className="w-[124px] flex flex-col justify-start items-start font-light">
           {/* 서비스 하위리스트 */}
-          {toggleType === "service" && <OttIcons />}
+          {toggleType === "service" && (
+            <OttIcons ottStates={ottStates} setOttStates={setOttStates} />
+          )}
 
           {/* 타입 하위리스트 */}
           {toggleType === "type" && (
@@ -80,10 +84,28 @@ export default function ToggleList({
                   타입을 선택해주세요.
                 </div>
               )}
-              {/* 시리즈 선택 시 시리즈 장르 보이기 */}
-              {checked.series && <GenreList media="tv" title="시리즈" />}
-              {/* 영화 선택 시 영화 장르 보이기 */}
-              {checked.movies && <GenreList media="movie" title="영화" />}
+              {availableGenres.length > 0 && (
+                <div className="flex flex-col gap-[10px]">
+                  {availableGenres.map((genre) => (
+                    <div key={genre.id} className="flex justify-start items-center gap-[15px]">
+                      <input
+                        type="checkbox"
+                        id={`genre-${genre.id}`}
+                        checked={checked[genre.name] || false}
+                        onChange={() => onCheckboxChange(genre.name)}
+                        className={`w-[16px] h-[16px] border-2 rounded-[3px] appearance-none cursor-pointer ${
+                          checked[genre.name]
+                            ? "bg-main border-white01"
+                            : "bg-black border-gray-400"
+                        } transition-colors ease-in-out`}
+                      />
+                      <label htmlFor={`genre-${genre.id}`} className="text-[13px]">
+                        {genre.name}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 

@@ -19,7 +19,8 @@ export default function DetailSeriesNoSeson() {
   const locationInfo = location.pathname.split("/").slice(1, 5);
 
   const contentId = locationInfo.slice(1).join("/");
-  console.log("contentId =", contentId);
+  // console.log("contentId =", contentId);
+
   useEffect(() => {
     const fetchEpisode = async () => {
       try {
@@ -27,7 +28,7 @@ export default function DetailSeriesNoSeson() {
         const episode = await tvAPI.getEpisode(
           Number(`${locationInfo[1]}`),
           Number(`${locationInfo[2]}`),
-          Number(`${locationInfo[3]}`)
+          Number(`${locationInfo[3]}`),
         );
         // console.log(season);
         setSeriesData(series);
@@ -44,6 +45,11 @@ export default function DetailSeriesNoSeson() {
       label: "토론",
     },
   ];
+
+  // 첫 렌더링 시 화면 상단 위치
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
     <>

@@ -27,7 +27,7 @@ export default function DetailSeason() {
         const series = await tvAPI.getSeries(Number(`${locationInfo[1]}`));
         const season = await tvAPI.getSeason(
           Number(`${locationInfo[1]}`),
-          Number(`${locationInfo[2]}`)
+          Number(`${locationInfo[2]}`),
         );
         setSeriesData(series);
         setSeasonData(season);
@@ -44,6 +44,11 @@ export default function DetailSeason() {
       label: "토론",
     },
   ];
+
+  // 첫 렌더링 시 화면 상단 위치
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
     <>

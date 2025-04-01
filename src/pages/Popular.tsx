@@ -37,7 +37,7 @@ export default function Popular() {
           title: item.title,
           media_type: item.media_type,
           name: item.name,
-        }))
+        })),
       );
     } catch (error) {
       console.error("Error fetching upcoming movies:", error);

@@ -25,8 +25,8 @@ const ScrapTab = ({ seasonClips, episodeClips, movieClips }: ScrapTabProps) => {
             {type === "season"
               ? "시즌"
               : type === "episode"
-              ? "에피소드"
-              : "영화"}
+                ? "에피소드"
+                : "영화"}
           </Tag>
         ))}
       </div>

@@ -47,7 +47,7 @@ export default function NewUpdate() {
             media_type: "tv",
             name: item.name,
             genre_ids: item.genre_ids,
-          })
+          }),
         ),
         ...nowPlayingMovie.results.map((item: NowPlayingMovieResultsType) => ({
           poster_path:
@@ -79,7 +79,7 @@ export default function NewUpdate() {
       setGenreNames(newGenreNames);
 
       const uniqueGenres = Array.from(
-        new Set(newGenreNames.map((genre) => genre.name))
+        new Set(newGenreNames.map((genre) => genre.name)),
       )
         .map((name) => newGenreNames.find((genre) => genre.name === name))
         .filter((genre): genre is GenreBasicType => genre !== undefined);
@@ -109,8 +109,8 @@ export default function NewUpdate() {
     selectedGenres.length > 0
       ? newUpdateImgSrc.filter((info) =>
           selectedGenres.every((selectedGenre) =>
-            info.genre_ids.includes(selectedGenre)
-          )
+            info.genre_ids.includes(selectedGenre),
+          ),
         )
       : newUpdateImgSrc;
 

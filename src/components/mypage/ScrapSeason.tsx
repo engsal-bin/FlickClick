@@ -5,16 +5,19 @@ export default function ScrapSeason({
 }: {
   seasonClips: SavedClips[] | null;
 }) {
+  console.log(seasonClips);
   return (
     <div className="flex flex-wrap tablet:gap-[30px] mobile:gap-[10px] mb-[50px]">
       {seasonClips?.map((clip) => (
-        <ScrapContent
-          ip_id={clip.ip_id}
-          ip_name={clip.ip_name}
-          ip_type={clip.ip_type}
-          poster_path={clip.poster_path}
-          summary={clip.summary}
-        />
+        <div key={clip.ip_id}>
+          <ScrapContent
+            ip_id={`detailseason/${clip.ip_id}`}
+            ip_name={clip.ip_name}
+            ip_type={clip.ip_type}
+            poster_path={clip.poster_path}
+            summary={clip.summary}
+          />
+        </div>
       ))}
     </div>
   );

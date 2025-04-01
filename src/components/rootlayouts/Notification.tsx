@@ -134,7 +134,11 @@ export default function Notification() {
 
       {/* 모바일용 알림창 */}
       <div className="tablet:hidden flex flex-col items-center gap-[20px] pt-[50px] px-[20px]">
-        {[{name:"시리즈", key: "series"}, {name: "영화", key: "movies"}, {name: "장르", key: "genres"}].map((category) => (
+        {[
+          { name: "시리즈", key: "series" },
+          { name: "영화", key: "movies" },
+          { name: "장르", key: "genres" },
+        ].map((category) => (
           <div key={category.key} className="w-full border-white border-1">
             <Link
               to={`/${category.key}`}

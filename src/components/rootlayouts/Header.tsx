@@ -69,7 +69,8 @@ export default function Header() {
                 location.pathname === "/series"
                   ? "text-main hover:text-main"
                   : ""
-              }`}>
+              }`}
+            >
               시리즈
             </Link>
             <Link
@@ -78,7 +79,8 @@ export default function Header() {
                 location.pathname === "/movies"
                   ? "text-main hover:text-main"
                   : ""
-              }`}>
+              }`}
+            >
               영화
             </Link>
             <Link
@@ -87,7 +89,8 @@ export default function Header() {
                 location.pathname === "/genres"
                   ? "text-main hover:text-main"
                   : ""
-              }`}>
+              }`}
+            >
               장르
             </Link>
           </div>
@@ -118,10 +121,12 @@ export default function Header() {
             {isLoggedIn ? (
               <Link
                 to={"/mypage"}
-                className="flex items-center justify-between ">
+                className="flex items-center justify-between "
+              >
                 <img
                   src={user?.profile}
-                  className="w-[35px] h-[35px] bg-gray02 rounded-full mr-[10px]"></img>
+                  className="w-[35px] h-[35px] bg-gray02 rounded-full mr-[10px]"
+                ></img>
                 <div>{user?.name || "No Name"}</div>
               </Link>
             ) : (
@@ -177,21 +182,25 @@ export default function Header() {
             {/* tablet 이상 */}
             <div
               className="absolute hidden tablet:flex top-[80px]
-            right-[18px] bg-none z-20">
+            right-[18px] bg-none z-20"
+            >
               <div
                 className="absolute top-0 right-0 w-[349px] h-[417px]
               bg-black border border-gray03 rounded-[10px]
-              shadow-md shadow-white01/10 p-[50px] z-20">
+              shadow-md shadow-white01/10 p-[50px] z-20"
+              >
                 <Notification />
               </div>
             </div>
             {/* mobile 전용 */}
             <div
               className="absolute tablet:hidden flex w-full h-[100%]
-            bg-black_50 top-[80px] left-0 z-20">
+            bg-black_50 top-[80px] left-0 z-20"
+            >
               <div
                 className="absolute top-0px right-0 w-[256px] h-full
-              bg-black border-0 rounded-none z-20">
+              bg-black border-0 rounded-none z-20"
+              >
                 <Notification />
               </div>
             </div>
