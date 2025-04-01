@@ -84,7 +84,7 @@ export const yearList = [
 export const ottList: OttState[] = [
   { id: 2, key: "appleTv", src: appleTv, alt: "Apple TV", selected: false },
   {
-    id: 2,
+    id: 3,
     key: "googlePlay",
     src: googlePlay,
     alt: "Google Play",
