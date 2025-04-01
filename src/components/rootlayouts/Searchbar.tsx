@@ -51,15 +51,11 @@ export default function Searchbar() {
   const { language } = useLanguageStore();
   const t = menuTranslations[language];
   const debouncedValue = useDebounce(searchValue, 200);
-  const [currentTab, setCurrentTab] = useState(t.all);
+  const [currentTab, setCurrentTab] = useState<string>("");
   const navigate = useNavigate();
 
   const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-  };
-
-  const handleTabChange = (tab: string) => {
-    setCurrentTab(tab);
   };
 
   const handleContentClick = (content: ContentType) => {
@@ -97,7 +93,17 @@ export default function Searchbar() {
 
   useEffect(() => {
     fetchSearhResults();
+  }, [debouncedValue, currentTab]);
+
+  useEffect(() => {
+    if (debouncedValue && !currentTab) {
+      setCurrentTab("all");
+    }
   }, [debouncedValue]);
+
+  useEffect(() => {
+    console.log("선택된 탭 바뀜", currentTab);
+  }, []);
 
   return (
     <>
@@ -138,37 +144,37 @@ export default function Searchbar() {
                   <ul className="flex w-full border-b border-b-gray02">
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
-                        currentTab === "전체"
+                        currentTab === "all"
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("전체")}
+                      onClick={() => setCurrentTab("all")}
                     >
                       {t.all}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
-                        currentTab === "시리즈"
+                        currentTab === "series"
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("시리즈")}
+                      onClick={() => setCurrentTab("series")}
                     >
                       {t.series}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
-                        currentTab === "영화"
+                        currentTab === "movie"
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("영화")}
+                      onClick={() => setCurrentTab("movie")}
                     >
                       {t.movie}
                     </li>
                   </ul>
                 </div>
-                {currentTab === "전체" && (
+                {currentTab === "all" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchResults.length === 0 && (
                       <div>
@@ -207,7 +213,7 @@ export default function Searchbar() {
                     ))}
                   </div>
                 )}
-                {currentTab === "시리즈" && (
+                {currentTab === "series" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchTVResults.length === 0 && (
                       <div>
@@ -244,7 +250,7 @@ export default function Searchbar() {
                     ))}
                   </div>
                 )}
-                {currentTab === "영화" && (
+                {currentTab === "movie" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchMovieResults.length === 0 && (
                       <div>
@@ -324,37 +330,37 @@ export default function Searchbar() {
                   <ul className="flex w-full border-b border-b-gray02">
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
-                        currentTab === "전체"
+                        currentTab === "all"
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("전체")}
+                      onClick={() => setCurrentTab("all")}
                     >
                       {t.all}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
-                        currentTab === "시리즈"
+                        currentTab === "series"
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("시리즈")}
+                      onClick={() => setCurrentTab("series")}
                     >
                       {t.series}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
-                        currentTab === "영화"
+                        currentTab === "movie"
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("영화")}
+                      onClick={() => setCurrentTab("movie")}
                     >
                       {t.movie}
                     </li>
                   </ul>
                 </div>
-                {currentTab === "전체" && (
+                {currentTab === "all" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchResults.length === 0 && (
                       <div>
@@ -393,10 +399,12 @@ export default function Searchbar() {
                     ))}
                   </div>
                 )}
-                {currentTab === "시리즈" && (
+                {currentTab === "series" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchTVResults.length === 0 && (
-                      <div>'{searchValue}'에 대한 검색 결과가 없습니다</div>
+                      <div>
+                        '{searchValue}'{t.noSearchResults}
+                      </div>
                     )}
                     {searchTVResults.map((result) => (
                       <div
@@ -428,7 +436,7 @@ export default function Searchbar() {
                     ))}
                   </div>
                 )}
-                {currentTab === "영화" && (
+                {currentTab === "movie" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchMovieResults.length === 0 && (
                       <div>
@@ -508,37 +516,37 @@ export default function Searchbar() {
                   <ul className="flex w-full border-b border-b-gray02">
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 text-[16px] cursor-pointer ${
-                        currentTab === "전체"
+                        currentTab === "all"
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("전체")}
+                      onClick={() => setCurrentTab("all")}
                     >
                       {t.all}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 text-[16px] cursor-pointer ${
-                        currentTab === "시리즈"
+                        currentTab === "series"
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("시리즈")}
+                      onClick={() => setCurrentTab("series")}
                     >
                       {t.series}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 text-[16px] cursor-pointer ${
-                        currentTab === "영화"
+                        currentTab === "movie"
                           ? "border-b border-b-white02 text-white01 font-bold"
                           : ""
                       }`}
-                      onClick={() => handleTabChange("영화")}
+                      onClick={() => setCurrentTab("movie")}
                     >
                       {t.movie}
                     </li>
                   </ul>
                 </div>
-                {currentTab === "전체" && (
+                {currentTab === "all" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchResults.length === 0 && (
                       <div className="text-[16px]">
@@ -577,7 +585,7 @@ export default function Searchbar() {
                     ))}
                   </div>
                 )}
-                {currentTab === "시리즈" && (
+                {currentTab === "series" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchTVResults.length === 0 && (
                       <div className="text-[16px]">
@@ -614,7 +622,7 @@ export default function Searchbar() {
                     ))}
                   </div>
                 )}
-                {currentTab === "영화" && (
+                {currentTab === "movie" && (
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchMovieResults.length === 0 && (
                       <div className="text-[16px]">
