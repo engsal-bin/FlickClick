@@ -33,6 +33,8 @@
 
 <h2>📝 협업 툴</h2>
 
+![](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=gitn&logoColor=white)
+![](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)
 ![](https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white)
 ![](https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
 
