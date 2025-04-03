@@ -11,7 +11,7 @@ export default function UpcomingCredits({ movie_id }: { movie_id: number }) {
   const [castInfos, setCastInfos] = useState([]);
   useEffect(() => {
     const fetchCredits = async () => {
-      const creditInfos = await movieAPI.getCredits(movie_id);
+      const creditInfos = await movieAPI.getCredits(movie_id, t.languageParams);
 
       setCastInfos(creditInfos.cast);
     };

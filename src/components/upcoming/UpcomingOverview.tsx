@@ -32,7 +32,7 @@ export default function UpcomingOverview({
   return (
     <div className={`w-[329px] max-desktop:w-full max-desktop:h-auto`}>
       <div className="flex justify-between text-white02 mt-[10px] text-[20px] max-[320px]:text-[16px]">
-        <div>줄거리</div>
+        <div>{t.story}</div>
         {showButton && (
           <button onClick={piusViewFunction} className="flex items-center">
             <p>{t.viewMore}</p>
