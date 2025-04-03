@@ -3,6 +3,8 @@ import sendIcon from "../../assets/icon/send.svg";
 import sendBlueIcon from "../../assets/icon/sendBlue.svg";
 import { commonAPI } from "../../api/common";
 import { useAuth } from "../../api/Auth";
+import { supabase } from "../../api";
+
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 export default function InputTextarea({
@@ -29,7 +31,10 @@ export default function InputTextarea({
       alert("1글자 이상 입력해주세요");
       return;
     }
-    if (!user?.id) return; // 사용자가 없으면 실행 안 함
+    if (!user?.id) {
+      alert("로그인 후 이용해주세요");
+      return;
+    } // 사용자가 없으면 실행 안 함
 
     if (reviewOrArgumentOrOpinion === "review") {
       await commonAPI.postReview(
@@ -58,9 +63,50 @@ export default function InputTextarea({
       );
       setText("");
     }
-    stateLifting();
   };
+  useEffect(() => {
+    const movieArgumentOpinionSubscription = supabase
+      .channel("movie_argument_comment")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "movie_argument_comment" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          stateLifting();
+        }
+      )
+      .subscribe();
 
+    const episodeArgumentOpinionSubscription = supabase
+      .channel("episode_argument_comment")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "episode_argument_comment" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          stateLifting();
+        }
+      )
+      .subscribe();
+
+    const seasonArgumentOpinionSubscription = supabase
+      .channel("season_argument_comment")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "season_argument_comment" },
+        (payload) => {
+          console.log("🔄 댓글 변경 감지:", payload);
+          stateLifting();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      movieArgumentOpinionSubscription.unsubscribe();
+      episodeArgumentOpinionSubscription.unsubscribe();
+      seasonArgumentOpinionSubscription.unsubscribe();
+    };
+  }, []);
   useEffect(() => {
     text.trim() ? setIsSend(true) : setIsSend(false);
     if (reviewOrArgumentOrOpinion === "review") {
@@ -71,6 +117,7 @@ export default function InputTextarea({
       setPlaceHolder(t.opinionPlaceholder);
     }
   }, [text]);
+
   return (
     <div className="flex justify-between mb-[30px] tablet:px-[30px] mobile:px-[10px]  tablet:h-[86px] mobile:h-[59px] border border-gray02 rounded-[10px]">
       <textarea

@@ -95,17 +95,19 @@ export default function Movies() {
   }
 
   return (
-    <div className="flex flex-col justify-between items-center mb-[100px] desktop:gap-[50px] tablet:gap-[40px] mobile:gap-[30px] text-white bg-black">
+    <div className="h-full flex flex-col justify-start items-center mb-[100px] text-white bg-black">
       <MainThumbnail />
-      <SeriesTags tags={genreStates} selectTag={selectGenre}>
-        {t.genres}
-      </SeriesTags>
-      <YearTags tags={yearStates} selectTag={selectYearRange}>
-        {t.year}
-      </YearTags>
-      <OttTags selectedTag={ottStates} selectTag={selectOtt}>
-        {t.streamingService}
-      </OttTags>
+      <div className="w-full flex flex-col gap-[30px] mb-[60px]">
+        <SeriesTags tags={genreStates} selectTag={selectGenre}>
+          {t.genres}
+        </SeriesTags>
+        <YearTags tags={yearStates} selectTag={selectYearRange}>
+          {t.year}
+        </YearTags>
+        <OttTags selectedTag={ottStates} selectTag={selectOtt}>
+          {t.streamingService}
+        </OttTags>
+      </div>
       {isTagsSelected ? (
         <div className="w-full md:px-10 px-[10px]">
           {isLoading ? (

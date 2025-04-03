@@ -1,2 +1,16 @@
 @import "./tallwind.css";
 @import "./fonts.css";
+
+/* Swiper 커스텀 스타일 */
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+  background-color: #fafafa60 !important;
+  transition: all 0.3s;
+}
+
+.swiper-pagination-bullet-active {
+  width: 10px !important;
+  height: 10px !important;
+  background-color: #4cc9f0 !important;
+}

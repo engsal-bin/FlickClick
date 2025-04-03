@@ -20,7 +20,7 @@ export default function DetailSeason() {
   // 시리즈 id, 시즌 id 저장
   const locationInfo = location.pathname.split("/").slice(1, 4);
   // 시리즈 데이터 상태
-  const [seriesData, setSeriesData] = useState<TvSeriesType>();
+  const [_, setSeriesData] = useState<TvSeriesType>();
   // 시즌 데이터 상태
   const [seasonData, setSeasonData] = useState<TvSeasonsType>();
 
@@ -63,7 +63,7 @@ export default function DetailSeason() {
     <>
       <DetailIntroBox contentId={Number(locationInfo[1])} type="tvSeason" />
       <section
-        className="border border-white flex flex-col jutify-evenly w-full 
+        className=" flex flex-col jutify-evenly w-full 
       tablet:gap-[50px] mobile:gap-[30px] 
       desktop:px-[128px] tablet:px-[40px] mobile:px-[10px]
       tablet:py-[50px] mobile:py-[30px]"

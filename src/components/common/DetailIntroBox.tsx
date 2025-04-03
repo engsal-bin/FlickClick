@@ -6,7 +6,7 @@ import { IMAGE_BASE_URL } from "../../api/axios";
 import { useEffect, useState } from "react";
 import { movieAPI } from "../../api/movie";
 import { tvAPI } from "../../api/tv";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   deleteClippedData,
   getClipsByUId,
@@ -23,6 +23,7 @@ export default function DetailIntroBox({
   contentId?: number;
   type?: string;
 }) {
+  const navigate = useNavigate();
   const { language } = useLanguageStore();
   const t = menuTranslations[language];
   const [tvContent, setTvContent] = useState<TvSeriesType>();
@@ -223,7 +224,13 @@ export default function DetailIntroBox({
           tablet:mt-[50px] mobile:mt-[30px] 
           desktop:mr-[50px] tablet:mr-[30px] mobile:mr-[10px]"
             >
-              <img src={cancelIcon} alt="닫기 버튼" />
+              <img
+                src={cancelIcon}
+                alt="닫기 버튼"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              />
             </button>
           </div>
 

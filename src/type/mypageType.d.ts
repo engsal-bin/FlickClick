@@ -103,10 +103,11 @@ interface MySavedCounts {
 }
 
 interface Notification {
-  id: string;
+  id: number;
   user_id: string;
   ip_id: string;
   ip_type: "movie" | "episode" | "season";
+  ip_name: string;
   event_type: string;
   message: string;
   created_at: Date;

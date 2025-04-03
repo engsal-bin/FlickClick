@@ -5,10 +5,10 @@ import {
 import { useEffect, useState } from "react";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
-
 import CreatedDiscuss from "./CreatedDiscuss";
 import MyOpinion from "./MyOpinion";
 import Tag from "../common/Tag";
+import TagWithnotCancelIcon from "../common/TagWithnotCancelIcon";
 
 const DiscussTab = ({ userId }: { userId: string | undefined }) => {
   const [discussType, setDiscussType] = useState("createdDiscuss");
@@ -38,18 +38,18 @@ const DiscussTab = ({ userId }: { userId: string | undefined }) => {
   return (
     <div>
       <div className="flex gap-[10px]">
-        <Tag
+        <TagWithnotCancelIcon
           onClick={() => setDiscussType("createdDiscuss")}
           isSelected={discussType === "createdDiscuss"}
         >
           {t.generatedDiscussion}
-        </Tag>
-        <Tag
+        </TagWithnotCancelIcon>
+        <TagWithnotCancelIcon
           onClick={() => setDiscussType("myOpinion")}
           isSelected={discussType === "myOpinion"}
         >
           {t.myOpinion}
-        </Tag>
+        </TagWithnotCancelIcon>
       </div>
       <div className="mt-[30px]">
         {discussType === "createdDiscuss" && (

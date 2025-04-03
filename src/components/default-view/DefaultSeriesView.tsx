@@ -74,7 +74,7 @@ export default function DefaultSeriesView() {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col gap-[30px]">
       <Contents to="/popular" showMore={false} data={trendingData}>
         {t.seriesTrending}
       </Contents>

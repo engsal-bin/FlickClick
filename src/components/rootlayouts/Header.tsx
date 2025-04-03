@@ -8,6 +8,8 @@ import Notification from "./Notification";
 import Searchbar from "./Searchbar";
 import burgerButton from "../../assets/icon/burgerButton.svg";
 import { useAuth } from "../../api/Auth";
+import { notificationAPI } from "../../api/notification";
+import { supabase } from "../../api";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 
@@ -18,6 +20,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [previousPath, setPreviousPath] = useState("");
   const { isLoggedIn, user } = useAuth();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const { language } = useLanguageStore();
 
   const t = menuTranslations[language];
@@ -58,6 +61,26 @@ export default function Header() {
     setIsOpen(false);
   }, [location.pathname]);
 
+  const fetchNotifications = async () => {
+    const { data } = await notificationAPI.getNotifications(user!.id);
+    setNotifications(data!);
+  };
+  useEffect(() => {
+    fetchNotifications();
+    const notificationSubscription = supabase
+      .channel("notification")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "notification" },
+        () => {
+          fetchNotifications();
+        }
+      )
+      .subscribe();
+    return () => {
+      notificationSubscription.unsubscribe();
+    };
+  }, []);
   return (
     <>
       <div className="w-full h-[80px] px-[50px] bg-black flex justify-between items-center">
@@ -132,7 +155,12 @@ export default function Header() {
                   src={user?.profile}
                   className="w-[35px] h-[35px] bg-gray02 rounded-full mr-[10px]"
                 ></img>
-                <div>{user?.name || "No Name"}</div>
+                <div className="relative">
+                  <div>{user?.name || "No Name"}</div>
+                  {notifications.some((n) => !n.is_read) && (
+                    <span className="absolute w-2 h-2 rounded-full -top-1 -right-1 bg-main"></span>
+                  )}
+                </div>
               </Link>
             ) : (
               <Link to="/login">{t.login}</Link>
@@ -175,7 +203,7 @@ export default function Header() {
         {/* 검색창 */}
         {isSearch && (
           <div className="absolute top-[80px] left-0 w-full h-full bg-black_50 z-20">
-            <div className="absolute left-0 w-full bg-black z-30">
+            <div className="absolute left-0 z-30 w-full bg-black">
               <Searchbar />
             </div>
           </div>

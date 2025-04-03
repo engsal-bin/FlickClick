@@ -5,7 +5,7 @@ import scrapIcon from "../../assets/icon/scrap_btn.svg";
 import noScrapIcon from "../../assets/icon/noScrapIcon.svg";
 import Tag from "./Tag";
 import { useAuth } from "../../api/Auth";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   deleteClippedData,
   getClipsByUId,
@@ -21,6 +21,7 @@ export default function DetailEpisodeIntroBox({
   series?: TvSeriesType;
   episode?: EpisodeType;
 }) {
+  const navigate = useNavigate();
   const location = useLocation();
   const contentType = "episode";
   const { language } = useLanguageStore();
@@ -163,7 +164,13 @@ export default function DetailEpisodeIntroBox({
           <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-lg"></div>
           <div className="flex justify-end w-full z-10 desktop:mb-[57px] tablet:mb-[70px] mobile:mb-[30px]">
             <button className="tablet:w-[26px] mobile:w-[19px] h-auto tablet:mt-[50px] mobile:mt-[30px] desktop:mr-[50px] tablet:mr-[30px] mobile:mr-[10px]">
-              <img src={cancelIcon} alt="닫기 버튼" />
+              <img
+                src={cancelIcon}
+                alt="닫기 버튼"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              />
             </button>
           </div>
           {/* 콘텐츠 소개 영역 */}

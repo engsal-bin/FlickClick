@@ -37,7 +37,7 @@ export default function Main() {
               title: item.title,
               media_type: item.media_type,
             }))
-            .slice(0, 20) as BasicType[],
+            .slice(0, 20)
         );
 
         const combinedArr = [
@@ -50,7 +50,7 @@ export default function Main() {
               media_type: "tv",
               title: item.name,
               popularity: item.popularity,
-            }),
+            })
           ),
           ...nowPlayingMovie.results.map(
             (item: NowPlayingMovieResultsType) => ({
@@ -61,7 +61,7 @@ export default function Main() {
               media_type: "movie",
               title: item.title,
               popularity: item.popularity,
-            }),
+            })
           ),
         ];
 
@@ -75,7 +75,7 @@ export default function Main() {
             id: item.id,
             title: item.title,
             media_type: item.media_type,
-          })) as BasicType[],
+          })) as BasicType[]
         );
 
         setUpcomingData(
@@ -86,7 +86,7 @@ export default function Main() {
             id: item.id,
             title: item.title,
             media_type: "movie",
-          })) as BasicType[],
+          }))
         );
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -99,6 +99,7 @@ export default function Main() {
   return (
     <div className="flex flex-col justify-between items-center mb-[100px] desktop:gap-[50px] tablet:gap-[40px] mobile:gap-[30px] text-white bg-black">
       <MainThumbnail />
+      <Banner />
       <Contents to="/popular" showMore trendingData={trendingData}>
         {t.trending}
       </Contents>
@@ -111,7 +112,6 @@ export default function Main() {
       <Contents to="" showMore={false}>
         {t.newYear}
       </Contents>
-      <Banner />
     </div>
   );
 }

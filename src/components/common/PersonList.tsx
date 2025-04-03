@@ -143,12 +143,12 @@ export default function PersonList({
               {/* 프로필 이미지 */}
               <div
                 className="bg-white tablet:w-[100px] mobile:w-[60px] 
-                aspect-square bg-cover bg-center rounded-full z-10
-                border-[1px] border-main"
+                aspect-square bg-cover bg-center rounded-full z-10"
                 style={{
                   backgroundImage: person.profile_path
                     ? `url(${IMAGE_BASE_URL}original${person.profile_path})`
-                    : `url(${imagenone})`, // 기본 이미지 처리
+                    : `url(${imagenone})`,
+                  border: person.profile_path ? "none" : "1px solid #4CC9F0",
                 }}
               ></div>
 

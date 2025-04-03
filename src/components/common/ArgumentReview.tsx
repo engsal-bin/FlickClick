@@ -8,11 +8,9 @@ import { menuTranslations } from "../../translations/menu";
 export default function ArgumentReview({
   opinion,
   movieOrSeasonOrEpisode,
-  stateLifting,
 }: {
   opinion: OpinionType;
   movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
-  stateLifting: () => void;
 }) {
   const { user } = useAuth();
   const [view, setView] = useState(false);
@@ -30,8 +28,6 @@ export default function ArgumentReview({
     } else if (movieOrSeasonOrEpisode === "episode") {
       await commonAPI.patchEpisodeArgumentOpinion(opinion.id);
     }
-
-    await stateLifting();
   };
 
   return (
