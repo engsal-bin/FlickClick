@@ -15,6 +15,11 @@ const NotifyTab = ({ userId }: { userId: string | undefined }) => {
     setNotifications(data!);
   };
 
+  const fetchNotifications = async () => {
+    const { data } = await notificationAPI.getNotifications(userId!);
+    setNotifications(data!);
+  };
+
   useEffect(() => {
     fetchNotifications();
     const notificationSubscription = supabase

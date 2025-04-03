@@ -100,7 +100,7 @@ export default function Series() {
   return (
     <div className="h-full flex flex-col justify-start items-center mb-[100px] text-white bg-black">
       <MainThumbnail />
-      <div className="w-full flex flex-col gap-[30px] mb-[60px]">
+      <div className="w-full flex flex-col  desktop:gap-[50px] tablet:gap-[40px] mobile:gap-[30px] mb-[60px]">
         <SeriesTags tags={genreStates} selectTag={selectGenre}>
           {t.genres}
         </SeriesTags>

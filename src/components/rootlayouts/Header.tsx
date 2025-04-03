@@ -81,6 +81,7 @@ export default function Header() {
       notificationSubscription.unsubscribe();
     };
   }, []);
+
   return (
     <>
       <div className="w-full h-[80px] px-[50px] bg-black flex justify-between items-center">
