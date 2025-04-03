@@ -21,10 +21,10 @@ export default function Main() {
       try {
         const [trend, onTheAirTvSeriese, nowPlayingMovie, upcoming] =
           await Promise.all([
-            commonAPI.getTrendingAll(1),
-            tvAPI.getOnTheAirTvSeriese(),
-            movieAPI.getNowPlayingMovie(),
-            movieAPI.getUpComingMovie(),
+            commonAPI.getTrendingAll(1, "day", t.languageParams),
+            tvAPI.getOnTheAirTvSeriese(1, t.languageParams),
+            movieAPI.getNowPlayingMovie(1, t.languageParams),
+            movieAPI.getUpComingMovie(1, t.languageParams),
           ]);
 
         setTrendingData(

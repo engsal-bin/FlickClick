@@ -32,7 +32,7 @@ export default function Chatbot({
     try {
       const API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
       const ORGANIZATION_ID = import.meta.env.VITE_OPENAI_ORGANIZATION_ID;
-      
+
       if (!API_KEY) {
         throw new Error("API 키가 설정되지 않았습니다.");
       }
@@ -43,15 +43,16 @@ export default function Chatbot({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${API_KEY}`,
+            Authorization: `Bearer ${API_KEY}`,
             ...(ORGANIZATION_ID && { "OpenAI-Organization": ORGANIZATION_ID }),
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
             messages: [
-              { 
-                role: "system", 
-                content: "너는 영화와 TV 시리즈에 대해 전문적인 지식을 가진 친절한 챗봇이야. 사용자의 질문에 대해 명확하고 유용한 답변을 제공해줘." 
+              {
+                role: "system",
+                content:
+                  "너는 영화와 TV 시리즈에 대해 전문적인 지식을 가진 친절한 챗봇이야. 사용자의 질문에 대해 명확하고 유용한 답변을 제공해줘.",
               },
               { role: "user", content: inputText },
             ],
@@ -70,7 +71,7 @@ export default function Chatbot({
       }
 
       const data = await response.json();
-      
+
       if (!data.choices?.[0]?.message?.content) {
         throw new Error("응답 데이터 형식이 올바르지 않습니다.");
       }
@@ -85,9 +86,9 @@ export default function Chatbot({
       console.error("API 호출 오류:", error);
       setMessages((prev) => [
         ...prev.slice(0, -1),
-        { 
-          sender: "bot", 
-          text: `죄송합니다. 오류가 발생했습니다: ${error instanceof Error ? error.message : "알 수 없는 오류"}` 
+        {
+          sender: "bot",
+          text: `죄송합니다. 오류가 발생했습니다: ${error instanceof Error ? error.message : "알 수 없는 오류"}`,
         },
       ]);
     }
@@ -126,7 +127,7 @@ export default function Chatbot({
       {/* 챗봇 안내 토스트 메시지 */}
       <div>
         {!isChatbotOpen && isChatbotMessageShown && (
-          <div className="fixed bottom-[5px] right-[50px] w-auto px-[20px] h-[40px] bg-white bg-opacity-30 backdrop-blur-lg border border-[3px] border-white border-opacity-30 shadow-lg flex items-center justify-center rounded-[30px] z-50 gap-[5px]">
+          <div className="fixed bottom-[5px] right-[50px] w-auto px-[20px] h-[40px] bg-white bg-opacity-30 backdrop-blur-lg border-[3px] border-white border-opacity-30 shadow-lg flex items-center justify-center rounded-[30px] z-50 gap-[5px]">
             <p className="text-sm text-center text-white">
               챗봇을 열어서 질문을 입력하세요
             </p>

@@ -165,7 +165,7 @@ export default function MainThumbnail() {
       {/* mobile 전용 */}
       {isLoading ? (
         <div className="animate-pulse w-full mobile:flex tablet:hidden">
-          <div className="w-full h-[420px] bg-gray-700 flex flex-col justify-end items-start gap-[10px] relative z-10 text-white bg-gray-700 rounded-md py-[50px] px-[30px]">
+          <div className="w-full h-[420px] flex flex-col justify-end items-start gap-[10px] relative z-10 text-white bg-gray-700 rounded-md py-[50px] px-[30px]">
             <div className="w-full h-[40px] bg-gray-600 rounded-md"></div>
             <div className="w-full h-[120px] bg-gray-600 rounded-md"></div>
           </div>
