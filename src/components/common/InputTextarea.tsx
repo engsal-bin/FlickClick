@@ -64,6 +64,7 @@ export default function InputTextarea({
       setText("");
     }
   };
+
   useEffect(() => {
     const movieArgumentOpinionSubscription = supabase
       .channel("movie_argument_comment")
@@ -107,6 +108,7 @@ export default function InputTextarea({
       seasonArgumentOpinionSubscription.unsubscribe();
     };
   }, []);
+
   useEffect(() => {
     text.trim() ? setIsSend(true) : setIsSend(false);
     if (reviewOrArgumentOrOpinion === "review") {
