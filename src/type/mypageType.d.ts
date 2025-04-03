@@ -8,14 +8,14 @@ interface Review {
 }
 
 interface Argument {
-  argument_id: number;
+  argument_id?: number;
   topic: string;
   ip_name: string;
   ip_type?: string;
   ip_id: string;
   created_at: Date;
   author_id?: string;
-  profile_image: string;
+  profile_image?: string;
 }
 
 interface ArgumentComment {

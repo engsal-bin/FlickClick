@@ -10,12 +10,10 @@ export default function CreatedDiscuss({
       {discusses?.map((discuss) => (
         <CreatedDiscussContent
           key={discuss.argument_id}
-          argument_id={discuss.argument_id}
           topic={discuss.topic}
           ip_name={discuss.ip_name}
           ip_id={discuss.ip_id}
           created_at={discuss.created_at}
-          profile_image={discuss.profile_image}
         />
       ))}
     </div>
