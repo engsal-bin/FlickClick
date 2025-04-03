@@ -62,6 +62,7 @@ export const menuTranslations = {
     cast: "출연진",
     crew: "제작진",
     noInfo: "정보가 없습니다",
+    noFilteringResult: "찾으시는 결과가 없습니다",
   },
   en: {
     series: "Series",
@@ -126,5 +127,6 @@ export const menuTranslations = {
     cast: "Cast",
     crew: "Crew",
     noInfo: "No Information",
+    noFilteringResult: "No Result with this options",
   },
 };

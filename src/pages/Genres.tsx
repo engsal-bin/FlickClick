@@ -269,9 +269,7 @@ export default function Genres() {
             ) : data?.pages?.flat().length === 0 ? (
               // 검색 결과 없음
               <div className="w-full flex flex-col justify-center items-center mt-[150px]">
-                <p className="text-[18px] text-gray01">
-                  찾으시는 결과가 없습니다.
-                </p>
+                <p className="text-[18px] text-gray01">{t.noFilteringResult}</p>
               </div>
             ) : (
               <div className="w-full md:px-10 px-[10px]">
