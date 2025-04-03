@@ -11,7 +11,6 @@ interface ChildProps {
   showMore?: boolean;
   trendingData?: BasicType[];
   children?: React.ReactNode;
-  imgSrc?: string[];
 }
 
 export default function Contents({
@@ -19,7 +18,6 @@ export default function Contents({
   showMore,
   trendingData,
   children,
-  imgSrc,
 }: ChildProps) {
   const path =
     trendingData?.map((item) =>
@@ -34,7 +32,7 @@ export default function Contents({
   const [isOverflow, setIsOverflow] = useState(false);
   console.log(trendingData);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   // 마우스 휠 이벤트 핸들러
   const handleWheel = (event: WheelEvent) => {
@@ -94,7 +92,7 @@ export default function Contents({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[20px]">
-                {t.viewMore}
+                {translation.viewMore}
               </Link>
             )}
           </div>
@@ -129,7 +127,7 @@ export default function Contents({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[12px]">
-                {t.viewMore}
+                {translation.viewMore}
               </Link>
             )}
           </div>

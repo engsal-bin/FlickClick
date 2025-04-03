@@ -21,7 +21,7 @@ export default function PersonList({
   const personListRef = useRef<HTMLDivElement>(null);
   const [isOverflow, setIsOverflow] = useState(false);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   useEffect(() => {
     if (!seriesId || !seasonNum) {
@@ -33,13 +33,13 @@ export default function PersonList({
         const person = await tvAPI.getSeasonCredits(
           seriesId,
           seasonNum,
-          t.languageParams
+          translation.languageParams
         );
         console.log(person);
 
-        if (label === t.cast) {
+        if (label === translation.cast) {
           setPersonData(person.cast);
-        } else if (label === t.crew) {
+        } else if (label === translation.crew) {
           setPersonData(person.crew);
         }
       } catch (error) {
@@ -54,11 +54,14 @@ export default function PersonList({
     if (type === "movie") {
       const fetchPerson = async () => {
         try {
-          const person = await movieAPI.getCredits(seriesId, t.languageParams);
+          const person = await movieAPI.getCredits(
+            seriesId,
+            translation.languageParams
+          );
 
-          if (label === t.cast) {
+          if (label === translation.cast) {
             setPersonData(person.cast);
-          } else if (label === t.crew) {
+          } else if (label === translation.crew) {
             setPersonData(person.crew);
           }
         } catch (error) {
@@ -136,7 +139,7 @@ export default function PersonList({
             <div
               key={
                 person.credit_id +
-                `${label === t.cast ? person.character : person.department}`
+                `${label === translation.cast ? person.character : person.department}`
               }
               className="flex flex-col gap-[5px] items-center"
             >
@@ -159,12 +162,14 @@ export default function PersonList({
 
               {/* 역할 */}
               <div className="w-full text-[16px] leading-auto text-gray03 text-center">
-                {label === t.cast ? person.character : person.department}
+                {label === translation.cast
+                  ? person.character
+                  : person.department}
               </div>
             </div>
           ))
         ) : (
-          <div className="text-center text-gray03">{t.noInfo}</div>
+          <div className="text-center text-gray03">{translation.noInfo}</div>
         )}
       </div>
     </div>

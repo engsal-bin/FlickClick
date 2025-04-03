@@ -26,7 +26,7 @@ export default function SeasonBox({
   season?: SeasonType;
 }) {
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   return (
     <Link
@@ -77,7 +77,7 @@ export default function SeasonBox({
               {/* 평점 */}
               <p className="tablet:text-[24px] mobile:text-[14px] text-gray03">
                 {season?.vote_average.toFixed(1)}
-                {t.scoreUnit}
+                {translation.scoreUnit}
               </p>
             </div>
           </div>

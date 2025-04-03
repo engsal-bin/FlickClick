@@ -30,7 +30,7 @@ export default function MediaList({
 
   const navigate = useNavigate();
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   if (data)
     return (
@@ -43,7 +43,7 @@ export default function MediaList({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[20px]">
-                {t.viewMore}
+                {translation.viewMore}
               </Link>
             )}
           </div>
@@ -77,7 +77,7 @@ export default function MediaList({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[12px]">
-                {t.viewMore}
+                {translation.viewMore}
               </Link>
             )}
           </div>

@@ -28,7 +28,7 @@ export default function Genres() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   const [typeState, setTypeState] = useState<TypeState[]>(typeList);
   const [genreStates, setgenreStates] = useState<GenreState[]>(tvGenreList);
@@ -65,22 +65,22 @@ export default function Genres() {
   };
 
   useEffect(() => {
-    const selectecdType = typeState.find((t) => t.selected);
+    const selectecdType = typeState.find((type) => type.selected);
     if (selectecdType) setShowGenreOptions(true);
     if (selectecdType?.value === "series") setgenreStates(tvGenreList);
     if (selectecdType?.value === "movies") setgenreStates(movieGenreList);
   }, [typeState]);
 
   useEffect(() => {
-    const selectedType = typeState.find((t) => t.selected);
+    const selectedType = typeState.find((type) => type.selected);
     const selectedGenres = genreStates
       .filter((g) => g.selected)
       .map((g) => g.id);
     const selectedOttPlatforms = ottStates
       .filter((o) => o.selected)
       .map((o) => o.id);
-    const selectedYear = yearStates.find((y) => y.selected);
-    const selectedRuntime = runtimeState.find((r) => r.selected);
+    const selectedYear = yearStates.find((year) => year.selected);
+    const selectedRuntime = runtimeState.find((runtime) => runtime.selected);
 
     console.log("년도 스테이트", genreStates);
     console.log("선택된 년도", selectedYear);
@@ -102,11 +102,11 @@ export default function Genres() {
 
   useEffect(() => {
     const hasSelectedTag =
-      typeState.some((t) => t.selected) ||
-      genreStates.some((g) => g.selected) ||
-      ottStates.some((o) => o.selected) ||
-      yearStates.some((y) => y.selected) ||
-      runtimeState.some((r) => r.selected);
+      typeState.some((type) => type.selected) ||
+      genreStates.some((genre) => genre.selected) ||
+      ottStates.some((ott) => ott.selected) ||
+      yearStates.some((year) => year.selected) ||
+      runtimeState.some((runtime) => runtime.selected);
 
     setIsTagSelected(hasSelectedTag);
   }, [typeState, genreStates, ottStates, yearStates, runtimeState]);
@@ -173,8 +173,8 @@ export default function Genres() {
           filterOptions.year?.gte || null,
           filterOptions.year?.lte || null,
           filterOptions.ott || [],
-          t.languageParams,
-          t.country,
+          translation.languageParams,
+          translation.country,
           pageParam,
           filterOptions.runtime?.gte,
           filterOptions.runtime?.lte
@@ -206,7 +206,7 @@ export default function Genres() {
         {/* 태그 선택 */}
         <div className="w-[124px] flex flex-col gap-[10px]">
           <div className="flex justify-between items-center">
-            <p className="text-[24px] font-bold">{t.genres}</p>
+            <p className="text-[24px] font-bold">{translation.genres}</p>
             <button
               className="md:hidden text-white"
               onClick={() => setIsSidebarOpen(false)}
@@ -218,7 +218,7 @@ export default function Genres() {
             className="w-[79px] flex justify-between cursor-pointer"
             onClick={handleResetAll}
           >
-            <p className="text-[12px] font-400">{t.resetTags}</p>
+            <p className="text-[12px] font-400">{translation.resetTags}</p>
             <img src={eraser} alt="초기화" />
           </div>
         </div>
@@ -227,26 +227,26 @@ export default function Genres() {
         <div className="w-[124px] border-b-[1px] border-gray02"></div>
 
         {/* 분류 리스트 */}
-        <ToggleList title={t.type}>
+        <ToggleList title={translation.type}>
           <TypeList typeState={typeState} onCheckboxChange={selectType} />
         </ToggleList>
-        <ToggleList title={t.streamingService}>
+        <ToggleList title={translation.streamingService}>
           <OttList ottStates={ottStates} onCheckboxChange={selectOtt} />
         </ToggleList>
-        <ToggleList title={t.genres}>
+        <ToggleList title={translation.genres}>
           <GenreList
             genreStates={genreStates}
             onCheckboxChange={selectGenre}
             showGenreOptions={showGenreOptions}
           />
         </ToggleList>
-        <ToggleList title={t.year}>
+        <ToggleList title={translation.year}>
           <YearsList
             yearStates={yearStates}
             onCheckboxChange={selectYearRange}
           />
         </ToggleList>
-        <ToggleList title={t.runtime}>
+        <ToggleList title={translation.runtime}>
           <TimesList
             runtimeState={runtimeState}
             onCheckboxChange={selectRumtime}
@@ -269,7 +269,9 @@ export default function Genres() {
             ) : data?.pages?.flat().length === 0 ? (
               // 검색 결과 없음
               <div className="w-full flex flex-col justify-center items-center mt-[150px]">
-                <p className="text-[18px] text-gray01">{t.noFilteringResult}</p>
+                <p className="text-[18px] text-gray01">
+                  {translation.noFilteringResult}
+                </p>
               </div>
             ) : (
               <div className="w-full md:px-10 px-[10px]">
@@ -296,7 +298,9 @@ export default function Genres() {
         ) : (
           <div className="w-full flex flex-col justify-start items-center mt-[150px]">
             <img src={selectTag} />
-            <p className="text-[18px] text-gray01">{t.noTagSelected}</p>
+            <p className="text-[18px] text-gray01">
+              {translation.noTagSelected}
+            </p>
           </div>
         )}
       </div>

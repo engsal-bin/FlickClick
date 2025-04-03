@@ -11,11 +11,14 @@ export default function GenreList({
   showGenreOptions: boolean;
 }) {
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
+
   return (
     <div className="flex flex-col gap-[10px]">
       {!showGenreOptions ? (
-        <div className="text-[13px] text-gray02">{t.noTagSelected}</div>
+        <div className="text-[13px] text-gray02">
+          {translation.noTagSelected}
+        </div>
       ) : (
         <div className="flex flex-col gap-[10px]">
           {genreStates.map((genre) => (

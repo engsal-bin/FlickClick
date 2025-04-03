@@ -6,12 +6,15 @@ import { menuTranslations } from "../../translations/menu";
 
 export default function UpcomingCredits({ movie_id }: { movie_id: number }) {
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const transition = menuTranslations[language];
 
   const [castInfos, setCastInfos] = useState([]);
   useEffect(() => {
     const fetchCredits = async () => {
-      const creditInfos = await movieAPI.getCredits(movie_id, t.languageParams);
+      const creditInfos = await movieAPI.getCredits(
+        movie_id,
+        transition.languageParams
+      );
 
       setCastInfos(creditInfos.cast);
     };
@@ -20,7 +23,7 @@ export default function UpcomingCredits({ movie_id }: { movie_id: number }) {
   return (
     <div className="w-[329px] min-h-[175px]  max-desktop:w-full h-auto">
       <div className="text-white text-[20px] max-[320px]:text-[16px mt-[10px]">
-        {t.cast}
+        {transition.cast}
       </div>
       <div className="flex mt-[20px] overflow-y-auto ">
         {castInfos.length > 0 ? (
@@ -28,7 +31,7 @@ export default function UpcomingCredits({ movie_id }: { movie_id: number }) {
             <UpcomingCreditsDetail info={info} key={index} />
           ))
         ) : (
-          <p className="text-white">{t.noInfo}</p>
+          <p className="text-white">{transition.noInfo}</p>
         )}
       </div>
     </div>

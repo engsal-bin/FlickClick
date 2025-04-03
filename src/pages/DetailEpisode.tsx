@@ -11,7 +11,7 @@ import { menuTranslations } from "../translations/menu";
 
 export default function DetailSeriesNoSeson() {
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const transition = menuTranslations[language];
   const [activeTab, setActiveTab] = useState<number>(0);
   const [seriesData, setSeriesData] = useState<TvSeriesType>();
 
@@ -56,20 +56,20 @@ export default function DetailSeriesNoSeson() {
   return (
     <>
       <DetailEpisodeIntroBox series={seriesData} episode={episodeData} />
-      <section className="flex flex-col jutify-evenly w-full tablet:gap-[50px] mobile:gap-[30px] desktop:px-[128px] tablet:px-[40px] mobile:px-[10px] mt-[30px]">
+      <section className="flex flex-col jutify-evenly w-full tablet:gap-[50px] mobile:gap-[30px] desktop:px-[128px] tablet:px-[40px] mobile:px-[10px] mt-[30px] mb-[100px]">
         {/* 영상 스와이퍼(아직 컴포넌트 완성 X) */}
         {/* 출연진 */}
         <PersonList
           seriesId={Number(locationInfo[1])}
           seasonNum={Number(locationInfo[2])}
-          label={t.cast}
+          label={transition.cast}
           type="cast"
         />
         {/* 제작진 */}
         <PersonList
           seriesId={Number(locationInfo[1])}
           seasonNum={Number(locationInfo[2])}
-          label={t.crew}
+          label={transition.crew}
           type="crew"
         />
 
@@ -108,14 +108,14 @@ export default function DetailSeriesNoSeson() {
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
           type="tv"
-          label={t.recommendation}
+          label={transition.recommendation}
         />
 
         {/* 유사작품 */}
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
           type="tv"
-          label={t.similarity}
+          label={transition.similarity}
         />
       </section>
     </>

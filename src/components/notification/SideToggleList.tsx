@@ -23,13 +23,13 @@ export default function SideToggleList({
 }: SideToggleListProps) {
   const navigate = useNavigate();
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   const myPageList = [
-    { key: "notify", label: t.notification },
-    { key: "review", label: t.review },
-    { key: "discuss", label: t.discuss },
-    { key: "scrap", label: t.scrap },
+    { key: "notify", label: translation.notification },
+    { key: "review", label: translation.review },
+    { key: "discuss", label: translation.discuss },
+    { key: "scrap", label: translation.scrap },
   ];
 
   return (

@@ -5,13 +5,13 @@ import { menuTranslations } from "../../translations/menu";
 const TabMenu = ({ selectedTab }: { selectedTab: string }) => {
   const navigate = useNavigate();
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   const tabNames = {
-    notify: t.notification,
-    review: t.review,
-    discuss: t.discuss,
-    scrap: t.scrap,
+    notify: translation.notification,
+    review: translation.review,
+    discuss: translation.discuss,
+    scrap: translation.scrap,
   };
 
   return (

@@ -15,7 +15,7 @@ export default function ArgumentReview({
   const { user } = useAuth();
   const [view, setView] = useState(false);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   const opinionDelete = async () => {
     const deleteCheck = confirm("정말 삭제하시겠습니까?");
@@ -96,7 +96,7 @@ export default function ArgumentReview({
               </div>
             </>
           ) : (
-            <p>{t.deletedOpinion}</p>
+            <p>{translation.deletedOpinion}</p>
           )}
         </div>
       </div>

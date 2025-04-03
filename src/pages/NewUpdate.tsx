@@ -14,7 +14,7 @@ export default function NewUpdate() {
   const [genreNames, setGenreNames] = useState<GenreBasicType[]>([]);
   const [allGenre, setAllgenre] = useState<GenreType[]>([]);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   const handleGoBack = () => {
     window.history.back();
@@ -29,7 +29,7 @@ export default function NewUpdate() {
   };
 
   const fetchGenre = async () => {
-    const genres = await movieAPI.getGenres(t.languageParams);
+    const genres = await movieAPI.getGenres(translation.languageParams);
     console.log("Fetched genres:", genres["genres"]);
     setAllgenre(genres["genres"]);
   };
@@ -126,7 +126,9 @@ export default function NewUpdate() {
         onClick={handleGoBack}
       />
       <div className="flex flex-col gap-[20px]">
-        <div className="text-xl font-bold text-white01">{t.newUpdate}</div>
+        <div className="text-xl font-bold text-white01">
+          {translation.newUpdate}
+        </div>
         <div className="flex gap-[10px] text-white03 font-light flex-wrap justify-start">
           {genres.map((genre) => (
             <GenreTag

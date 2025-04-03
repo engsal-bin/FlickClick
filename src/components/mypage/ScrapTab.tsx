@@ -15,7 +15,7 @@ interface ScrapTabProps {
 const ScrapTab = ({ seasonClips, episodeClips, movieClips }: ScrapTabProps) => {
   const [scrapType, setScrapType] = useState("season");
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   return (
     <div>
@@ -27,10 +27,10 @@ const ScrapTab = ({ seasonClips, episodeClips, movieClips }: ScrapTabProps) => {
             isSelected={scrapType === type}
           >
             {type === "season"
-              ? t.season
+              ? translation.season
               : type === "episode"
-                ? t.episode
-                : t.movie}
+                ? translation.episode
+                : translation.movie}
           </TagWithnotCancelIcon>
         ))}
       </div>

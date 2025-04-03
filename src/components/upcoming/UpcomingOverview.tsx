@@ -14,7 +14,7 @@ export default function UpcomingOverview({
 }) {
   const [isMiddleScreen, setIsMiddleScreen] = useState(false);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -32,10 +32,10 @@ export default function UpcomingOverview({
   return (
     <div className={`w-[329px] max-desktop:w-full max-desktop:h-auto`}>
       <div className="flex justify-between text-white02 mt-[10px] text-[20px] max-[320px]:text-[16px]">
-        <div>{t.story}</div>
+        <div>{translation.story}</div>
         {showButton && (
           <button onClick={piusViewFunction} className="flex items-center">
-            <p>{t.viewMore}</p>
+            <p>{translation.viewMore}</p>
             <img
               src={arrow}
               className={`ml-[10px] w-[18px] h-[18px] ${

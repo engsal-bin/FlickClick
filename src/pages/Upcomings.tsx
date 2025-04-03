@@ -8,12 +8,15 @@ export default function Upcomings() {
   const [upcomings, setUpcomings] = useState<UpComingMovieResultsType[]>([]);
   const [allGenre, setAllgenre] = useState<GenreType[]>([]);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   useEffect(() => {
     const fetchUpcomingMovies = async () => {
       try {
-        const upcoming = await movieAPI.getUpComingMovie(1, t.languageParams);
+        const upcoming = await movieAPI.getUpComingMovie(
+          1,
+          translation.languageParams
+        );
 
         setUpcomings(upcoming.results);
       } catch (error) {

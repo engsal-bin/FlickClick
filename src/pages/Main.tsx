@@ -14,17 +14,17 @@ export default function Main() {
   const [newUpdateData, setNewUpdateData] = useState<BasicType[]>([]);
   const [upComingData, setUpcomingData] = useState<BasicType[]>([]);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
         const [trend, onTheAirTvSeriese, nowPlayingMovie, upcoming] =
           await Promise.all([
-            commonAPI.getTrendingAll(1, "day", t.languageParams),
-            tvAPI.getOnTheAirTvSeriese(1, t.languageParams),
-            movieAPI.getNowPlayingMovie(1, t.languageParams),
-            movieAPI.getUpComingMovie(1, t.languageParams),
+            commonAPI.getTrendingAll(1, "day", translation.languageParams),
+            tvAPI.getOnTheAirTvSeriese(1, translation.languageParams),
+            movieAPI.getNowPlayingMovie(1, translation.languageParams),
+            movieAPI.getUpComingMovie(1, translation.languageParams),
           ]);
 
         setTrendingData(
@@ -101,16 +101,16 @@ export default function Main() {
       <MainThumbnail />
       <Banner />
       <Contents to="/popular" showMore trendingData={trendingData}>
-        {t.trending}
+        {translation.trending}
       </Contents>
       <Contents to="/newupdate" showMore trendingData={upComingData}>
-        {t.newUpdate}
+        {translation.newUpdate}
       </Contents>
       <Contents to="/upcomings" showMore trendingData={newUpdateData}>
-        {t.upcoming}
+        {translation.upcoming}
       </Contents>
       <Contents to="" showMore={false}>
-        {t.newYear}
+        {translation.newYear}
       </Contents>
     </div>
   );

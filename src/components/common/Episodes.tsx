@@ -27,12 +27,13 @@ export default function Episodes({
           >
             {/* 스틸컷 */}
             <div
-              className="tablet:w-[323px] mobile:w-full bg-white bg-cover bg-center rounded-[5px]"
+              className="tablet:w-[323px] mobile:w-full bg-cover bg-center rounded-[5px]"
               style={{
                 aspectRatio: "1661 / 1000",
                 backgroundImage: epi.still_path
                   ? `url(${IMAGE_BASE_URL}original${epi.still_path})`
                   : `url(${imagenone2})`,
+                border: epi.still_path ? "none" : "1px solid #535353",
               }}
             ></div>
 

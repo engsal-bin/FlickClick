@@ -15,7 +15,7 @@ export default function Reviews({
 }) {
   const [reviews, setReviews] = useState([]);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   const fetchReview = async () => {
     if (movieOrSeasonOrEpisode === "movie") {
@@ -95,7 +95,7 @@ export default function Reviews({
               />
             ))
           ) : (
-            <p className="text-white">{t.noReviews}</p>
+            <p className="text-white">{translation.noReviews}</p>
           )}
         </div>
       </div>

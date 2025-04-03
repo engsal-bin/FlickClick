@@ -20,7 +20,7 @@ export default function Argument({
   stateLifting: () => void;
 }) {
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
   const [isArgumentToggleOpen, setIsArgumentToggleOpen] = useState(false);
   const [argumentOpinions, setArgumentOpinions] = useState<OpinionType[]>([]);
   const [editContent, setEditContent] = useState(argumentContent.topic);
@@ -61,21 +61,21 @@ export default function Argument({
 
   const argumentDelete = async () => {
     if (movieOrSeasonOrEpisode === "movie") {
-      const deleteCheck = confirm(t.comfirmDelteMessage);
+      const deleteCheck = confirm(translation.comfirmDelteMessage);
       if (deleteCheck) {
         await commonAPI.deleteMovieArgument(argumentContent.id);
       }
       return;
     }
     if (movieOrSeasonOrEpisode === "season") {
-      const deleteCheck = confirm(t.comfirmDelteMessage);
+      const deleteCheck = confirm(translation.comfirmDelteMessage);
       if (deleteCheck) {
         await commonAPI.deleteSeasonArgument(argumentContent.id);
       }
       return;
     }
     if (movieOrSeasonOrEpisode === "episode") {
-      const deleteCheck = confirm(t.comfirmDelteMessage);
+      const deleteCheck = confirm(translation.comfirmDelteMessage);
       if (deleteCheck) {
         await commonAPI.deleteEpisodeArgument(argumentContent.id);
       }
@@ -163,7 +163,8 @@ export default function Argument({
                   <p>{formatDate(argumentContent.updated_at)}</p>
                   <div className="flex justify-between">
                     <p>
-                      {t.writtenBy}: <span>{argumentContent.author_name} </span>
+                      {translation.writtenBy}:{" "}
+                      <span>{argumentContent.author_name} </span>
                     </p>
                     {argumentOpinions.length == 0 &&
                       user?.id === argumentContent.author_id && (
@@ -221,7 +222,7 @@ export default function Argument({
                   />
                 ))
               ) : (
-                <p className="text-white">{t.noOpinions}</p>
+                <p className="text-white">{translation.noOpinions}</p>
               )}
             </div>
 
