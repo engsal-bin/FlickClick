@@ -36,8 +36,8 @@ type TypeState = {
   id: number;
   key: string;
   krKey: string;
-  selected: boolean;
   value: string;
+  selected: boolean;
   apiParams: string;
 };
 

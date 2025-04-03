@@ -164,7 +164,7 @@ export const movieGenreList: GenreState[] = [
   { id: 37, key: "Western", krKey: "서부", selected: false },
 ];
 
-export const typeList = [
+export const typeList: TypeState[] = [
   {
     id: 1,
     key: "Series",

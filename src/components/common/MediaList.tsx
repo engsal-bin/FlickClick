@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { mediaTypeToPathName } from "../../constants/path";
 import { IMAGE_BASE_URL } from "../../api/axios";
-import { Content } from "../../type/seriesType";
+import { Content } from "../../type/filterType";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 
@@ -25,7 +25,7 @@ export default function MediaList({
         ? `/${mediaTypeToPathName[item.media_type as "movie" | "tv"]}/${
             item.id
           }`
-        : "",
+        : ""
     ) ?? [];
 
   const navigate = useNavigate();
