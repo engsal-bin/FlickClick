@@ -7,8 +7,13 @@ import PersonList from "../components/common/PersonList";
 import Reviews from "../components/common/Reviews";
 import { tvAPI } from "../api/tv";
 import { useLocation } from "react-router-dom";
+import { useLanguageStore } from "../store/useLanguageStore";
+import { menuTranslations } from "../translations/menu";
 
 export default function DetailSeason() {
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
+
   const [activeTab, setActiveTab] = useState<number>(0);
   // 경로 정보 불러오기
   const location = useLocation();
@@ -24,10 +29,14 @@ export default function DetailSeason() {
   useEffect(() => {
     const fetchSeries = async () => {
       try {
-        const series = await tvAPI.getSeries(Number(`${locationInfo[1]}`));
+        const series = await tvAPI.getSeries(
+          Number(`${locationInfo[1]}`),
+          t.languageParams
+        );
         const season = await tvAPI.getSeason(
           Number(`${locationInfo[1]}`),
           Number(`${locationInfo[2]}`),
+          t.languageParams
         );
         setSeriesData(series);
         setSeasonData(season);
@@ -65,14 +74,14 @@ export default function DetailSeason() {
         <PersonList
           seriesId={Number(locationInfo[1])}
           seasonNum={Number(locationInfo[2])}
-          label="출연진"
+          label={t.cast}
           type="tv"
         />
         {/* 제작진 */}
         <PersonList
           seriesId={Number(locationInfo[1])}
           seasonNum={Number(locationInfo[2])}
-          label="제작진"
+          label={t.crew}
           type="tv"
         />
         {/* 에피소드 리스트 */}
@@ -116,14 +125,14 @@ export default function DetailSeason() {
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
           type="tv"
-          label="추천"
+          label={t.recommendation}
         />
 
         {/* 유사작품 */}
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
           type="tv"
-          label="유사한 작품"
+          label={t.similarity}
         />
       </section>
     </>

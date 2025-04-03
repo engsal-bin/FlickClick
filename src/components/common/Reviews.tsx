@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import InputTextarea from "./InputTextarea";
 import Review from "./Review";
 import { commonAPI } from "../../api/common";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function Reviews({
   movieOrSeasonOrEpisode,
@@ -11,6 +13,8 @@ export default function Reviews({
   contentId: string;
 }) {
   const [reviews, setReviews] = useState([]);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   const fetchReview = async () => {
     if (movieOrSeasonOrEpisode === "movie") {
@@ -56,7 +60,7 @@ export default function Reviews({
               />
             ))
           ) : (
-            <p className="text-white">리뷰가 없습니다.</p>
+            <p className="text-white">{t.noReviews}</p>
           )}
         </div>
       </div>

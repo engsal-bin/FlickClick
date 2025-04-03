@@ -1,4 +1,3 @@
-import { OttState } from "../../type/seriesType";
 import OttIcon from "../OttIcon";
 
 export default function OttTags({

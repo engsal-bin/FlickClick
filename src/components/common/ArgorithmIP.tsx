@@ -5,6 +5,8 @@ import { movieAPI } from "../../api/movie";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function ArgorithmIP({
   seriesId,
@@ -15,22 +17,36 @@ export default function ArgorithmIP({
   type: string;
   label: string;
 }) {
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
   const [contents, setContents] = useState<RecommendContentsType[]>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (type === "tv" && label === "추천") {
-          const tvResponse = await tvAPI.getRecommendTv(seriesId);
+        if (type === "tv" && label === t.recommendation) {
+          const tvResponse = await tvAPI.getRecommendTv(
+            seriesId,
+            t.languageParams
+          );
           setContents(tvResponse.results);
-        } else if (type === "movie" && label === "추천") {
-          const movieResponse = await movieAPI.getRecommendMovie(seriesId);
+        } else if (type === "movie" && label === t.recommendation) {
+          const movieResponse = await movieAPI.getRecommendMovie(
+            seriesId,
+            t.languageParams
+          );
           setContents(movieResponse.results);
-        } else if (type === "tv" && label === "유사한 작품") {
-          const tvResponse = await tvAPI.getSimilarTv(seriesId);
+        } else if (type === "tv" && label === t.similarity) {
+          const tvResponse = await tvAPI.getSimilarTv(
+            seriesId,
+            t.languageParams
+          );
           setContents(tvResponse.results);
-        } else if (type === "movie" && label === "유사한 작품") {
-          const movieResponse = await movieAPI.getSimilarMovie(seriesId);
+        } else if (type === "movie" && label === t.similarity) {
+          const movieResponse = await movieAPI.getSimilarMovie(
+            seriesId,
+            t.languageParams
+          );
           setContents(movieResponse.results);
         }
       } catch (error) {
@@ -63,7 +79,7 @@ export default function ArgorithmIP({
         {/* <div className="flex justify-start gap-[30px] tablet:h-full mobile:h-[132.5px]"> */}
         {contents?.length === 0 ? (
           <div className="text-[16px] text-white02 font-light">
-            검색결과가 없습니다.
+            {t.noResult}
           </div>
         ) : (
           contents?.map((item) => (

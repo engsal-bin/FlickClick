@@ -1,5 +1,4 @@
 import { useLanguageStore } from "../../store/useLanguageStore";
-import { YearState } from "../../type/seriesType";
 import Tag from "./Tag";
 
 export default function YearTags({

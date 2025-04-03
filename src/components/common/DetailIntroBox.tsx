@@ -13,6 +13,8 @@ import {
   postClippedData,
 } from "../../api/mypageInfo";
 import { useAuth } from "../../api/Auth";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function DetailIntroBox({
   contentId,
@@ -21,6 +23,8 @@ export default function DetailIntroBox({
   contentId?: number;
   type?: string;
 }) {
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
   const [tvContent, setTvContent] = useState<TvSeriesType>();
   const [tvSeasonContent, setTvSeasonContent] = useState<TvSeasonsType>();
   const [movieContent, setMovieContent] = useState<MovieType>();
@@ -54,14 +58,20 @@ export default function DetailIntroBox({
         }
 
         if (type === "movie") {
-          const movie = await movieAPI.getMovie(Number(contentId));
+          const movie = await movieAPI.getMovie(
+            Number(contentId),
+            t.languageParams
+          );
           setMovieContent(movie);
           setIpId(movie.id);
           setPosterPath(movie.poster_path);
           setContentName(movie.title);
           setOverview(movie.overview);
         } else if (type === "tvSeries" || type === "tvSeason") {
-          const tvSeries = await tvAPI.getSeries(Number(contentId));
+          const tvSeries = await tvAPI.getSeries(
+            Number(contentId),
+            t.languageParams
+          );
           setTvContent(tvSeries);
           setIpId(`${tvSeries.id}/${seasonId}`);
           setPosterPath(tvSeries.poster_path);
@@ -72,7 +82,8 @@ export default function DetailIntroBox({
         if (type === "tvSeason") {
           const tvSeason = await tvAPI.getSeason(
             Number(contentId),
-            Number(seasonId)
+            Number(seasonId),
+            t.languageParams
           );
           setTvSeasonContent(tvSeason);
         }
@@ -272,17 +283,17 @@ export default function DetailIntroBox({
 
                   {/* 시즌 or 에피소드 갯수 */}
                   {type === "tvSeries" && (
-                    <Tag>{`시즌 ${tvContent?.seasons.length}개`}</Tag>
+                    <Tag>{`${t.season} ${tvContent?.seasons.length}${t.countUnit}`}</Tag>
                   )}
                   {type === "tvSeason" && (
-                    <Tag>{`에피소드 ${tvSeasonContent?.episodes.length}개`}</Tag>
+                    <Tag>{`${t.episode} ${tvSeasonContent?.episodes.length}${t.countUnit}`}</Tag>
                   )}
                 </div>
               </div>
               <div className="flex flex-col gap-[10px]">
                 {/* 제작사 or 시청할 수 있는 서비스 */}
                 <p className="text-white02 text-[16px] leading-[24px]">
-                  {type === "movie" ? "제작사" : "시청할 수 있는 서비스"}
+                  {type === "movie" ? t.provider : t.streamingService}
                 </p>
 
                 {/* 시청할 수 있는 서비스 로고 */}
@@ -372,7 +383,7 @@ export default function DetailIntroBox({
                         : "text-white01"
                     }`}
                   >
-                    스크랩
+                    {t.scrap}
                   </span>
                 </button>
               )}

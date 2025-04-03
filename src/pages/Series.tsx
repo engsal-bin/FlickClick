@@ -9,7 +9,6 @@ import GridContents from "../components/common/GridContents";
 import { ottList, tvGenreList, yearList } from "../constants/tags";
 import { commonAPI } from "../api/common";
 import GridSkeletonList from "../components/skeletons/GridSkeletonList";
-import { Content, GenreState, OttState, YearState } from "../type/seriesType";
 import DefaultSeriesView from "../components/default-view/DefaultSeriesView";
 import { useLanguageStore } from "../store/useLanguageStore";
 import { menuTranslations } from "../translations/menu";

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { commonAPI } from "../../api/common";
 import { movieAPI } from "../../api/movie";
 import Contents from "../common/MediaList";
-import { Content } from "../../type/seriesType";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 

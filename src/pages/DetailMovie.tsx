@@ -5,12 +5,15 @@ import DetailIntroBox from "../components/common/DetailIntroBox";
 import PersonList from "../components/common/PersonList";
 import Reviews from "../components/common/Reviews";
 import { useLocation } from "react-router-dom";
+import { useLanguageStore } from "../store/useLanguageStore";
+import { menuTranslations } from "../translations/menu";
 
 export default function DetailMovie() {
   const [activeTab, setActiveTab] = useState<number>(0);
   const location = useLocation();
   const contentId = location.pathname.split("/")[2];
-
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
   const tabs = [
     { label: "리뷰" },
     {
@@ -29,9 +32,9 @@ export default function DetailMovie() {
         {/* 영상 스와이퍼(아직 컴포넌트 완성 X) */}
 
         {/* 출연진 */}
-        <PersonList seriesId={Number(contentId)} label="출연진" type="movie" />
+        <PersonList seriesId={Number(contentId)} label={t.cast} type="movie" />
         {/* 제작진 */}
-        <PersonList seriesId={Number(contentId)} label="제작진" type="movie" />
+        <PersonList seriesId={Number(contentId)} label={t.crew} type="movie" />
         {/* 리뷰토론 */}
         <section className="flex flex-col">
           {/* 텝 */}
@@ -60,13 +63,17 @@ export default function DetailMovie() {
         </section>
 
         {/* 추천 */}
-        <ArgorithmIP seriesId={Number(contentId)} type="movie" label="추천" />
+        <ArgorithmIP
+          seriesId={Number(contentId)}
+          type="movie"
+          label={t.recommendation}
+        />
 
         {/* 유사작품 */}
         <ArgorithmIP
           seriesId={Number(contentId)}
           type="movie"
-          label="유사한 작품"
+          label={t.similarity}
         />
       </section>
     </>

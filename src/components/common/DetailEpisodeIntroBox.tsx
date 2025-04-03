@@ -11,6 +11,8 @@ import {
   getClipsByUId,
   postClippedData,
 } from "../../api/mypageInfo";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function DetailEpisodeIntroBox({
   series,
@@ -21,6 +23,8 @@ export default function DetailEpisodeIntroBox({
 }) {
   const location = useLocation();
   const contentType = "episode";
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
   const contentId = location.pathname.split("/")[2];
   const seasonId = location.pathname.split("/")[3];
   const episodeId = location.pathname.split("/")[4];
@@ -169,20 +173,14 @@ export default function DetailEpisodeIntroBox({
         justify-between relative z-10 text-left text-white"
             >
               <div className="w-full flex flex-col gap-[10px]">
-                {/* 제목 */}
                 <div className="font-bold text-[40px] leading-auto">
                   {episode?.name}
                 </div>
                 <div className="flex gap-[10px] text-light">
-                  {/* 에피소드 방영일 */}
                   <Tag>{episode?.air_date}</Tag>
-
-                  {/* 장르 */}
                   {series?.genres.map((genre) => (
                     <Tag key={genre.id}>{genre.name}</Tag>
                   ))}
-
-                  {/* 시즌 */}
                   {episode?.season_number && (
                     <Tag>{`시즌 ${String(episode?.season_number)}`}</Tag>
                   )}
@@ -190,10 +188,8 @@ export default function DetailEpisodeIntroBox({
 
                 <div className="flex flex-col gap-[10px]">
                   <p className="text-white02 text-[16px] leading-[24px]">
-                    시청할 수 있는 서비스
+                    {t.streamingService}
                   </p>
-
-                  {/* 시청할 수 있는 서비스 로고 */}
                   <div className="flex gap-[10px]">
                     {series?.networks.map((network) => (
                       <div
@@ -267,7 +263,7 @@ export default function DetailEpisodeIntroBox({
                       : "text-white01"
                   }`}
                 >
-                  스크랩
+                  {t.scrap}
                 </span>
               </button>
             </div>

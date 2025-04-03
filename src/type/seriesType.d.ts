@@ -1,4 +1,4 @@
-export type Content = {
+type Content = {
   adult: boolean;
   backdrop_path: string | null;
   first_air_date: string;
@@ -16,7 +16,7 @@ export type Content = {
   vote_count: number;
 };
 
-export type TvShow = {
+type TvShow = {
   id: number;
   name: string;
   overview: string;
@@ -32,14 +32,23 @@ export type TvShow = {
   popularity: number;
 };
 
-export type GenreState = {
+type TypeState = {
+  id: number;
+  key: string;
+  krKey: string;
+  selected: boolean;
+  value: string;
+  apiParams: string;
+};
+
+type GenreState = {
   id: number;
   key: string;
   krKey: string;
   selected: boolean;
 };
 
-export type YearState = {
+type YearState = {
   id: number;
   key: string;
   krKey: string;
@@ -48,7 +57,7 @@ export type YearState = {
   selected: boolean;
 };
 
-export type OttState = {
+type OttState = {
   id: number;
   key: string;
   src: string;
@@ -56,21 +65,27 @@ export type OttState = {
   selected: boolean;
 };
 
-export type Genres = {
+type Genres = {
   id: number;
   name: string;
+  key: string;
+  krKey: string;
 };
 
-export type CheckedState = {
+type CheckedState = {
   [key: string]: boolean;
 };
 
-export type RuntimeRange = {
-  gte: number | null;
-  lte: number | null;
+type RuntimeRange = {
+  id: nunber;
+  key: string;
+  krKey: string;
+  gte: number;
+  lte: number;
+  selected: boolean;
 };
 
-export type Content = {
+type Content = {
   id: number;
   title: string;
   name: string;
@@ -91,3 +106,33 @@ type FilterOptions = {
   language: string;
   region: string;
 };
+
+interface Genres {
+  id: number;
+  name: string;
+  key: string;
+  krKey: string;
+}
+
+interface YearState {
+  id: number;
+  key: string;
+  krKey: string;
+  gte: string;
+  lte: string;
+  selected: boolean;
+}
+
+interface OttState {
+  id: number;
+  name: string;
+  src: string;
+  alt: string;
+  selected: boolean;
+}
+
+interface CheckedState {
+  series: boolean;
+  movies: boolean;
+  [key: string]: boolean;
+}

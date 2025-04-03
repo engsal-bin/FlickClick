@@ -6,7 +6,6 @@ import watcha from "../assets/icon/ottIcon/watcha.svg";
 import primeVideo from "../assets/icon/ottIcon/primeVideo.svg";
 import netflix from "../assets/icon/ottIcon/netflix.svg";
 import wavve from "../assets/icon/ottIcon/wavve.svg";
-import { GenreState, OttState, YearState } from "../type/seriesType";
 
 export const yearList: YearState[] = [
   {
@@ -163,4 +162,74 @@ export const movieGenreList: GenreState[] = [
   { id: 53, key: "Thriller", krKey: "스릴러", selected: false },
   { id: 10752, key: "War", krKey: "전쟁", selected: false },
   { id: 37, key: "Western", krKey: "서부", selected: false },
+];
+
+export const typeList = [
+  {
+    id: 1,
+    key: "Series",
+    krKey: "시리즈",
+    selected: false,
+    value: "series",
+    apiParams: "tv",
+  },
+  {
+    id: 2,
+    key: "Movies",
+    krKey: "영화",
+    selected: false,
+    value: "movies",
+    apiParams: "movie",
+  },
+];
+
+export const runtimeList = [
+  {
+    id: 1,
+    key: "under 15min",
+    krKey: "15분 이하",
+    gte: 0,
+    lte: 15,
+    selected: false,
+  },
+  {
+    id: 2,
+    key: "15~30min",
+    krKey: "15~30분",
+    gte: 15,
+    lte: 30,
+    selected: false,
+  },
+  {
+    id: 3,
+    key: "30~60min",
+    krKey: "30~60분",
+    gte: 30,
+    lte: 60,
+    selected: false,
+  },
+  {
+    id: 4,
+    key: "60~90min",
+    krKey: "15~30분",
+    gte: 60,
+    lte: 90,
+    selected: false,
+  },
+  {
+    id: 5,
+    key: "90~120min",
+    krKey: "90~120분",
+    gte: 90,
+    lte: 120,
+    selected: false,
+  },
+  {
+    id: 6,
+    key: "over 120min",
+    krKey: "120분 이상",
+    gte: 120,
+    lte: 800,
+    selected: false,
+  },
 ];

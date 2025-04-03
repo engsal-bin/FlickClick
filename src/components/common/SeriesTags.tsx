@@ -1,6 +1,5 @@
 import Tag from "./Tag";
 import { useLanguageStore } from "../../store/useLanguageStore";
-import { GenreState } from "../../type/seriesType";
 
 export default function Tags({
   children,
@@ -27,7 +26,7 @@ export default function Tags({
               onClick={() => selectTag(tag.id)}
               isSelected={tag.selected}
             >
-              {language === 'ko' ? tag.krKey : tag.key}
+              {language === "ko" ? tag.krKey : tag.key}
             </Tag>
           ))}
         </div>
@@ -44,7 +43,7 @@ export default function Tags({
               onClick={() => selectTag(tag.id)}
               isSelected={tag.selected}
             >
-              {language === 'ko' ? tag.krKey : tag.key}
+              {language === "ko" ? tag.krKey : tag.key}
             </Tag>
           ))}
         </div>

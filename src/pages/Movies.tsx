@@ -10,7 +10,6 @@ import GridContents from "../components/common/GridContents";
 import { ottList, movieGenreList, yearList } from "../constants/tags";
 import { commonAPI } from "../api/common";
 import GridSkeletonList from "../components/skeletons/GridSkeletonList";
-import { Content, GenreState, OttState, YearState } from "../type/seriesType";
 import { useLanguageStore } from "../store/useLanguageStore";
 import { menuTranslations } from "../translations/menu";
 
