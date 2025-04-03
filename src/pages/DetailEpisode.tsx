@@ -6,12 +6,15 @@ import PersonList from "../components/common/PersonList";
 import Reviews from "../components/common/Reviews";
 import { tvAPI } from "../api/tv";
 import { useLocation } from "react-router-dom";
+import { useLanguageStore } from "../store/useLanguageStore";
+import { menuTranslations } from "../translations/menu";
 
 export default function DetailSeriesNoSeson() {
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
   const [activeTab, setActiveTab] = useState<number>(0);
-  // 시리즈 데이터 상태
   const [seriesData, setSeriesData] = useState<TvSeriesType>();
-  // 에피소드 상태
+
   const [episodeData, setEpisodeData] = useState<EpisodeType>();
   // 경로 정보 불러오기
   const location = useLocation();
@@ -19,7 +22,6 @@ export default function DetailSeriesNoSeson() {
   const locationInfo = location.pathname.split("/").slice(1, 5);
 
   const contentId = locationInfo.slice(1).join("/");
-  // console.log("contentId =", contentId);
 
   useEffect(() => {
     const fetchEpisode = async () => {
@@ -28,7 +30,7 @@ export default function DetailSeriesNoSeson() {
         const episode = await tvAPI.getEpisode(
           Number(`${locationInfo[1]}`),
           Number(`${locationInfo[2]}`),
-          Number(`${locationInfo[3]}`),
+          Number(`${locationInfo[3]}`)
         );
         // console.log(season);
         setSeriesData(series);
@@ -60,14 +62,14 @@ export default function DetailSeriesNoSeson() {
         <PersonList
           seriesId={Number(locationInfo[1])}
           seasonNum={Number(locationInfo[2])}
-          label="출연진"
+          label={t.cast}
           type="cast"
         />
         {/* 제작진 */}
         <PersonList
           seriesId={Number(locationInfo[1])}
           seasonNum={Number(locationInfo[2])}
-          label="제작진"
+          label={t.crew}
           type="crew"
         />
 
@@ -106,14 +108,14 @@ export default function DetailSeriesNoSeson() {
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
           type="tv"
-          label="추천"
+          label={t.recommendation}
         />
 
         {/* 유사작품 */}
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
           type="tv"
-          label="유사한 작품"
+          label={t.similarity}
         />
       </section>
     </>

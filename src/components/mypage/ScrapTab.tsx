@@ -1,8 +1,10 @@
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 import ScrapEpisode from "./ScrapEpisode";
 import ScrapMovie from "./ScrapMovie";
 import ScrapSeason from "./ScrapSeason";
-import Tag from "../common/Tag";
 import { useState } from "react";
+import TagWithnotCancelIcon from "../common/TagWithnotCancelIcon";
 
 interface ScrapTabProps {
   seasonClips: SavedClips[] | null;
@@ -12,22 +14,24 @@ interface ScrapTabProps {
 
 const ScrapTab = ({ seasonClips, episodeClips, movieClips }: ScrapTabProps) => {
   const [scrapType, setScrapType] = useState("season");
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   return (
     <div>
       <div className="flex gap-[10px]">
         {["season", "episode", "movie"].map((type) => (
-          <Tag
+          <TagWithnotCancelIcon
             key={type}
             onClick={() => setScrapType(type)}
             isSelected={scrapType === type}
           >
             {type === "season"
-              ? "시즌"
+              ? t.season
               : type === "episode"
-                ? "에피소드"
-                : "영화"}
-          </Tag>
+                ? t.episode
+                : t.movie}
+          </TagWithnotCancelIcon>
         ))}
       </div>
       <div className="mt-[30px]">

@@ -4,6 +4,8 @@ import { tvAPI } from "../api/tv";
 import { movieAPI } from "../api/movie";
 import ContentsWithoutViewMore from "../components/common/ContentsWithoutViewMore";
 import GenreTag from "../components/common/GenreTag";
+import { useLanguageStore } from "../store/useLanguageStore";
+import { menuTranslations } from "../translations/menu";
 
 export default function NewUpdate() {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
@@ -11,6 +13,8 @@ export default function NewUpdate() {
   const [genres, setGenres] = useState<GenreBasicType[]>([]);
   const [genreNames, setGenreNames] = useState<GenreBasicType[]>([]);
   const [allGenre, setAllgenre] = useState<GenreType[]>([]);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   const handleGoBack = () => {
     window.history.back();
@@ -25,7 +29,7 @@ export default function NewUpdate() {
   };
 
   const fetchGenre = async () => {
-    const genres = await movieAPI.getGenres();
+    const genres = await movieAPI.getGenres(t.languageParams);
     console.log("Fetched genres:", genres["genres"]);
     setAllgenre(genres["genres"]);
   };
@@ -47,7 +51,7 @@ export default function NewUpdate() {
             media_type: "tv",
             name: item.name,
             genre_ids: item.genre_ids,
-          }),
+          })
         ),
         ...nowPlayingMovie.results.map((item: NowPlayingMovieResultsType) => ({
           poster_path:
@@ -79,7 +83,7 @@ export default function NewUpdate() {
       setGenreNames(newGenreNames);
 
       const uniqueGenres = Array.from(
-        new Set(newGenreNames.map((genre) => genre.name)),
+        new Set(newGenreNames.map((genre) => genre.name))
       )
         .map((name) => newGenreNames.find((genre) => genre.name === name))
         .filter((genre): genre is GenreBasicType => genre !== undefined);
@@ -109,8 +113,8 @@ export default function NewUpdate() {
     selectedGenres.length > 0
       ? newUpdateImgSrc.filter((info) =>
           selectedGenres.every((selectedGenre) =>
-            info.genre_ids.includes(selectedGenre),
-          ),
+            info.genre_ids.includes(selectedGenre)
+          )
         )
       : newUpdateImgSrc;
 
@@ -122,7 +126,7 @@ export default function NewUpdate() {
         onClick={handleGoBack}
       />
       <div className="flex flex-col gap-[20px]">
-        <div className="text-xl font-bold text-white01">신규 업데이트</div>
+        <div className="text-xl font-bold text-white01">{t.newUpdate}</div>
         <div className="flex gap-[10px] text-white03 font-light flex-wrap justify-start">
           {genres.map((genre) => (
             <GenreTag

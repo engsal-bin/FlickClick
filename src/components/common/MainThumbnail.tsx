@@ -4,8 +4,10 @@ import { tvAPI } from "../../api/tv";
 import { movieAPI } from "../../api/movie";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css"; // Swiper 스타일 import
+import "swiper/swiper-bundle.css";
 import { Pagination } from "swiper/modules";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function MainThumbnail() {
   const [contents, setContents] = useState<trendContentType[]>();
@@ -13,14 +15,15 @@ export default function MainThumbnail() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const swiperRef = useRef<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const trendTv = await tvAPI.getTrendTv();
-        const trendMovie = await movieAPI.getTrendMovie();
-
+        const trendTv = await tvAPI.getTrendTv(t.languageParams);
+        const trendMovie = await movieAPI.getTrendMovie(t.languageParams);
         const shuffleArray = (array: trendContentType[]) => {
           return array
             .map((item) => ({ item, sortKey: Math.random() }))
@@ -33,7 +36,6 @@ export default function MainThumbnail() {
           ...trendMovie.results,
         ]);
 
-        // 백드롭패스 이미지가 있는 것들만 필터링 후 5개 자르기
         if (location.pathname === "/") {
           setContents(
             trendSum
@@ -69,7 +71,7 @@ export default function MainThumbnail() {
       }
     };
     fetchData();
-  }, [location.pathname]);
+  }, [location.pathname, t.languageParams]);
 
   // swiperRef.current가 초기화되면 activeIndex로 currentIndex 설정
   useEffect(() => {
@@ -94,9 +96,9 @@ export default function MainThumbnail() {
       ) : (
         <Swiper
           modules={[Pagination]}
-          spaceBetween={10} // 슬라이드 사이 간격
-          slidesPerView={1} // 한 번에 보여지는 슬라이드 수
-          loop={true} // 무한 반복
+          spaceBetween={10}
+          slidesPerView={1}
+          loop={true}
           className="w-full hidden tablet:flex"
           pagination={{
             clickable: true,
@@ -163,7 +165,7 @@ export default function MainThumbnail() {
       {/* mobile 전용 */}
       {isLoading ? (
         <div className="animate-pulse w-full mobile:flex tablet:hidden">
-          <div className="w-full h-[420px] bg-gray-700 flex flex-col justify-end items-start gap-[10px] relative z-10 text-white bg-gray-700 rounded-md py-[50px] px-[30px]">
+          <div className="w-full h-[420px] flex flex-col justify-end items-start gap-[10px] relative z-10 text-white bg-gray-700 rounded-md py-[50px] px-[30px]">
             <div className="w-full h-[40px] bg-gray-600 rounded-md"></div>
             <div className="w-full h-[120px] bg-gray-600 rounded-md"></div>
           </div>

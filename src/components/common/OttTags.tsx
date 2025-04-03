@@ -19,7 +19,7 @@ export default function OttTags({
           <OttIcon
             key={service.key}
             src={service.src}
-            isSelected={service.selected} 
+            isSelected={service.selected}
             onClick={() => selectTag(service.id)}
             alt={service.alt}
           />

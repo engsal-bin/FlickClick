@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import arrowRight from "../../assets/icon/arrow/arrowRight.svg";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import noImage from "../../assets/icon/imagenone2.svg";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 interface SeasonType {
   air_date: string;
@@ -23,6 +25,9 @@ export default function SeasonBox({
   seriesId: number;
   season?: SeasonType;
 }) {
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
+
   return (
     <Link
       to={`/detailseason/${seriesId}/${season?.season_number}`}
@@ -71,7 +76,8 @@ export default function SeasonBox({
 
               {/* 평점 */}
               <p className="tablet:text-[24px] mobile:text-[14px] text-gray03">
-                {season?.vote_average.toFixed(1)}점
+                {season?.vote_average.toFixed(1)}
+                {t.scoreUnit}
               </p>
             </div>
           </div>

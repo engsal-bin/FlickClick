@@ -5,6 +5,8 @@ import { commonAPI } from "../../api/common";
 import { useAuth } from "../../api/Auth";
 import { supabase } from "../../api";
 
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 export default function InputTextarea({
   reviewOrArgumentOrOpinion,
   movieOrSeasonOrEpisode,
@@ -16,6 +18,8 @@ export default function InputTextarea({
   contentId: string | number;
   stateLifting: () => void;
 }) {
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
   const [text, setText] = useState("");
   const [isSend, setIsSend] = useState(false);
   const [placeHolder, setPlaceHolder] = useState("");
@@ -60,6 +64,7 @@ export default function InputTextarea({
       setText("");
     }
   };
+
   useEffect(() => {
     const movieArgumentOpinionSubscription = supabase
       .channel("movie_argument_comment")
@@ -103,14 +108,15 @@ export default function InputTextarea({
       seasonArgumentOpinionSubscription.unsubscribe();
     };
   }, []);
+
   useEffect(() => {
     text.trim() ? setIsSend(true) : setIsSend(false);
     if (reviewOrArgumentOrOpinion === "review") {
-      setPlaceHolder("리뷰를 입력해주세요");
+      setPlaceHolder(t.reviewPlaceholder);
     } else if (reviewOrArgumentOrOpinion === "argument") {
-      setPlaceHolder("토론 주제를 입력해주세요");
+      setPlaceHolder(t.argumentPlaceholder);
     } else {
-      setPlaceHolder("의견를 입력해주세요");
+      setPlaceHolder(t.opinionPlaceholder);
     }
   }, [text]);
 

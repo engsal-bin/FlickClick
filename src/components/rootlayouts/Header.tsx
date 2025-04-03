@@ -10,6 +10,8 @@ import burgerButton from "../../assets/icon/burgerButton.svg";
 import { useAuth } from "../../api/Auth";
 import { notificationAPI } from "../../api/notification";
 import { supabase } from "../../api";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +21,10 @@ export default function Header() {
   const [previousPath, setPreviousPath] = useState("");
   const { isLoggedIn, user } = useAuth();
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const { language } = useLanguageStore();
+
+  const t = menuTranslations[language];
+
   // 모바일에서 스크롤 막기&허용
   useEffect(() => {
     const isMobile = window.innerWidth <= 768;
@@ -75,6 +81,7 @@ export default function Header() {
       notificationSubscription.unsubscribe();
     };
   }, []);
+
   return (
     <>
       <div className="w-full h-[80px] px-[50px] bg-black flex justify-between items-center">
@@ -93,7 +100,7 @@ export default function Header() {
                   : ""
               }`}
             >
-              시리즈
+              {t.series}
             </Link>
             <Link
               to="/movies"
@@ -103,7 +110,7 @@ export default function Header() {
                   : ""
               }`}
             >
-              영화
+              {t.movies}
             </Link>
             <Link
               to="/genres"
@@ -113,7 +120,7 @@ export default function Header() {
                   : ""
               }`}
             >
-              장르
+              {t.genres}
             </Link>
           </div>
           {/* mobile 전용 */}
@@ -127,11 +134,11 @@ export default function Header() {
         {/* 우측 메뉴 */}
         <>
           {/* tablet 이상 */}
-          <div className=" hidden tablet:flex w-[189px] h-[35px] justify-between items-center  text-white01 text-[14px] font-bold">
+          <div className="hidden tablet:flex w-[189px] h-[35px] justify-between items-center text-white01 text-[14px] font-bold">
             {/* 검색 버튼 */}
             <img
               src={isSearch ? cancelIcon : searchIcon}
-              alt="Toggle Searchbar"
+              alt={t.search}
               className={`cursor-pointer w-[20px] ${
                 isSearch ? "w-[18px] mx-[4px]" : "w-[26px]"
               }`}
@@ -157,13 +164,13 @@ export default function Header() {
                 </div>
               </Link>
             ) : (
-              <Link to="/login">로그인을 해주세요</Link>
+              <Link to="/login">{t.login}</Link>
             )}
             {/* 알림창 버튼 */}
             {isLoggedIn && (
               <img
                 src={arrow01}
-                alt="Toggle Notification"
+                alt={t.notification}
                 className="flex cursor-pointer"
                 onClick={() => {
                   setIsOpen((prev) => !prev);
@@ -176,7 +183,7 @@ export default function Header() {
             {/* 검색 버튼 */}
             <img
               src={isSearch ? cancelIcon : searchIcon}
-              alt="Toggle Searchbar"
+              alt={t.search}
               className="cursor-pointer w-[20px]"
               onClick={() => {
                 setIsSearch((prev) => !prev);
@@ -185,7 +192,7 @@ export default function Header() {
             {/* 햄버거 버튼 */}
             <img
               src={burgerButton}
-              alt="Toggle Notification"
+              alt={t.notification}
               className="cursor-pointer flex w-[20px]"
               onClick={() => {
                 setIsOpen((prev) => !prev);

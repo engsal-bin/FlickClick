@@ -2,7 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { mediaTypeToPathName } from "../../constants/path";
 import { IMAGE_BASE_URL } from "../../api/axios";
-import { Content } from "../../type/seriesType";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
+import defaultImage from "../../assets/icon/imagenone2.svg";
 
 interface ChildProps {
   to: string;
@@ -23,10 +25,12 @@ export default function MediaList({
         ? `/${mediaTypeToPathName[item.media_type as "movie" | "tv"]}/${
             item.id
           }`
-        : "",
+        : ""
     ) ?? [];
 
   const navigate = useNavigate();
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   if (data)
     return (
@@ -39,7 +43,7 @@ export default function MediaList({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[20px]">
-                더보기
+                {t.viewMore}
               </Link>
             )}
           </div>
@@ -48,8 +52,12 @@ export default function MediaList({
             {data.map((item, index) => {
               return (
                 <img
-                  className="w-[200px] h-[265px] border-[1px] rounded-[8px] border-gray01"
-                  src={`${IMAGE_BASE_URL}original${item.poster_path}`}
+                  className="w-[200px] h-[265px] rounded-[8px]"
+                  src={
+                    item.poster_path
+                      ? `${IMAGE_BASE_URL}original${item.poster_path}`
+                      : defaultImage
+                  }
                   alt={item.name}
                   key={index}
                   onClick={() => {
@@ -69,7 +77,7 @@ export default function MediaList({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[12px]">
-                더보기
+                {t.viewMore}
               </Link>
             )}
           </div>

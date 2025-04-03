@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useLanguageStore } from "../store/useLanguageStore";
+import { menuTranslations } from "../translations/menu";
 
 import { commonAPI } from "../api/common.ts";
 import { movieAPI } from "../api/movie.ts";
@@ -11,16 +13,18 @@ export default function Main() {
   const [trendingData, setTrendingData] = useState<BasicType[]>([]);
   const [newUpdateData, setNewUpdateData] = useState<BasicType[]>([]);
   const [upComingData, setUpcomingData] = useState<BasicType[]>([]);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
         const [trend, onTheAirTvSeriese, nowPlayingMovie, upcoming] =
           await Promise.all([
-            commonAPI.getTrendingAll(1),
-            tvAPI.getOnTheAirTvSeriese(),
-            movieAPI.getNowPlayingMovie(),
-            movieAPI.getUpComingMovie(),
+            commonAPI.getTrendingAll(1, "day", t.languageParams),
+            tvAPI.getOnTheAirTvSeriese(1, t.languageParams),
+            movieAPI.getNowPlayingMovie(1, t.languageParams),
+            movieAPI.getUpComingMovie(1, t.languageParams),
           ]);
 
         setTrendingData(
@@ -97,16 +101,16 @@ export default function Main() {
       <MainThumbnail />
       <Banner />
       <Contents to="/popular" showMore trendingData={trendingData}>
-        인기 급상승
+        {t.trending}
       </Contents>
       <Contents to="/newupdate" showMore trendingData={upComingData}>
-        신규 업데이트
+        {t.newUpdate}
       </Contents>
       <Contents to="/upcomings" showMore trendingData={newUpdateData}>
-        공개 예정
+        {t.upcoming}
       </Contents>
       <Contents to="" showMore={false}>
-        새해에 봐야하는 ☀️
+        {t.newYear}
       </Contents>
     </div>
   );

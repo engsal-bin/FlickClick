@@ -12,11 +12,14 @@ const getOnTheAirTvSeriese = async (page = 1, language = "ko-KR") => {
   }
 };
 
-const getSeries = async (series_id: number) => {
+const getSeries = async (
+  series_id: number,
+  languageParams: string = "ko-KR"
+) => {
   try {
     const response = await axiosInstance.get(`/tv/${series_id}`, {
       params: {
-        language: "ko-KR",
+        language: languageParams,
       },
     });
     return response.data;
@@ -26,15 +29,19 @@ const getSeries = async (series_id: number) => {
   }
 };
 
-const getSeason = async (series_id: number, season_number: number) => {
+const getSeason = async (
+  series_id: number,
+  season_number: number,
+  languageParams: string = "ko-KR"
+) => {
   try {
     const response = await axiosInstance.get(
       `/tv/${series_id}/season/${season_number}`,
       {
         params: {
-          language: "ko-KR",
+          language: languageParams,
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -43,15 +50,19 @@ const getSeason = async (series_id: number, season_number: number) => {
   }
 };
 
-const getSeasonCredits = async (series_id: number, season_number: number) => {
+const getSeasonCredits = async (
+  series_id: number,
+  season_number: number,
+  languageParams: string = "ko-KR"
+) => {
   try {
     const response = await axiosInstance.get(
       `/tv/${series_id}/season/${season_number}/credits`,
       {
         params: {
-          language: "ko-KR",
+          language: languageParams,
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -63,7 +74,7 @@ const getSeasonCredits = async (series_id: number, season_number: number) => {
 const getEpisode = async (
   series_id: number,
   season_number: number,
-  episode_number: number,
+  episode_number: number
 ) => {
   try {
     const response = await axiosInstance.get(
@@ -72,7 +83,7 @@ const getEpisode = async (
         params: {
           language: "ko-KR",
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -93,12 +104,12 @@ const getTrendTv = async (language = "ko-KR") => {
   }
 };
 
-const getRecommendTv = async (series_id: number) => {
+const getRecommendTv = async (series_id: number, languageParams = "ko-KR") => {
   try {
     const response = await axiosInstance.get(
       `/tv/${series_id}/recommendations`,
       {
-        params: { language: "ko-KR", page: 1 },
+        params: { language: languageParams, page: 1 },
       }
     );
     return response.data;
@@ -108,10 +119,13 @@ const getRecommendTv = async (series_id: number) => {
   }
 };
 
-const getSimilarTv = async (series_id: number) => {
+const getSimilarTv = async (
+  series_id: number,
+  languageParams: string = "ko-KR"
+) => {
   try {
     const response = await axiosInstance.get(`/tv/${series_id}/similar`, {
-      params: { language: "ko-KR", page: 1 },
+      params: { language: languageParams, page: 1 },
     });
     return response.data;
   } catch (error) {
@@ -121,6 +135,7 @@ const getSimilarTv = async (series_id: number) => {
 };
 
 const getGenres = async (language = "ko-KR") => {
+  console.log("언어", language);
   try {
     const response = await axiosInstance.get(`/genre/tv/list`, {
       params: { language },

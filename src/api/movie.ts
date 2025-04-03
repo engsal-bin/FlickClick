@@ -45,7 +45,7 @@ const getTrendMovie = async (language = "ko-KR") => {
   }
 };
 
-const getCredits = async (movie_id: number, language = "ko-KR") => {
+const getCredits = async (movie_id: number, language: string = "ko-KR") => {
   try {
     const response = await axiosInstance.get(`/movie/${movie_id}/credits`, {
       params: { language },
@@ -73,7 +73,7 @@ const getProviders = async (movie_id: number, language = "ko-KR") => {
       `/movie/${movie_id}/watch/providers`,
       {
         params: { language },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -81,11 +81,11 @@ const getProviders = async (movie_id: number, language = "ko-KR") => {
   }
 };
 
-const getMovie = async (movie_id: number) => {
+const getMovie = async (movie_id: number, languageParams: string = "ko-KR") => {
   try {
     const response = await axiosInstance.get(`/movie/${movie_id}`, {
       params: {
-        language: "ko-KR",
+        language: languageParams,
       },
     });
     return response.data;
@@ -94,12 +94,15 @@ const getMovie = async (movie_id: number) => {
   }
 };
 
-const getRecommendMovie = async (series_id: number) => {
+const getRecommendMovie = async (
+  series_id: number,
+  languageParams: string = "ko-KR"
+) => {
   try {
     const response = await axiosInstance.get(
       `/movie/${series_id}/recommendations`,
       {
-        params: { language: "ko-KR", page: 1 },
+        params: { language: languageParams, page: 1 },
       }
     );
     return response.data;
@@ -109,10 +112,13 @@ const getRecommendMovie = async (series_id: number) => {
   }
 };
 
-const getSimilarMovie = async (series_id: number) => {
+const getSimilarMovie = async (
+  series_id: number,
+  languageParams: string = "ko-KR"
+) => {
   try {
     const response = await axiosInstance.get(`/movie/${series_id}/similar`, {
-      params: { language: "ko-KR", page: 1 },
+      params: { language: languageParams, page: 1 },
     });
     return response.data;
   } catch (error) {

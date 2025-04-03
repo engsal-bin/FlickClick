@@ -2,6 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { mediaTypeToPathName } from "../../constants/path";
 import { useEffect, useRef, useState } from "react";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
+import defaultImage from "../../assets/icon/imagenone2.svg";
 
 interface ChildProps {
   to: string;
@@ -24,24 +27,25 @@ export default function Contents({
         ? `/${mediaTypeToPathName[item.media_type as "movie" | "tv"]}/${
             item.id
           }`
-        : "",
+        : ""
     ) ?? [];
   const navigate = useNavigate();
   const dataRef = useRef<HTMLDivElement>(null);
   const [isOverflow, setIsOverflow] = useState(false);
   console.log(trendingData);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   // 마우스 휠 이벤트 핸들러
   const handleWheel = (event: WheelEvent) => {
     if (dataRef.current) {
-      // dataRef.current의 위치와 크기 정보
       const rect = dataRef.current.getBoundingClientRect();
       const isMouseInBounds =
         event.clientY >= rect.top && event.clientY <= rect.bottom;
 
       if (isMouseInBounds) {
-        event.preventDefault(); // 세로 스크롤 막기
-        dataRef.current.scrollLeft += event.deltaY; // deltaY 값에 따라 가로 스크롤 적용
+        event.preventDefault();
+        dataRef.current.scrollLeft += event.deltaY;
       }
     }
   };
@@ -90,7 +94,7 @@ export default function Contents({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[20px]">
-                더보기
+                {t.viewMore}
               </Link>
             )}
           </div>
@@ -102,11 +106,13 @@ export default function Contents({
             {trendingData?.map((_, index) => {
               return (
                 <img
-                  className="w-[200px] h-[265px] border-[1px] rounded-[8px] border-gray01 cursor-pointer"
-                  src={trendingData[index].poster_path}
+                  className={`w-[200px] h-[265px] rounded-[8px] cursor-pointer `}
+                  src={trendingData[index].poster_path || defaultImage}
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = defaultImage;
+                  }}
                   key={index}
                   onClick={() => {
-                    // 이미지 클릭 시 해당 경로로 이동
                     navigate(path[index]);
                   }}
                 />
@@ -123,7 +129,7 @@ export default function Contents({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[12px]">
-                더보기
+                {t.viewMore}
               </Link>
             )}
           </div>
@@ -132,8 +138,11 @@ export default function Contents({
             {trendingData.map((_, index) => {
               return (
                 <img
-                  className="w-[200px] h-[265px] border-[1px] rounded-[8px] border-gray01 cursor-pointer"
-                  src={trendingData[index].poster_path}
+                  className={`w-[200px] h-[265px]  rounded-[8px]  cursor-pointer`}
+                  src={trendingData[index].poster_path || defaultImage}
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = defaultImage;
+                  }}
                   key={index}
                   onClick={() => {
                     navigate(path[index]);

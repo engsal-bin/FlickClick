@@ -3,6 +3,8 @@ import { tvAPI } from "../../api/tv";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import { movieAPI } from "../../api/movie";
 import imagenone from "../../assets/icon/imagenone.svg";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function PersonList({
   seriesId,
@@ -18,25 +20,26 @@ export default function PersonList({
   const [personData, setPersonData] = useState<PersonDataType[]>([]);
   const personListRef = useRef<HTMLDivElement>(null);
   const [isOverflow, setIsOverflow] = useState(false);
-  // console.log(seriesId);
-  // console.log(seasonNum);
-  // console.log(personData);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
-  // Tv 시리즈 데이터 불러오기
   useEffect(() => {
-    // seriesId와 seasonNum이 유효한지 확인
     if (!seriesId || !seasonNum) {
-      return; // 값이 없으면 API 요청을 하지 않음
+      return;
     }
 
     const fetchPerson = async () => {
       try {
-        const person = await tvAPI.getSeasonCredits(seriesId, seasonNum);
+        const person = await tvAPI.getSeasonCredits(
+          seriesId,
+          seasonNum,
+          t.languageParams
+        );
         console.log(person);
 
-        if (label === "출연진") {
+        if (label === t.cast) {
           setPersonData(person.cast);
-        } else if (label === "제작진") {
+        } else if (label === t.crew) {
           setPersonData(person.crew);
         }
       } catch (error) {
@@ -51,11 +54,11 @@ export default function PersonList({
     if (type === "movie") {
       const fetchPerson = async () => {
         try {
-          const person = await movieAPI.getCredits(seriesId);
+          const person = await movieAPI.getCredits(seriesId, t.languageParams);
 
-          if (label === "출연진") {
+          if (label === t.cast) {
             setPersonData(person.cast);
-          } else if (label === "제작진") {
+          } else if (label === t.crew) {
             setPersonData(person.crew);
           }
         } catch (error) {
@@ -133,19 +136,19 @@ export default function PersonList({
             <div
               key={
                 person.credit_id +
-                `${label === "출연진" ? person.character : person.department}`
+                `${label === t.cast ? person.character : person.department}`
               }
               className="flex flex-col gap-[5px] items-center"
             >
               {/* 프로필 이미지 */}
               <div
                 className="bg-white tablet:w-[100px] mobile:w-[60px] 
-                aspect-square bg-cover bg-center rounded-full z-10
-                border-[1px] border-main"
+                aspect-square bg-cover bg-center rounded-full z-10"
                 style={{
                   backgroundImage: person.profile_path
                     ? `url(${IMAGE_BASE_URL}original${person.profile_path})`
-                    : `url(${imagenone})`, // 기본 이미지 처리
+                    : `url(${imagenone})`,
+                  border: person.profile_path ? "none" : "1px solid #4CC9F0",
                 }}
               ></div>
 
@@ -156,12 +159,12 @@ export default function PersonList({
 
               {/* 역할 */}
               <div className="w-full text-[16px] leading-auto text-gray03 text-center">
-                {label === "출연진" ? person.character : person.department}
+                {label === t.cast ? person.character : person.department}
               </div>
             </div>
           ))
         ) : (
-          <div className="text-center text-gray03">{label} 정보 없음</div>
+          <div className="text-center text-gray03">{t.noInfo}</div>
         )}
       </div>
     </div>

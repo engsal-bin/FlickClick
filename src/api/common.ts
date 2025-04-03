@@ -1,3 +1,4 @@
+import { Content } from "../type/filterType";
 import { axiosInstance } from "./axios";
 import { supabase } from "./index.ts";
 import { movieAPI } from "./movie.ts";
@@ -9,7 +10,7 @@ const updated_at = new Date().toISOString();
 const getTrendingAll = async (
   page: number,
   day = "day",
-  language = "ko-KR",
+  language = "ko-KR"
 ) => {
   try {
     const response = await axiosInstance.get(`/trending/all/${day}`, {
@@ -32,31 +33,17 @@ const getDiscover = async (
   region: string = "US",
   page: number = 1,
   runtimeGte: number | null = null,
-  runtimeLte: number | null = null,
+  runtimeLte: number | null = null
 ): Promise<Content[]> => {
   let endpoint = `/discover/${targetType}?language=${language}&watch_region=${region}&page=${page}`;
 
-  console.log(
-    "디스커버 API 호출 TargetType:",
-    genres,
-    dateGte,
-    ottPlatforms,
-    runtimeGte,
-    runtimeLte
-  )
   if (genres.length > 0) endpoint += `&with_genres=${genres.join("|")}`;
-  if (dateGte)
-    endpoint += `&first_air_date.gte=${dateGte}`;
-  if (dateLte)
-    endpoint += `&first_air_date.lte=${dateLte}`;
+  if (dateGte) endpoint += `&first_air_date.gte=${dateGte}`;
+  if (dateLte) endpoint += `&first_air_date.lte=${dateLte}`;
   if (ottPlatforms.length > 0)
     endpoint += `&with_watch_providers=${ottPlatforms.join("|")}`;
-  if (runtimeGte)
-    endpoint += `&with_runtime.gte=${runtimeGte}`;
-  if (runtimeLte)
-    endpoint += `&with_runtime.lte=${runtimeLte}`;
-
-  console.log("디스커버 api 엔드포인트", endpoint)
+  if (runtimeGte) endpoint += `&with_runtime.gte=${runtimeGte}`;
+  if (runtimeLte) endpoint += `&with_runtime.lte=${runtimeLte}`;
 
   try {
     const { data } = await axiosInstance.get(endpoint);
@@ -178,7 +165,7 @@ const postArgumentOpinion = async (
   argument_id: number,
   content: string,
   author_id: string,
-  argumentType: string,
+  argumentType: string
 ) => {
   try {
     if (argumentType === "movie") {

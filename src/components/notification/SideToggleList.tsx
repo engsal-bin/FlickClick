@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 import arrowBottom from "../../assets/icon/arrow/arrowBottom.svg";
 import arrowRight from "../../assets/icon/arrow/arrowRight.svg";
 
@@ -14,13 +15,6 @@ interface SideToggleListProps {
   onClicked: (key: string) => void;
 }
 
-const myPageList = [
-  { key: "notify", label: "알림" },
-  { key: "review", label: "리뷰" },
-  { key: "discuss", label: "토론" },
-  { key: "scrap", label: "스크랩" },
-];
-
 export default function SideToggleList({
   title,
   id,
@@ -28,6 +22,15 @@ export default function SideToggleList({
   onClicked,
 }: SideToggleListProps) {
   const navigate = useNavigate();
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
+
+  const myPageList = [
+    { key: "notify", label: t.notification },
+    { key: "review", label: t.review },
+    { key: "discuss", label: t.discuss },
+    { key: "scrap", label: t.scrap },
+  ];
 
   return (
     <div className="w-full h-full border-white border-1">

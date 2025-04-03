@@ -7,6 +7,8 @@ import { commonAPI } from "../../api/common";
 import { formatDate } from "../../utils/formattingDate";
 import { supabase } from "../../api";
 import { useAuth } from "../../api/Auth";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 export default function Argument({
   argumentContent,
@@ -17,6 +19,8 @@ export default function Argument({
   movieOrSeasonOrEpisode: movieOrSeasonOrEpisodeType;
   stateLifting: () => void;
 }) {
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
   const [isArgumentToggleOpen, setIsArgumentToggleOpen] = useState(false);
   const [argumentOpinions, setArgumentOpinions] = useState<OpinionType[]>([]);
   const [editContent, setEditContent] = useState(argumentContent.topic);
@@ -57,21 +61,21 @@ export default function Argument({
 
   const argumentDelete = async () => {
     if (movieOrSeasonOrEpisode === "movie") {
-      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      const deleteCheck = confirm(t.comfirmDelteMessage);
       if (deleteCheck) {
         await commonAPI.deleteMovieArgument(argumentContent.id);
       }
       return;
     }
     if (movieOrSeasonOrEpisode === "season") {
-      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      const deleteCheck = confirm(t.comfirmDelteMessage);
       if (deleteCheck) {
         await commonAPI.deleteSeasonArgument(argumentContent.id);
       }
       return;
     }
     if (movieOrSeasonOrEpisode === "episode") {
-      const deleteCheck = confirm("정말 삭제하시겠습니까?");
+      const deleteCheck = confirm(t.comfirmDelteMessage);
       if (deleteCheck) {
         await commonAPI.deleteEpisodeArgument(argumentContent.id);
       }
@@ -159,7 +163,7 @@ export default function Argument({
                   <p>{formatDate(argumentContent.updated_at)}</p>
                   <div className="flex justify-between">
                     <p>
-                      작성자: <span>{argumentContent.author_name}</span>
+                      {t.writtenBy}: <span>{argumentContent.author_name} </span>
                     </p>
                     {argumentOpinions.length == 0 &&
                       user?.id === argumentContent.author_id && (
@@ -217,7 +221,7 @@ export default function Argument({
                   />
                 ))
               ) : (
-                <p className="text-white">의견이 없습니다.</p>
+                <p className="text-white">{t.noOpinions}</p>
               )}
             </div>
 
@@ -228,7 +232,6 @@ export default function Argument({
               movieOrSeasonOrEpisode={movieOrSeasonOrEpisode}
             />
           </div>
-          b
         </div>
       )}
     </div>
