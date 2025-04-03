@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import { movieAPI } from "../api/movie";
 import Upcoming from "../components/upcoming/Upcoming";
+import { useLanguageStore } from "../store/useLanguageStore";
+import { menuTranslations } from "../translations/menu";
 
 export default function Upcomings() {
   const [upcomings, setUpcomings] = useState<UpComingMovieResultsType[]>([]);
   const [allGenre, setAllgenre] = useState<GenreType[]>([]);
+  const { language } = useLanguageStore();
+  const t = menuTranslations[language];
 
   useEffect(() => {
     const fetchUpcomingMovies = async () => {
       try {
-        const upcoming = await movieAPI.getUpComingMovie();
+        const upcoming = await movieAPI.getUpComingMovie(1, t.languageParams);
 
         setUpcomings(upcoming.results);
       } catch (error) {
