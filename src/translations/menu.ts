@@ -64,6 +64,8 @@ export const menuTranslations = {
     noInfo: "정보가 없습니다",
     noFilteringResult: "찾으시는 결과가 없습니다",
     story: "줄거리",
+    noOtt: "지원 가능 OTT 없음",
+    noSummary: "해당 영화의 줄거리는 아직 준비중입니다...",
   },
   en: {
     series: "Series",
@@ -130,5 +132,7 @@ export const menuTranslations = {
     noInfo: "No Information",
     noFilteringResult: "No Result with this options",
     story: "Summary",
+    noOtt: "No Streaming Service",
+    noSummary: "No Summary serviced Yet.",
   },
 };

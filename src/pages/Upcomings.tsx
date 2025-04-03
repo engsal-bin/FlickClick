@@ -25,7 +25,7 @@ export default function Upcomings() {
     };
 
     const fetchGenre = async () => {
-      const genres = await movieAPI.getGenres();
+      const genres = await movieAPI.getGenres(translation.languageParams);
       setAllgenre(genres["genres"]);
     };
 

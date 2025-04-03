@@ -6,6 +6,8 @@ import netflix from "../../assets/icon/ottIcon/netflix.svg";
 import wavve from "../../assets/icon/ottIcon/wavve.svg";
 import { useEffect, useState } from "react";
 import { movieAPI } from "../../api/movie";
+import { useLanguageStore } from "../../store/useLanguageStore";
+import { menuTranslations } from "../../translations/menu";
 
 interface OttServiceType {
   display_priority: number;
@@ -14,7 +16,6 @@ interface OttServiceType {
   provider_name: string;
 }
 
-// 모든 OTT 서비스 정보
 const ottServiceList = [
   { src: appleTv, alt: "Apple TV" },
   { src: googlePlay, alt: "Google Play Movies" },
@@ -28,6 +29,9 @@ export default function UpcomingOtt({ movie_id }: { movie_id: number }) {
   const [ottServicesInfos, setOttServicesInfos] = useState<
     { src: string; alt: string }[]
   >([]);
+
+  const { language } = useLanguageStore();
+  const translation = menuTranslations[language];
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -44,8 +48,8 @@ export default function UpcomingOtt({ movie_id }: { movie_id: number }) {
 
         const filteredServices = ottServiceList.filter((info) =>
           flatrate.some(
-            (service: OttServiceType) => service.provider_name === info.alt,
-          ),
+            (service: OttServiceType) => service.provider_name === info.alt
+          )
         );
 
         setOttServicesInfos(filteredServices);
@@ -71,7 +75,9 @@ export default function UpcomingOtt({ movie_id }: { movie_id: number }) {
           </div>
         ))
       ) : (
-        <p className="flex items-center text-sm text-gray-500">OTT 없음</p>
+        <p className="flex items-center text-sm text-gray-500">
+          {translation.noOtt}
+        </p>
       )}
     </div>
   );

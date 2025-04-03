@@ -50,7 +50,7 @@ export default function UpcomingOverview({
           isMiddleScreen || plusView ? "" : "h-[192px] overflow-hidden"
         }`}
       >
-        {overview || "해당 영화의 줄거리는 아직 준비중입니다..."}
+        {overview || translation.noSummary}
       </div>
     </div>
   );
