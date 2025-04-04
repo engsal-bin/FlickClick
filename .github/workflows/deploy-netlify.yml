@@ -25,7 +25,9 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL}}
           VITE_SUPABASE_ANON_KEY: ${{secrets.VITE_SUPABASE_ANON_KEY}}
           VITE_TMDB_API_KEY: ${{secrets.VITE_TMDB_API_KEY}}
-
+          VITE_SUPABASE_URL: ${{secrets.VITE_SUPABASE_URL}}
+          VITE_SUPABASE_ANON_KEY: ${{secrets.VITE_SUPABASE_ANON_KEY}}
+          VITE_TMDB_API_KEY: ${{secrets.VITE_TMDB_API_KEY}}
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
