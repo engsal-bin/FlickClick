@@ -1,5 +1,5 @@
 // Ott logo
-import appleTv from "../assets/icon/ottIcon/appleTv.svg";
+import appleTv from "../assets/icon/ottIcon/appleTV.svg";
 import googlePlay from "../assets/icon/ottIcon/googlePlay.svg";
 import disneyPlus from "../assets/icon/ottIcon/disneyPlus.svg";
 import watcha from "../assets/icon/ottIcon/watcha.svg";
