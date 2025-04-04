@@ -74,7 +74,7 @@ export default function DefaultMoviesView() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-[30px]">
+    <div className="w-full flex flex-col gap-[30px]">
       <Contents to="/popular" showMore={true} data={trendingData}>
         {t.movieTrending}
       </Contents>

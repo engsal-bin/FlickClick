@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-
 import { mediaTypeToPathName } from "../../constants/path";
 import { useEffect, useRef, useState } from "react";
 import { useLanguageStore } from "../../store/useLanguageStore";
@@ -100,22 +99,33 @@ export default function Contents({
           </div>
 
           <div
-            className="flex justify-between overflow-x-auto overflow-y-hidden"
+            className="flex gap-[20px] overflow-x-auto overflow-y-hidden"
             ref={dataRef}
           >
             {trendingData?.map((_, index) => {
               return (
-                <img
-                  className={`w-[200px] h-[265px] rounded-[8px] cursor-pointer `}
-                  src={trendingData[index].poster_path || defaultImage}
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = defaultImage;
-                  }}
+                <div
                   key={index}
-                  onClick={() => {
-                    navigate(path[index]);
-                  }}
-                />
+                  className="flex flex-col justify-start items-center w-[200px] shrink-0 gap-[10px]"
+                >
+                  <img
+                    className={`w-[200px] h-[265px] rounded-[8px] cursor-pointer`}
+                    src={trendingData[index].poster_path || defaultImage}
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = defaultImage;
+                    }}
+                    onClick={() => {
+                      navigate(path[index]);
+                    }}
+                  />
+                  <div className="relative w-full px-[10px]">
+                    <p className="text-left overflow-hidden whitespace-nowrap text-ellipsis hover:whitespace-normal hover:overflow-visible">
+                      {trendingData[index].name
+                        ? trendingData[index].name
+                        : trendingData[index].title}
+                    </p>
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -134,20 +144,32 @@ export default function Contents({
             )}
           </div>
 
-          <div className="flex overflow-y-auto">
+          <div className="flex overflow-y-auto gap-[10px]">
             {trendingData.map((_, index) => {
               return (
-                <img
-                  className={`w-[200px] h-[265px]  rounded-[8px]  cursor-pointer`}
-                  src={trendingData[index].poster_path || defaultImage}
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = defaultImage;
-                  }}
+                <div
                   key={index}
-                  onClick={() => {
-                    navigate(path[index]);
-                  }}
-                />
+                  className="flex flex-col justify-start items-center w-[200px] shrink-0 gap-[10px]"
+                >
+                  <img
+                    className={`w-[200px] h-[265px] rounded-[8px] cursor-pointer`}
+                    src={trendingData[index].poster_path || defaultImage}
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = defaultImage;
+                    }}
+                    key={index}
+                    onClick={() => {
+                      navigate(path[index]);
+                    }}
+                  />
+                  <div className="relative w-full">
+                    <p className="text-center overflow-hidden whitespace-nowrap text-ellipsis">
+                      {trendingData[index].name
+                        ? trendingData[index].name
+                        : trendingData[index].title}
+                    </p>
+                  </div>
+                </div>
               );
             })}
           </div>

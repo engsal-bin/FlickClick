@@ -34,7 +34,7 @@ export default function Main() {
                 "https://image.tmdb.org/t/p/w220_and_h330_face" +
                 item.poster_path,
               id: item.id,
-              title: item.title,
+              title: item.title ? item.title : item.name,
               media_type: item.media_type,
             }))
             .slice(0, 20)
