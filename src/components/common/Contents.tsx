@@ -152,14 +152,34 @@ export default function Contents({
         {/* mobile 전용 */}
         <div className="tablet:hidden flex flex-col justify-between w-full px-[10px] ">
           <div className="flex items-baseline justify-between">
+            {/* 리스트 제목 */}
             <p className="text-white01 font-bold text-[18px] mb-[30px]">
               {children}
             </p>
-            {showMore && (
-              <Link to={to} className="text-white03 text-[12px]">
-                {translation.viewMore}
-              </Link>
-            )}
+
+            <div className="flex justify-between gap-[20px]">
+              {/* 페이지네이션 (원형 토글 버튼) */}
+              <div className="flex gap-1 justify-center items-center">
+                {Array.from({ length: totalPages }).map((_, index) => (
+                  <button
+                    key={index}
+                    className={`w-[5px] h-[5px] rounded-full ${currentPage === index ? "bg-main" : "bg-white01/30"}`}
+                    onClick={() => {
+                      if (swiperRef.current) {
+                        swiperRef.current.slideTo(index * slidesPerView, 500);
+                      }
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* 더보기 */}
+              {showMore && (
+                <Link to={to} className="text-white03 text-[12px]">
+                  {translation.viewMore}
+                </Link>
+              )}
+            </div>
           </div>
 
           <Swiper
