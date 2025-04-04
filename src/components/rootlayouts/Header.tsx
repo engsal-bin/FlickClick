@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import mainLogo from "../../assets/logo/mainLogo.svg";
 import searchIcon from "../../assets/icon/searchIcon.svg";
@@ -22,6 +22,7 @@ export default function Header() {
   const { isLoggedIn, user } = useAuth();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const { language } = useLanguageStore();
+  const notificationRef = useRef<HTMLDivElement>(null);
 
   const translation = menuTranslations[language];
 
@@ -60,6 +61,20 @@ export default function Header() {
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
+
+  // 노티피케이션 창 외의 영역 클릭 시 창 닫기
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isOpen && notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const fetchNotifications = async () => {
     const { data } = await notificationAPI.getNotifications(user!.id);
@@ -219,6 +234,7 @@ export default function Header() {
             right-[18px] bg-none z-20"
             >
               <div
+                ref={notificationRef}
                 className="absolute top-0 right-0 w-[349px] h-[417px]
               bg-black border border-gray03 rounded-[10px]
               shadow-md shadow-white01/10 p-[50px] z-20"
@@ -232,6 +248,7 @@ export default function Header() {
             bg-black_50 top-[80px] left-0 z-20"
             >
               <div
+                ref={notificationRef}
                 className="absolute top-0px right-0 w-[256px] h-full
               bg-black border-0 rounded-none z-20"
               >
