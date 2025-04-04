@@ -1,11 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
-
-import { mediaTypeToPathName } from "../../constants/path";
+import { Link } from "react-router-dom";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 import defaultImage from "../../assets/icon/imagenone2.svg";
-import { useEffect, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
+import { Navigation, Pagination } from "swiper/modules";
 
 interface ChildProps {
   to: string;
@@ -20,16 +20,6 @@ export default function MediaList({
   data,
   children,
 }: ChildProps) {
-  const path =
-    data?.map((item) =>
-      item.media_type && mediaTypeToPathName[item.media_type as "movie" | "tv"]
-        ? `/${mediaTypeToPathName[item.media_type as "movie" | "tv"]}/${
-            item.id
-          }`
-        : ""
-    ) ?? [];
-
-  const navigate = useNavigate();
   const { language } = useLanguageStore();
   const translation = menuTranslations[language];
 
@@ -49,40 +39,52 @@ export default function MediaList({
             )}
           </div>
 
-          <div
-            className="flex gap-[20px] overflow-x-auto overflow-y-hidden"
-            ref={dataRef}
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={10}
+            slidesPerView={3}
+            className="w-full hidden tablet:flex"
+            breakpoints={{
+              900: { slidesPerView: 4 },
+              1100: { slidesPerView: 5 },
+              1300: { slidesPerView: 6 },
+            }}
           >
             {data.map((item, index) => {
               return (
-                <div
-                  key={index}
-                  className="flex flex-col justify-start items-center w-[200px] shrink-0 gap-[10px]"
-                >
-                  <img
-                    className="w-[200px] h-[265px] rounded-[8px] cursor-pointer"
-                    src={
-                      item.poster_path
-                        ? `${IMAGE_BASE_URL}original${item.poster_path}`
-                        : defaultImage
-                    }
-                    alt={item.name}
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = defaultImage;
+                <SwiperSlide key={index}>
+                  <div
+                    key={index}
+                    className="w-[200px] h-[265px] rounded-[8px] cursor-pointer
+                    bg-cover bg-center"
+                    style={{
+                      backgroundImage: `url(${
+                        item.poster_path
+                          ? `${IMAGE_BASE_URL}original${item.poster_path}`
+                          : item.backdrop_path
+                            ? `${IMAGE_BASE_URL}original${item.backdrop_path}`
+                            : defaultImage
+                      })`,
                     }}
-                    onClick={() => {
-                      navigate(path[index]);
-                    }}
-                  />
-                  <div className="relative w-full px-[10px]">
+                  >
+                    <Link
+                      to={
+                        item.title
+                          ? `/detailmovie/${item.id}`
+                          : `/detailseries/${item.id}`
+                      }
+                      className="block w-full h-full"
+                    ></Link>
+                  </div>
+                  <div className="relative w-[200px] px-[10px]">
                     <p className="text-left overflow-hidden whitespace-nowrap text-ellipsis hover:whitespace-normal hover:overflow-visible">
                       {item.name ? item.name : item.title}
                     </p>
                   </div>
-                </div>
+                </SwiperSlide>
               );
             })}
-          </div>
+          </Swiper>
         </div>
 
         {/* mobile 전용 */}
@@ -98,21 +100,47 @@ export default function MediaList({
             )}
           </div>
 
-          <div className="flex overflow-y-auto gap-[10px]">
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={10}
+            slidesPerView={3}
+            className="w-full hidden tablet:flex"
+          >
             {data.map((item, index) => {
               return (
-                <img
-                  className="w-[200px] h-[265px] border-[1px] rounded-[8px] border-gray01"
-                  src={`${IMAGE_BASE_URL}original${item.poster_path}`}
-                  alt={item.name}
-                  key={index}
-                  onClick={() => {
-                    navigate(path[index]);
-                  }}
-                />
+                <SwiperSlide key={index}>
+                  <div
+                    key={index}
+                    className="w-[100px] h-[132.5px] rounded-[8px] cursor-pointer
+                    bg-cover bg-center"
+                    style={{
+                      backgroundImage: `url(${
+                        item.poster_path
+                          ? `${IMAGE_BASE_URL}original${item.poster_path}`
+                          : item.backdrop_path
+                            ? `${IMAGE_BASE_URL}original${item.backdrop_path}`
+                            : defaultImage
+                      })`,
+                    }}
+                  >
+                    <Link
+                      to={
+                        item.title
+                          ? `/detailmovie/${item.id}`
+                          : `/detailseries/${item.id}`
+                      }
+                      className="block w-full h-full"
+                    ></Link>
+                  </div>
+                  <div className="relative w-[100px] px-[2px]">
+                    <p className="text-left text-[14px] overflow-hidden whitespace-nowrap text-ellipsis">
+                      {item.name ? item.name : item.title}
+                    </p>
+                  </div>
+                </SwiperSlide>
               );
             })}
-          </div>
+          </Swiper>
         </div>
       </>
     );
