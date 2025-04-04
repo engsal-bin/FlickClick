@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 import defaultImage from "../../assets/icon/imagenone2.svg";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
+import { Navigation, Pagination } from "swiper/modules";
 
 interface ChildProps {
   to: string;
@@ -96,16 +99,20 @@ export default function Contents({
             )}
           </div>
 
-          <div
-            className="flex gap-[20px] overflow-x-auto overflow-y-hidden"
-            ref={dataRef}
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={10}
+            slidesPerView={3}
+            className="w-full hidden tablet:flex"
+            breakpoints={{
+              900: { slidesPerView: 4 },
+              1100: { slidesPerView: 5 },
+              1300: { slidesPerView: 6 },
+            }}
           >
             {trendingData?.map((_, index) => {
               return (
-                <div
-                  key={index}
-                  className="flex flex-col justify-start items-center w-[200px] shrink-0 gap-[10px]"
-                >
+                <SwiperSlide key={index}>
                   <img
                     className={`w-[200px] h-[265px] rounded-[8px] cursor-pointer`}
                     src={trendingData[index].poster_path || defaultImage}
@@ -116,17 +123,17 @@ export default function Contents({
                       navigate(path[index]);
                     }}
                   />
-                  <div className="relative w-full px-[10px]">
+                  <div className="relative w-[200px] px-[10px]">
                     <p className="text-left overflow-hidden whitespace-nowrap text-ellipsis hover:whitespace-normal hover:overflow-visible">
                       {trendingData[index].name
                         ? trendingData[index].name
                         : trendingData[index].title}
                     </p>
                   </div>
-                </div>
+                </SwiperSlide>
               );
             })}
-          </div>
+          </Swiper>
         </div>
 
         {/* mobile 전용 */}
@@ -142,15 +149,17 @@ export default function Contents({
             )}
           </div>
 
-          <div className="flex overflow-y-auto gap-[10px]">
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={10}
+            slidesPerView={3}
+            className="w-full hidden tablet:flex"
+          >
             {trendingData.map((_, index) => {
               return (
-                <div
-                  key={index}
-                  className="flex flex-col justify-start items-center w-[200px] shrink-0 gap-[10px]"
-                >
+                <SwiperSlide key={index}>
                   <img
-                    className={`w-[200px] h-[265px] rounded-[8px] cursor-pointer`}
+                    className={`w-[100px] h-[132.5px] rounded-[8px] cursor-pointer`}
                     src={trendingData[index].poster_path || defaultImage}
                     onError={(e) => {
                       (e.currentTarget as HTMLImageElement).src = defaultImage;
@@ -160,17 +169,17 @@ export default function Contents({
                       navigate(path[index]);
                     }}
                   />
-                  <div className="relative w-full">
+                  <div className="relative w-[100px] px-[2px]">
                     <p className="text-center overflow-hidden whitespace-nowrap text-ellipsis">
                       {trendingData[index].name
                         ? trendingData[index].name
                         : trendingData[index].title}
                     </p>
                   </div>
-                </div>
+                </SwiperSlide>
               );
             })}
-          </div>
+          </Swiper>
         </div>
       </>
     );

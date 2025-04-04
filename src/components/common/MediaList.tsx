@@ -46,7 +46,6 @@ export default function MediaList({
             className="w-full hidden tablet:flex"
             breakpoints={{
               900: { slidesPerView: 4 },
-              // 1100: { slidesPerView: 4 },
               1100: { slidesPerView: 5 },
               1300: { slidesPerView: 6 },
             }}
