@@ -74,11 +74,11 @@ export default function DefaultMoviesView() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-[30px]">
-      <MediaList to="/popular" showMore={false} data={trendingData}>
+    <div className="w-full flex flex-col gap-[30px]">
+      <MediaList to="/popular" showMore={true} data={trendingData}>
         {translation.movieTrending}
       </MediaList>
-      <MediaList to="/newupdate" showMore={false} data={newUpdateData}>
+      <MediaList to="/newupdate" showMore={true} data={newUpdateData}>
         {translation.movieNewUpdate}
       </MediaList>
     </div>

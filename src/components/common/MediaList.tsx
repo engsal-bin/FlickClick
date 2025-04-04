@@ -5,6 +5,7 @@ import { IMAGE_BASE_URL } from "../../api/axios";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 import defaultImage from "../../assets/icon/imagenone2.svg";
+import { useEffect, useRef, useState } from "react";
 
 interface ChildProps {
   to: string;
@@ -48,22 +49,37 @@ export default function MediaList({
             )}
           </div>
 
-          <div className="flex justify-between overflow-y-auto gap-[10px]">
+          <div
+            className="flex gap-[20px] overflow-x-auto overflow-y-hidden"
+            ref={dataRef}
+          >
             {data.map((item, index) => {
               return (
-                <img
-                  className="w-[200px] h-[265px] rounded-[8px]"
-                  src={
-                    item.poster_path
-                      ? `${IMAGE_BASE_URL}original${item.poster_path}`
-                      : defaultImage
-                  }
-                  alt={item.name}
+                <div
                   key={index}
-                  onClick={() => {
-                    navigate(path[index]);
-                  }}
-                />
+                  className="flex flex-col justify-start items-center w-[200px] shrink-0 gap-[10px]"
+                >
+                  <img
+                    className="w-[200px] h-[265px] rounded-[8px] cursor-pointer"
+                    src={
+                      item.poster_path
+                        ? `${IMAGE_BASE_URL}original${item.poster_path}`
+                        : defaultImage
+                    }
+                    alt={item.name}
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = defaultImage;
+                    }}
+                    onClick={() => {
+                      navigate(path[index]);
+                    }}
+                  />
+                  <div className="relative w-full px-[10px]">
+                    <p className="text-left overflow-hidden whitespace-nowrap text-ellipsis hover:whitespace-normal hover:overflow-visible">
+                      {item.name ? item.name : item.title}
+                    </p>
+                  </div>
+                </div>
               );
             })}
           </div>
