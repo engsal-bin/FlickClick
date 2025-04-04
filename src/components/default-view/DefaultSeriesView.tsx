@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { commonAPI } from "../../api/common";
 import { tvAPI } from "../../api/tv";
-import Contents from "../common/MediaList";
+import MediaList from "../common/MediaList";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 
@@ -9,7 +9,7 @@ export default function DefaultSeriesView() {
   const [trendingData, setTrendingData] = useState<Content[]>([]);
   const [newUpdateData, setNewUpdateData] = useState<Content[]>([]);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   useEffect(() => {
     const fetchTrendAll = async () => {
@@ -17,22 +17,22 @@ export default function DefaultSeriesView() {
         const trendPage1 = await commonAPI.getTrendingAll(
           1,
           "day",
-          t.languageParams
+          translation.languageParams
         );
         const trendPage2 = await commonAPI.getTrendingAll(
           2,
           "day",
-          t.languageParams
+          translation.languageParams
         );
         const trendPage3 = await commonAPI.getTrendingAll(
           3,
           "day",
-          t.languageParams
+          translation.languageParams
         );
         const trendPage4 = await commonAPI.getTrendingAll(
           4,
           "day",
-          t.languageParams
+          translation.languageParams
         );
         const trendResponse = [
           ...trendPage1.results.filter(
@@ -75,12 +75,12 @@ export default function DefaultSeriesView() {
 
   return (
     <div className="w-full flex flex-col gap-[30px]">
-      <Contents to="/popular" showMore={true} data={trendingData}>
-        {t.seriesTrending}
-      </Contents>
-      <Contents to="/newupdate" showMore={true} data={newUpdateData}>
-        {t.seriesNewUpdate}
-      </Contents>
+      <MediaList to="/popular" showMore={true} data={trendingData}>
+        {translation.seriesTrending}
+      </MediaList>
+      <MediaList to="/newupdate" showMore={true} data={newUpdateData}>
+        {translation.seriesNewUpdate}
+      </MediaList>
     </div>
   );
 }

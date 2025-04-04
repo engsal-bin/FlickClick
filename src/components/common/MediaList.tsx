@@ -31,56 +31,7 @@ export default function MediaList({
 
   const navigate = useNavigate();
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
-  const dataRef = useRef<HTMLDivElement>(null);
-  const [isOverflow, setIsOverflow] = useState(false);
-
-  // 마우스 휠 이벤트 핸들러
-  const handleWheel = (event: WheelEvent) => {
-    if (dataRef.current) {
-      const rect = dataRef.current.getBoundingClientRect();
-      const isMouseInBounds =
-        event.clientY >= rect.top && event.clientY <= rect.bottom;
-
-      if (isMouseInBounds) {
-        event.preventDefault();
-        dataRef.current.scrollLeft += event.deltaY;
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (!dataRef.current) return;
-
-    const personList = dataRef.current;
-
-    personList.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      personList.removeEventListener("wheel", handleWheel);
-    };
-  }, [isOverflow]);
-
-  // 부모 요소의 너비를 기준으로 자식 요소가 넘쳤는지 체크
-  useEffect(() => {
-    const checkOverflow = () => {
-      if (dataRef.current) {
-        const isOverflowing =
-          dataRef.current.scrollWidth > dataRef.current.clientWidth;
-        setIsOverflow(isOverflowing);
-      }
-    };
-
-    // 브라우저가 레이아웃을 계산한 후 실행되도록 requestAnimationFrame 사용
-    const raf = requestAnimationFrame(checkOverflow);
-
-    window.addEventListener("resize", checkOverflow);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", checkOverflow);
-    };
-  }, [data]);
+  const translation = menuTranslations[language];
 
   if (data)
     return (
@@ -93,7 +44,7 @@ export default function MediaList({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[20px]">
-                {t.viewMore}
+                {translation.viewMore}
               </Link>
             )}
           </div>
@@ -142,7 +93,7 @@ export default function MediaList({
             </p>
             {showMore && (
               <Link to={to} className="text-white03 text-[12px]">
-                {t.viewMore}
+                {translation.viewMore}
               </Link>
             )}
           </div>

@@ -19,7 +19,7 @@ export default function InputTextarea({
   stateLifting: () => void;
 }) {
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
   const [text, setText] = useState("");
   const [isSend, setIsSend] = useState(false);
   const [placeHolder, setPlaceHolder] = useState("");
@@ -112,11 +112,11 @@ export default function InputTextarea({
   useEffect(() => {
     text.trim() ? setIsSend(true) : setIsSend(false);
     if (reviewOrArgumentOrOpinion === "review") {
-      setPlaceHolder(t.reviewPlaceholder);
+      setPlaceHolder(translation.reviewPlaceholder);
     } else if (reviewOrArgumentOrOpinion === "argument") {
-      setPlaceHolder(t.argumentPlaceholder);
+      setPlaceHolder(translation.argumentPlaceholder);
     } else {
-      setPlaceHolder(t.opinionPlaceholder);
+      setPlaceHolder(translation.opinionPlaceholder);
     }
   }, [text]);
 

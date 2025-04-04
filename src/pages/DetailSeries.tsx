@@ -12,14 +12,14 @@ export default function DetailSeries() {
   // 시리즈 id, 시즌 id 저장
   const locationInfo = location.pathname.split("/").slice(1, 4);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   useEffect(() => {
     const fetchSeries = async () => {
       try {
         const series = await tvAPI.getSeries(
           Number(locationInfo[1]),
-          t.languageParams
+          translation.languageParams
         );
         setContentData(series);
       } catch (error) {
@@ -35,7 +35,7 @@ export default function DetailSeries() {
   }, [location]);
 
   return (
-    <div>
+    <div className="mb-[100px]">
       <DetailIntroBox contentId={Number(locationInfo[1])} type="tvSeries" />
       {contentData?.seasons.map((season) => (
         <SeasonBox
@@ -45,7 +45,6 @@ export default function DetailSeries() {
           season={season}
         />
       ))}
-      <hr className="h-[1px] border-gray02" />
     </div>
   );
 }

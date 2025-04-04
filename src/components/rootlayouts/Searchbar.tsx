@@ -50,7 +50,7 @@ export default function Searchbar() {
     ContentType[] | []
   >([]);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
   const debouncedValue = useDebounce(searchValue, 200);
   const [currentTab, setCurrentTab] = useState<string>("");
   const navigate = useNavigate();
@@ -67,7 +67,11 @@ export default function Searchbar() {
 
   const fetchTrendingContents = async () => {
     try {
-      const response: ContentsType = await commonAPI.getTrendingAll(1);
+      const response: ContentsType = await commonAPI.getTrendingAll(
+        1,
+        "day",
+        translation.languageParams
+      );
       setTrendingContents(response.results.slice(0, 10));
     } catch (error) {
       console.error(error);
@@ -76,9 +80,18 @@ export default function Searchbar() {
 
   const fetchSearhResults = async () => {
     try {
-      const allResults = await searchAPI.multiSearch(debouncedValue);
-      const tvResults = await searchAPI.tvSearch(debouncedValue);
-      const movieResults = await searchAPI.movieSearch(debouncedValue);
+      const allResults = await searchAPI.multiSearch(
+        debouncedValue,
+        translation.languageParams
+      );
+      const tvResults = await searchAPI.tvSearch(
+        debouncedValue,
+        translation.languageParams
+      );
+      const movieResults = await searchAPI.movieSearch(
+        debouncedValue,
+        translation.languageParams
+      );
 
       setSearchResults(allResults.results);
       setSearchTVResults(tvResults.results);
@@ -114,14 +127,14 @@ export default function Searchbar() {
           <div className="flex">
             <input
               className="w-[620px] h-[41px] mr-[4px] font-light text-white01 text-[18px] bg-black border-b-[2px] border-b-white01 focus:outline-none"
-              placeholder={t.searchPlaceholder}
+              placeholder={translation.searchPlaceholder}
               value={searchValue}
               onChange={handleSearchInput}
             />
             <img src={seachIcon} />
           </div>
           <div className="w-[650px] flex flex-col gap-[20px] mt-[50px] text-white01 font-bold text-[18px]">
-            {!searchValue ? <p>{t.trendingContent}</p> : ""}
+            {!searchValue ? <p>{translation.trendingContent}</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
                 <div
@@ -151,7 +164,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => setCurrentTab("all")}
                     >
-                      {t.all}
+                      {translation.all}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
@@ -161,7 +174,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => setCurrentTab("series")}
                     >
-                      {t.series}
+                      {translation.series}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
@@ -171,7 +184,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => setCurrentTab("movie")}
                     >
-                      {t.movie}
+                      {translation.movie}
                     </li>
                   </ul>
                 </div>
@@ -179,7 +192,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchResults.length === 0 && (
                       <div>
-                        '{searchValue}'{t.noSearchResults}
+                        '{searchValue}'{translation.noSearchResults}
                       </div>
                     )}
                     {searchResults.map((result) => (
@@ -206,7 +219,9 @@ export default function Searchbar() {
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
                             <p>
-                              {result.media_type === "tv" ? t.series : t.movie}
+                              {result.media_type === "tv"
+                                ? translation.series
+                                : translation.movie}
                             </p>
                             <p>|</p>
                             <p>
@@ -222,7 +237,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchTVResults.length === 0 && (
                       <div>
-                        '{searchValue}'{t.noSearchResults}
+                        '{searchValue}'{translation.noSearchResults}
                       </div>
                     )}
                     {searchTVResults.map((result) => (
@@ -248,7 +263,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
-                            <p>{t.series}</p>
+                            <p>{translation.series}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}
@@ -263,7 +278,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchMovieResults.length === 0 && (
                       <div>
-                        '{searchValue}'{t.noSearchResults}
+                        '{searchValue}'{translation.noSearchResults}
                       </div>
                     )}
                     {searchMovieResults.map((result) => (
@@ -289,7 +304,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
-                            <p>{t.movie}</p>
+                            <p>{translation.movie}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}
@@ -312,14 +327,14 @@ export default function Searchbar() {
           <div className="flex text-[18px]">
             <input
               className="w-[620px] h-[41px] mr-[4px] font-light text-white01 bg-black border-b-[2px] border-b-white01 focus:outline-none"
-              placeholder={t.searchPlaceholder}
+              placeholder={translation.searchPlaceholder}
               value={searchValue}
               onChange={handleSearchInput}
             />
             <img src={seachIcon} />
           </div>
           <div className="w-[650px] flex flex-col gap-[20px] mt-[50px] text-white01 font-bold text-[18px]">
-            {!searchValue ? <p>{t.trendingContent}</p> : ""}
+            {!searchValue ? <p>{translation.trendingContent}</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
                 <div
@@ -349,7 +364,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => setCurrentTab("all")}
                     >
-                      {t.all}
+                      {translation.all}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
@@ -359,7 +374,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => setCurrentTab("series")}
                     >
-                      {t.series}
+                      {translation.series}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 cursor-pointer ${
@@ -369,7 +384,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => setCurrentTab("movie")}
                     >
-                      {t.movie}
+                      {translation.movie}
                     </li>
                   </ul>
                 </div>
@@ -377,7 +392,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchResults.length === 0 && (
                       <div>
-                        '{searchValue}'{t.noSearchResults}
+                        '{searchValue}'{translation.noSearchResults}
                       </div>
                     )}
                     {searchResults.map((result) => (
@@ -404,7 +419,9 @@ export default function Searchbar() {
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
                             <p>
-                              {result.media_type === "tv" ? t.series : t.movie}
+                              {result.media_type === "tv"
+                                ? translation.series
+                                : translation.movie}
                             </p>
                             <p>|</p>
                             <p>
@@ -420,7 +437,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchTVResults.length === 0 && (
                       <div>
-                        '{searchValue}'{t.noSearchResults}
+                        '{searchValue}'{translation.noSearchResults}
                       </div>
                     )}
                     {searchTVResults.map((result) => (
@@ -446,7 +463,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
-                            <p>{t.series}</p>
+                            <p>{translation.series}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}
@@ -461,7 +478,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchMovieResults.length === 0 && (
                       <div>
-                        '{searchValue}' {t.noSearchResults}
+                        '{searchValue}' {translation.noSearchResults}
                       </div>
                     )}
                     {searchMovieResults.map((result) => (
@@ -487,7 +504,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className=" font-normal text-[14px] text-gray03 flex gap-[5px]">
-                            <p>{t.movie}</p>
+                            <p>{translation.movie}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}
@@ -510,14 +527,14 @@ export default function Searchbar() {
           <div className="flex text-[18px] w-full">
             <input
               className="w-full h-[35px] mr-[4px] font-light text-white01 bg-black border-b-[2px] border-b-white01 focus:outline-none"
-              placeholder={t.searchPlaceholder}
+              placeholder={translation.searchPlaceholder}
               value={searchValue}
               onChange={handleSearchInput}
             />
             <img src={seachIcon} />
           </div>
           <div className="w-full flex flex-col gap-[20px] mt-[50px] text-white01 font-bold text-[18px]">
-            {!searchValue ? <p>{t.trendingContent}</p> : ""}
+            {!searchValue ? <p>{translation.trendingContent}</p> : ""}
             {!searchValue ? (
               trendingContents.map((content, index) => (
                 <div
@@ -547,7 +564,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => setCurrentTab("all")}
                     >
-                      {t.all}
+                      {translation.all}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 text-[16px] cursor-pointer ${
@@ -557,7 +574,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => setCurrentTab("series")}
                     >
-                      {t.series}
+                      {translation.series}
                     </li>
                     <li
                       className={`w-[100px] py-[19px] text-center text-gray02 text-[16px] cursor-pointer ${
@@ -567,7 +584,7 @@ export default function Searchbar() {
                       }`}
                       onClick={() => setCurrentTab("movie")}
                     >
-                      {t.movie}
+                      {translation.movie}
                     </li>
                   </ul>
                 </div>
@@ -575,7 +592,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchResults.length === 0 && (
                       <div className="text-[16px]">
-                        '{searchValue}'{t.noSearchResults}
+                        '{searchValue}'{translation.noSearchResults}
                       </div>
                     )}
                     {searchResults.map((result) => (
@@ -602,7 +619,9 @@ export default function Searchbar() {
                           </p>
                           <p className=" font-normal text-[12px] text-gray03 flex gap-[5px]">
                             <p>
-                              {result.media_type === "tv" ? t.series : t.movie}
+                              {result.media_type === "tv"
+                                ? translation.series
+                                : translation.movie}
                             </p>
                             <p>|</p>
                             <p>
@@ -618,7 +637,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchTVResults.length === 0 && (
                       <div className="text-[16px]">
-                        '{searchValue}'{t.noSearchResults}
+                        '{searchValue}'{translation.noSearchResults}
                       </div>
                     )}
                     {searchTVResults.map((result) => (
@@ -644,7 +663,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className="font-normal text-[12px] text-gray03 flex gap-[5px]">
-                            <p>{t.series}</p>
+                            <p>{translation.series}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}
@@ -659,7 +678,7 @@ export default function Searchbar() {
                   <div className="max-h-[calc(100vh-320px)] overflow-y-auto mt-[30px]">
                     {searchMovieResults.length === 0 && (
                       <div className="text-[16px]">
-                        '{searchValue}'{t.noSearchResults}
+                        '{searchValue}'{translation.noSearchResults}
                       </div>
                     )}
                     {searchMovieResults.map((result) => (
@@ -685,7 +704,7 @@ export default function Searchbar() {
                             {result.name || result.title}
                           </p>
                           <p className="font-normal text-[12px] text-gray03 flex gap-[5px]">
-                            <p>{t.movie}</p>
+                            <p>{translation.movie}</p>
                             <p>|</p>
                             <p>
                               {result.release_date || result.first_air_date}

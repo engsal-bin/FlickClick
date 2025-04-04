@@ -8,7 +8,7 @@ import { notificationAPI } from "../../api/notification";
 const NotifyTab = ({ userId }: { userId: string | undefined }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   const fetchNotifications = async () => {
     const { data } = await notificationAPI.getNotifications(userId!);
@@ -48,7 +48,7 @@ const NotifyTab = ({ userId }: { userId: string | undefined }) => {
     );
   }
 
-  return <div>{t.noNotifications}</div>;
+  return <div>{translation.noNotifications}</div>;
 };
 
 export default NotifyTab;

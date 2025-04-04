@@ -25,7 +25,7 @@ export default function DetailIntroBox({
 }) {
   const navigate = useNavigate();
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
   const [tvContent, setTvContent] = useState<TvSeriesType>();
   const [tvSeasonContent, setTvSeasonContent] = useState<TvSeasonsType>();
   const [movieContent, setMovieContent] = useState<MovieType>();
@@ -61,7 +61,7 @@ export default function DetailIntroBox({
         if (type === "movie") {
           const movie = await movieAPI.getMovie(
             Number(contentId),
-            t.languageParams
+            translation.languageParams
           );
           setMovieContent(movie);
           setIpId(movie.id);
@@ -71,7 +71,7 @@ export default function DetailIntroBox({
         } else if (type === "tvSeries" || type === "tvSeason") {
           const tvSeries = await tvAPI.getSeries(
             Number(contentId),
-            t.languageParams
+            translation.languageParams
           );
           setTvContent(tvSeries);
           setIpId(`${tvSeries.id}/${seasonId}`);
@@ -84,7 +84,7 @@ export default function DetailIntroBox({
           const tvSeason = await tvAPI.getSeason(
             Number(contentId),
             Number(seasonId),
-            t.languageParams
+            translation.languageParams
           );
           setTvSeasonContent(tvSeason);
         }
@@ -290,17 +290,19 @@ export default function DetailIntroBox({
 
                   {/* 시즌 or 에피소드 갯수 */}
                   {type === "tvSeries" && (
-                    <Tag>{`${t.season} ${tvContent?.seasons.length}${t.countUnit}`}</Tag>
+                    <Tag>{`${translation.season} ${tvContent?.seasons.length}${translation.countUnit}`}</Tag>
                   )}
                   {type === "tvSeason" && (
-                    <Tag>{`${t.episode} ${tvSeasonContent?.episodes.length}${t.countUnit}`}</Tag>
+                    <Tag>{`${translation.episode} ${tvSeasonContent?.episodes.length}${translation.countUnit}`}</Tag>
                   )}
                 </div>
               </div>
               <div className="flex flex-col gap-[10px]">
                 {/* 제작사 or 시청할 수 있는 서비스 */}
                 <p className="text-white02 text-[16px] leading-[24px]">
-                  {type === "movie" ? t.provider : t.streamingService}
+                  {type === "movie"
+                    ? translation.provider
+                    : translation.streamingService}
                 </p>
 
                 {/* 시청할 수 있는 서비스 로고 */}
@@ -390,7 +392,7 @@ export default function DetailIntroBox({
                         : "text-white01"
                     }`}
                   >
-                    {t.scrap}
+                    {translation.scrap}
                   </span>
                 </button>
               )}

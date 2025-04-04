@@ -16,14 +16,16 @@ export default function MainThumbnail() {
   const swiperRef = useRef<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const trendTv = await tvAPI.getTrendTv(t.languageParams);
-        const trendMovie = await movieAPI.getTrendMovie(t.languageParams);
+        const trendTv = await tvAPI.getTrendTv(translation.languageParams);
+        const trendMovie = await movieAPI.getTrendMovie(
+          translation.languageParams
+        );
         const shuffleArray = (array: trendContentType[]) => {
           return array
             .map((item) => ({ item, sortKey: Math.random() }))
@@ -71,7 +73,7 @@ export default function MainThumbnail() {
       }
     };
     fetchData();
-  }, [location.pathname, t.languageParams]);
+  }, [location.pathname, translation.languageParams]);
 
   // swiperRef.current가 초기화되면 activeIndex로 currentIndex 설정
   useEffect(() => {

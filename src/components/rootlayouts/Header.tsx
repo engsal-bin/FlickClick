@@ -23,7 +23,7 @@ export default function Header() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const { language } = useLanguageStore();
 
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   // 모바일에서 스크롤 막기&허용
   useEffect(() => {
@@ -100,7 +100,7 @@ export default function Header() {
                   : ""
               }`}
             >
-              {t.series}
+              {translation.series}
             </Link>
             <Link
               to="/movies"
@@ -110,7 +110,7 @@ export default function Header() {
                   : ""
               }`}
             >
-              {t.movies}
+              {translation.movies}
             </Link>
             <Link
               to="/genres"
@@ -120,7 +120,7 @@ export default function Header() {
                   : ""
               }`}
             >
-              {t.genres}
+              {translation.genres}
             </Link>
           </div>
           {/* mobile 전용 */}
@@ -138,7 +138,7 @@ export default function Header() {
             {/* 검색 버튼 */}
             <img
               src={isSearch ? cancelIcon : searchIcon}
-              alt={t.search}
+              alt={translation.search}
               className={`cursor-pointer w-[20px] ${
                 isSearch ? "w-[18px] mx-[4px]" : "w-[26px]"
               }`}
@@ -164,13 +164,13 @@ export default function Header() {
                 </div>
               </Link>
             ) : (
-              <Link to="/login">{t.login}</Link>
+              <Link to="/login">{translation.login}</Link>
             )}
             {/* 알림창 버튼 */}
             {isLoggedIn && (
               <img
                 src={arrow01}
-                alt={t.notification}
+                alt={translation.notification}
                 className="flex cursor-pointer"
                 onClick={() => {
                   setIsOpen((prev) => !prev);
@@ -183,7 +183,7 @@ export default function Header() {
             {/* 검색 버튼 */}
             <img
               src={isSearch ? cancelIcon : searchIcon}
-              alt={t.search}
+              alt={translation.search}
               className="cursor-pointer w-[20px]"
               onClick={() => {
                 setIsSearch((prev) => !prev);
@@ -192,7 +192,7 @@ export default function Header() {
             {/* 햄버거 버튼 */}
             <img
               src={burgerButton}
-              alt={t.notification}
+              alt={translation.notification}
               className="cursor-pointer flex w-[20px]"
               onClick={() => {
                 setIsOpen((prev) => !prev);

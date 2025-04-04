@@ -25,7 +25,7 @@ export default function DetailEpisodeIntroBox({
   const location = useLocation();
   const contentType = "episode";
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
   const contentId = location.pathname.split("/")[2];
   const seasonId = location.pathname.split("/")[3];
   const episodeId = location.pathname.split("/")[4];
@@ -195,7 +195,7 @@ export default function DetailEpisodeIntroBox({
 
                 <div className="flex flex-col gap-[10px]">
                   <p className="text-white02 text-[16px] leading-[24px]">
-                    {t.streamingService}
+                    {translation.streamingService}
                   </p>
                   <div className="flex gap-[10px]">
                     {series?.networks.map((network) => (
@@ -270,7 +270,7 @@ export default function DetailEpisodeIntroBox({
                       : "text-white01"
                   }`}
                 >
-                  {t.scrap}
+                  {translation.scrap}
                 </span>
               </button>
             </div>

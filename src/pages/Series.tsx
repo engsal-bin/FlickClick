@@ -19,7 +19,7 @@ export default function Series() {
   const [yearStates, setYearStates] = useState<YearState[]>(yearList);
   const [ottStates, setOttStates] = useState<OttState[]>(ottList);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   const selectGenre = (id: number) => {
     setGenreStates((prev) =>
@@ -77,8 +77,8 @@ export default function Series() {
           selectedYear?.gte || null,
           selectedYear?.lte || null,
           selectedOttPlatforms,
-          t.languageParams,
-          t.country,
+          translation.languageParams,
+          translation.country,
           pageParam
         );
         return response.map((content) => ({
@@ -102,13 +102,13 @@ export default function Series() {
       <MainThumbnail />
       <div className="w-full flex flex-col  desktop:gap-[50px] tablet:gap-[40px] mobile:gap-[30px] mb-[60px]">
         <SeriesTags tags={genreStates} selectTag={selectGenre}>
-          {t.genres}
+          {translation.genres}
         </SeriesTags>
         <YearTags tags={yearStates} selectTag={selectYearRange}>
-          {t.year}
+          {translation.year}
         </YearTags>
         <OttTags selectedTag={ottStates} selectTag={selectOtt}>
-          {t.streamingService}
+          {translation.streamingService}
         </OttTags>
       </div>
       {isTagsSelected ? (

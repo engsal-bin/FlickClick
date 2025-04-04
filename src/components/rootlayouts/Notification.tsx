@@ -23,7 +23,7 @@ type ToggleClickedType = {
 export default function Notification() {
   const navigate = useNavigate();
   const { language, setLanguage } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   const [toggleClicked, setToggleClicked] = useState<ToggleClickedType>({
     series: false,
@@ -81,9 +81,9 @@ export default function Notification() {
       {/* 데스크탑용 알림 */}
       <div className="hidden tablet:flex w-[249px] h-[58px] justify-between">
         {[
-          [t.review, counts.reviewCount, "review"],
-          [t.discuss, counts.discussCount, "discuss"],
-          [t.scrap, counts.clipCount, "scrap"],
+          [translation.review, counts.reviewCount, "review"],
+          [translation.discuss, counts.discussCount, "discuss"],
+          [translation.scrap, counts.clipCount, "scrap"],
         ].map(([label, count, select]) => (
           <button
             onClick={() =>
@@ -104,13 +104,13 @@ export default function Notification() {
 
       {/* 언어 변경 */}
       <div className="justify-between hidden tablet:flex">
-        <p className="text-white01">{t.languageChange}</p>
+        <p className="text-white01">{translation.languageChange}</p>
         <div
           className="w-[68px] flex justify-between cursor-pointer"
           onClick={toggleLanguage}
         >
           <img src={changeIcon} />
-          <p className="text-white01">{t.language}</p>
+          <p className="text-white01">{translation.language}</p>
         </div>
       </div>
 
@@ -119,7 +119,7 @@ export default function Notification() {
         onClick={() => navigate("/mypage")}
         className="hidden text-white01 tablet:flex"
       >
-        {t.mypage}
+        {translation.mypage}
       </button>
       <button
         onClick={() =>
@@ -127,7 +127,7 @@ export default function Notification() {
         }
         className="hidden text-white01 tablet:flex"
       >
-        {t.notification}
+        {translation.notification}
       </button>
 
       {/* 로그아웃 */}
@@ -136,15 +136,15 @@ export default function Notification() {
         onClick={onClickLogOut}
       >
         <img src={logoutIcon} className="mr-[15px]" />
-        <p className="text-warn">{t.logout}</p>
+        <p className="text-warn">{translation.logout}</p>
       </div>
 
       {/* 모바일용 알림창 */}
       <div className="tablet:hidden flex flex-col items-center gap-[20px] pt-[50px] px-[20px]">
         {[
-          { name: t.series, key: "series" },
-          { name: t.movies, key: "movies" },
-          { name: t.genres, key: "genres" },
+          { name: translation.series, key: "series" },
+          { name: translation.movies, key: "movies" },
+          { name: translation.genres, key: "genres" },
         ].map((category) => (
           <div key={category.key} className="w-full border-white border-1">
             <Link
@@ -163,10 +163,12 @@ export default function Notification() {
           className="flex items-center justify-between w-full border-white cursor-pointer border-1"
           onClick={toggleLanguage}
         >
-          <p className="text-white01">{t.languageChange}</p>
+          <p className="text-white01">{translation.languageChange}</p>
           <div className="w-[60px] flex justify-between gap-[5px]">
             <img src={tranlateLang} />
-            <div className="text-white01 text-[14px]">{t.language}</div>
+            <div className="text-white01 text-[14px]">
+              {translation.language}
+            </div>
           </div>
         </div>
 
@@ -176,14 +178,14 @@ export default function Notification() {
           className="flex justify-between items-center gap-[15px]"
         >
           <img src={logoutIcon} />
-          <p className="text-warn">{t.logout}</p>
+          <p className="text-warn">{translation.logout}</p>
         </button>
 
         {/* SideToggleList 컴포넌트 */}
         {[
-          { label: t.movies, path: "movies" },
-          { label: t.genres, path: "genres" },
-          { label: t.mypage, path: "myPage" },
+          { label: translation.movies, path: "movies" },
+          { label: translation.genres, path: "genres" },
+          { label: translation.mypage, path: "myPage" },
         ].map((list) => (
           <SideToggleList
             key={list.label}

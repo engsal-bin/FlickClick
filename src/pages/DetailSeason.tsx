@@ -12,18 +12,13 @@ import { menuTranslations } from "../translations/menu";
 
 export default function DetailSeason() {
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   const [activeTab, setActiveTab] = useState<number>(0);
-  // 경로 정보 불러오기
   const location = useLocation();
-  // 시리즈 id, 시즌 id 저장
   const locationInfo = location.pathname.split("/").slice(1, 4);
-  // 시리즈 데이터 상태
   const [_, setSeriesData] = useState<TvSeriesType>();
-  // 시즌 데이터 상태
   const [seasonData, setSeasonData] = useState<TvSeasonsType>();
-
   const contentId = locationInfo.slice(1, 3).join("/");
 
   useEffect(() => {
@@ -31,12 +26,12 @@ export default function DetailSeason() {
       try {
         const series = await tvAPI.getSeries(
           Number(`${locationInfo[1]}`),
-          t.languageParams
+          translation.languageParams
         );
         const season = await tvAPI.getSeason(
           Number(`${locationInfo[1]}`),
           Number(`${locationInfo[2]}`),
-          t.languageParams
+          translation.languageParams
         );
         setSeriesData(series);
         setSeasonData(season);
@@ -66,7 +61,7 @@ export default function DetailSeason() {
         className=" flex flex-col jutify-evenly w-full 
       tablet:gap-[50px] mobile:gap-[30px] 
       desktop:px-[128px] tablet:px-[40px] mobile:px-[10px]
-      tablet:py-[50px] mobile:py-[30px]"
+      tablet:py-[50px] mobile:py-[30px] mb-[100px]"
       >
         {/* 영상 스와이퍼(아직 컴포넌트 완성 X) */}
 
@@ -74,14 +69,14 @@ export default function DetailSeason() {
         <PersonList
           seriesId={Number(locationInfo[1])}
           seasonNum={Number(locationInfo[2])}
-          label={t.cast}
+          label={translation.cast}
           type="tv"
         />
         {/* 제작진 */}
         <PersonList
           seriesId={Number(locationInfo[1])}
           seasonNum={Number(locationInfo[2])}
-          label={t.crew}
+          label={translation.crew}
           type="tv"
         />
         {/* 에피소드 리스트 */}
@@ -125,14 +120,14 @@ export default function DetailSeason() {
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
           type="tv"
-          label={t.recommendation}
+          label={translation.recommendation}
         />
 
         {/* 유사작품 */}
         <ArgorithmIP
           seriesId={Number(locationInfo[1])}
           type="tv"
-          label={t.similarity}
+          label={translation.similarity}
         />
       </section>
     </>

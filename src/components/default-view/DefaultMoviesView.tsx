@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { commonAPI } from "../../api/common";
 import { movieAPI } from "../../api/movie";
-import Contents from "../common/MediaList";
+import MediaList from "../common/MediaList";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 
@@ -9,7 +9,7 @@ export default function DefaultMoviesView() {
   const [trendingData, setTrendingData] = useState<Content[]>([]);
   const [newUpdateData, setNewUpdateData] = useState<Content[]>([]);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
 
   useEffect(() => {
     const fetchTrendAll = async () => {
@@ -17,22 +17,22 @@ export default function DefaultMoviesView() {
         const trendPage1 = await commonAPI.getTrendingAll(
           1,
           "day",
-          t.languageParams
+          translation.languageParams
         );
         const trendPage2 = await commonAPI.getTrendingAll(
           2,
           "day",
-          t.languageParams
+          translation.languageParams
         );
         const trendPage3 = await commonAPI.getTrendingAll(
           3,
           "day",
-          t.languageParams
+          translation.languageParams
         );
         const trendPage4 = await commonAPI.getTrendingAll(
           4,
           "day",
-          t.languageParams
+          translation.languageParams
         );
         const trendResponse = [
           ...trendPage1.results.filter(
@@ -75,12 +75,12 @@ export default function DefaultMoviesView() {
 
   return (
     <div className="w-full flex flex-col gap-[30px]">
-      <Contents to="/popular" showMore={true} data={trendingData}>
-        {t.movieTrending}
-      </Contents>
-      <Contents to="/newupdate" showMore={true} data={newUpdateData}>
-        {t.movieNewUpdate}
-      </Contents>
+      <MediaList to="/popular" showMore={true} data={trendingData}>
+        {translation.movieTrending}
+      </MediaList>
+      <MediaList to="/newupdate" showMore={true} data={newUpdateData}>
+        {translation.movieNewUpdate}
+      </MediaList>
     </div>
   );
 }

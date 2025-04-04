@@ -18,34 +18,34 @@ export default function ArgorithmIP({
   label: string;
 }) {
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const translation = menuTranslations[language];
   const [contents, setContents] = useState<RecommendContentsType[]>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (type === "tv" && label === t.recommendation) {
+        if (type === "tv" && label === translation.recommendation) {
           const tvResponse = await tvAPI.getRecommendTv(
             seriesId,
-            t.languageParams
+            translation.languageParams
           );
           setContents(tvResponse.results);
-        } else if (type === "movie" && label === t.recommendation) {
+        } else if (type === "movie" && label === translation.recommendation) {
           const movieResponse = await movieAPI.getRecommendMovie(
             seriesId,
-            t.languageParams
+            translation.languageParams
           );
           setContents(movieResponse.results);
-        } else if (type === "tv" && label === t.similarity) {
+        } else if (type === "tv" && label === translation.similarity) {
           const tvResponse = await tvAPI.getSimilarTv(
             seriesId,
-            t.languageParams
+            translation.languageParams
           );
           setContents(tvResponse.results);
-        } else if (type === "movie" && label === t.similarity) {
+        } else if (type === "movie" && label === translation.similarity) {
           const movieResponse = await movieAPI.getSimilarMovie(
             seriesId,
-            t.languageParams
+            translation.languageParams
           );
           setContents(movieResponse.results);
         }
@@ -79,7 +79,7 @@ export default function ArgorithmIP({
         {/* <div className="flex justify-start gap-[30px] tablet:h-full mobile:h-[132.5px]"> */}
         {contents?.length === 0 ? (
           <div className="text-[16px] text-white02 font-light">
-            {t.noResult}
+            {translation.noResult}
           </div>
         ) : (
           contents?.map((item) => (

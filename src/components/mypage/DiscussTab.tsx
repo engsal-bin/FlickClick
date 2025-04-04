@@ -7,7 +7,6 @@ import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 import CreatedDiscuss from "./CreatedDiscuss";
 import MyOpinion from "./MyOpinion";
-import Tag from "../common/Tag";
 import TagWithnotCancelIcon from "../common/TagWithnotCancelIcon";
 
 const DiscussTab = ({ userId }: { userId: string | undefined }) => {
@@ -15,7 +14,7 @@ const DiscussTab = ({ userId }: { userId: string | undefined }) => {
   const [discusses, setDiscusses] = useState<Argument[] | null>([]);
   const [myOpinions, setMyOpinions] = useState<ArgumentComment[] | null>([]);
   const { language } = useLanguageStore();
-  const t = menuTranslations[language];
+  const transition = menuTranslations[language];
 
   useEffect(() => {
     if (!userId) return;
@@ -42,13 +41,13 @@ const DiscussTab = ({ userId }: { userId: string | undefined }) => {
           onClick={() => setDiscussType("createdDiscuss")}
           isSelected={discussType === "createdDiscuss"}
         >
-          {t.generatedDiscussion}
+          {transition.generatedDiscussion}
         </TagWithnotCancelIcon>
         <TagWithnotCancelIcon
           onClick={() => setDiscussType("myOpinion")}
           isSelected={discussType === "myOpinion"}
         >
-          {t.myOpinion}
+          {transition.myOpinion}
         </TagWithnotCancelIcon>
       </div>
       <div className="mt-[30px]">
