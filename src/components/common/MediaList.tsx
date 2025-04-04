@@ -139,7 +139,7 @@ export default function MediaList({
                     ></Link>
                   </div>
                   <div className="relative w-[200px] px-[10px]">
-                    <p className="text-left overflow-hidden whitespace-nowrap text-ellipsis hover:whitespace-normal hover:overflow-visible">
+                    <p className="overflow-hidden text-left whitespace-nowrap text-ellipsis hover:whitespace-normal hover:overflow-visible">
                       {item.name ? item.name : item.title}
                     </p>
                   </div>
@@ -186,7 +186,7 @@ export default function MediaList({
             modules={[Navigation, Pagination]}
             spaceBetween={10}
             slidesPerView={3}
-            className="w-full hidden tablet:flex"
+            className="hidden w-full tablet:flex"
           >
             {data.map((item, index) => {
               return (
