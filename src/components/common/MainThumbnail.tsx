@@ -5,7 +5,7 @@ import { movieAPI } from "../../api/movie";
 import { IMAGE_BASE_URL } from "../../api/axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import { useLanguageStore } from "../../store/useLanguageStore";
 import { menuTranslations } from "../../translations/menu";
 
@@ -97,10 +97,11 @@ export default function MainThumbnail() {
         </div>
       ) : (
         <Swiper
-          modules={[Pagination]}
+          modules={[Pagination, Autoplay]}
           spaceBetween={10}
           slidesPerView={1}
           loop={true}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
           className="w-full hidden tablet:flex"
           pagination={{
             clickable: true,
