@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { formatDate } from "../../utils/formattingDate";
 
 export default function Review({
-  review_id,
   ip_name,
   ip_id,
   content,
@@ -10,7 +9,7 @@ export default function Review({
 }: Review) {
   const getRoutePath = () => {
     const slashCount = (ip_id.match(/\//g) || []).length;
-    
+
     switch (slashCount) {
       case 1:
         return `/detailseason/${ip_id}`;

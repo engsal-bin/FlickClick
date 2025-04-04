@@ -1,4 +1,3 @@
-import { Content } from "../type/filterType";
 import { axiosInstance } from "./axios";
 import { supabase } from "./index.ts";
 import { movieAPI } from "./movie.ts";
