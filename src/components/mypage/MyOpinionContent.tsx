@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { formatDate } from "./../../utils/formattingDate";
 
 export default function MyOpinionContent({
-  argument_id,
   topic,
   ip_name,
   ip_id,
@@ -11,7 +10,7 @@ export default function MyOpinionContent({
 }: ArgumentComment) {
   const getRoutePath = () => {
     const slashCount = (ip_id.match(/\//g) || []).length;
-    
+
     switch (slashCount) {
       case 1:
         return `/detailseason/${ip_id}`;
