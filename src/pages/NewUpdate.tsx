@@ -11,7 +11,6 @@ export default function NewUpdate() {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [newUpdateImgSrc, setNewUpateImgSrc] = useState<NewUpdateType[]>([]);
   const [genres, setGenres] = useState<GenreBasicType[]>([]);
-  const [genreNames, setGenreNames] = useState<GenreBasicType[]>([]);
   const [allGenre, setAllgenre] = useState<GenreType[]>([]);
   const { language } = useLanguageStore();
   const translation = menuTranslations[language];
@@ -79,8 +78,6 @@ export default function NewUpdate() {
           });
         });
       });
-
-      setGenreNames(newGenreNames);
 
       const uniqueGenres = Array.from(
         new Set(newGenreNames.map((genre) => genre.name))
