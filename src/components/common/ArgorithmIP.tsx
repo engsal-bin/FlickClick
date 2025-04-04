@@ -64,19 +64,16 @@ export default function ArgorithmIP({
 
       {/* 컨텐츠 내용 */}
       <Swiper
-        // spaceBetween={10} // 슬라이드 사이 간격
-        // slidesPerView={5} // 한 번에 보여지는 슬라이드 수
         breakpoints={{
-          320: { slidesPerView: 2, spaceBetween: 5 },
-          480: { slidesPerView: 3, spaceBetween: 10 },
-          768: { slidesPerView: 4, spaceBetween: 15 },
-          1024: { slidesPerView: 5, spaceBetween: 20 },
-          1280: { slidesPerView: 6, spaceBetween: 20 },
+          320: { slidesPerView: 2 },
+          600: { slidesPerView: 3 },
+          880: { slidesPerView: 4 },
+          1090: { slidesPerView: 5 },
+          1300: { slidesPerView: 6 },
         }}
         loop={false} // 무한 반복
         className="w-full"
       >
-        {/* <div className="flex justify-start gap-[30px] tablet:h-full mobile:h-[132.5px]"> */}
         {contents?.length === 0 ? (
           <div className="text-[16px] text-white02 font-light">
             {translation.noResult}
@@ -106,8 +103,8 @@ export default function ArgorithmIP({
 
                 {/* 제목(연도) */}
                 <div
-                  className="font-bold text-[16px] text-white02
-                  line-clamp-2 overflow-hidden whitespace-normal 
+                  className="tablet:w-[200px] mobile:w-[100px] font-bold text-[16px] text-white02
+                  line-clamp-1 overflow-hidden whitespace-normal 
                   hover:line-clamp-none hover:overflow-visible"
                 >
                   {item.title ? item.title : item.name}(
@@ -120,8 +117,6 @@ export default function ArgorithmIP({
             </SwiperSlide>
           ))
         )}
-
-        {/* </div> */}
       </Swiper>
     </section>
   );
