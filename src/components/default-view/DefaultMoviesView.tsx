@@ -75,10 +75,10 @@ export default function DefaultMoviesView() {
 
   return (
     <div className="flex flex-col gap-[30px]">
-      <Contents to="/popular" showMore={false} data={trendingData}>
+      <Contents to="/popular" showMore={true} data={trendingData}>
         {t.movieTrending}
       </Contents>
-      <Contents to="/newupdate" showMore={false} data={newUpdateData}>
+      <Contents to="/newupdate" showMore={true} data={newUpdateData}>
         {t.movieNewUpdate}
       </Contents>
     </div>
