@@ -60,7 +60,5 @@
 <h2>🎥 페이지별 기능 시연</h2>
 <h4>메인 페이지</h4>
 
-<img src="https://github.com/user-attachments/assets/de581406-3d52-4912-90ea-975d36c4d841" alt="2025-04-02160752-ezgif com-video-to-gif-converter" width="700" height="auto">
-
 <p>시리즈 탭</p>
 
