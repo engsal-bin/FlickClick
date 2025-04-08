@@ -77,7 +77,7 @@ export default function Notification() {
   };
 
   return (
-    <div className="flex flex-col justify-between h-full border-white">
+    <div className="flex flex-col justify-between h-full border-white shadow-2xl">
       {/* 데스크탑용 알림 */}
       <div className="hidden tablet:flex w-[249px] h-[58px] justify-between">
         {[
