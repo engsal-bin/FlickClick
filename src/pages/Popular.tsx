@@ -30,7 +30,11 @@ export default function Popular() {
 
   const fetchTrendAll = async (day = "day") => {
     try {
-      const trend = await commonAPI.getTrendingAll(1, day);
+      const trend = await commonAPI.getTrendingAll(
+        1,
+        day,
+        translation.languageParams
+      );
       console.log(trend);
 
       setTrendInfos(

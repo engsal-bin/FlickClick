@@ -4,6 +4,7 @@ import mainLogo from "../../assets/logo/mainLogo.svg";
 import searchIcon from "../../assets/icon/searchIcon.svg";
 import cancelIcon from "../../assets/icon/cancelIcon.svg";
 import arrow01 from "../../assets/icon/arrow/arrow01.svg";
+import arrowUp from "../../assets/icon/arrow/arrowUp.svg";
 import Notification from "./Notification";
 import Searchbar from "./Searchbar";
 import burgerButton from "../../assets/icon/burgerButton.svg";
@@ -15,18 +16,16 @@ import { menuTranslations } from "../../translations/menu";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSearch, setIsSearch] = useState(false); // 검색창 오픈 상태
-  const location = useLocation(); // 현재 경로 상태
+  const [isSearch, setIsSearch] = useState(false);
+  const location = useLocation();
   const navigate = useNavigate();
   const [previousPath, setPreviousPath] = useState("");
   const { isLoggedIn, user } = useAuth();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const { language } = useLanguageStore();
+  const translation = menuTranslations[language];
   const notificationRef = useRef<HTMLDivElement>(null);
 
-  const translation = menuTranslations[language];
-
-  // 모바일에서 스크롤 막기&허용
   useEffect(() => {
     const isMobile = window.innerWidth <= 768;
     if (isOpen && isMobile) {
@@ -39,7 +38,6 @@ export default function Header() {
     };
   }, [isOpen]);
 
-  // 검색창 오픈 시 스크롤 막기
   useEffect(() => {
     if (isSearch) {
       document.body.style.overflow = "hidden";
@@ -62,10 +60,13 @@ export default function Header() {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // 노티피케이션 창 외의 영역 클릭 시 창 닫기
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (isOpen && notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+      if (
+        isOpen &&
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -151,17 +152,19 @@ export default function Header() {
           {/* tablet 이상 */}
           <div className="hidden tablet:flex w-[189px] h-[35px] justify-between items-center text-white01 text-[14px] font-bold">
             {/* 검색 버튼 */}
-            <img
-              src={isSearch ? cancelIcon : searchIcon}
-              alt={translation.search}
-              className={`cursor-pointer w-[20px] ${
-                isSearch ? "w-[18px] mx-[4px]" : "w-[26px]"
-              }`}
-              onClick={() => {
-                setIsSearch((prev) => !prev);
-                isSearch ? navigate(previousPath) : "";
-              }}
-            />
+            <button className="z-10">
+              <img
+                src={isSearch ? cancelIcon : searchIcon}
+                alt={translation.search}
+                className={`cursor-pointer w-[20px] ${
+                  isSearch ? "w-[18px] mx-[4px]" : "w-[26px]"
+                }`}
+                onClick={() => {
+                  setIsSearch((prev) => !prev);
+                  isSearch ? navigate(previousPath) : "";
+                }}
+              />
+            </button>
             {isLoggedIn ? (
               <Link
                 to={"/mypage"}
@@ -183,14 +186,19 @@ export default function Header() {
             )}
             {/* 알림창 버튼 */}
             {isLoggedIn && (
-              <img
-                src={arrow01}
-                alt={translation.notification}
-                className="flex cursor-pointer"
+              <button
+                className="z-50 tablet:block hidden"
                 onClick={() => {
                   setIsOpen((prev) => !prev);
                 }}
-              />
+                onMouseDown={(e) => e.stopPropagation()}
+              >
+                <img
+                  src={isOpen ? arrowUp : arrow01}
+                  alt={translation.notification}
+                  className="flex cursor-pointer"
+                />
+              </button>
             )}
           </div>
           {/* mobile 전용 */}
@@ -205,14 +213,19 @@ export default function Header() {
               }}
             />
             {/* 햄버거 버튼 */}
-            <img
-              src={burgerButton}
-              alt={translation.notification}
-              className="cursor-pointer flex w-[20px]"
+            <button
               onClick={() => {
                 setIsOpen((prev) => !prev);
               }}
-            />
+              onMouseDown={(e) => e.stopPropagation()}
+              className="z-50 tablet:hidden block"
+            >
+              <img
+                src={burgerButton}
+                alt={translation.notification}
+                className="cursor-pointer flex w-[20px]"
+              />
+            </button>
           </div>
         </>
 
@@ -227,35 +240,29 @@ export default function Header() {
 
         {/* 알림창 */}
         {isOpen && (
-          <>
-            {/* tablet 이상 */}
+          <div
+            className="absolute tablet:flex tablet:top-[80px]
+            tablet:right-[18px] tablet:bg-none
+            absolute tablet:w-auto tablet:h-auto w-full h-[100%]
+            bg-black_50 top-[80px] left-0"
+            ref={notificationRef}
+          >
             <div
-              className="absolute hidden tablet:flex top-[80px]
-            right-[18px] bg-none z-20"
-            >
-              <div
-                ref={notificationRef}
-                className="absolute top-0 right-0 w-[349px] h-[417px]
+              className="tablet:block hidden absolute top-0 right-0 w-[349px] h-[417px]
               bg-black border border-gray03 rounded-[10px]
               shadow-md shadow-white01/10 p-[50px] z-20"
-              >
-                <Notification />
-              </div>
+            >
+              <Notification />
             </div>
             {/* mobile 전용 */}
+
             <div
-              className="absolute tablet:hidden flex w-full h-[100%]
-            bg-black_50 top-[80px] left-0 z-20"
-            >
-              <div
-                ref={notificationRef}
-                className="absolute top-0px right-0 w-[256px] h-full
+              className="tablet:hidden absolute top-0px right-0 w-[256px] h-full
               bg-black border-0 rounded-none z-20"
-              >
-                <Notification />
-              </div>
+            >
+              <Notification />
             </div>
-          </>
+          </div>
         )}
       </div>
     </>

@@ -56,7 +56,10 @@ export default function DefaultSeriesView() {
 
     const fetchNewUpdate = async () => {
       try {
-        const newUpdataResponse = await tvAPI.getOnTheAirTvSeriese();
+        const newUpdataResponse = await tvAPI.getOnTheAirTvSeriese(
+          1,
+          translation.languageParams
+        );
         const newUpdateWithType = newUpdataResponse.results.map(
           (item: Content) => ({
             ...item,

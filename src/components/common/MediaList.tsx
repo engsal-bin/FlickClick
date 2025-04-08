@@ -128,6 +128,9 @@ export default function MediaList({
                             : defaultImage
                       })`,
                     }}
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = defaultImage;
+                    }}
                   >
                     <Link
                       to={
@@ -203,6 +206,9 @@ export default function MediaList({
                             ? `${IMAGE_BASE_URL}original${item.backdrop_path}`
                             : defaultImage
                       })`,
+                    }}
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = defaultImage;
                     }}
                   >
                     <Link

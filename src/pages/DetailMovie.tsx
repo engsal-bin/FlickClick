@@ -15,9 +15,9 @@ export default function DetailMovie() {
   const { language } = useLanguageStore();
   const transition = menuTranslations[language];
   const tabs = [
-    { label: "리뷰" },
+    { label: transition.review },
     {
-      label: "토론",
+      label: transition.discuss,
     },
   ];
 
