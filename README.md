@@ -66,7 +66,6 @@
 ├─ package.json
 ├─ postcss.config.js
 ├─ public
-│ ├─ \_redirects
 │ └─ favicon.png
 ├─ src
 │ ├─ App.tsx
@@ -119,53 +118,85 @@
 <br/>
 
 <h2>🎥 페이지별 기능 시연</h2>
-<h4>메인 페이지</h4>
-
-<p>시리즈 탭</p>
-
-<img src="https://github.com/user-attachments/assets/9926a21e-9511-4dea-8bfd-ca1e64d4f060" alt="2025-04-02160752-ezgif com-video-to-gif-converter" width="700" height="auto">
-
-<p>영화 탭</p>
-
-<img src="https://github.com/user-attachments/assets/dc45c901-d4c5-4f2b-b31d-7c4dc784b419" width="700" height="auto">
-
-<p>장르 필터링 탭</p>
-
-<img src="https://github.com/user-attachments/assets/3061e7fc-24a2-473a-9140-a32bf7d89d6c" width="700" height="auto">
-
-<p>검색 탭</p>
-
-<img src="https://github.com/user-attachments/assets/0b885ca7-f50e-4206-95e0-e92370db6e92" alt="2025-04-02160752-ezgif com-video-to-gif-converter" width="700" height="auto">
-
-<p>언어지원</p>
-
-<img src="https://github.com/user-attachments/assets/f713cdcb-39c1-4f96-ade2-6f6616128327" alt="2025-04-02160752-ezgif com-video-to-gif-converter" width="700" height="auto">
-
-<p>신규 업데이트</p>
-
-<img src="https://github.com/user-attachments/assets/2e5cdbfd-38ca-40e8-b298-de16bf0f9e07" alt="2025-04-02160752-ezgif com-video-to-gif-converter" width="700" height="auto">
-
-<p>트렌드 콘텐츠</p>
-
-<img src="https://github.com/user-attachments/assets/03de2f71-99b0-4e54-bab9-1d18c6150a17" alt="2025-04-02160752-ezgif com-video-to-gif-converter" width="700" height="auto">
-
-<p>공개 예정 콘텐츠</p>
-
-<img src="https://github.com/user-attachments/assets/a14011a3-633f-47c3-a319-f393632e0cf3" alt="2025-04-02160752-ezgif com-video-to-gif-converter" width="700" height="auto">
-
-<p>마이페이지</p>
-
-<img src="https://github.com/user-attachments/assets/4620b510-36d9-4265-a269-bc98b7d18c56" alt="2025-04-02160752-ezgif com-video-to-gif-converter" width="700" height="auto">
-
-<p>영화 상세 페이지</p>
-
-<img src="https://github.com/user-attachments/assets/e7ef1f77-aac2-4e40-bd54-797e8ba0c593" alt="2025-04-02160752-ezgif com-video-to-gif-converter" width="700" height="auto">
-
-<p>시리즈 상세 페이지</p>
-
-<img src="https://github.com/user-attachments/assets/e312856d-2502-425a-a5c9-d92f06aaf3c1" width="700" height="auto">
-
-<p>토론 및 리뷰</p>
-
-<img src="https://github.com/user-attachments/assets/3277e83c-2bb4-4f1d-8155-df8adbaff1fe" alt="2025-04-02160752-ezgif com-video-to-gif-converter" width="700" height="auto">
-```
+<table>
+  <tbody>
+    <!-- 1번째 행: 시리즈 탭 / 영화 탭 -->
+    <tr>
+      <td align="center">시리즈 탭</td>
+      <td align="center">영화 탭</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/9926a21e-9511-4dea-8bfd-ca1e64d4f060" alt="시리즈 탭" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/dc45c901-d4c5-4f2b-b31d-7c4dc784b419" alt="영화 탭" />
+      </td>
+    </tr>
+    <!-- 2번째 행: 장르 필터링 탭 / 검색 탭 -->
+    <tr>
+      <td align="center">장르 필터링 탭</td>
+      <td align="center">검색 탭</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/3061e7fc-24a2-473a-9140-a32bf7d89d6c" alt="장르 필터링 탭" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/0b885ca7-f50e-4206-95e0-e92370db6e92" alt="검색 탭" />
+      </td>
+    </tr>
+    <!-- 3번째 행: 언어지원 / 신규 업데이트 -->
+    <tr>
+      <td align="center">언어지원</td>
+      <td align="center">신규 업데이트</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/f713cdcb-39c1-4f96-ade2-6f6616128327" alt="언어지원" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/2e5cdbfd-38ca-40e8-b298-de16bf0f9e07" alt="신규 업데이트" />
+      </td>
+    </tr>
+    <!-- 4번째 행: 트렌드 콘텐츠 / 공개 예정 콘텐츠 -->
+    <tr>
+      <td align="center">트렌드 콘텐츠</td>
+      <td align="center">공개 예정 콘텐츠</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/03de2f71-99b0-4e54-bab9-1d18c6150a17" alt="트렌드 콘텐츠" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/a14011a3-633f-47c3-a319-f393632e0cf3" alt="공개 예정 콘텐츠" />
+      </td>
+    </tr>
+    <!-- 5번째 행: 마이페이지 / 영화 상세 페이지 -->
+    <tr>
+      <td align="center">마이페이지</td>
+      <td align="center">영화 상세 페이지</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/4620b510-36d9-4265-a269-bc98b7d18c56" alt="마이페이지" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/e7ef1f77-aac2-4e40-bd54-797e8ba0c593" alt="영화 상세 페이지" />
+      </td>
+    </tr>
+    <!-- 6번째 행: 시리즈 상세 페이지 / 토론 및 리뷰 -->
+    <tr>
+      <td align="center">시리즈 상세 페이지</td>
+      <td align="center">토론 및 리뷰</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/e312856d-2502-425a-a5c9-d92f06aaf3c1" alt="시리즈 상세 페이지" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/3277e83c-2bb4-4f1d-8155-df8adbaff1fe" alt="토론 및 리뷰" />
+      </td>
+    </tr>
+  </tbody>
+</table>
