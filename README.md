@@ -66,8 +66,6 @@
 ├─ package.json
 ├─ postcss.config.js
 ├─ public
-│ ├─ \_redirects
-│ └─ favicon.png
 ├─ src
 │ ├─ App.tsx
 │ ├─ api
