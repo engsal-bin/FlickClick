@@ -196,3 +196,11 @@ export const deleteClippedData = async (
     console.error("스크랩 삭제 중 오류 발생:", error);
   }
 };
+
+// 쿼리 키 상수 추가
+export const QUERY_KEYS = {
+  USER_COUNTS: 'userCounts',
+  USER_REVIEWS: 'userReviews',
+  USER_CLIPS: 'userClips',
+  USER_NOTIFICATIONS: 'userNotifications',
+};
