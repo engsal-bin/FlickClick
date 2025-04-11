@@ -1,4 +1,5 @@
 ![Frame 151](https://github.com/user-attachments/assets/2e668af3-5ea1-4968-b030-3d4c3be5d47f)
+
 <h4 align="center">FlickClick은 사용자가 최신 영화 및 TV 시리즈 콘텐츠를 편리하게 검색하고 관리할 수 있는 플랫폼입니다.</h4>
 <br/>
 
@@ -9,11 +10,12 @@
 
 <h2>🤝 팀원</h2>
 
-| Frontend | Frontend | Frontend | Frontend |
-| :---: | :---: | :---: | :---: |
-|![121593029](https://github.com/user-attachments/assets/025d0abf-73b8-4431-9ddd-051b2e5039b6)|![186317824](https://github.com/user-attachments/assets/57a72a8d-bc9a-4854-a79b-99b8c418df02)|![185449401](https://github.com/user-attachments/assets/d02ac9e6-3d29-457b-bc5f-228609972170)|![137764022](https://github.com/user-attachments/assets/6e3d4826-de16-4a62-b227-ff81e3647eb0)|
-| 김내현 | 김예빈 | 성송원 | 이수빈 |
-| [@kimnaehyun](https://github.com/kimnaehyun) | [@engsal-bin](https://github.com/engsal-bin) | [@songwon-sung](https://github.com/songwon-sung) | [@ddongguri-bing](https://github.com/ddongguri-bing) |
+|                                           Frontend                                            |                                           Frontend                                            |                                           Frontend                                            |                                           Frontend                                            |
+| :-------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: |
+| ![121593029](https://github.com/user-attachments/assets/025d0abf-73b8-4431-9ddd-051b2e5039b6) | ![186317824](https://github.com/user-attachments/assets/57a72a8d-bc9a-4854-a79b-99b8c418df02) | ![185449401](https://github.com/user-attachments/assets/d02ac9e6-3d29-457b-bc5f-228609972170) | ![137764022](https://github.com/user-attachments/assets/6e3d4826-de16-4a62-b227-ff81e3647eb0) |
+|                                            김내현                                             |                                            김예빈                                             |                                            성송원                                             |                                            이수빈                                             |
+|                         [@kimnaehyun](https://github.com/kimnaehyun)                          |                         [@engsal-bin](https://github.com/engsal-bin)                          |                       [@songwon-sung](https://github.com/songwon-sung)                        |                     [@ddongguri-bing](https://github.com/ddongguri-bing)                      |
+
 <br/>
 
 <h2>🛠️ 기술 스택</h2>
@@ -57,10 +59,152 @@
 
 <br/>
 
-<h2>🎥 페이지별 기능 시연</h2>
-<h4>메인 페이지</h4>
+<h2>🗂️ 폴더 구조</h2>
 
+<h2>🗂️ 폴더 구조</h2>
+
+```plaintext
+├─ eslint.config.js
+├─ index.html
+├─ package.json
+├─ postcss.config.js
+├─ public
+│   └─ favicon.png
+├─ src
+│   ├─ App.tsx
+│   ├─ api
+│   │   ├─ Auth.tsx
+│   │   ├─ axios.ts
+│   │   ├─ common.ts
+│   │   ├─ index.ts
+│   │   ├─ movie.ts
+│   │   ├─ mypageInfo.ts
+│   │   ├─ notification.ts
+│   │   ├─ search.ts
+│   │   ├─ tv.ts
+│   │   └─ user.ts
+│   ├─ assets
+│   │   ├─ icon
+│   │   └─ logo
+│   ├─ components
+│   │   ├─ OttIcon.tsx
+│   │   ├─ common
+│   │   ├─ default-view
+│   │   ├─ genresPage
+│   │   ├─ movies
+│   │   ├─ mypage
+│   │   ├─ notification
+│   │   ├─ rootlayouts
+│   │   ├─ skeletons
+│   │   └─ upcoming
+│   ├─ constants
+│   ├─ context
+│   ├─ css
+│   │   ├─ fonts.css
+│   │   ├─ index.css
+│   │   └─ tallwind.css
+│   ├─ hooks
+│   ├─ layouts
+│   ├─ main.tsx
+│   ├─ pages
+│   ├─ store
+│   ├─ translations
+│   ├─ type
+│   ├─ utils
+│   └─ vite-env.d.ts
+├─ tailwind.config.js
+├─ tsconfig.app.json
+├─ tsconfig.json
+├─ tsconfig.node.json
+└─ vite.config.ts
+```
+
+<br/>
+
+<h2>🎥 페이지별 기능 시연</h2>
+
+<h4>메인 페이지</h4>
 <img src="https://github.com/user-attachments/assets/de581406-3d52-4912-90ea-975d36c4d841" alt="2025-04-02160752-ezgif com-video-to-gif-converter" width="700" height="auto">
 
-<p>시리즈 탭</p>
-
+<table>
+  <tbody>
+    <!-- 1번째 행: 시리즈 탭 / 영화 탭 -->
+    <tr>
+      <td align="center">시리즈 탭</td>
+      <td align="center">영화 탭</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/9926a21e-9511-4dea-8bfd-ca1e64d4f060" alt="시리즈 탭" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/dc45c901-d4c5-4f2b-b31d-7c4dc784b419" alt="영화 탭" />
+      </td>
+    </tr>
+    <!-- 2번째 행: 장르 필터링 탭 / 검색 탭 -->
+    <tr>
+      <td align="center">장르 필터링 탭</td>
+      <td align="center">검색 탭</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/3061e7fc-24a2-473a-9140-a32bf7d89d6c" alt="장르 필터링 탭" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/0b885ca7-f50e-4206-95e0-e92370db6e92" alt="검색 탭" />
+      </td>
+    </tr>
+    <!-- 3번째 행: 언어지원 / 신규 업데이트 -->
+    <tr>
+      <td align="center">언어지원</td>
+      <td align="center">신규 업데이트</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/f713cdcb-39c1-4f96-ade2-6f6616128327" alt="언어지원" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/2e5cdbfd-38ca-40e8-b298-de16bf0f9e07" alt="신규 업데이트" />
+      </td>
+    </tr>
+    <!-- 4번째 행: 트렌드 콘텐츠 / 공개 예정 콘텐츠 -->
+    <tr>
+      <td align="center">트렌드 콘텐츠</td>
+      <td align="center">공개 예정 콘텐츠</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/03de2f71-99b0-4e54-bab9-1d18c6150a17" alt="트렌드 콘텐츠" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/a14011a3-633f-47c3-a319-f393632e0cf3" alt="공개 예정 콘텐츠" />
+      </td>
+    </tr>
+    <!-- 5번째 행: 마이페이지 / 영화 상세 페이지 -->
+    <tr>
+      <td align="center">마이페이지</td>
+      <td align="center">영화 상세 페이지</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/4620b510-36d9-4265-a269-bc98b7d18c56" alt="마이페이지" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/e7ef1f77-aac2-4e40-bd54-797e8ba0c593" alt="영화 상세 페이지" />
+      </td>
+    </tr>
+    <!-- 6번째 행: 시리즈 상세 페이지 / 토론 및 리뷰 -->
+    <tr>
+      <td align="center">시리즈 상세 페이지</td>
+      <td align="center">토론 및 리뷰</td>
+    </tr>
+    <tr>
+      <td>
+        <img src="https://github.com/user-attachments/assets/e312856d-2502-425a-a5c9-d92f06aaf3c1" alt="시리즈 상세 페이지" />
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/3277e83c-2bb4-4f1d-8155-df8adbaff1fe" alt="토론 및 리뷰" />
+      </td>
+    </tr>
+  </tbody>
+</table>

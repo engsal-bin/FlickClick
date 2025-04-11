@@ -30,80 +30,93 @@ export default function Contents({
         : ""
     ) ?? [];
   const navigate = useNavigate();
-  const dataRef = useRef<HTMLDivElement>(null);
-  const [isOverflow, setIsOverflow] = useState(false);
   console.log(trendingData);
   const { language } = useLanguageStore();
   const translation = menuTranslations[language];
 
-  // 마우스 휠 이벤트 핸들러
-  const handleWheel = (event: WheelEvent) => {
-    if (dataRef.current) {
-      const rect = dataRef.current.getBoundingClientRect();
-      const isMouseInBounds =
-        event.clientY >= rect.top && event.clientY <= rect.bottom;
+  const swiperRef = useRef<any>(null); // Swiper 참조
+  const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 상태
+  const [currentIndex, setCurrentIndex] = useState(0); // 현재 index 상태
+  const [slidesPerView, setSlidesPerView] = useState(0);
+  // console.log("currentIndex", currentIndex);
+  // console.log("currentPage", currentPage);
 
-      if (isMouseInBounds) {
-        event.preventDefault();
-        dataRef.current.scrollLeft += event.deltaY;
-      }
-    }
-  };
+  // resize 이벤트를 감지하여 slidesPerView 업데이트
+  useEffect(() => {
+    const updateSlidesPerView = () => {
+      const width = window.innerWidth;
+      setSlidesPerView(width >= 1300 ? 6 : width >= 1100 ? 5 : 4);
+    };
+
+    // 초기 실행
+    updateSlidesPerView();
+    // 이벤트 리스너 추가
+    window.addEventListener("resize", updateSlidesPerView);
+
+    // 언마운트 시 제거
+    return () => window.removeEventListener("resize", updateSlidesPerView);
+  }, []);
+
+  // 전체 페이지 수
+  const totalPages = Math.ceil((trendingData?.length || 0) / slidesPerView);
+
+  // 현재 index값에 따라 현재 page 변경
+  useEffect(() => {
+    const page = Math.ceil(currentIndex / slidesPerView);
+    console.log("page", page);
+    setCurrentPage(page);
+  }, [currentIndex, window.innerWidth]);
 
   useEffect(() => {
-    if (!dataRef.current) return;
-
-    const personList = dataRef.current;
-
-    personList.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      personList.removeEventListener("wheel", handleWheel);
-    };
-  }, [isOverflow]);
-
-  // 부모 요소의 너비를 기준으로 자식 요소가 넘쳤는지 체크
-  useEffect(() => {
-    const checkOverflow = () => {
-      if (dataRef.current) {
-        const isOverflowing =
-          dataRef.current.scrollWidth > dataRef.current.clientWidth;
-        setIsOverflow(isOverflowing);
-      }
-    };
-
-    // 브라우저가 레이아웃을 계산한 후 실행되도록 requestAnimationFrame 사용
-    const raf = requestAnimationFrame(checkOverflow);
-
-    window.addEventListener("resize", checkOverflow);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", checkOverflow);
-    };
-  }, [trendingData]);
+    setCurrentPage(0);
+    setCurrentIndex(0);
+  }, []);
 
   if (trendingData)
     return (
       <>
         {/* tablet 이상 */}
-        <div className="hidden tablet:flex flex-col justify-between w-full px-[50px]  ">
+        <div className="hidden tablet:flex flex-col justify-between w-full px-[50px] relative">
           <div className="flex items-baseline justify-between">
+            {/* 리스트 제목 */}
             <p className="text-white01 font-bold text-[24px] mb-[30px]">
               {children}
             </p>
-            {showMore && (
-              <Link to={to} className="text-white03 text-[20px]">
-                {translation.viewMore}
-              </Link>
-            )}
+
+            <div className="flex justify-between gap-[20px]">
+              {/* 페이지네이션 (원형 토글 버튼) */}
+              <div className="flex gap-2 justify-center items-center">
+                {Array.from({ length: totalPages }).map((_, index) => (
+                  <button
+                    key={index}
+                    className={`w-[10px] h-[10px] rounded-full ${currentPage === index ? "bg-main" : "bg-white01/30"}`}
+                    onClick={() => {
+                      if (swiperRef.current) {
+                        swiperRef.current.slideTo(index * slidesPerView, 500);
+                      }
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* 더보기 */}
+              {showMore && (
+                <Link to={to} className="text-white03 text-[20px]">
+                  {translation.viewMore}
+                </Link>
+              )}
+            </div>
           </div>
 
           <Swiper
-            modules={[Navigation, Pagination]}
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
             spaceBetween={10}
             slidesPerView={3}
             className="w-full hidden tablet:flex"
+            onSlideChange={(swiper) => {
+              console.log(swiper.activeIndex);
+              setCurrentIndex(swiper.activeIndex);
+            }}
             breakpoints={{
               900: { slidesPerView: 4 },
               1100: { slidesPerView: 5 },
@@ -139,14 +152,34 @@ export default function Contents({
         {/* mobile 전용 */}
         <div className="tablet:hidden flex flex-col justify-between w-full px-[10px] ">
           <div className="flex items-baseline justify-between">
+            {/* 리스트 제목 */}
             <p className="text-white01 font-bold text-[18px] mb-[30px]">
               {children}
             </p>
-            {showMore && (
-              <Link to={to} className="text-white03 text-[12px]">
-                {translation.viewMore}
-              </Link>
-            )}
+
+            <div className="flex justify-between gap-[20px]">
+              {/* 페이지네이션 (원형 토글 버튼) */}
+              <div className="flex gap-1 justify-center items-center">
+                {Array.from({ length: totalPages }).map((_, index) => (
+                  <button
+                    key={index}
+                    className={`w-[5px] h-[5px] rounded-full ${currentPage === index ? "bg-main" : "bg-white01/30"}`}
+                    onClick={() => {
+                      if (swiperRef.current) {
+                        swiperRef.current.slideTo(index * slidesPerView, 500);
+                      }
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* 더보기 */}
+              {showMore && (
+                <Link to={to} className="text-white03 text-[12px]">
+                  {translation.viewMore}
+                </Link>
+              )}
+            </div>
           </div>
 
           <Swiper

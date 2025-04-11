@@ -48,7 +48,7 @@ export default function Banner() {
         href="https://github.com/engsal-bin/FlickClick"
         target="_blank"
         rel="noopener noreferrer"
-        className="desktop:hidden tablet:hidden mobile:flex w-[300px] h-[80px] mx-[10px] bg-[#1D232A] justify-center items-center gap-[10px] cursor-pointer"
+        className="desktop:hidden tablet:hidden mobile:flex w-[350px] h-[80px] mx-[10px] bg-[#1D232A] justify-center items-center gap-[10px] cursor-pointer"
       >
         {/* 깃허브 로고 */}
         <div

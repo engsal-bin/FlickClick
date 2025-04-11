@@ -256,7 +256,7 @@ export default function Genres() {
       <div className="flex-1">
         {/* 모바일 사이드바 토글 버튼 */}
         <button
-          className="md:hidden fixed top-[90px] left-4 z-40 bg-black text-white p-2 rounded"
+          className="md:hidden fixed top-[90px] left-4 z-10 bg-black text-white p-2 rounded shadow-lg"
           onClick={() => setIsSidebarOpen(true)}
         >
           ☰

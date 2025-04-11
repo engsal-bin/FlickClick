@@ -56,7 +56,10 @@ export default function DefaultMoviesView() {
 
     const fetchNewUpdate = async () => {
       try {
-        const newUpdataResponse = await movieAPI.getNowPlayingMovie();
+        const newUpdataResponse = await movieAPI.getNowPlayingMovie(
+          1,
+          translation.languageParams
+        );
         const newUpdateWithType = newUpdataResponse.results.map(
           (item: Content) => ({
             ...item,

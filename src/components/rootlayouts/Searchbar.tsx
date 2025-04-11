@@ -103,7 +103,7 @@ export default function Searchbar() {
 
   useEffect(() => {
     fetchTrendingContents();
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     fetchSearhResults();
@@ -122,7 +122,7 @@ export default function Searchbar() {
   return (
     <>
       {/* desktop */}
-      <div className="tablet:hidden mobile:hidden desktop:flex">
+      <div className="tablet:hidden mobile:hidden desktop:flex z-40">
         <div className="w-[100%] h-[100%] py-[50px] px-[315px] flex flex-col justify-between items-center">
           <div className="flex">
             <input
@@ -211,6 +211,10 @@ export default function Searchbar() {
                                 : defaultImage
                             }
                             className="w-full h-full rounded-[8px]"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src =
+                                defaultImage;
+                            }}
                           />
                         </div>
                         <div className="flex flex-col gap-[10px]">
@@ -256,6 +260,10 @@ export default function Searchbar() {
                                 : defaultImage
                             }
                             className="w-full h-full rounded-[8px]"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src =
+                                defaultImage;
+                            }}
                           />
                         </div>
                         <div className="flex flex-col gap-[10px]">
@@ -297,6 +305,10 @@ export default function Searchbar() {
                                 : defaultImage
                             }
                             className="w-full h-full rounded-[8px]"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src =
+                                defaultImage;
+                            }}
                           />
                         </div>
                         <div className="flex flex-col gap-[10px]">
@@ -411,6 +423,10 @@ export default function Searchbar() {
                                 : defaultImage
                             }
                             className="w-full h-full rounded-[8px]"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src =
+                                defaultImage;
+                            }}
                           />
                         </div>
                         <div className="flex flex-col gap-[10px]">
@@ -456,6 +472,10 @@ export default function Searchbar() {
                                 : defaultImage
                             }
                             className="w-full h-full rounded-[8px]"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src =
+                                defaultImage;
+                            }}
                           />
                         </div>
                         <div className="flex flex-col gap-[10px]">
@@ -497,6 +517,10 @@ export default function Searchbar() {
                                 : defaultImage
                             }
                             className="w-full h-full rounded-[8px]"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src =
+                                defaultImage;
+                            }}
                           />
                         </div>
                         <div className="flex flex-col gap-[10px]">
@@ -523,18 +547,22 @@ export default function Searchbar() {
 
       {/* mobile */}
       <div className="desktop:hidden tablet:hidden mobile:flex">
-        <div className="w-full h-full py-[50px] px-[10px] flex flex-col justify-between items-center ">
-          <div className="flex text-[18px] w-full">
+        <div className="w-full h-full py-[50px] px-[50px] flex flex-col justify-between items-center ">
+          <div className="flex w-full">
             <input
-              className="w-full h-[35px] mr-[4px] font-light text-white01 bg-black border-b-[2px] border-b-white01 focus:outline-none"
+              className="w-full h-[35px] mr-[4px] font-light text-white01 bg-black border-b border-b-white01 focus:outline-none text-[16px]"
               placeholder={translation.searchPlaceholder}
               value={searchValue}
               onChange={handleSearchInput}
             />
             <img src={seachIcon} />
           </div>
-          <div className="w-full flex flex-col gap-[20px] mt-[50px] text-white01 font-bold text-[18px]">
-            {!searchValue ? <p>{translation.trendingContent}</p> : ""}
+          <div className="w-full flex flex-col gap-[20px] mt-[50px] text-white01 font-bold ">
+            {!searchValue ? (
+              <p className="text-[18px]">{translation.trendingContent}</p>
+            ) : (
+              ""
+            )}
             {!searchValue ? (
               trendingContents.map((content, index) => (
                 <div
@@ -611,6 +639,10 @@ export default function Searchbar() {
                                 : defaultImage
                             }
                             className="w-full h-full rounded-[8px]"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src =
+                                defaultImage;
+                            }}
                           />
                         </div>
                         <div className="flex flex-col gap-[10px]">
@@ -656,6 +688,10 @@ export default function Searchbar() {
                                 : defaultImage
                             }
                             className="w-full h-full rounded-[8px]"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src =
+                                defaultImage;
+                            }}
                           />
                         </div>
                         <div className="flex flex-col gap-[10px]">
@@ -697,6 +733,10 @@ export default function Searchbar() {
                                 : defaultImage
                             }
                             className="w-full h-full rounded-[8px]"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src =
+                                defaultImage;
+                            }}
                           />
                         </div>
                         <div className="flex flex-col gap-[10px]">

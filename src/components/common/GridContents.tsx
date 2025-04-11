@@ -23,6 +23,9 @@ export default function GridContents({ content }: { content: Content }) {
         }
         alt={content.name || "no image"}
         className="w-full h-full object-cover rounded-lg"
+        onError={(e) => {
+          (e.currentTarget as HTMLImageElement).src = defaultImage;
+        }}
       />
     </div>
   );
