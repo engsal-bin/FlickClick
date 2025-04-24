@@ -68,7 +68,7 @@ export default function SeasonBox({
             <div className="flex justify-start gap-[10px]">
               {/* 방영연도 */}
               <p className="tablet:text-[24px] mobile:text-[14px] text-gray03">
-                {season?.air_date && season?.air_date.slice(0, 4)}
+                {season?.air_date ? season?.air_date.slice(0, 4) : "정보 없음"}
               </p>
 
               {/* 구분선 */}
