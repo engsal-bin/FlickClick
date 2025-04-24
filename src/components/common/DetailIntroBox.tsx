@@ -272,11 +272,13 @@ export default function DetailIntroBox({
                 <div className="w-full flex gap-[10px] text-light flex-wrap">
                   {/* 방영연도 */}
                   <Tag>
-                    {type === "tvSeries"
+                    {type === "tvSeries" && tvContent?.first_air_date
                       ? `${tvContent?.first_air_date.slice(0, 4)}`
-                      : type === "tvSeason"
+                      : type === "tvSeason" && tvSeasonContent?.air_date
                         ? `${tvSeasonContent?.air_date.slice(0, 4)}`
-                        : `${movieContent?.release_date.slice(0, 4)}`}
+                        : movieContent?.release_date
+                          ? `${movieContent?.release_date.slice(0, 4)}`
+                          : "연도정보 없음"}
                   </Tag>
 
                   {/* 장르 */}
